@@ -1,6 +1,5 @@
 ﻿# Encyclopaedia Framework for Ren'Py
-# Copyright 2014 Joshua Fehler <jsfehler@gmail.com>
-# Last Updated: 10/26/2014
+# Copyright 2015 Joshua Fehler <jsfehler@gmail.com>
 #
 # This file is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,26 +15,41 @@
 # along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
 init -1 python:
- #Function that creates the buttons for each entry.
- #It makes one button, based on the value "x", associated to the given encyclopaedia "enc".
- #Used in a "for loop" on a screen to generate the correct buttons for every entry 
-    def generateEntryButton(x,enc):  
+    def generateEntryButton(x, enc):  
+        """ 
+        Create buttons for each Entry in an Encyclopaedia.
+        
+        "x" is the Entry's position in the Encyclopaedia's list of entries.
+        It will reference either all the entries or only the unlocked ones, depending on the given Encyclopaedia's showLockedButtons variable.
+        
+        "enc" is the given Encyclopaedia.
+        
+        Call this function on a Ren'Py screen, inside whatever other UI (Window, box, etc) you want, inside a for loop.
+        """
         ui.hbox()
+        # If locked buttons should be visible.
         if enc.showLockedButtons:
-            if enc.all_entries[x][1].locked == False: #If the entry is unlocked, make the button to go to it. If it's locked, make an inactive "???" button
-                ui.textbutton(enc.all_entries[x][1].name, clicked= [ enc.ChangeStatus(x), enc.SetEntry(x), Show("encyclopaedia_entry")] )
-                if enc.all_entries[x][1].status == None or enc.all_entries[x][1].status == False:
+            # If the entry is unlocked, make the button point to it. If it's locked, make a "???" button.
+            if enc.all_entries[x][1].locked == False:
+                ui.textbutton(enc.all_entries[x][1].name, clicked=[ enc.ChangeStatus(x), enc.SetEntry(x), Show("encyclopaedia_entry") ] )
+                
+                # Make a tag next to the button if it hasn't been viewed by the player yet.
+                if not enc.all_entries[x][1].status:    
                     ui.textbutton ("New!")
-          
-            else: #If locked entries should be shown in the list, the "???" button should go to the entry. If not, it's an inactive button
+
+            else:
+                # If locked entries should be viewable, the "???" button should go to the entry. If not, it's an inactive button.
                 if enc.showLockedEntry:
                     ui.textbutton("???", clicked=[ enc.ChangeStatus(x), enc.SetEntry(x), Show("encyclopaedia_entry")])
                 else:
                     ui.textbutton("???")
     
-        if enc.showLockedButtons == False: #Only showing unlocked entries in this case, no need for the "???" button
+        # If locked buttons should not be visible. (No need for the "???" buttons.)
+        if enc.showLockedButtons == False:
             ui.textbutton(enc.unlocked_entries[x][1].name, clicked= [ enc.ChangeStatus(x), enc.SetEntry(x), Show("encyclopaedia_entry")] )
-            if enc.unlocked_entries[x][1].status == None or enc.unlocked_entries[x][1].status == False:  
+            
+            # Make a tag next to the button if it hasn't been viewed by the player yet.
+            if not enc.unlocked_entries[x][1].status:
                 ui.textbutton ("New!")
         ui.close()
 
@@ -109,16 +123,19 @@ screen encyclopaedia_list:
         xalign .98
         yalign .98
         vbox:
-            textbutton "Sort by Number" action encyclopaedia.Sort(sorting_mode="Number") #Buttons to sort entries
+            # Buttons to sort entries.
+            textbutton "Sort by Number" action encyclopaedia.Sort(sorting_mode="Number")
             textbutton "Sort A to Z" action encyclopaedia.Sort(sorting_mode="A to Z")
             textbutton "Sort Z to A" action encyclopaedia.Sort(sorting_mode="Z to A")
             textbutton "Sort by Subject" action encyclopaedia.Sort(sorting_mode="Subject")
    
+            # Debug buttons to show off different styles of hiding locked data.
             textbutton "Show/Hide Locked Buttons" action encyclopaedia.ToggleShowLockedButtons()
             textbutton "Show/Hide Locked Entry" action encyclopaedia.ToggleShowLockedEntry()
    
             #Sort and SaveStatus are unnecessary if you're not using persistent data
-            textbutton "Return"  action [encyclopaedia.Sort(sorting_mode="Number"), encyclopaedia.SaveStatus(persistent.new_dict, "new_0"), Return()] #Sorting mode has to be number to save properly. "new_0" needs to be the prefix for the persistent dictionary.
+            #Sorting mode has to be by Number to save properly. "new_0" should be whatever the prefix for the persistent dictionary is.
+            textbutton "Return"  action [encyclopaedia.Sort(sorting_mode="Number"), encyclopaedia.SaveStatus(persistent.new_dict, "new_0"), Return()]
 
 ##############################################################################
 # Encyclopaedia Entry
@@ -140,7 +157,8 @@ screen encyclopaedia_entry:
                 xfill True
                 xmargin 10
                 top_margin 10
-                $page_indicator = "0%d : %s" % (encyclopaedia.getEntryData()[1].number, encyclopaedia.getEntryData()[1].getName()) # Flavour text to indicate which page we're current on
+                # Flavour text to indicate which page we're currently on
+                $ page_indicator = "0%d : %s" % (encyclopaedia.getEntryData()[1].number, encyclopaedia.getEntryData()[1].getName())
                 text page_indicator
   
             frame:
@@ -154,20 +172,19 @@ screen encyclopaedia_entry:
                     textbutton "Next Entry" xalign .98 action encyclopaedia.NextEntry() #Relative to the sorting mode  
        
             hbox:
-                $ddd = config.screen_width
-                $dd = config.screen_width/2
-                $pp = config.screen_height/2
+                $ half_screen_width = config.screen_width/2
+                $ half_screen_height = config.screen_height/2
                 if encyclopaedia.getEntryData()[1].hasImage: #If the entry or sub-entry has an image, add it to the screen   
                     frame:
                         xmargin 10
                         yfill True
                         xfill True
 
-                        xmaximum dd
-                        ymaximum pp  
+                        xmaximum half_screen_width
+                        ymaximum half_screen_height  
 
                         $current_image = encyclopaedia.getEntryData()[1].getImage()
-                        add current_image crop (0,10,dd-30,pp-10)
+                        add current_image crop (0,10,half_screen_width-30,half_screen_height-10)
    
                 window:
                     id "entry_window"
@@ -175,8 +192,8 @@ screen encyclopaedia_entry:
                     xfill True
                     yfill True
                     xalign 0.5
-                    xmaximum ddd
-                    ymaximum pp
+                    xmaximum config.screen_width
+                    ymaximum half_screen_height
                     viewport:
                         scrollbars "vertical"
                         mousewheel True  
@@ -219,7 +236,6 @@ screen encyclopaedia_entry:
 
 ##############################################################################
 # Encyclopaedia Button
-#
 # Contains a button to open the encyclopaedia at any time during the game
 screen show_enc_button:
     textbutton "Open Encyclopaedia" xalign .98 yalign .02 action ShowMenu("encyclopaedia_list")

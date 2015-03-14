@@ -1,6 +1,5 @@
 # Encyclopaedia Framework for Ren'Py
 # Copyright 2015 Joshua Fehler <jsfehler@gmail.com>
-# Last Updated: 2/28/2015
 #
 # This file is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -48,17 +47,17 @@ init -1500 python:
             self.given_entry = self.enc.getEntry(self.entry_number)
             self.given_text = self.given_entry.getText()
             
-            #entry_text is the entry_numberiable used on the encyclopaedia_entry screen for whatever entry's text we're displaying            
+            # entry_text is the variable used on the encyclopaedia_entry screen for whatever entry's text we're displaying            
             self.enc.entry_text = self.string_to_list(self.given_text)
  
-            #index the list to get what the new current_position should be
+            # index the list to get what the new current_position should be
             if self.enc.showLockedEntry:
                 self.target_position = self.enc.all_entries.index([self.given_entry.number,self.given_entry])
    
             else:
                 self.target_position = self.enc.unlocked_entries.index([self.given_entry.number,self.given_entry])
    
-            #The EntryData is based on the target_position gotten
+            # The EntryData is based on the target_position gotten
             self.enc.setEntryData(self.target_position)
    
             self.enc.current_position = self.target_position
@@ -67,12 +66,12 @@ init -1500 python:
     class ChangeEntryAction(EncyclopaediaEntryAction):
         """  
         Scroll through the current entry being viewed. 
-        Used by Encyclopaedia's PreviousEntry and NextEntry functions
+        Used by an Encyclopaedia's PreviousEntry and NextEntry functions.
         """    
         def __init__(self, encyclopaedia, direction, block, *args, **kwargs):  
             self.enc = encyclopaedia
-            self.block = block #If the button is active or not
-            self.dir = direction  #Determines if it's going to the previous or next entry 
+            self.block = block # If the button is active or not
+            self.dir = direction  # Determines if it's going to the previous or next entry 
   
         def __call__(self):
             if self.block == False:
@@ -90,7 +89,8 @@ init -1500 python:
     
                 self.enc.current_position += self.dir
       
-                self.enc.sub_current_position = 1 #When changing an entry, the sub-entry page number is set back to 1
+                # When changing an entry, the sub-entry page number is set back to 1
+                self.enc.sub_current_position = 1
                 renpy.restart_interaction()
     
         def get_sensitive(self):
@@ -124,27 +124,29 @@ init -1500 python:
             self.enc = encyclopaedia
             self.unlocked_entries = self.enc.unlocked_entries
             self.all_entries = self.enc.all_entries
+            
             self.reverse = False
             if sorting_mode == "Z to A":
                 self.reverse = True
-            self.sortingMode = sorting_mode
+            
+            self.sorting_mode = sorting_mode
 
         def _getKey(self,item):
-            if self.sortingMode == "Number":
+            if self.sorting_mode == "Number":
                 return item[0]
             return item[1].name
 
         def __call__(self):
             self.enc.unlocked_entries = sorted(self.unlocked_entries, reverse=self.reverse,key=self._getKey)
             self.enc.all_entries = sorted(self.all_entries, reverse=self.reverse,key=self._getKey)
-            self.enc.sortingMode = self.sortingMode
+            self.enc.sorting_mode = self.sorting_mode
             renpy.restart_interaction()
  
 
     class SaveStatusAction(Action):
         """
         Saves the "New!" status of every entry in an encyclopaedia. 
-        Only necessary if using Persistent Data 
+        Only necessary if using Persistent Data.
         """
         def __init__(self, encyclopaedia, enc_dict, tag_string):
             self.enc = encyclopaedia
@@ -200,7 +202,7 @@ init -1500 python:
     
     class Encyclopaedia(store.object): 
         """Container that manages the display and sorting of a group of EncEntries"""
-        def __init__(self, sortingMode="Number", showLockedButtons=False, showLockedEntry=False):
+        def __init__(self, sorting_mode="Number", showLockedButtons=False, showLockedEntry=False):
             self.subjects = [] #List of all subjects
             self.unlocked_entries = [] #List of unlocked entries
             self.all_entries = [] #List of all entries, regardless of if locked or not 
@@ -209,10 +211,10 @@ init -1500 python:
             self.entry_list_size = 0 #Is either size or size_all, depending on if locked entries are shown
             self.max_size = 0
 
-            self.sortingMode = sortingMode #Default type of sorting for list screen. Defaults to "Number"
+            self.sorting_mode = sorting_mode #Default type of sorting for list screen. Defaults to "Number"
 
             self.reverseSorting = False
-            if sortingMode == "Z to A":
+            if sorting_mode == "Z to A":
                 self.reverseSorting = True
    
             self.showLockedButtons = showLockedButtons #If True, locked entries show "???" on the listing screen. Defaults to True
@@ -228,8 +230,8 @@ init -1500 python:
   
         def setLockedImageTint(self, tint_amount):
             """Sets all the locked images in an Encyclopaedia to use the same tint."""
-            for itemA,itemB in self.all_entries:
-                itemB.tintLockedImage((tint_amount[0],tint_amount[1],tint_amount[2]))
+            for itemA, itemB in self.all_entries:
+                itemB.tintLockedImage((tint_amount[0], tint_amount[1], tint_amount[2]))
   
         def getPercentageUnlocked(self): 
             """Returns string representation of the percentage of the encyclopaedia that's unlocked."""
@@ -268,7 +270,7 @@ init -1500 python:
                 if item.locked == False:
                     self.unlocked_entries.append([item.number,item])
   
-            if self.sortingMode == "Number":
+            if self.sorting_mode == "Number":
                 self.unlocked_entries = sorted(self.unlocked_entries,key=itemgetter(0))
                 self.all_entries = sorted(self.all_entries,key=itemgetter(0))
             else:
@@ -342,7 +344,8 @@ init -1500 python:
      
         def _make_persistent_dict(self, total, dk, dv):
             """
-            Takes two strings to define a series of keys and values. 
+            For the total amount given,
+            takes a two strings to define a series of keys and values. 
             Creates lists and evaluates the values to variables. 
             Combines the lists into a dictionary.
             """
@@ -453,20 +456,24 @@ init -1500 python:
             self.locked_name = "???"
             self.locked_text = "???"
             self.locked_image = locked_image
-            self.locked_image_tint = (0.0,0.0,0.0) #Tuple used to set the numbers that tintLockedImage() uses to change the colour of a locked image 
+            
+            # Tuple used to set the numbers that tintLockedImage() uses to change the colour of a locked image
+            self.locked_image_tint = (0.0, 0.0, 0.0) 
 
-            self.pages = 0 #holds an integer for the number of pages in the entry
+            # Number of pages in the entry
+            self.pages = 0
 
             self.hasImage = False  
-            if image != None: #If no image is specified, it's assumed the entry was meant to have no image
+            if image != None: # If no image, assume the entry was meant to have no image
                 self.image = image
                 self.hasImage = True  
 
-                if self.locked_image == None: #If no locked image is specified, take the entry image and tint it.
+                # If no locked image is specified, tint the entry image.
+                if self.locked_image == None:
                     self.tintLockedImage(self.locked_image_tint)
    
             self.sub_entry_list = [[1,self]]
-            self.hasSubEntry = False #Default status for an Entry is to have no sub-entries
+            self.hasSubEntry = False # Default status for an Entry is to have no sub-entries
   
         def __repr__(self):
             return str(self.name)
@@ -494,7 +501,8 @@ init -1500 python:
                 matrix = im.matrix.tint(tint_amount[0],tint_amount[1],tint_amount[2] )
                 self.locked_image = im.MatrixColor(self.image, matrix)
   
-        def addSubEntry(self,sub_entry): #Adds multiple pages in the form of sub-entries
+        def addSubEntry(self,sub_entry):
+            """Adds multiple pages in the form of sub-entries."""
             if not [sub_entry.number,sub_entry] in self.sub_entry_list:
                 if not sub_entry in self.sub_entry_list:
                     if sub_entry.locked == False:
@@ -504,11 +512,13 @@ init -1500 python:
   
                 self.pages = len(self.sub_entry_list)
   
-        def addSubEntries(self, *new_sub_entries): #Adds multiple new sub-entries at once
+        def addSubEntries(self, *new_sub_entries):
+            """Adds multiple new sub-entries at once."""
             for item in new_sub_entries:
                 self.addSubEntry(item)
  
-        def getSubEntry(self,page): #accepts Integer. returns the text on given page 
+        def getSubEntry(self, page):
+            """Returns the text on given page."""
             return self.sub_entry_list[page][1].text
   
         def unlockSubEntry(self, item, unlock_flag):

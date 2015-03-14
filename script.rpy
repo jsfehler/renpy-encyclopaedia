@@ -158,9 +158,9 @@ screen encyclopaedia_entry:
                 xfill True
                 xmargin 10
                 top_margin 10
-                # Flavour text to indicate which page we're currently on
-                $ page_indicator = "0%d : %s" % (encyclopaedia.getEntryData()[1].number, encyclopaedia.getEntryData()[1].getName())
-                text page_indicator
+                # Flavour text to indicate which entry we're currently on
+                $ entry_indicator = "0%d : %s" % (encyclopaedia.getEntryData()[1].number, encyclopaedia.getEntryData()[1].getName())
+                text entry_indicator
   
             frame:
                 id "entry_nav"
@@ -175,7 +175,8 @@ screen encyclopaedia_entry:
             hbox:
                 $ half_screen_width = config.screen_width/2
                 $ half_screen_height = config.screen_height/2
-                if encyclopaedia.getEntryData()[1].hasImage: #If the entry or sub-entry has an image, add it to the screen   
+                # If the entry or sub-entry has an image, add it to the screen
+                if encyclopaedia.getEntryData()[1].hasImage:
                     frame:
                         xmargin 10
                         yfill True
@@ -187,24 +188,48 @@ screen encyclopaedia_entry:
                         $current_image = encyclopaedia.getEntryData()[1].getImage()
                         add current_image crop (0,10,half_screen_width-30,half_screen_height-10)
    
-                window:
-                    id "entry_window"
-                    xmargin 10
-                    xfill True
-                    yfill True
-                    xmaximum config.screen_width
-                    ymaximum half_screen_height
-                    viewport:
-                        scrollbars "vertical"
-                        mousewheel True  
-                        draggable True
+                    window:
+                        id "entry_window"
+                        xmargin 10
                         xfill True
-                        yfill True  
-                        vbox:
-                            spacing 15
-                            # entry_text is a list of paragraphs from what whatever the current entry is
-                            for item in encyclopaedia.entry_text:
-                                text item
+                        yfill True
+                        xmaximum config.screen_width
+                        ymaximum half_screen_height
+                        viewport:
+                            scrollbars "vertical"
+                            mousewheel True  
+                            draggable True
+                            xfill True
+                            yfill True  
+                            vbox:
+                                spacing 15
+                                xfill True
+                                yfill True 
+                                # entry_text is a list of paragraphs from what whatever the current entry is
+                                for item in encyclopaedia.entry_text:
+                                    text item
+                                        
+                else:
+                    window:
+                        id "entry_window"
+                        xmargin 10
+                        xfill True
+                        yfill True
+                        xmaximum config.screen_width
+                        ymaximum half_screen_height
+                        viewport:
+                            scrollbars "vertical"
+                            mousewheel True  
+                            draggable True
+                            xfill True
+                            yfill True  
+                            vbox:
+                                spacing 15
+                                xfill True
+                                yfill True 
+                                # entry_text is a list of paragraphs from what whatever the current entry is
+                                for item in encyclopaedia.entry_text:
+                                    text item
 
             frame:
                 style_group "mm_root"  

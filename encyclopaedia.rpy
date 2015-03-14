@@ -413,9 +413,9 @@ init -1500 python:
             dict_of_values = self._make_persistent_dict(entries_total, master_key, 'persistent.%s["%s"]' % (vals_name, master_key))
             setattr(persistent, dict_name, dict_of_values)   
 
-        #The following functions all bind Actions to the Encyclopaedia Object.
+        # The following functions all bind Screen Actions to the Encyclopaedia Object.
         def PreviousEntry(self):
-            return ChangeEntryAction(self, -1, self.checkMin(self.current_position,0))
+            return ChangeEntryAction(self, -1, self.checkMin(self.current_position, 0))
 
         def NextEntry(self):
             return ChangeEntryAction(self, 1, self.checkMax(self.current_position,self.max_size-1))

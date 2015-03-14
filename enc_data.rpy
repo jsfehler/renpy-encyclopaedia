@@ -6,7 +6,7 @@
 
 init python:
 
-    #Variables to hold the text.
+    # Variables to hold the text.
     lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in nisl magna. Fusce nec bibendum magna, sed venenatis erat. Sed non dapibus augue, quis hendrerit diam. Quisque bibendum turpis vitae orci iaculis volutpat. Proin venenatis, nunc quis tempus convallis, lectus eros ultrices sem, eu condimentum tellus nisi sed magna. Curabitur laoreet posuere orci eu eleifend. Vivamus sed dui dignissim, egestas lorem eu, lobortis arcu. Duis venenatis sem eu ipsum condimentum adipiscing. Ut vel augue ut velit bibendum varius pharetra nec ligula. Duis eu sollicitudin mauris. Praesent vestibulum ligula vel ligula condimentum dignissim. Ut risus velit, laoreet sed pellentesque sed, suscipit in massa. Etiam posuere fringilla purus."
     cras = "Cras pretium, tellus ac tristique dapibus, mauris eros convallis libero, nec porta urna leo sed mi. Quisque non metus ac lacus sodales blandit. Maecenas dapibus justo vitae hendrerit placerat. Phasellus mollis sem nunc, sed porta ligula ullamcorper sit amet. Vivamus posuere vestibulum velit, nec facilisis metus hendrerit sit amet. Vivamus vulputate cursus massa sit amet sagittis. Donec ullamcorper arcu sit amet nibh elementum posuere. Suspendisse lectus ligula, luctus sit amet placerat et, molestie vel diam. Donec suscipit ut urna pulvinar molestie. Suspendisse suscipit placerat ligula, ac mattis neque malesuada ut. Cras aliquet malesuada mauris eu venenatis. Sed dapibus quis leo at ultricies. Integer laoreet elit semper ante hendrerit hendrerit. Ut eget nisl justo. Duis sit amet dolor lectus. Aenean aliquet porttitor pellentesque."
     infeu = "In feugiat ut magna vitae tincidunt. Suspendisse mi odio, tincidunt a ante in, consectetur iaculis lacus. Aenean non mi vitae risus congue bibendum ut id magna. Sed ornare sit amet nulla eu tempor. Sed aliquam nisi nisl, in auctor mauris convallis non. Suspendisse nec lacus tristique erat sodales auctor quis sed est. Nullam vitae feugiat dui. Maecenas tempor, urna quis ullamcorper accumsan, ligula leo tincidunt justo, sagittis vulputate nulla dui quis tellus. Ut felis lacus, tempus eget bibendum id, feugiat sit amet dolor. Proin cursus at risus hendrerit scelerisque. Sed posuere lorem non lacus aliquam, nec faucibus quam tempus. Praesent eu velit in magna bibendum interdum."
@@ -16,58 +16,66 @@ init python:
     wine2 = "More Wine"
     wine3 = "More Wine 3x" 
     
-    #A list of strings being used instead of a single string. The default UI will show this as paragraphs.
+    # A list of strings can be used instead of a single string. The default UI will show this as paragraphs.
     women = [
     "Who does not Love Wine Wife & Song will be a Fool for his Lifelong!",
     "Wine, women, and song is a hendiatris that endorses hedonistic lifestyles or behaviours. In modern times, it is usually seen in the form sex, drugs, and rock 'n' roll.",
     ]
 
-    #Variables to hold the image paths.
+    # Variables to hold the image paths. The path is relative to your game/ directory.
     en1_image = "enc_images/1266537434812.png"
     en2_image = "enc_images/1381014062018.jpg"
     en3_image = "enc_images/Rtx-011.jpg"
     en4_image = "enc_images/Xord_concept.jpg"
     en7_image = "enc_images/Thanatos_sprite.png"
 
-    #Define an encyclopaedia object.
-    #showLockedButtons=False will not display locked "???" entries on the list screen.
-    #showLockedEntry=False will prevent the player from viewing the locked entry.
+    # Define an encyclopaedia object.
+    
+    # If showLockedButtons=False, it will not display locked entries on the list screen. 
+    # If True, locked entries will be displayed with "???" instead of their title.
+    
+    # If showLockedEntry=False, it will prevent the player from viewing the locked entry.
+    # if True, locked entries can be viewed, but the title, text, and image will be replaced with "???".
     encyclopaedia = Encyclopaedia(showLockedButtons=True, showLockedEntry=True) 
     
-    #If the encyclopaedia is save game independent, run this function to generate the persistent status variables. 
-    #If the encyclopaedia is unique for each save game, comment out or delete this.
-    #entries_total is the total number of EncEntries the Encyclopaedia will hold.
-    #master_key and name are what determines the name of the status variables and the name of each key.
-    #only change master_key and name if you need multiple encyclopaedias in a game.
+    # If the encyclopaedia is save game independent, run this function to generate the persistent status variables. 
+    # If the encyclopaedia is unique for each save game, comment out or delete this.
+    
+    # entries_total is the total number of EncEntries the Encyclopaedia will hold.
+    # master_key and name are what determines the name of the status variables and the name of each key.
+    # only change master_key and name if you need multiple encyclopaedias in a game.
     encyclopaedia.setPersistentStatus(entries_total=7, master_key="new", name="new")
     
-    #Add all the subjects the Encyclopaedia will have.
+    # Add all the subjects the Encyclopaedia will have.
     encyclopaedia.addSubjects("Lorem Ipsum", "Virtues")
-
-    #Here we define each Encyclopaedia Entry
-    #The arguments are: number, name, text, subject, status, locked, image
-    #status should always be from the persistent.new_dict or it won't save
-    #if locked=False, entry will always be visible, even if new game hasn't been started
-    en1 = EncEntry(1,"Lorem",lorem, "Lorem Ipsum", status=persistent.new_dict["new_00"], locked=False, image=en1_image)
-    en2 = EncEntry(2,"Cras",cras, "Lorem Ipsum", status=persistent.new_dict["new_01"],  locked=False, image=en2_image)
-    en3 = EncEntry(3,"In", infeu, "Lorem Ipsum", status=persistent.new_dict["new_02"], locked=False, image=en3_image)
-    en4 = EncEntry(4,"Morbi", morbi, "Lorem Ipsum", status=persistent.new_dict["new_03"], locked=persistent.en4_locked, image=en4_image, locked_image=None)
-    en5 = EncEntry(5,"Mauris",mauris, "Lorem Ipsum", status=persistent.new_dict["new_04"], locked=False)
-    en6 = EncEntry(6,"Wine",wine, "Virtues", status=persistent.new_dict["new_05"], locked=persistent.en6_locked)
-    en7 = EncEntry(7,"Women",women, "Virtues", status=persistent.new_dict["new_06"], locked=persistent.en7_locked, image=en7_image, locked_image=None)
+    # To do this one at a time, use addSubject() instead.
+    
+    # Here we define each Encyclopaedia Entry
+    # The arguments are: number, name, text, subject, status, locked, image
+    # if save game independent, status should always be from the persistent.new_dict or it won't save
+    # if locked=False, entry will always be visible, even if new game hasn't been started
+    en1 = EncEntry(1, "Lorem", lorem, "Lorem Ipsum", status=persistent.new_dict["new_00"], locked=False, image=en1_image)
+    en2 = EncEntry(2, "Cras", cras, "Lorem Ipsum", status=persistent.new_dict["new_01"],  locked=False, image=en2_image)
+    en3 = EncEntry(3, "In", infeu, "Lorem Ipsum", status=persistent.new_dict["new_02"], locked=False, image=en3_image)
+    en4 = EncEntry(4, "Morbi", morbi, "Lorem Ipsum", status=persistent.new_dict["new_03"], locked=persistent.en4_locked, image=en4_image, locked_image=None)
+    en5 = EncEntry(5, "Mauris", mauris, "Lorem Ipsum", status=persistent.new_dict["new_04"], locked=False)
+    en6 = EncEntry(6, "Wine", wine, "Virtues", status=persistent.new_dict["new_05"], locked=persistent.en6_locked)
+    en7 = EncEntry(7, "Women", women, "Virtues", status=persistent.new_dict["new_06"], locked=persistent.en7_locked, image=en7_image, locked_image=None)
   
-    #Add all entries and sub-entries in an init block.
+    # Add all entries and sub-entries in an init block.
     encyclopaedia.addEntries(en1,en2,en3,en4,en5,en6,en7) 
-    #addEntry auto-sorts when adding.
-    #en4 and en6 won't be viewed at the start because they're locked by persistent data.
-    #After they're unlocked, they'll be available whenever the game loads. 
+    # To do this one at a time, use addEntry() instead
+    # This auto-sorts when adding.
+    
+    # en4 and en6 won't be viewed at the start because they're locked by persistent data.
+    # After they're unlocked, they'll be available whenever the game loads. 
 
     #When creating sub-entries, the main entry is considered page 1, always start at 2
-    en2_2 = EncEntry(2,"Cras 2","Cras 2","Virtues", locked=False)
-    en2_3 = EncEntry(3,"Cras 3","Cras 3","Virtues", locked=persistent.en2_3_locked)
+    en2_2 = EncEntry(2, "Cras 2", "Cras 2", "Virtues", locked=False)
+    en2_3 = EncEntry(3, "Cras 3", "Cras 3", "Virtues", locked=persistent.en2_3_locked)
 
-    en6_2 = EncEntry(2,"Wine 2",wine2,"Virtues", locked=persistent.en6_2_locked)
-    en6_3 = EncEntry(3,"Wine 3",wine3,"Virtues", locked=persistent.en6_3_locked)
+    en6_2 = EncEntry(2, "Wine 2", wine2, "Virtues", locked=persistent.en6_2_locked)
+    en6_3 = EncEntry(3, "Wine 3", wine3, "Virtues", locked=persistent.en6_3_locked)
 
-    en2.addSubEntries(en2_2,en2_3)
-    en6.addSubEntries(en6_2,en6_3)
+    en2.addSubEntries(en2_2, en2_3)
+    en6.addSubEntries(en6_2, en6_3)

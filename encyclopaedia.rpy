@@ -240,6 +240,10 @@ init -1500 python:
             percentage = floor((float_size / float_size_all) * 100)
             return str(int(percentage)) + "%"
   
+        def getEntryCurrentPage(self, label="Page"):
+            """Returns string indicating which sub-page of an entry is being viewed."""
+            return "%s %d / %d" % (label, self.sub_current_position, self.getEntryData()[1].pages)
+  
         def setEntryListSize(self):
             """The entry list size is determined by whether or not locked buttons or locked entries should be shown."""
             if self.showLockedButtons:

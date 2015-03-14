@@ -80,7 +80,8 @@ screen encyclopaedia_list:
     
                 hbox:
                     xfill True
-                    text encyclopaedia.getPercentageUnlocked() + " Complete" #Percentage display
+                    # Percentage unlocked display
+                    text encyclopaedia.getPercentageUnlocked() + " Complete"
 
             frame:
                 style_group "mm_root"  
@@ -93,31 +94,31 @@ screen encyclopaedia_list:
                     scrollbars "vertical"
                     mousewheel True
                     draggable True
-     
                     vbox: 
-                        text encyclopaedia.sortingMode xalign 0.5 #Flavour text to display the current sorting mode.
+                        #Flavour text to display the current sorting mode.
+                        text encyclopaedia.sorting_mode xalign 0.5
      
                         python:
                             #If sorting by subject, display the subject heading and add an entry under it if it's the same subject
-                            if encyclopaedia.sortingMode == "Subject":
-                                for x in range(len(encyclopaedia.subjects) ):
+                            if encyclopaedia.sorting_mode == "Subject":
+                                for x in range(len(encyclopaedia.subjects)):
                                     ui.text(encyclopaedia.subjects[x])
                                     for y in range(encyclopaedia.entry_list_size):  
                                         if encyclopaedia.getEntry(y).subject == encyclopaedia.subjects[x]:
-                                            generateEntryButton(y,encyclopaedia)   
+                                            generateEntryButton(y, encyclopaedia)   
        
                             #If sorting by number, add the number next to the entry
-                            elif encyclopaedia.sortingMode == "Number":    
+                            elif encyclopaedia.sorting_mode == "Number":    
                                 for x in range(encyclopaedia.entry_list_size):
                                     ui.hbox()
                                     ui.textbutton (str(encyclopaedia.getEntry(x).number))
-                                    generateEntryButton(x,encyclopaedia)   
+                                    generateEntryButton(x, encyclopaedia)   
                                     ui.close()
       
                             #If sorting Alphabetically or Reverse-Alphabetically, don't add anything before the entry
                             else:
                                 for x in range(encyclopaedia.entry_list_size):
-                                    generateEntryButton(x,encyclopaedia) 
+                                    generateEntryButton(x, encyclopaedia) 
     
     frame:
         xalign .98
@@ -191,7 +192,6 @@ screen encyclopaedia_entry:
                     xmargin 10
                     xfill True
                     yfill True
-                    xalign 0.5
                     xmaximum config.screen_width
                     ymaximum half_screen_height
                     viewport:
@@ -202,7 +202,8 @@ screen encyclopaedia_entry:
                         yfill True  
                         vbox:
                             spacing 15
-                            for item in encyclopaedia.entry_text: #entry_text is a list of paragraphs from what whatever the current entry is
+                            # entry_text is a list of paragraphs from what whatever the current entry is
+                            for item in encyclopaedia.entry_text:
                                 text item
 
             frame:
@@ -210,14 +211,15 @@ screen encyclopaedia_entry:
                 xfill True
                 yfill False
                 xmargin 10
-   
                 hbox:
                     xfill True  
   
-                    if encyclopaedia.getEntryData()[1].hasSubEntry: #If there's a sub-entry, add Prev/Next Page buttons     
+                    # If there's a sub-entry, add Prev/Next Page buttons
+                    if encyclopaedia.getEntryData()[1].hasSubEntry:    
                         textbutton "Previous Page" xalign .02 action encyclopaedia.PreviousPage()
 
-                        text "Page %d / %d" % (encyclopaedia.sub_current_position, encyclopaedia.getEntryData()[1].pages) #Flavour text to indicate which sub-page is being viewed
+                        # Flavour text to indicate which sub-page out of the total is being viewed
+                        text encyclopaedia.getEntryCurrentPage(label="Page")
 
                         textbutton "Next Page" xalign .98 action encyclopaedia.NextPage()  
  
@@ -231,7 +233,7 @@ screen encyclopaedia_entry:
             yalign .98
             hbox:
                 xfill True
-                text "Sorting Mode: %s" % (encyclopaedia.sortingMode,) #Flavour text that displays the current sorting mode
+                text "Sorting Mode: %s" % encyclopaedia.sorting_mode #Flavour text that displays the current sorting mode
                 textbutton "Close Entry" id "close_entry_button" xalign .98 clicked [encyclopaedia.ResetSubPage(), Show("encyclopaedia_list")] 
 
 ##############################################################################
@@ -247,7 +249,7 @@ label start:
   
     "Do you want to add entries 4 and 6?" 
 
-    #Unlocking an entry during the game requires the lock flag to be set to False, and then the encyclopaedia to be updated.
+    # Unlocking an entry during the game requires the lock flag to be set to False, and then the encyclopaedia to be updated.
     menu:
         "Yes":
             $ persistent.en6_locked = False

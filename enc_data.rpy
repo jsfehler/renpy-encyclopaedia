@@ -63,7 +63,7 @@ init python:
     en7 = EncEntry(7, "Women", women, "Virtues", status=persistent.new_dict["new_06"], locked=persistent.en7_locked, image=en7_image, locked_image=None)
   
     # Add all entries and sub-entries in an init block.
-    encyclopaedia.addEntries(en1,en2,en3,en4,en5,en6,en7) 
+    encyclopaedia.addEntries(en1, en2, en3, en4, en5, en6, en7) 
     # To do this one at a time, use addEntry() instead
     # This auto-sorts when adding.
     

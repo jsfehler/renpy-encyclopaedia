@@ -14,19 +14,19 @@
 # along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
 init -1 python:
-    from encyclopaedia.encyclopaedia import Encyclopaedia, EncEntry
+    from encyclopaedia.encyclopaedia import Encyclopaedia
+    from encyclopaedia.encentry import EncEntry
 
-    def generateEntryButton(x, enc): #type of button, screen for entry make them arguments 
+    def generateEntryButton(x, enc, entry_screen):
         """ 
-        Create buttons for each Entry in an Encyclopaedia.
+        Create a button for an Entry in an Encyclopaedia.
+        Call this function on a Ren'Py screen, inside whatever other UI (Window, box, etc) you want, inside a for loop.
         
         Parameters:
             x: is the Entry's position in the Encyclopaedia's list of entries.
             It will reference either all the entries or only the unlocked ones, depending on the given Encyclopaedia's showLockedButtons variable.
         
             enc: The given Encyclopaedia.
-        
-        Call this function on a Ren'Py screen, inside whatever other UI (Window, box, etc) you want, inside a for loop.
         """
         ui.hbox()
         # If locked buttons should be visible.
@@ -35,32 +35,55 @@ init -1 python:
             if enc.all_entries[x][1].locked == False:
                 ui.textbutton(enc.all_entries[x][1].name, clicked=[enc.ChangeStatus(x), 
                                                                    enc.SetEntry(x), 
-                                                                   Show("encyclopaedia_entry")])
+                                                                   Show(entry_screen)])
                 
                 # Make a tag next to the button if it hasn't been viewed by the player yet.
                 if not enc.all_entries[x][1].status:    
                     ui.textbutton ("New!")
 
             else:
-                # If locked entries should be viewable, the "???" button should go to the entry. If not, it's an inactive button.
+                # If locked entries should be viewable, the "???" button should go to the entry. 
+                # If not, it's an inactive button.
                 if enc.showLockedEntry:
                     ui.textbutton("???", clicked=[enc.ChangeStatus(x), 
                                                   enc.SetEntry(x), 
-                                                  Show("encyclopaedia_entry")])
+                                                  Show(entry_screen)])
                 else:
                     ui.textbutton("???")
     
         # If locked buttons should not be visible. (No need for the "???" buttons.)
-        if enc.showLockedButtons == False:
-            ui.textbutton(enc.unlocked_entries[x][1].name, clicked= [enc.ChangeStatus(x), 
-                                                                     enc.SetEntry(x), 
-                                                                     Show("encyclopaedia_entry")] )
+        elif enc.showLockedButtons == False:
+            ui.textbutton(enc.unlocked_entries[x][1].name, clicked=[enc.ChangeStatus(x), 
+                                                                    enc.SetEntry(x), 
+                                                                    Show(entry_screen)] )
             
             # Make a tag next to the button if it hasn't been viewed by the player yet.
             if not enc.unlocked_entries[x][1].status:
                 ui.textbutton ("New!")
         ui.close()
 
+    def generateEntryList(show_screen=""):
+        # If sorting by subject, display the subject heading and add an entry under it if it's the same subject
+        if encyclopaedia.sorting_mode == encyclopaedia.SORT_SUBJECT:
+            for x in range(len(encyclopaedia.subjects)):
+                ui.text(encyclopaedia.subjects[x])
+                for y in range(encyclopaedia.entry_list_size):  
+                    if encyclopaedia.get_entry_at(y).subject == encyclopaedia.subjects[x]:
+                        generateEntryButton(y, encyclopaedia, show_screen)   
+
+        # If sorting by number, add the number next to the entry
+        elif encyclopaedia.sorting_mode == encyclopaedia.SORT_NUMBER:    
+            for x in range(encyclopaedia.entry_list_size):
+                ui.hbox()
+                ui.textbutton (str(encyclopaedia.get_entry_at(x).number))
+                generateEntryButton(x, encyclopaedia, show_screen)   
+                ui.close()
+
+        # If sorting Alphabetically or Reverse-Alphabetically, don't add anything before the entry
+        else:
+            for x in range(encyclopaedia.entry_list_size):
+                generateEntryButton(x, encyclopaedia, show_screen) 
+        
 ##############################################################################
 # Encyclopaedia List
 #
@@ -107,27 +130,8 @@ screen encyclopaedia_list:
                         text encyclopaedia.sorting_mode_label xalign 0.5
      
                         python:
-                            #If sorting by subject, display the subject heading and add an entry under it if it's the same subject
-                            if encyclopaedia.sorting_mode == encyclopaedia.SORT_SUBJECT:
-                                for x in range(len(encyclopaedia.subjects)):
-                                    ui.text(encyclopaedia.subjects[x])
-                                    for y in range(encyclopaedia.entry_list_size):  
-                                        if encyclopaedia.get_entry_at(y).subject == encyclopaedia.subjects[x]:
-                                            generateEntryButton(y, encyclopaedia)   
-       
-                            #If sorting by number, add the number next to the entry
-                            elif encyclopaedia.sorting_mode == encyclopaedia.SORT_NUMBER:    
-                                for x in range(encyclopaedia.entry_list_size):
-                                    ui.hbox()
-                                    ui.textbutton (str(encyclopaedia.get_entry_at(x).number))
-                                    generateEntryButton(x, encyclopaedia)   
-                                    ui.close()
-      
-                            #If sorting Alphabetically or Reverse-Alphabetically, don't add anything before the entry
-                            else:
-                                for x in range(encyclopaedia.entry_list_size):
-                                    generateEntryButton(x, encyclopaedia) 
-    
+                            generateEntryList(show_screen="encyclopaedia_entry")
+
     frame:
         xalign .98
         yalign .98
@@ -180,14 +184,14 @@ screen encyclopaedia_entry:
                 xmargin 10
                 hbox:
                     xfill True
-                    textbutton "Previous Entry" xalign .02 action encyclopaedia.PreviousEntry() #Relative to the sorting mode
-                    textbutton "Next Entry" xalign .98 action encyclopaedia.NextEntry() #Relative to the sorting mode  
+                    textbutton "Previous Entry" xalign .02 action encyclopaedia.PreviousEntry() # Relative to the sorting mode
+                    textbutton "Next Entry" xalign .98 action encyclopaedia.NextEntry() # Relative to the sorting mode  
        
             hbox:
                 $ half_screen_width = config.screen_width / 2
                 $ half_screen_height = config.screen_height / 2
                 # If the entry or sub-entry has an image, add it to the screen
-                if encyclopaedia.index.hasImage:
+                if encyclopaedia.index.has_image:
                     frame:
                         xmargin 10
                         yfill True
@@ -197,7 +201,7 @@ screen encyclopaedia_entry:
                         ymaximum half_screen_height  
 
                         $current_image = encyclopaedia.index.image
-                        add current_image crop (0,10,half_screen_width-30,half_screen_height-10)
+                        add current_image crop (0, 10, half_screen_width-30, half_screen_height-10)
    
                     window:
                         id "entry_window"

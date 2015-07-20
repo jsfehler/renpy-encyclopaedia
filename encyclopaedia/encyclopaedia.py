@@ -1,4 +1,3 @@
-# Encyclopaedia Framework 2.0 for Ren'Py
 # Copyright 2015 Joshua Fehler <jsfehler@gmail.com>
 #
 # This file is free software: you can redistribute it and/or modify
@@ -241,8 +240,11 @@ class Encyclopaedia(store.object):
         self.sort_alphabetically_label = "A to Z"
         self.sort_reverse_alphabetically_label = "Z to A"
         self.sort_subject_label = "Subject"
-        self.sort_unread_label = "Unread"        
+        self.sort_unread_label = "Unread"
 
+    def __str__(self):
+        return "Encyclopaedia"        
+        
     @property
     def index(self):
         return self._index
@@ -335,7 +337,7 @@ class Encyclopaedia(store.object):
         entry.locked = unlock_flag
         self.addEntry(entry)
         return entry
-               
+
     def sort_entries(self, sorting=None, reverse=False):
         """
         Sort both entry lists by whatever the current sorting mode is
@@ -350,8 +352,8 @@ class Encyclopaedia(store.object):
         else:
             self.all_entries._sort_by_name(reverse=reverse)
             self.unlocked_entries._sort_by_name(reverse=reverse)
-        
-    def addEntry(self, item): 
+
+    def addEntry(self, item):
         """Adds an entry to the encyclopaedia and sorts it."""
         
         # Add to list of all entries
@@ -364,7 +366,8 @@ class Encyclopaedia(store.object):
             if item.locked == False:
                 self.unlocked_entries.append([item.number, item])
 
-        self.sort_entries(sorting=self.sorting_mode, reverse=self.reverseSorting)
+        self.sort_entries(sorting=self.sorting_mode, 
+                          reverse=self.reverseSorting)
 
         self.size = len(self.unlocked_entries)
         self.size_all = len(self.all_entries)
@@ -430,15 +433,20 @@ class Encyclopaedia(store.object):
             return True
         return False
  
-    def _make_persistent_dict(self, total, dk, dv):
+    def _make_persistent_dict(self, total, master_key, persistent_var_string):
         """
         For the total amount given,
         takes a two strings to define a series of keys and values. 
         Creates lists and evaluates the values to variables. 
         Combines the lists into a dictionary.
         """
-        keys = [dk % x for x in range(total)] # eg: new_00, new_01, etc
-        vals_string = [dv % x for x in range(total)] # eg: persistent.new_dict["new_00"], persistent.new_dict["new_01"], etc
+
+        # eg: new_00, new_01, etc
+        keys = [master_key % x for x in range(total)]
+        # eg: persistent.new_dict["new_00"], persistent.new_dict["new_01"], etc
+        vals = [persistent_var_string % x for x in range(total)]
+        
+        # Eval strings into the actual variables
         vals = [eval(item) for item in vals_string]
         combo = zip(keys, vals)
         return dict(combo)  
@@ -485,17 +493,27 @@ class Encyclopaedia(store.object):
 
         try:
             # Set every value in persistent.new_vals to be a key in persistent.new_dict 
-            dict_of_keys = self._make_persistent_dict(entries_total, master_key, 'persistent.%s["%s"]' % (dict_name, master_key))
-            setattr(persistent, vals_name, dict_of_keys)
+            dict_of_keys = self._make_persistent_dict(entries_total, 
+                                                      master_key, 
+                                                      'persistent.%s["%s"]' % (dict_name, master_key))
+            setattr(persistent, 
+                    vals_name, 
+                    dict_of_keys)
             
         except (TypeError, KeyError) as e:
             # The first time the Encyclopaedia is launched, the persistent dictionary doesn't exist yet, causing a TypeError. 
             # In development, the dictionary may already exist, but without the correct number of keys, causing a KeyError. 
-            setattr(persistent, vals_name, {master_key % k: None for k in range(entries_total)})
+            setattr(persistent, 
+                    vals_name, 
+                    {master_key % k: None for k in range(entries_total)})
             
         # Set every value in persistent.new_dict to be a key in persistent.new_vals    
-        dict_of_values = self._make_persistent_dict(entries_total, master_key, 'persistent.%s["%s"]' % (vals_name, master_key))
-        setattr(persistent, dict_name, dict_of_values)   
+        dict_of_values = self._make_persistent_dict(entries_total, 
+                                                    master_key, 
+                                                    'persistent.%s["%s"]' % (vals_name, master_key))
+        setattr(persistent, 
+                dict_name, 
+                dict_of_values)   
 
     # The following functions all bind Screen Actions to the Encyclopaedia Object.
     def PreviousEntry(self):
@@ -536,127 +554,3 @@ class Encyclopaedia(store.object):
 
     def ToggleShowLockedEntry(self):
         return ToggleShowLockedEntryAction(self)  
-        
-        
-class EncEntry(store.object):
-    """Stores Entry content. Has to be added to an Encyclopaedia or else it will do nothing."""
-    def __init__(self, number=0, name="Entry Name", text="Entry Text", subject=None, status=None, locked=False, image=None, locked_image=None):  
-        self.number = number
-        self.name = name
-        self.text = text
-        self.status = status
-        self.subject = subject
-        self.locked = locked
-        self.locked_name = "???"
-        self.locked_text = "???"
-        self.locked_image = locked_image
-        
-        # Tuple used to set the numbers that tintLockedImage() uses to change the colour of a locked image
-        self.locked_image_tint = (0.0, 0.0, 0.0) 
-
-        # Number of pages in the entry
-        self.pages = 0
-
-        self.hasImage = False  
-        if image != None: # If no image, assume the entry was meant to have no image
-            self.image = image
-            self.hasImage = True
-
-            # If no locked image is specified, tint the entry image.
-            if self.locked_image == None:
-                self.tint_locked_image(self.locked_image_tint)
-
-        self.sub_entry_list = [[1, self]]
-        
-        # Default status for an Entry is to have no sub-entries
-        self.has_sub_entry = False
-
-    def __repr__(self):
-        return "EncEntry: " + str(self.name) 
-
-    def __str__(self):
-        return str(self.name)
-
-    def _get_entry_data(self, data, locked_data):
-        """
-        Returns:
-            If True or None, return the data requested, else the locked placeholder for the data
-        """
-        if self.locked or self.locked == None:
-            return locked_data
-        return data
-
-    @property
-    def name(self):
-        """The name for the entry. If the entry is locked, returns the placeholder instead"""
-        return self._name
-        
-    @name.getter
-    def name(self):
-        return self._get_entry_data(self._name, self.locked_name)
-        
-    @name.setter
-    def name(self, val):
-        self._name = val
-        
-    @property
-    def text(self):
-        """The text for the entry. If the entry is locked, returns the placeholder instead"""
-        return self._text
-        
-    @text.getter
-    def text(self):
-        return self._get_entry_data(self._text, self.locked_text)
-        
-    @text.setter
-    def text(self, val):
-        self._text = val      
-
-    @property
-    def image(self):
-        """The image for the entry. If the entry is locked, returns the placeholder instead"""
-        return self._image
-        
-    @image.getter
-    def image(self):
-        return self._get_entry_data(self._image, self.locked_image)
-        
-    @image.setter
-    def image(self, val):
-        self._image = val   
-
-    def tint_locked_image(self, tint_amount):
-        if self.hasImage:
-            matrix = renpy.display.im.matrix.tint(tint_amount[0], tint_amount[1], tint_amount[2] )
-            self.locked_image = renpy.display.im.MatrixColor(self._image, matrix)
-            return True
-        raise Exception("EncEntry has no image. Cannot tint nothing.")
-
-    def addSubEntry(self, sub_entry):
-        """Adds multiple pages to the entry in the form of sub-entries."""
-        if not [sub_entry.number, sub_entry] in self.sub_entry_list:
-            if not sub_entry in self.sub_entry_list:
-                if sub_entry.locked == False:
-                    self.sub_entry_list.append([sub_entry.number, sub_entry])
-                    self.sub_entry_list = sorted(self.sub_entry_list, key=itemgetter(0))
-                    self.has_sub_entry = True
-            
-                    self.pages = len(self.sub_entry_list)
-                    return True
-        return False
-
-    def addSubEntries(self, *new_sub_entries):
-        """Adds multiple new sub-entries at once."""
-        for item in new_sub_entries:
-            self.addSubEntry(item)
-
-    def getSubEntry(self, page):
-        """Returns the text on given page."""
-        return self.sub_entry_list[page][1].text
-
-    def unlockSubEntry(self, item, unlock_flag):
-        item.locked = unlock_flag
-        self.addSubEntry(item)
-        
-        # If an entry gets sub-entries unlocked, the unread status on the entry is restored
-        self.status = False

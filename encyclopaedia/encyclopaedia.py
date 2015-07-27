@@ -443,8 +443,9 @@ class Encyclopaedia(store.object):
 
         # eg: new_00, new_01, etc
         keys = [master_key % x for x in range(total)]
+        
         # eg: persistent.new_dict["new_00"], persistent.new_dict["new_01"], etc
-        vals = [persistent_var_string % x for x in range(total)]
+        vals_string = [persistent_var_string % x for x in range(total)]
         
         # Eval strings into the actual variables
         vals = [eval(item) for item in vals_string]

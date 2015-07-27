@@ -1,3 +1,18 @@
+# Copyright 2015 Joshua Fehler <jsfehler@gmail.com>
+#
+# This file is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This file is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this file.  If not, see <http://www.gnu.org/licenses/>.
+
 from operator import itemgetter
 
 import renpy.store as store
@@ -5,33 +20,33 @@ import renpy.exports as renpy
 
 
 class EncEntry(store.object):
-    """Stores Entry content. Has to be added to an Encyclopaedia or else it will do nothing."""
-    def __init__(self, number=0, name="Entry Name", text="Entry Text", subject=None, status=None, locked=False, image=None, locked_image=None):  
+    """Stores an Entry's content. EncEntry should be added to an Encyclopaedia."""
+    def __init__(self, number=0, name="Entry Name", text="Entry Text", subject=None, status=None, locked=False, image=None, locked_name="???", locked_text="???", locked_image=None):  
         self.number = number
         self.name = name
         self.text = text
         self.status = status
         self.subject = subject
         self.locked = locked
-        self.locked_name = "???"
-        self.locked_text = "???"
-        self.locked_image = locked_image
         
-        # Tuple used to set the numbers that tintLockedImage() uses to change the colour of a locked image
-        self.locked_image_tint = (0.0, 0.0, 0.0) 
+        # Only set the image if it's not None
+        self.has_image = False  
+        if image != None:
+            self.image = image
+
+            # If there's an image, but no locked image is specified, tint the image and use it as the locked image.
+            if locked_image == None:
+                 # Tuple is used to set the numbers that tint_locked_image() uses to change the colour of a locked image
+                self.tint_locked_image((0.0, 0.0, 0.0))
+            
+        self.locked_name = locked_name
+        self.locked_text = locked_text
+        self.locked_image = locked_image
 
         # Number of pages in the entry
         self.pages = 0
 
-        self.has_image = False  
-        if image != None: # If no image, assume the entry was meant to have no image
-            self.image = image
-            self.has_image = True
-
-            # If no locked image is specified, tint the entry image.
-            if self.locked_image == None:
-                self.tint_locked_image(self.locked_image_tint)
-
+        # The parent EncEntry must be the first entry in the sub-entry list.
         self.sub_entry_list = [[1, self]]
         
         # Default status for an Entry is to have no sub-entries
@@ -45,8 +60,10 @@ class EncEntry(store.object):
 
     def _get_entry_data(self, data, locked_data):
         """
+        Used by self.name, self.text, and self.image to control if the locked placeholder or actual entry data should be returned.
+        
         Returns:
-            If True or None, return the data requested, else the locked placeholder for the data
+            If True or None, return the data requested, else return the locked placeholder for the data
         """
         if self.locked or self.locked == None:
             return locked_data
@@ -54,7 +71,13 @@ class EncEntry(store.object):
 
     @property
     def name(self):
-        """The name for the entry. If the entry is locked, returns the placeholder instead"""
+        """
+        The name for the entry. If the entry is locked, returns the placeholder instead
+        
+        Returns:
+            The name for the EncEntry
+        
+        """
         return self._name
         
     @name.getter
@@ -67,7 +90,12 @@ class EncEntry(store.object):
         
     @property
     def text(self):
-        """The text for the entry. If the entry is locked, returns the placeholder instead"""
+        """
+        The text for the entry. If the entry is locked, returns the placeholder instead
+        
+        Returns:
+            The text for the EncEntry
+        """
         return self._text
         
     @text.getter
@@ -80,7 +108,12 @@ class EncEntry(store.object):
 
     @property
     def image(self):
-        """The image for the entry. If the entry is locked, returns the placeholder instead"""
+        """
+        The image for the entry. If the entry is locked, returns the placeholder instead
+        
+        Returns:
+            The image for the EncEntry
+        """
         return self._image
         
     @image.getter
@@ -89,9 +122,19 @@ class EncEntry(store.object):
 
     @image.setter
     def image(self, val):
+        self.has_image = True
         self._image = val   
 
     def tint_locked_image(self, tint_amount):
+        """
+        If the EncEntry has an image, tint it and use it as the locked image.
+        
+        Parameters:
+            tint_amount: Tuple for the RGB values to tint the image
+        
+        Returns:
+            True if successful. Exception if not
+        """
         if self.has_image:
             matrix = renpy.display.im.matrix.tint(tint_amount[0], tint_amount[1], tint_amount[2] )
             self.locked_image = renpy.display.im.MatrixColor(self._image, matrix)

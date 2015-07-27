@@ -42,6 +42,9 @@ class EntryList(list):
         Pushes all the locked entries to the bottom of the list.
         
         Used when locked entries should appear at the bottom of the list.
+
+        Returns:
+            The list
         """
         
         # We can't pop and insert directly; the loop will get screwed up.   

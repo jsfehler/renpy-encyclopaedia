@@ -24,7 +24,7 @@ class EncEntry(store.object):
     def __init__(self, number=0, name="Entry Name", text="Entry Text", subject=None, status=None, locked=False, image=None, locked_name="???", locked_text="???", locked_image=None):  
         self.number = number
         self.name = name
-        self.text = text
+        self.text = self._string_to_list(text)
         self.status = status
         self.subject = subject
         self.locked = locked
@@ -40,7 +40,7 @@ class EncEntry(store.object):
                 self.tint_locked_image((0.0, 0.0, 0.0))
             
         self.locked_name = locked_name
-        self.locked_text = locked_text
+        self.locked_text = self._string_to_list(locked_text)
         self.locked_image = locked_image
 
         # Number of pages in the entry
@@ -51,7 +51,32 @@ class EncEntry(store.object):
         
         # Default status for an Entry is to have no sub-entries
         self.has_sub_entry = False
+        
+        self.current_page = 0
 
+    @property
+    def current_page(self):
+        return self._current_page
+
+    @current_page.getter
+    def current_page(self):
+        return self.sub_entry_list[self._current_page][1]
+        
+    @current_page.setter
+    def current_page(self, val):
+        self._current_page = val -1
+        
+    def _string_to_list(self, given_text):
+        """
+        EncEntry accepts a string or a list of strings for the 'text' argument.
+        Each list item is a paragraph.
+        If a string is given, convert it to a list.
+        """
+        # If the text is already in a list, just return it.
+        if type(given_text) is renpy.python.RevertableList:
+            return given_text
+        return [given_text]        
+        
     def __repr__(self):
         return "EncEntry: " + str(self.name) 
 

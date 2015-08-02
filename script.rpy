@@ -218,8 +218,8 @@ screen encyclopaedia_entry:
                             yfill True  
                             vbox:
                                 spacing 15
-                                # entry_text is a list of paragraphs from what whatever the current entry is
-                                for item in encyclopaedia.entry_text:
+                                # Display the current entry's text
+                                for item in encyclopaedia.index.current_page.text:
                                     text item
                                         
                 else:
@@ -240,8 +240,8 @@ screen encyclopaedia_entry:
                                 spacing 15
                                 xfill True
                                 yfill True 
-                                # entry_text is a list of paragraphs from what whatever the current entry is
-                                for item in encyclopaedia.entry_text:
+                                # Display the current entry's text
+                                for item in encyclopaedia.index.current_page.text:
                                     text item
 
             frame:

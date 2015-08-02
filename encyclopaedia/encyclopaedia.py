@@ -30,26 +30,12 @@ class EncyclopaediaEntryAction(renpy.ui.Action):
         self.enc = encyclopaedia
         self.entry_number = entry_number    
 
-    def _string_to_list(self, given_text):
-        """
-        The text for an Encyclopaedia Entry can be a string or a list of strings.
-        If a string is given, convert it to a list.
-        """
-        # If the text is already in a list, just return it.
-        if type(given_text) is renpy.python.RevertableList:
-            return given_text
-        return [given_text]
-
 
 class SetEntryAction(EncyclopaediaEntryAction):
     """Action that sets the selected encyclopaedia entry into the displaying frame."""       
             
     def __call__(self):
         self.given_entry = self.enc.get_entry_at(self.entry_number)
-        self.given_text = self.given_entry.text
-        
-        # entry_text is the variable used on the encyclopaedia_entry screen for whatever entry's text we're displaying            
-        self.enc.entry_text = self._string_to_list(self.given_text)
 
         # index the list to get what the new current_position should be
         if self.enc.showLockedEntry:
@@ -84,9 +70,6 @@ class ChangeEntryAction(EncyclopaediaEntryAction):
                 entries = self.enc.unlocked_entries
 
             entries[new_position][1].status = True 
-            given_text = entries[new_position][1].text   
-          
-            self.enc.entry_text = self._string_to_list(given_text)
 
             self.enc.current_position += self.dir
   
@@ -110,12 +93,10 @@ class ChangePageAction(ChangeEntryAction):
 
     def __call__(self):
         if self.block == False: 
-            given_text = self.enc.get_unlocked_entry_at(self.enc.current_position).getSubEntry(self.enc.sub_current_position + self.dir1)
-
-            self.enc.entry_text = self._string_to_list(given_text)
-            
             self.enc.sub_current_position += self.dir2
 
+            self.enc.index.current_page = self.enc.sub_current_position
+            
             renpy.restart_interaction()
 
 
@@ -141,14 +122,14 @@ class SaveStatusAction(renpy.ui.Action):
     Saves the "New!" status of every entry in an encyclopaedia. 
     Only necessary if using Persistent Data.
     """
-    def __init__(self, encyclopaedia, enc_dict, tag_string):
+    def __init__(self, encyclopaedia, persistent_dict, tag_string):
         self.enc = encyclopaedia
-        self.enc_dict = enc_dict
+        self.persistent_dict = persistent_dict
         self.tag_string = tag_string
     
     def __call__(self):
-        for x in range(self.enc.size_all):
-            self.enc_dict[self.tag_string + str(x)] = self.enc.all_entries[x][1].status   
+        for x in range(len(self.enc.all_entries)):
+            self.persistent_dict[self.tag_string + str(x)] = self.enc.all_entries[x][1].status   
 
 
 class ChangeStatusAction(EncyclopaediaEntryAction): 
@@ -165,6 +146,7 @@ class ResetSubPageAction(renpy.ui.Action):
     
     def __call__(self):
         self.enc.sub_current_position = 1
+        self.enc.index.current_page = 1
         renpy.restart_interaction()
 
         
@@ -194,7 +176,7 @@ class ToggleShowLockedEntryAction(renpy.ui.Action):
         renpy.restart_interaction()
         
 class Encyclopaedia(store.object): 
-    """Container that manages the display and sorting of a group of EncEntries."""
+    """ Container that manages the display and sorting of a group of EncEntries. """
     
     # Constants for the different types of sorting available.
     SORT_NUMBER = 0
@@ -204,7 +186,8 @@ class Encyclopaedia(store.object):
     SORT_UNREAD = 4
             
     def __init__(self, sorting_mode=0, showLockedButtons=False, showLockedEntry=False):
-        self.subjects = [] # List of all subjects
+        # List of all subjects
+        self.subjects = []
         
         # List of unlocked entries
         self.unlocked_entries = EntryList()
@@ -212,8 +195,11 @@ class Encyclopaedia(store.object):
         # List of all entries, regardless of if locked or not
         self.all_entries = EntryList() 
         
-        self.size = 0  # length of self.unlocked_entries  
-        self.size_all = 0 # length of self.all_entries  
+        # Length of self.unlocked_entries        
+        self.__size = 0  
+        
+        # Length of self.all_entries
+        self.__size_all = 0  
         
         # The type of sorting used. Default sorting is by Number.
         self.sorting_mode = sorting_mode
@@ -222,18 +208,19 @@ class Encyclopaedia(store.object):
         if sorting_mode == self.SORT_REVERSE_ALPHABETICALLY:
             self.reverseSorting = True
 
-        # If True, locked entries show "???" on the listing screen.
+        # If True, locked entries show a placeholder label on the listing screen.
         self.showLockedButtons = showLockedButtons 
         
-        # If True, locked entries can be viewed, but the data is hidden from view
+        # If True, locked entries can be viewed, but the data is hidden from view with a placeholder (defined in the EncEntry)
         self.showLockedEntry = showLockedEntry
 
-        self.current_position = 0 # Indicates the current entry open. Is the current position based on the unlocked list.
-        self.sub_current_position = 1 # 1 because the main entry is the first page in the sub-entry list
+        # Pointer for the current entry open. Is the current position based on the unlocked list.
+        self.current_position = 0
+        
+        # The default sub-entry position is 1 because the parent entry is the first page in the sub-entry list
+        self.sub_current_position = 1
 
         self.index = 0
-
-        self.entry_text = ""
         
         # Variables for the string representations of the different sorting types
         self.sort_number_label = "Number"
@@ -265,11 +252,11 @@ class Encyclopaedia(store.object):
     def entry_list_size(self):
         """
         Returns:
-            Whatever the size of the entry list should be, based on if locked buttons should be shown or not.
+            Whatever the current size of the entry list should be, based on if locked buttons should be shown or not.
         """
         if self.showLockedButtons:
-            return self.size_all
-        return self.size            
+            return self.__size_all
+        return self.__size            
 
     @property
     def max_size(self):
@@ -278,8 +265,8 @@ class Encyclopaedia(store.object):
             Whatever the maximum size of the entry list should be, based on if locked buttons should be shown or not.
         """
         if self.showLockedEntry:
-            return self.size_all
-        return self.size
+            return self.__size_all
+        return self.__size
             
     @property
     def sorting_mode_label(self):
@@ -303,7 +290,7 @@ class Encyclopaedia(store.object):
         Returns: 
             String representation of the percentage of the encyclopaedia that's unlocked, ie: '50%'
         """
-        amount_unlocked = float(self.size) / float(self.size_all)
+        amount_unlocked = float(self.__size) / float(self.__size_all)
         percentage = floor(amount_unlocked * 100)
         return str(int(percentage)) + indicator
 
@@ -340,9 +327,8 @@ class Encyclopaedia(store.object):
 
     def sort_entries(self, sorting=None, reverse=False):
         """
-        Sort both entry lists by whatever the current sorting mode is
+        Sort both entry lists by whatever the current sorting mode is.
         """
-        # Sort lists so that the newly unlocked entries don't end up at the bottom of the list
         if sorting == self.SORT_NUMBER:
             self.all_entries._sort_by_number()
             self.unlocked_entries._sort_by_number()
@@ -352,47 +338,6 @@ class Encyclopaedia(store.object):
         else:
             self.all_entries._sort_by_name(reverse=reverse)
             self.unlocked_entries._sort_by_name(reverse=reverse)
-
-    def addEntry(self, item):
-        """Adds an entry to the encyclopaedia and sorts it."""
-        
-        # Add to list of all entries
-        if not [item.number, item] in self.all_entries: # Prevents duplicate entries
-            self.all_entries.append([item.number, item])
-
-        # Add to list of unlocked entries
-        # The unlocked_entries list should only contain entries that have locked=False
-        if not [item.number, item] in self.unlocked_entries: # Prevents duplicate entries
-            if item.locked == False:
-                self.unlocked_entries.append([item.number, item])
-
-        self.sort_entries(sorting=self.sorting_mode, 
-                          reverse=self.reverseSorting)
-
-        self.size = len(self.unlocked_entries)
-        self.size_all = len(self.all_entries)
-
-    def addEntries(self, *new_entries): 
-        """Adds multiple new entries at once"""
-        for item in new_entries:
-            self.addEntry(item)
-
-    def addSubject(self, new_subject): 
-        """
-        Adds a new subject to the Encyclopaedia. Won't allow duplicates
-        
-        Returns:
-            True if the subject was added, False if it was not
-        """
-        if not new_subject in self.subjects:
-            self.subjects.append(new_subject)
-            return True
-        return False
-
-    def addSubjects(self, *new_subjects): 
-        """Adds multiple new subjects at once"""
-        for item in new_subjects:
-            self.addSubject(item)
       
     def get_entry_at(self, entry_number): 
         """ 
@@ -436,19 +381,27 @@ class Encyclopaedia(store.object):
     def _make_persistent_dict(self, total, master_key, persistent_var_string):
         """
         For the total amount given,
-        takes a two strings to define a series of keys and values. 
-        Creates lists and evaluates the values to variables. 
-        Combines the lists into a dictionary.
+            1) takes two strings to define a series of keys and values in a dictionary. 
+            2) Creates two lists and evaluates the values to variables. 
+            3) Then combines the lists into a dictionary.
+        
+        Parameters:
+            total: The number of entries in the dictionary that's going to be made
+            master_key: The prefix for the keys
+            persistent_var_string: The string that will be turned into the variables for the values in the dictionary
+            
+        Returns:
+            Dictionary with persistent values
         """
 
         # eg: new_00, new_01, etc
         keys = [master_key % x for x in range(total)]
-        
+                
         # eg: persistent.new_dict["new_00"], persistent.new_dict["new_01"], etc
         vals_string = [persistent_var_string % x for x in range(total)]
-        
         # Eval strings into the actual variables
         vals = [eval(item) for item in vals_string]
+        
         combo = zip(keys, vals)
         return dict(combo)  
 
@@ -493,10 +446,12 @@ class Encyclopaedia(store.object):
         dict_name = name + "_dict"
 
         try:
-            # Set every value in persistent.new_vals to be a key in persistent.new_dict 
+            # Set every value in persistent.<vals_name> to be a key in persistent.<dict_name> 
             dict_of_keys = self._make_persistent_dict(entries_total, 
                                                       master_key, 
                                                       'persistent.%s["%s"]' % (dict_name, master_key))
+            
+            # Set persistent.<vals_name> to be a dictionary
             setattr(persistent, 
                     vals_name, 
                     dict_of_keys)
@@ -516,21 +471,68 @@ class Encyclopaedia(store.object):
                 dict_name, 
                 dict_of_values)   
 
+    def addEntry(self, item):
+        """Adds an entry to the encyclopaedia and sorts it."""
+        
+        # Add to list of all entries
+        if not [item.number, item] in self.all_entries: # Prevents duplicate entries
+            self.all_entries.append([item.number, item])
+
+        # Add to list of unlocked entries
+        # The unlocked_entries list should only contain entries that have locked=False
+        if not [item.number, item] in self.unlocked_entries: # Prevents duplicate entries
+            if item.locked == False:
+                self.unlocked_entries.append([item.number, item])
+
+        self.sort_entries(sorting=self.sorting_mode, 
+                          reverse=self.reverseSorting)
+
+        self.__size = len(self.unlocked_entries)
+        self.__size_all = len(self.all_entries)
+
+    def addEntries(self, *new_entries): 
+        """Adds multiple new entries at once"""
+        for item in new_entries:
+            self.addEntry(item)
+
+    def addSubject(self, new_subject): 
+        """
+        Adds a new subject to the Encyclopaedia. Won't allow duplicates
+        
+        Returns:
+            True if the subject was added, False if it was not
+        """
+        if not new_subject in self.subjects:
+            self.subjects.append(new_subject)
+            return True
+        return False
+
+    def addSubjects(self, *new_subjects): 
+        """Adds multiple new subjects at once"""
+        for item in new_subjects:
+            self.addSubject(item)                
+                
     # The following functions all bind Screen Actions to the Encyclopaedia Object.
     def PreviousEntry(self):
+        """Screen Action. Use with a button."""
         return ChangeEntryAction(self, -1, self.checkMin(self.current_position, 0))
 
     def NextEntry(self):
+        """Screen Action. Use with a button."""
         return ChangeEntryAction(self, 1, self.checkMax(self.current_position, self.max_size - 1))
 
     def PreviousPage(self):
+        """Screen Action. Use with a button."""
         return ChangePageAction(self, -2, -1, self.checkMin(self.sub_current_position, 1))
 
     def NextPage(self):
+        """Screen Action. Use with a button."""
         return ChangePageAction(self, 0, 1, self.checkMax(self.sub_current_position, self.index.pages))
 
     def Sort(self, sorting_mode=None):
         """
+        Screen Action. Use with a button.
+        
         Parameters: 
             sorting_mode: The type of sorting to use. If None, use the current sorting.
         """
@@ -539,19 +541,25 @@ class Encyclopaedia(store.object):
         return SortEncyclopaedia(self, sorting_mode)
 
     def SetEntry(self,given_entry):
+        """Screen Action. Use with a button."""
         return SetEntryAction(self, given_entry) 
 
     def SaveStatus(self, enc_dict, tag_string):
+        """Screen Action. Use with a button."""
         return SaveStatusAction(self, enc_dict, tag_string)
 
     def ChangeStatus(self, position):
+        """Screen Action. Use with a button."""
         return ChangeStatusAction(self, position)
 
     def ResetSubPage(self):
+        """Screen Action. Use with a button."""
         return ResetSubPageAction(self)
 
     def ToggleShowLockedButtons(self):
+        """Screen Action. Use with a button."""
         return ToggleShowLockedButtonsAction(self) 
 
     def ToggleShowLockedEntry(self):
+        """Screen Action. Use with a button."""
         return ToggleShowLockedEntryAction(self)  

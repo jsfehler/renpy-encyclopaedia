@@ -54,13 +54,13 @@ init python:
     # The arguments are: number, name, text, subject, status, locked, image
     # if save game independent, status should always be from the persistent.new_dict or it won't save
     # if locked=False, entry will always be visible, even if new game hasn't been started
-    en1 = EncEntry(1, "Lorem", lorem, "Lorem Ipsum", status=persistent.new_dict["new_00"], locked=False, image=en1_image)
-    en2 = EncEntry(2, "Cras", cras, "Lorem Ipsum", status=persistent.new_dict["new_01"],  locked=False, image=en2_image)
-    en3 = EncEntry(3, "In", infeu, "Lorem Ipsum", status=persistent.new_dict["new_02"], locked=False, image=en3_image)
-    en4 = EncEntry(4, "Morbi", morbi, "Lorem Ipsum", status=persistent.new_dict["new_03"], locked=persistent.en4_locked, image=en4_image, locked_image=None)
-    en5 = EncEntry(5, "Mauris", mauris, "Lorem Ipsum", status=persistent.new_dict["new_04"], locked=False)
-    en6 = EncEntry(6, "Wine", wine, "Virtues", status=persistent.new_dict["new_05"], locked=persistent.en6_locked)
-    en7 = EncEntry(7, "Women", women, "Virtues", status=persistent.new_dict["new_06"], locked=persistent.en7_locked, image=en7_image, locked_image=None)
+    en1 = EncEntry(0, "Lorem", lorem, "Lorem Ipsum", status=persistent.new_dict["new_00"], locked=False, image=en1_image)
+    en2 = EncEntry(1, "Cras", cras, "Lorem Ipsum", status=persistent.new_dict["new_01"],  locked=False, image=en2_image)
+    en3 = EncEntry(2, "In", infeu, "Lorem Ipsum", status=persistent.new_dict["new_02"], locked=False, image=en3_image)
+    en4 = EncEntry(3, "Morbi", morbi, "Lorem Ipsum", status=persistent.new_dict["new_03"], locked=persistent.en4_locked, image=en4_image, locked_image=None)
+    en5 = EncEntry(4, "Mauris", mauris, "Lorem Ipsum", status=persistent.new_dict["new_04"], locked=False)
+    en6 = EncEntry(5, "Wine", wine, "Virtues", status=persistent.new_dict["new_05"], locked=persistent.en6_locked)
+    en7 = EncEntry(6, "Women", women, "Virtues", status=persistent.new_dict["new_06"], locked=persistent.en7_locked, image=en7_image, locked_image=None)
   
     # Add all entries and sub-entries in an init block.
     encyclopaedia.addEntries(en1, en2, en3, en4, en5, en6, en7) 

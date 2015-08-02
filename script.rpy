@@ -33,8 +33,8 @@ init -1 python:
         if enc.showLockedButtons:
             # If the entry is unlocked, make the button point to it. If it's locked, make a "???" button.
             if enc.all_entries[x][1].locked == False:
-                ui.textbutton(enc.all_entries[x][1].name, clicked=[enc.ChangeStatus(x), 
-                                                                   enc.SetEntry(x), 
+                ui.textbutton(enc.all_entries[x][1].name, clicked=[enc.ChangeStatus(enc.all_entries[x]), 
+                                                                   enc.SetEntry(enc.all_entries[x]), 
                                                                    Show(entry_screen)])
                 
                 # Make a tag next to the button if it hasn't been viewed by the player yet.
@@ -45,16 +45,16 @@ init -1 python:
                 # If locked entries should be viewable, the "???" button should go to the entry. 
                 # If not, it's an inactive button.
                 if enc.showLockedEntry:
-                    ui.textbutton("???", clicked=[enc.ChangeStatus(x), 
-                                                  enc.SetEntry(x), 
+                    ui.textbutton("???", clicked=[enc.ChangeStatus(enc.all_entries[x]), 
+                                                  enc.SetEntry(enc.all_entries[x]), 
                                                   Show(entry_screen)])
                 else:
                     ui.textbutton("???")
     
         # If locked buttons should not be visible. (No need for the "???" buttons.)
         elif enc.showLockedButtons == False:
-            ui.textbutton(enc.unlocked_entries[x][1].name, clicked=[enc.ChangeStatus(x), 
-                                                                    enc.SetEntry(x), 
+            ui.textbutton(enc.unlocked_entries[x][1].name, clicked=[enc.ChangeStatus(enc.unlocked_entries[x]), 
+                                                                    enc.SetEntry(enc.unlocked_entries[x]), 
                                                                     Show(entry_screen)] )
             
             # Make a tag next to the button if it hasn't been viewed by the player yet.
@@ -75,7 +75,7 @@ init -1 python:
         elif encyclopaedia.sorting_mode == encyclopaedia.SORT_NUMBER:    
             for x in range(encyclopaedia.entry_list_size):
                 ui.hbox()
-                ui.textbutton (str(encyclopaedia.get_entry_at(x).number))
+                ui.textbutton (str(encyclopaedia.get_entry_at(x).number + 1))
                 generateEntryButton(x, encyclopaedia, show_screen)   
                 ui.close()
 
@@ -174,7 +174,7 @@ screen encyclopaedia_entry:
                 xmargin 10
                 top_margin 10
                 # Flavour text to indicate which entry we're currently on
-                $ entry_indicator = "0%d : %s" % (encyclopaedia.index.number, encyclopaedia.index.name)
+                $ entry_indicator = "0%d : %s" % (encyclopaedia.index.number + 1, encyclopaedia.index.name)
                 text entry_indicator
   
             frame:

@@ -52,7 +52,7 @@ class EncEntry(store.object):
         # Default status for an Entry is to have no sub-entries
         self.has_sub_entry = False
         
-        self.current_page = 0
+        self.current_page = 1
 
     @property
     def current_page(self):

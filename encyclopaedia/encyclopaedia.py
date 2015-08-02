@@ -25,28 +25,31 @@ persistent = renpy.game.persistent
 
 
 class EncyclopaediaEntryAction(renpy.ui.Action):
-    """Action that acts using a specific Encyclopaedia Entry"""
-    def __init__(self, encyclopaedia, entry_number):
+    """
+    Action that acts using a specific Encyclopaedia Entry.
+    This class is inherited by other Encyclopaedia Actions.
+    """
+    def __init__(self, encyclopaedia, entry):
         self.enc = encyclopaedia
-        self.entry_number = entry_number    
+        self.entry = entry    
 
 
 class SetEntryAction(EncyclopaediaEntryAction):
-    """Action that sets the selected encyclopaedia entry into the displaying frame."""       
+    """Set the selected encyclopaedia entry into the displaying frame."""       
             
     def __call__(self):
-        self.given_entry = self.enc.get_entry_at(self.entry_number)
-
-        # index the list to get what the new current_position should be
-        if self.enc.showLockedEntry:
-            target_position = self.enc.all_entries.index([self.given_entry.number, self.given_entry])
+        # When setting an entry, we need to know which list to use.
+        # Index the selected list to find out what the entry's position is.
+        if self.enc.showLockedButtons == False:
+            target_position = self.enc.unlocked_entries.index(self.entry)
         else:
-            target_position = self.enc.unlocked_entries.index([self.given_entry.number, self.given_entry])
-
-        # The EntryData is based on the target_position gotten
+            target_position = self.enc.all_entries.index(self.entry)
+           
+        # The active entry is set to whichever list position was found    
         self.enc.index = target_position
-
-        self.enc.current_position = target_position
+        
+        # The current position is updated
+        self.enc.current_position = target_position 
 
 
 class ChangeEntryAction(EncyclopaediaEntryAction):
@@ -61,20 +64,13 @@ class ChangeEntryAction(EncyclopaediaEntryAction):
 
     def __call__(self):
         if self.block == False:
-            new_position = self.enc.current_position + self.dir
-            
-            self.enc.index = new_position
-
-            entries = self.enc.all_entries
-            if self.enc.showLockedEntry == False:
-                entries = self.enc.unlocked_entries
-
-            entries[new_position][1].status = True 
-
             self.enc.current_position += self.dir
-  
+            self.enc.index = self.enc.current_position
+            self.enc.index.status = True
+
             # When changing an entry, the sub-entry page number is set back to 1
             self.enc.sub_current_position = 1
+            self.enc.index.current_page = self.enc.sub_current_position
             renpy.restart_interaction()
 
     def get_sensitive(self):
@@ -135,7 +131,7 @@ class SaveStatusAction(renpy.ui.Action):
 class ChangeStatusAction(EncyclopaediaEntryAction): 
     """Change the "New!" status of an EncEntry"""    
     def __call__(self):
-        self.changed_entry = self.enc.get_entry_at(self.entry_number)
+        self.changed_entry = self.entry[1]
         self.changed_entry.status = True
 
 
@@ -220,7 +216,7 @@ class Encyclopaedia(store.object):
         # The default sub-entry position is 1 because the parent entry is the first page in the sub-entry list
         self.sub_current_position = 1
 
-        self.index = 0
+        self.index = 1
         
         # Variables for the string representations of the different sorting types
         self.sort_number_label = "Number"
@@ -242,8 +238,15 @@ class Encyclopaedia(store.object):
         Returns:
             The entry at the index number.
         """
-        return self.get_entry_at(self._index)
-
+        if self.showLockedButtons and self.showLockedEntry:
+            return self.get_all_entry_at(self._index)
+        elif self.showLockedButtons and not self.showLockedEntry:
+            return self.get_unlocked_entry_at(self._index)
+        elif not self.showLockedButtons and self.showLockedEntry:
+            return self.get_all_entry_at(self._index)
+        
+        return self.get_unlocked_entry_at(self._index)
+        
     @index.setter
     def index(self, val):
         self._index = val
@@ -275,10 +278,10 @@ class Encyclopaedia(store.object):
             String representation the current sorting mode
         """
         sorting_strings = {self.SORT_NUMBER: self.sort_number_label,
-        self.SORT_ALPHABETICALLY: self.sort_alphabetically_label,
-        self.SORT_REVERSE_ALPHABETICALLY: self.sort_reverse_alphabetically_label,
-        self.SORT_SUBJECT: self.sort_subject_label,
-        self.SORT_UNREAD: self.sort_unread_label}
+                           self.SORT_ALPHABETICALLY: self.sort_alphabetically_label,
+                           self.SORT_REVERSE_ALPHABETICALLY: self.sort_reverse_alphabetically_label,
+                           self.SORT_SUBJECT: self.sort_subject_label,
+                           self.SORT_UNREAD: self.sort_unread_label}
 
         return sorting_strings[self.sorting_mode]
 
@@ -306,10 +309,11 @@ class Encyclopaedia(store.object):
         return "%s %d %s %d" % (label, self.sub_current_position, separator, self.index.pages)        
         
     def set_global_locked_image_tint(self, tint_amount):
-        """Sets all the locked images in an Encyclopaedia to use the same tint.
+        """
+        Sets all the locked images in an Encyclopaedia to use the same tint.
         
         Parameters:
-            tint_amount - tuple containing an RGB value (R, G, B)
+            tint_amount: tuple containing an RGB value (R, G, B)
         """
         for item_number, item in self.all_entries:
             item.tint_locked_image((tint_amount[0], tint_amount[1], tint_amount[2]))        
@@ -338,12 +342,15 @@ class Encyclopaedia(store.object):
         else:
             self.all_entries._sort_by_name(reverse=reverse)
             self.unlocked_entries._sort_by_name(reverse=reverse)
-      
+ 
     def get_entry_at(self, entry_number): 
         """ 
-        Get the entry at a specific index.
         Used for displaying the buttons.
+        Gets an entry from either all_entries or unlocked_entries
         Depends on if locked entries should be in the entry list or not.
+        
+        Parameters:
+            entry_number: The list position for the desired entry.
         
         Returns: 
             The entry of the specified entry_number
@@ -512,54 +519,84 @@ class Encyclopaedia(store.object):
         for item in new_subjects:
             self.addSubject(item)                
                 
-    # The following functions all bind Screen Actions to the Encyclopaedia Object.
     def PreviousEntry(self):
-        """Screen Action. Use with a button."""
+        """
+        Returns:
+            Screen Action. Use with a button
+        """
         return ChangeEntryAction(self, -1, self.checkMin(self.current_position, 0))
 
     def NextEntry(self):
-        """Screen Action. Use with a button."""
+        """
+        Returns:
+            Screen Action. Use with a button
+        """
         return ChangeEntryAction(self, 1, self.checkMax(self.current_position, self.max_size - 1))
 
     def PreviousPage(self):
-        """Screen Action. Use with a button."""
+        """
+        Returns:
+            Screen Action. Use with a button
+        """
         return ChangePageAction(self, -2, -1, self.checkMin(self.sub_current_position, 1))
 
     def NextPage(self):
-        """Screen Action. Use with a button."""
+        """
+        Returns:
+            Screen Action. Use with a button
+        """
         return ChangePageAction(self, 0, 1, self.checkMax(self.sub_current_position, self.index.pages))
 
     def Sort(self, sorting_mode=None):
-        """
-        Screen Action. Use with a button.
-        
+        """        
         Parameters: 
-            sorting_mode: The type of sorting to use. If None, use the current sorting.
+            sorting_mode: The type of sorting to use. If None specified, use the current sorting.
+        
+        Returns:
+            Screen Action. Use with a button.
         """
         if None == sorting_mode:
             sorting_mode = self.sorting_mode
         return SortEncyclopaedia(self, sorting_mode)
 
     def SetEntry(self,given_entry):
-        """Screen Action. Use with a button."""
+        """
+        Returns:
+            Screen Action. Use with a button.
+        """
         return SetEntryAction(self, given_entry) 
 
     def SaveStatus(self, enc_dict, tag_string):
-        """Screen Action. Use with a button."""
+        """
+        Returns:
+            Screen Action. Use with a button.
+        """
         return SaveStatusAction(self, enc_dict, tag_string)
 
     def ChangeStatus(self, position):
-        """Screen Action. Use with a button."""
+        """
+        Returns:
+            Screen Action. Use with a button.
+        """
         return ChangeStatusAction(self, position)
 
     def ResetSubPage(self):
-        """Screen Action. Use with a button."""
+        """
+        Returns:
+            Screen Action. Use with a button.
+        """
         return ResetSubPageAction(self)
 
     def ToggleShowLockedButtons(self):
-        """Screen Action. Use with a button."""
+        """
+        Returns:
+            Screen Action. Use with a button.
+        """
         return ToggleShowLockedButtonsAction(self) 
 
     def ToggleShowLockedEntry(self):
-        """Screen Action. Use with a button."""
+        """
+        Returns:
+            Screen Action. Use with a button.
+        """
         return ToggleShowLockedEntryAction(self)  

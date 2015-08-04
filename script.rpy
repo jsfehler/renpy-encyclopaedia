@@ -112,7 +112,7 @@ screen encyclopaedia_list:
                 hbox:
                     xfill True
                     # Percentage unlocked display
-                    text encyclopaedia.get_percentage_unlocked_label() + " Complete"
+                    text encyclopaedia.labels.percentage_unlocked + " Complete"
 
             frame:
                 style_group "mm_root"  
@@ -127,7 +127,7 @@ screen encyclopaedia_list:
                     draggable True
                     vbox: 
                         #Flavour text to display the current sorting mode.
-                        text encyclopaedia.sorting_mode_label xalign 0.5
+                        text encyclopaedia.labels.sorting_mode xalign 0.5
      
                         python:
                             generateEntryList(show_screen="encyclopaedia_entry")
@@ -174,7 +174,7 @@ screen encyclopaedia_entry:
                 xmargin 10
                 top_margin 10
                 # Flavour text to indicate which entry we're currently on
-                $ entry_indicator = "0%d : %s" % (encyclopaedia.index.number + 1, encyclopaedia.index.name)
+                $ entry_indicator = "0%d : %s" % (encyclopaedia.active.number + 1, encyclopaedia.active.name)
                 text entry_indicator
   
             frame:
@@ -191,7 +191,7 @@ screen encyclopaedia_entry:
                 $ half_screen_width = config.screen_width / 2
                 $ half_screen_height = config.screen_height / 2
                 # If the entry or sub-entry has an image, add it to the screen
-                if encyclopaedia.index.has_image:
+                if encyclopaedia.active.has_image:
                     frame:
                         xmargin 10
                         yfill True
@@ -200,7 +200,7 @@ screen encyclopaedia_entry:
                         xmaximum half_screen_width
                         ymaximum half_screen_height  
 
-                        $current_image = encyclopaedia.index.image
+                        $current_image = encyclopaedia.active.image
                         add current_image crop (0, 10, half_screen_width-30, half_screen_height-10)
    
                     window:
@@ -219,7 +219,7 @@ screen encyclopaedia_entry:
                             vbox:
                                 spacing 15
                                 # Display the current entry's text
-                                for item in encyclopaedia.index.current_page.text:
+                                for item in encyclopaedia.active.current_page.text:
                                     text item
                                         
                 else:
@@ -241,7 +241,7 @@ screen encyclopaedia_entry:
                                 xfill True
                                 yfill True 
                                 # Display the current entry's text
-                                for item in encyclopaedia.index.current_page.text:
+                                for item in encyclopaedia.active.current_page.text:
                                     text item
 
             frame:
@@ -253,11 +253,11 @@ screen encyclopaedia_entry:
                     xfill True  
   
                     # If there's a sub-entry, add Prev/Next Page buttons
-                    if encyclopaedia.index.has_sub_entry:    
+                    if encyclopaedia.active.has_sub_entry:    
                         textbutton "Previous Page" xalign .02 action encyclopaedia.PreviousPage()
 
                         # Flavour text to indicate which sub-page out of the total is being viewed
-                        text encyclopaedia.get_entry_current_page_label(label="Page")
+                        text encyclopaedia.labels.entry_current_page
 
                         textbutton "Next Page" xalign .98 action encyclopaedia.NextPage()  
  
@@ -271,7 +271,7 @@ screen encyclopaedia_entry:
             yalign .98
             hbox:
                 xfill True
-                text "Sorting Mode: %s" % encyclopaedia.sorting_mode_label #Flavour text that displays the current sorting mode
+                text "Sorting Mode: %s" % encyclopaedia.labels.sorting_mode #Flavour text that displays the current sorting mode
                 textbutton "Close Entry" id "close_entry_button" xalign .98 clicked [encyclopaedia.Sort(), encyclopaedia.ResetSubPage(), Show("encyclopaedia_list")] 
 
 ##############################################################################

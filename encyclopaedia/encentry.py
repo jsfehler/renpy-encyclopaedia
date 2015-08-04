@@ -29,6 +29,10 @@ class EncEntry(store.object):
         self.subject = subject
         self.locked = locked
         
+        self.locked_name = locked_name
+        self.locked_text = self._string_to_list(locked_text)
+        self.locked_image = locked_image
+        
         # Only set the image if it's not None
         self.has_image = False  
         if image != None:
@@ -39,10 +43,6 @@ class EncEntry(store.object):
                  # Tuple is used to set the numbers that tint_locked_image() uses to change the colour of a locked image
                 self.tint_locked_image((0.0, 0.0, 0.0))
             
-        self.locked_name = locked_name
-        self.locked_text = self._string_to_list(locked_text)
-        self.locked_image = locked_image
-
         # Number of pages in the entry
         self.pages = 0
 

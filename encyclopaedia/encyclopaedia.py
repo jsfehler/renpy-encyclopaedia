@@ -13,8 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
-from operator import itemgetter
-
 import renpy.store as store
 import renpy.exports as renpy 
 
@@ -39,14 +37,22 @@ class SetEntryAction(EncyclopaediaEntryAction):
             
     def __call__(self):
         # When setting an entry, index all_entries with the entry.
-        # That position is what the encyclopaedia's active entry should be.
-        target_position = self.enc.all_entries.index(self.entry)
-           
+        # That position is what the encyclopaedia's active entry should be.        
+        if self.enc.showLockedEntry == False:
+            target_position = self.enc.unlocked_entries.index(self.entry)
+        else:
+            target_position = self.enc.all_entries.index(self.entry)
         # The active entry is set to whichever list position was found    
-        self.enc.active = target_position
+        self.enc.active = self.entry
+        
+        if self.enc.active.locked == False:
+             self.enc.active.status = True
         
         # The current position is updated
-        self.enc.current_position = target_position 
+        self.enc.current_position = target_position
+        
+        renpy.show_screen(self.enc.entry_screen)
+        renpy.restart_interaction()
 
 
 class ChangeEntryAction(renpy.ui.Action):
@@ -67,20 +73,21 @@ class ChangeEntryAction(renpy.ui.Action):
         if self.block == False:
             # Update the current position
             self.enc.current_position += self.dir
-            
+                 
             # If NOT showing locked entries, the next entry we want to see is,
             # the next entry in unlocked_entries. Take that entry, and index
             # all_entries to find the target_position
             if self.enc.showLockedEntry == False:
-                target_position = self.enc.all_entries.index(self.enc.unlocked_entries[self.enc.current_position])
+                target_position = self.enc.unlocked_entries[self.enc.current_position]
             else:
-                target_position = self.enc.current_position
+                target_position = self.enc.all_entries[self.enc.current_position]
             
             # Update the active entry
             self.enc.active = target_position
             
-            # Mark the entry as viewed
-            self.enc.active.status = True
+            # Mark the entry as viewed, if it's not locked
+            if self.enc.active.locked == False:
+                self.enc.active.status = True
 
             # When changing an entry, the sub-entry page number is set back to 1
             self.enc.sub_current_position = 1
@@ -140,13 +147,13 @@ class SaveStatusAction(renpy.ui.Action):
     
     def __call__(self):
         for x in range(len(self.enc.all_entries)):
-            self.persistent_dict[self.tag_string + str(x)] = self.enc.all_entries[x][1].status   
+            self.persistent_dict[self.tag_string + str(x)] = self.enc.all_entries[x].status   
 
-
+# Is this still necessary?
 class ChangeStatusAction(EncyclopaediaEntryAction): 
     """Change the "New!" status of an EncEntry"""    
     def __call__(self):
-        self.changed_entry = self.entry[1]
+        self.changed_entry = self.entry
         self.changed_entry.status = True
 
 
@@ -196,7 +203,7 @@ class Encyclopaedia(store.object):
     SORT_SUBJECT = 3
     SORT_UNREAD = 4
             
-    def __init__(self, sorting_mode=0, showLockedButtons=False, showLockedEntry=False):
+    def __init__(self, sorting_mode=0, showLockedButtons=False, showLockedEntry=False, entry_screen=''):
         # List of all subjects
         self.subjects = []
         
@@ -226,7 +233,7 @@ class Encyclopaedia(store.object):
         self.showLockedEntry = showLockedEntry
 
         # Returns the currently open entry
-        self.active = 0
+        self.active = None
         
         # Pointer for the current entry open. Is the current position based on the unlocked list.
         self.current_position = 0
@@ -234,37 +241,14 @@ class Encyclopaedia(store.object):
         # The default sub-entry position is 1 because the parent entry is the first page in the sub-entry list
         self.sub_current_position = 1
         
+        # The screen to display an open entry
+        self.entry_screen = entry_screen
+        
         # Load the default (English) label controller
         self.labels = LabelController(self)
 
     def __str__(self):
         return "Encyclopaedia"        
-        
-    @property
-    def active(self):
-        return self._active
-    
-    @active.getter
-    def active(self):
-        """
-        This returns the active entry from the all_entries list.
-        If you need to only reference unlocked_entries, index all_entries
-        with the entry you want from unlocked_entries.
-        
-        Returns:
-            The entry at the active number.
-        """
-        return self.get_all_entry_at(self._active)
- 
-    @active.setter
-    def active(self, val):
-        """
-        Set the active entry to a new number.
-        
-        Parameters:
-            val: integer
-        """
-        self._active = val
         
     @property
     def entry_list_size(self):
@@ -342,14 +326,14 @@ class Encyclopaedia(store.object):
         Returns: 
             The entry associated with entry_number from all_entries list
         """
-        return self.all_entries[entry_number][1]
+        return self.all_entries[entry_number]
 
     def get_unlocked_entry_at(self, entry_number): 
         """
         Returns:
             The entry associated with entry_number from unlocked_entries list
         """
-        return self.unlocked_entries[entry_number][1]
+        return self.unlocked_entries[entry_number]
         
     # Checks the current_position against the min or max of the encyclopaedia, returns Boolean
     # Used to determine if the Prev/Next Actions should be active
@@ -460,15 +444,18 @@ class Encyclopaedia(store.object):
         """Adds an entry to the encyclopaedia and sorts it."""
         
         # Add to list of all entries
-        if not [item.number, item] in self.all_entries: # Prevents duplicate entries
-            self.all_entries.append([item.number, item])
+        if not item in self.all_entries: # Prevents duplicate entries
+            self.all_entries.append(item)
 
         # Add to list of unlocked entries
         # The unlocked_entries list should only contain entries that have locked=False
-        if not [item.number, item] in self.unlocked_entries: # Prevents duplicate entries
+        if not item in self.unlocked_entries: # Prevents duplicate entries
             if item.locked == False:
-                self.unlocked_entries.append([item.number, item])
+                self.unlocked_entries.append(item)
 
+        # Add the subject to the list
+        self.addSubject(item.subject)
+                
         self.sort_entries(sorting=self.sorting_mode, 
                           reverse=self.reverseSorting)
 

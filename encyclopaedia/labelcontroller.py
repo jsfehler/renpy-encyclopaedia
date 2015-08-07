@@ -22,9 +22,13 @@ class LabelController(object):
     def __init__(self, encyclopaedia):
         self.encyclopaedia = encyclopaedia
    
+        # Placed next to the percentage unlocked number
         self.percentage_label = '%'
         
+        # Placed before the entry page displayed
         self.page_label = 'Page'
+        
+        # Placed in-between the current page number and the total page number 
         self.page_separator_label = '/'
    
         # Variables for the string representations of the different sorting types
@@ -36,10 +40,7 @@ class LabelController(object):
 
     @property
     def percentage_unlocked(self): 
-        """
-        Parameters:
-            indicator: A string that is placed next to the percentage unlocked number
-        
+        """ 
         Returns: 
             String representation of the percentage of the encyclopaedia that's unlocked, ie: '50%'
         """
@@ -50,10 +51,6 @@ class LabelController(object):
     @property
     def entry_current_page(self):
         """
-        Parameters:
-            label: String placed before the entry page displayed
-            separator: String placed in-between the current page number and the total page number 
-        
         Returns: 
             String indicating which sub-page of an entry is being viewed
         """
@@ -66,7 +63,7 @@ class LabelController(object):
     def sorting_mode(self):
         """
         Returns:
-            String representation the current sorting mode
+            String representation of the current sorting mode
         """
         sorting_strings = {self.encyclopaedia.SORT_NUMBER: self.sort_number_label,
                            self.encyclopaedia.SORT_ALPHABETICALLY: self.sort_alphabetically_label,

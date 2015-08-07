@@ -14,7 +14,6 @@
 # along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
 import copy
-from operator import itemgetter
 
 
 class EntryList(list):
@@ -52,7 +51,7 @@ class EntryList(list):
 
         # Loop over self.all_entries, but do the changes to changed_all_entries
         for item in self:
-            if item[1].locked != False:
+            if item.locked != False:
                 changed_all_entries = self._push_to_bottom(changed_all_entries, item)
         
         del self[:]
@@ -61,11 +60,14 @@ class EntryList(list):
         
         return self
 
+    def _get_number_key(self, item):
+        return item.number
+        
     def _sort_by_number(self):
-        return self.sort(key=itemgetter(0))        
+        return self.sort(key=self._get_number_key)        
         
     def _get_name_key(self, item):
-        return item[1].name        
+        return item.name        
         
     def _sort_by_name(self, reverse=False, locked_at_bottom=True):     
         self.sort(reverse=reverse, 
@@ -75,7 +77,7 @@ class EntryList(list):
             self._send_locked_entries_to_bottom()
                                   
     def _get_unread_key(self, item):
-        return item[1].status    
+        return item.status    
         
     def _sort_by_unread(self):     
         # Sort by name first

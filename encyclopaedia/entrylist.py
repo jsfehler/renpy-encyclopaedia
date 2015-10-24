@@ -64,13 +64,13 @@ class EntryList(list):
     def _get_number_key(self, item):
         return item.number
         
-    def _sort_by_number(self):
+    def sort_by_number(self):
         return self.sort(key=self._get_number_key)        
         
     def _get_name_key(self, item):
         return item.name        
         
-    def _sort_by_name(self, reverse=False, locked_at_bottom=True):     
+    def sort_by_name(self, reverse=False, locked_at_bottom=True):
         self.sort(
             reverse=reverse,
             key=self._get_name_key
@@ -82,9 +82,9 @@ class EntryList(list):
     def _get_unread_key(self, item):
         return item.status    
         
-    def _sort_by_unread(self):     
+    def sort_by_unread(self):
         # Sort by name first
-        self._sort_by_name()
+        self.sort_by_name()
                        
         self.sort(key=self._get_unread_key)
         

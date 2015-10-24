@@ -31,12 +31,16 @@ init python:
 
     # Define an encyclopaedia object.
     
-    # If showLockedButtons=False, it will not display locked entries on the list screen. 
+    # If show_locked_buttons=False, it will not display locked entries on the list screen.
     # If True, locked entries will be displayed with "???" instead of their title.
     
-    # If showLockedEntry=False, it will prevent the player from viewing the locked entry.
+    # If show_locked_entry=False, it will prevent the player from viewing the locked entry.
     # if True, locked entries can be viewed, but the title, text, and image will be replaced with "???".
-    encyclopaedia = Encyclopaedia(showLockedButtons=True, showLockedEntry=True, entry_screen = "encyclopaedia_entry")
+    encyclopaedia = Encyclopaedia(
+        show_locked_buttons=True,
+        show_locked_entry=True,
+        entry_screen = "encyclopaedia_entry"
+    )
     
     # If the encyclopaedia is save game independent, run this function to generate the persistent status variables. 
     # If the encyclopaedia is unique for each save game, comment out or delete this.
@@ -66,7 +70,15 @@ init python:
     en7 = EncEntry(7, "Women", women, subject_virtues, status=persistent.new_dict["new_06"], locked=persistent.en7_locked, image=en7_image, locked_image=None)
   
     # Add all entries and sub-entries in an init block.
-    encyclopaedia.addEntries(en1, en2, en3, en4, en5, en6, en7) 
+    encyclopaedia.addEntries(
+        en1,
+        en2,
+        en3,
+        en4,
+        en5,
+        en6,
+        en7
+    )
     # To do this one at a time, use addEntry() instead
     # This auto-sorts when adding.
     
@@ -74,11 +86,36 @@ init python:
     # After they're unlocked, they'll be available whenever the game loads. 
 
     #When creating sub-entries, the main entry is considered page 1, always start at 2
-    en2_2 = EncEntry(2, "Cras 2", "Cras 2", "Virtues", locked=False)
-    en2_3 = EncEntry(3, "Cras 3", "Cras 3", "Virtues", locked=persistent.en2_3_locked)
+    en2_2 = EncEntry(
+        2,
+        "Cras 2",
+        "Cras 2",
+        "Virtues",
+        locked=False
+    )
 
-    en6_2 = EncEntry(2, "Wine 2", wine2, "Virtues", locked=persistent.en6_2_locked)
-    en6_3 = EncEntry(3, "Wine 3", wine3, "Virtues", locked=persistent.en6_3_locked)
+    en2_3 = EncEntry(
+        3,
+        "Cras 3",
+        "Cras 3",
+        "Virtues",
+        locked=persistent.en2_3_locked
+    )
+
+    en6_2 = EncEntry(
+        2,
+        "Wine 2",
+        wine2,
+        "Virtues",
+        locked=persistent.en6_2_locked
+    )
+    en6_3 = EncEntry(
+        3,
+        "Wine 3",
+        wine3,
+        "Virtues",
+        locked=persistent.en6_3_locked
+    )
 
     en2.addSubEntries(en2_2, en2_3)
     en6.addSubEntries(en6_2, en6_3)

@@ -26,13 +26,13 @@ def generate_entry_button(x, enc):
     Parameters:
         x: is the Entry's position in the Encyclopaedia's list of entries.
         It will reference either all the entries or only the unlocked ones,
-        depending on the given Encyclopaedia's showLockedButtons variable.
+        depending on the given Encyclopaedia's show_locked_buttons variable.
     
         enc: The given Encyclopaedia.
     """
     ui.hbox()
     # If locked buttons should be visible.
-    if enc.showLockedButtons:
+    if enc.show_locked_buttons:
         # If the entry is unlocked, make the button point to it. If it's locked, make a "???" button.
         if enc.all_entries[x].locked is False:
             ui.textbutton(enc.all_entries[x].name, clicked=enc.SetEntry(enc.all_entries[x]))
@@ -44,13 +44,13 @@ def generate_entry_button(x, enc):
         else:
             # If locked entries should be viewable, the "???" button should go to the entry. 
             # If not, it's an inactive button.
-            if enc.showLockedEntry:
+            if enc.show_locked_entry:
                 ui.textbutton("???", clicked=enc.SetEntry(enc.all_entries[x]))
             else:
                 ui.textbutton("???")
 
     # If locked buttons should not be visible. (No need for the "???" buttons.)
-    elif enc.showLockedButtons is False:
+    elif enc.show_locked_buttons is False:
         ui.textbutton(enc.unlocked_entries[x].name, clicked=enc.SetEntry(enc.unlocked_entries[x]))
         
         # Make a tag next to the button if it hasn't been viewed by the player yet.

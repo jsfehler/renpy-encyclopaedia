@@ -118,7 +118,7 @@ screen encyclopaedia_entry:
                         # You don't have to crop your images. I just did this for the example.
                         # You can position them however you want.
                         $current_image = encyclopaedia.active.image
-                        add current_image crop (0, 10, half_screen_width-30, half_screen_height-10)
+                        add current_image crop (0, 10, half_screen_width - 30, half_screen_height - 10)
    
                     window:
                         id "entry_window"

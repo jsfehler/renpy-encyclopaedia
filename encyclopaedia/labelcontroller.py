@@ -31,7 +31,7 @@ class LabelController(object):
         # Placed in-between the current page number and the total page number 
         self.page_separator_label = '/'
    
-        # Variables for the string representations of the different sorting types
+        # Variables for the strings representating the different sorting types
         self.sort_number_label = "Number"
         self.sort_alphabetically_label = "A to Z"
         self.sort_reverse_alphabetically_label = "Z to A"
@@ -42,11 +42,18 @@ class LabelController(object):
     def percentage_unlocked(self): 
         """ 
         Returns: 
-            String representation of the percentage of the encyclopaedia that's unlocked, ie: '50%'
+            String displaying the percentage of the encyclopaedia that's unlocked, 
+            ie: '50%'
         """
-        amount_unlocked = float(self.encyclopaedia._size) / float(self.encyclopaedia._size_all)
+        
+        float_size = float(self.encyclopaedia._size)
+        float_size_all = float(self.encyclopaedia._size_all
+        
+        amount_unlocked = float_size / float_size_all
         percentage = floor(amount_unlocked * 100)
-        return str(int(percentage)) + self.percentage_label   
+        label = str(int(percentage)) + self.percentage_label 
+        
+        return label   
 
     @property
     def entry_current_page(self):
@@ -54,10 +61,14 @@ class LabelController(object):
         Returns: 
             String indicating which sub-page of an entry is being viewed
         """
-        return "%s %d %s %d" % (self.page_label, 
-                                self.encyclopaedia.sub_current_position, 
-                                self.page_separator_label, 
-                                self.encyclopaedia.active.pages) 
+        label = "%s %d %s %d" % (
+            self.page_label, 
+            self.encyclopaedia.sub_current_position, 
+            self.page_separator_label, 
+            self.encyclopaedia.active.pages
+        ) 
+        
+        return label
      
     @property
     def sorting_mode(self):
@@ -65,10 +76,12 @@ class LabelController(object):
         Returns:
             String representation of the current sorting mode
         """
-        sorting_strings = {self.encyclopaedia.SORT_NUMBER: self.sort_number_label,
-                           self.encyclopaedia.SORT_ALPHABETICALLY: self.sort_alphabetically_label,
-                           self.encyclopaedia.SORT_REVERSE_ALPHABETICALLY: self.sort_reverse_alphabetically_label,
-                           self.encyclopaedia.SORT_SUBJECT: self.sort_subject_label,
-                           self.encyclopaedia.SORT_UNREAD: self.sort_unread_label}
+        sorting_strings = {
+            self.encyclopaedia.SORT_NUMBER: self.sort_number_label,
+            self.encyclopaedia.SORT_ALPHABETICALLY: self.sort_alphabetically_label,
+            self.encyclopaedia.SORT_REVERSE_ALPHABETICALLY: self.sort_reverse_alphabetically_label,
+            self.encyclopaedia.SORT_SUBJECT: self.sort_subject_label,
+            self.encyclopaedia.SORT_UNREAD: self.sort_unread_label
+        }
 
         return sorting_strings[self.encyclopaedia.sorting_mode]  

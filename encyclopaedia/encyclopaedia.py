@@ -38,15 +38,15 @@ class SetEntryAction(EncyclopaediaEntryAction):
     def __call__(self):
         # When setting an entry, index all_entries with the entry.
         # That position is what the encyclopaedia's active entry should be.        
-        if self.enc.showLockedEntry == False:
+        if self.enc.showLockedEntry is False:
             target_position = self.enc.unlocked_entries.index(self.entry)
         else:
             target_position = self.enc.all_entries.index(self.entry)
         # The active entry is set to whichever list position was found    
         self.enc.active = self.entry
         
-        if self.enc.active.locked == False:
-             self.enc.active.status = True
+        if self.enc.active.locked is False:
+            self.enc.active.status = True
         
         # The current position is updated
         self.enc.current_position = target_position
@@ -70,14 +70,14 @@ class ChangeEntryAction(renpy.ui.Action):
         self.dir = direction 
 
     def __call__(self):
-        if self.block == False:
+        if self.block is False:
             # Update the current position
             self.enc.current_position += self.dir
                  
             # If NOT showing locked entries, the next entry we want to see is,
             # the next entry in unlocked_entries. Take that entry, and index
             # all_entries to find the target_position
-            if self.enc.showLockedEntry == False:
+            if self.enc.showLockedEntry is False:
                 target_position = self.enc.unlocked_entries[self.enc.current_position]
             else:
                 target_position = self.enc.all_entries[self.enc.current_position]
@@ -86,7 +86,7 @@ class ChangeEntryAction(renpy.ui.Action):
             self.enc.active = target_position
             
             # Mark the entry as viewed, if it's not locked
-            if self.enc.active.locked == False:
+            if self.enc.active.locked is False:
                 self.enc.active.status = True
 
             # When changing an entry, the sub-entry page number is set back to 1
@@ -103,13 +103,13 @@ class ChangeEntryAction(renpy.ui.Action):
 class ChangePageAction(ChangeEntryAction):
     """Change the current sub-entry being viewed."""        
     def __init__(self, encyclopaedia, direction, direction2, block, *args, **kwargs):
-        super(ChangePageAction,self).__init__(encyclopaedia, direction, block, *args, **kwargs)
+        super(ChangePageAction, self).__init__(encyclopaedia, direction, block, *args, **kwargs)
 
         self.dir1 = direction
         self.dir2 = direction2
 
     def __call__(self):
-        if self.block == False: 
+        if self.block is False:
             self.enc.sub_current_position += self.dir2
 
             self.enc.active.current_page = self.enc.sub_current_position
@@ -148,6 +148,7 @@ class SaveStatusAction(renpy.ui.Action):
     def __call__(self):
         for x in range(len(self.enc.all_entries)):
             self.persistent_dict[self.tag_string + str(x)] = self.enc.all_entries[x].status   
+
 
 # Is this still necessary?
 class ChangeStatusAction(EncyclopaediaEntryAction): 
@@ -193,6 +194,7 @@ class ToggleShowLockedEntryAction(renpy.ui.Action):
         self.enc.showLockedEntry = not self.enc.showLockedEntry
         renpy.restart_interaction()
 
+
 class Encyclopaedia(store.object): 
     """ Container that manages the display and sorting of a group of EncEntries. """
     
@@ -203,7 +205,11 @@ class Encyclopaedia(store.object):
     SORT_SUBJECT = 3
     SORT_UNREAD = 4
             
-    def __init__(self, sorting_mode=0, showLockedButtons=False, showLockedEntry=False, entry_screen=''):
+    def __init__(self,
+                 sorting_mode=0,
+                 showLockedButtons=False,
+                 showLockedEntry=False,
+                 entry_screen=''):
         # List of all subjects
         self.subjects = []
         
@@ -229,7 +235,8 @@ class Encyclopaedia(store.object):
         # If True, locked entries show a placeholder label on the listing screen.
         self.showLockedButtons = showLockedButtons 
         
-        # If True, locked entries can be viewed, but the data is hidden from view with a placeholder (defined in the EncEntry)
+        # If True, locked entries can be viewed,
+        # but the data is hidden from view with a placeholder (defined in the EncEntry)
         self.showLockedEntry = showLockedEntry
 
         # Returns the currently open entry
@@ -426,8 +433,10 @@ class Encyclopaedia(store.object):
                     dict_of_keys)
             
         except (TypeError, KeyError) as e:
-            # The first time the Encyclopaedia is launched, the persistent dictionary doesn't exist yet, causing a TypeError. 
-            # In development, the dictionary may already exist, but without the correct number of keys, causing a KeyError. 
+            # The first time the Encyclopaedia is launched,
+            # the persistent dictionary doesn't exist yet, causing a TypeError.
+            # In development, the dictionary may already exist,
+            # but without the correct number of keys, causing a KeyError.
             setattr(persistent, 
                     vals_name, 
                     {master_key % k: None for k in range(entries_total)})

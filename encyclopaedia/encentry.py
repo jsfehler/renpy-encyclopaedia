@@ -19,9 +19,23 @@ import renpy.store as store
 import renpy.exports as renpy
 
 
+class MissingImageException(Exception):
+    pass
+
+
 class EncEntry(store.object):
-    """Stores an Entry's content. EncEntry should be added to an Encyclopaedia."""
-    def __init__(self, number=0, name="Entry Name", text="Entry Text", subject=None, status=None, locked=False, image=None, locked_name="???", locked_text="???", locked_image=None):  
+    """ Stores an Entry's content. EncEntry should be added to an Encyclopaedia. """
+    def __init__(self,
+                 number=0,
+                 name="Entry Name",
+                 text="Entry Text",
+                 subject=None,
+                 status=None,
+                 locked=False,
+                 image=None,
+                 locked_name="???",
+                 locked_text="???",
+                 locked_image=None):
         self.number = number
         self.name = name
         self.text = self._string_to_list(text)
@@ -35,11 +49,11 @@ class EncEntry(store.object):
         
         # Only set the image if it's not None
         self.has_image = False  
-        if image != None:
+        if image is not None:
             self.image = image
 
             # If there's an image, but no locked image is specified, tint the image and use it as the locked image.
-            if locked_image == None:
+            if locked_image is None:
                  # Tuple is used to set the numbers that tint_locked_image() uses to change the colour of a locked image
                 self.tint_locked_image((0.0, 0.0, 0.0))
             
@@ -64,7 +78,7 @@ class EncEntry(store.object):
         
     @current_page.setter
     def current_page(self, val):
-        self._current_page = val -1
+        self._current_page = val - 1
         
     def _string_to_list(self, given_text):
         """
@@ -90,7 +104,7 @@ class EncEntry(store.object):
         Returns:
             If True or None, return the data requested, else return the locked placeholder for the data
         """
-        if self.locked or self.locked == None:
+        if self.locked or self.locked is None:
             return locked_data
         return data
 
@@ -161,16 +175,16 @@ class EncEntry(store.object):
             True if successful. Exception if not
         """
         if self.has_image:
-            matrix = renpy.display.im.matrix.tint(tint_amount[0], tint_amount[1], tint_amount[2] )
+            matrix = renpy.display.im.matrix.tint(tint_amount[0], tint_amount[1], tint_amount[2])
             self.locked_image = renpy.display.im.MatrixColor(self._image, matrix)
             return True
-        raise Exception("EncEntry has no image. Cannot tint nothing.")
+        raise MissingImageException("EncEntry has no image. Cannot tint nothing.")
 
     def addSubEntry(self, sub_entry):
         """Adds multiple pages to the entry in the form of sub-entries."""
         if not [sub_entry.number, sub_entry] in self.sub_entry_list:
             if not sub_entry in self.sub_entry_list:
-                if sub_entry.locked == False:
+                if sub_entry.locked is False:
                     self.sub_entry_list.append([sub_entry.number, sub_entry])
                     self.sub_entry_list = sorted(self.sub_entry_list, key=itemgetter(0))
                     self.has_sub_entry = True

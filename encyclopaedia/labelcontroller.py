@@ -15,6 +15,7 @@
 
 from math import floor
 
+
 class LabelController(object):
     """
     Controls how the labels that display Encyclopaedia data appear.
@@ -47,7 +48,7 @@ class LabelController(object):
         """
         
         float_size = float(self.encyclopaedia._size)
-        float_size_all = float(self.encyclopaedia._size_all
+        float_size_all = float(self.encyclopaedia._size_all)
         
         amount_unlocked = float_size / float_size_all
         percentage = floor(amount_unlocked * 100)

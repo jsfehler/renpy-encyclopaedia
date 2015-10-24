@@ -17,7 +17,7 @@ import copy
 
 
 class EntryList(list):
-    """list that's been extended with specific sorting options"""
+    """ list that's been extended with specific sorting options """
     
     def _push_to_bottom(self, list_instance, item):
         """
@@ -31,8 +31,9 @@ class EntryList(list):
         Returns:
             The list_instance
         """
+        list_length = len(list_instance)
         popped = list_instance.pop(list_instance.index(item))
-        list_instance.insert(len(list_instance), popped)
+        list_instance.insert(list_length, popped)
         
         return list_instance
         
@@ -51,7 +52,7 @@ class EntryList(list):
 
         # Loop over self.all_entries, but do the changes to changed_all_entries
         for item in self:
-            if item.locked != False:
+            if item.locked is not False:
                 changed_all_entries = self._push_to_bottom(changed_all_entries, item)
         
         del self[:]
@@ -70,8 +71,10 @@ class EntryList(list):
         return item.name        
         
     def _sort_by_name(self, reverse=False, locked_at_bottom=True):     
-        self.sort(reverse=reverse, 
-                  key=self._get_name_key)
+        self.sort(
+            reverse=reverse,
+            key=self._get_name_key
+        )
 
         if locked_at_bottom:
             self._send_locked_entries_to_bottom()

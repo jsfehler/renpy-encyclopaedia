@@ -17,9 +17,12 @@ import copy
 
 
 class EntryList(list):
-    """ list that's been extended with specific sorting options """
-    
-    def _push_to_bottom(self, list_instance, item):
+    """
+    list that's been extended with specific sorting options
+    """
+
+    @staticmethod
+    def _push_to_bottom(list_instance, item):
         """
         Take a list and an item in that list. 
         Pop the item from the list and insert it at the bottom.
@@ -40,11 +43,10 @@ class EntryList(list):
     def _send_locked_entries_to_bottom(self):
         """
         Pushes all the locked entries to the bottom of the list.
-        
         Used when locked entries should appear at the bottom of the list.
 
         Returns:
-            The list
+            self
         """
         
         # We can't pop and insert directly; the loop will get screwed up.   
@@ -61,13 +63,16 @@ class EntryList(list):
         
         return self
 
-    def _get_number_key(self, item):
+    @staticmethod
+    def _get_number_key(item):
         return item.number
         
     def sort_by_number(self):
-        return self.sort(key=self._get_number_key)        
-        
-    def _get_name_key(self, item):
+        sorted_list = self.sort(key=self._get_number_key)
+        return sorted_list
+
+    @staticmethod
+    def _get_name_key(item):
         return item.name        
         
     def sort_by_name(self, reverse=False, locked_at_bottom=True):
@@ -78,8 +83,9 @@ class EntryList(list):
 
         if locked_at_bottom:
             self._send_locked_entries_to_bottom()
-                                  
-    def _get_unread_key(self, item):
+
+    @staticmethod
+    def _get_unread_key(item):
         return item.status    
         
     def sort_by_unread(self):

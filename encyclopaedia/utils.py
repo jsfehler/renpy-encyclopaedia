@@ -58,12 +58,13 @@ def generate_entry_button(x, enc):
             ui.textbutton("New!")
     ui.close()
 
-def GenerateEntryListButtons(encyclopaedia):
+
+def generate_entry_list_buttons(encyclopaedia):
     """
-    Generates one textbutton for each encyclopaedia entry.
+    Generates one renpy textbutton for each encyclopaedia entry.
     
     Parameters:
-        sencyclopaedia: The Encyclopaedia object to get data from
+        encyclopaedia: The Encyclopaedia object to get data from
     """
 
     # If sorting by subject, display the subject heading and add an entry under it if it's the same subject

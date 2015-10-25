@@ -45,7 +45,7 @@ screen encyclopaedia_list:
      
                         python:
                             # Utility function that generates all the buttons used to access the Entries.
-                            GenerateEntryListButtons(encyclopaedia)
+                            generate_entry_list_buttons(encyclopaedia)
 
     frame:
         xalign .98

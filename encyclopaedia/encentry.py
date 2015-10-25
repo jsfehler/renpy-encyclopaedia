@@ -79,12 +79,14 @@ class EncEntry(store.object):
     @current_page.setter
     def current_page(self, val):
         self._current_page = val - 1
-        
-    def _string_to_list(self, given_text):
+
+    @staticmethod
+    def _string_to_list(given_text):
         """
         EncEntry accepts a string or a list of strings for the 'text' argument.
-        Each list item is a paragraph.
-        If a string is given, convert it to a list.
+        Each list item represents a paragraph.
+        If a string is given, convert it to a list,
+        assuming a string with no list = one paragraph.
         """
         # If the text is already in a list, just return it.
         if type(given_text) is renpy.python.RevertableList:
@@ -99,7 +101,8 @@ class EncEntry(store.object):
 
     def _get_entry_data(self, data, locked_data):
         """
-        Used by self.name, self.text, and self.image to control if the locked placeholder or actual entry data should be returned.
+        Used by self.name, self.text, and self.image to control if
+        the locked placeholder or actual entry data should be returned.
         
         Returns:
             If True or None, return the data requested, else return the locked placeholder for the data
@@ -115,7 +118,6 @@ class EncEntry(store.object):
         
         Returns:
             The name for the EncEntry
-        
         """
         return self._name
         
@@ -175,18 +177,27 @@ class EncEntry(store.object):
             True if successful. Exception if not
         """
         if self.has_image:
-            matrix = renpy.display.im.matrix.tint(tint_amount[0], tint_amount[1], tint_amount[2])
+            matrix = renpy.display.im.matrix.tint(
+                tint_amount[0],
+                tint_amount[1],
+                tint_amount[2]
+            )
             self.locked_image = renpy.display.im.MatrixColor(self._image, matrix)
             return True
         raise MissingImageException("EncEntry has no image. Cannot tint nothing.")
 
     def addSubEntry(self, sub_entry):
-        """Adds multiple pages to the entry in the form of sub-entries."""
+        """
+        Adds multiple pages to the entry in the form of sub-entries.
+        """
         if not [sub_entry.number, sub_entry] in self.sub_entry_list:
             if not sub_entry in self.sub_entry_list:
                 if sub_entry.locked is False:
                     self.sub_entry_list.append([sub_entry.number, sub_entry])
-                    self.sub_entry_list = sorted(self.sub_entry_list, key=itemgetter(0))
+                    self.sub_entry_list = sorted(
+                        self.sub_entry_list,
+                        key=itemgetter(0)
+                    )
                     self.has_sub_entry = True
             
                     self.pages = len(self.sub_entry_list)
@@ -194,13 +205,19 @@ class EncEntry(store.object):
         return False
 
     def addSubEntries(self, *new_sub_entries):
-        """Adds multiple new sub-entries at once."""
+        """
+        Adds multiple new sub-entries at once.
+        """
         for item in new_sub_entries:
             self.addSubEntry(item)
 
     def getSubEntry(self, page):
-        """Returns the text on given page."""
-        return self.sub_entry_list[page][1].text
+        """
+        Returns the text on given page.
+        """
+        current_page_text = self.sub_entry_list[page][1].text
+
+        return current_page_text
 
     def unlockSubEntry(self, item, unlock_flag):
         item.locked = unlock_flag

@@ -32,7 +32,7 @@ class LabelController(object):
         # Placed in-between the current page number and the total page number 
         self.page_separator_label = '/'
    
-        # Variables for the strings representating the different sorting types
+        # Variables for the strings representing the different sorting types
         self.sort_number_label = "Number"
         self.sort_alphabetically_label = "A to Z"
         self.sort_reverse_alphabetically_label = "Z to A"
@@ -43,8 +43,8 @@ class LabelController(object):
     def percentage_unlocked(self): 
         """ 
         Returns: 
-            String displaying the percentage of the encyclopaedia that's unlocked, 
-            ie: '50%'
+            String displaying the percentage of the encyclopaedia
+            that's unlocked, ie: '50%'
         """
         
         float_size = float(self.encyclopaedia._size)
@@ -77,12 +77,15 @@ class LabelController(object):
         Returns:
             String representation of the current sorting mode
         """
+
+        enc = self.encyclopaedia
+
         sorting_strings = {
-            self.encyclopaedia.SORT_NUMBER: self.sort_number_label,
-            self.encyclopaedia.SORT_ALPHABETICALLY: self.sort_alphabetically_label,
-            self.encyclopaedia.SORT_REVERSE_ALPHABETICALLY: self.sort_reverse_alphabetically_label,
-            self.encyclopaedia.SORT_SUBJECT: self.sort_subject_label,
-            self.encyclopaedia.SORT_UNREAD: self.sort_unread_label
+            enc.SORT_NUMBER: self.sort_number_label,
+            enc.SORT_ALPHABETICALLY: self.sort_alphabetically_label,
+            enc.SORT_REVERSE_ALPHABETICALLY: self.sort_reverse_alphabetically_label,
+            enc.SORT_SUBJECT: self.sort_subject_label,
+            enc.SORT_UNREAD: self.sort_unread_label
         }
 
         return sorting_strings[self.encyclopaedia.sorting_mode]  

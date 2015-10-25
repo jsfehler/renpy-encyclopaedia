@@ -18,7 +18,8 @@ import copy
 
 class EntryList(list):
     """
-    list that's been extended with specific sorting options
+    list that's been extended with specific sorting options.
+    EntryList should only contain EncEntry objects.
     """
 
     @staticmethod
@@ -52,10 +53,13 @@ class EntryList(list):
         # We can't pop and insert directly; the loop will get screwed up.   
         changed_all_entries = copy.copy(self)
 
-        # Loop over self.all_entries, but do the changes to changed_all_entries
+        # Loop over the list, but do the changes to changed_all_entries
         for item in self:
             if item.locked is not False:
-                changed_all_entries = self._push_to_bottom(changed_all_entries, item)
+                changed_all_entries = self._push_to_bottom(
+                    changed_all_entries,
+                    item
+                )
         
         del self[:]
         for item in changed_all_entries:
@@ -68,8 +72,8 @@ class EntryList(list):
         return item.number
         
     def sort_by_number(self):
-        sorted_list = self.sort(key=self._get_number_key)
-        return sorted_list
+        self.sort(key=self._get_number_key)
+        return self
 
     @staticmethod
     def _get_name_key(item):
@@ -84,6 +88,8 @@ class EntryList(list):
         if locked_at_bottom:
             self._send_locked_entries_to_bottom()
 
+        return self
+
     @staticmethod
     def _get_unread_key(item):
         return item.status    
@@ -94,5 +100,8 @@ class EntryList(list):
                        
         self.sort(key=self._get_unread_key)
         
-        # In this scenario, locked entries should always be at the bottom, since they can never be unread or read
+        # In this scenario, locked entries should always be at the bottom,
+        # since they can never be unread or read
         self._send_locked_entries_to_bottom()
+
+        return self

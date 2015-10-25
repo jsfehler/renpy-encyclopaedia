@@ -89,7 +89,8 @@ class Encyclopaedia(store.object):
     def entry_list_size(self):
         """
         Returns:
-            Whatever the current size of the entry list should be, based on if locked buttons should be shown or not.
+            Whatever the current size of the entry list should be,
+            based on if locked buttons should be shown or not.
         """
         if self.show_locked_buttons:
             return self._size_all
@@ -99,7 +100,8 @@ class Encyclopaedia(store.object):
     def max_size(self):
         """
         Returns:
-            Whatever the maximum size of the entry list should be, based on if locked buttons should be shown or not.
+            Whatever the maximum size of the entry list should be,
+            based on if locked buttons should be shown or not.
         """
         if self.show_locked_entry:
             return self._size_all
@@ -288,7 +290,9 @@ class Encyclopaedia(store.object):
         )
 
     def addEntry(self, item):
-        """Adds an entry to the encyclopaedia and sorts it."""
+        """
+        Adds an entry to the encyclopaedia and sorts it.
+        """
         
         # Add to list of all entries
         if not item in self.all_entries:  # Prevents duplicate entries
@@ -312,13 +316,15 @@ class Encyclopaedia(store.object):
         self._size_all = len(self.all_entries)
 
     def addEntries(self, *new_entries): 
-        """Adds multiple new entries at once"""
+        """
+        Adds multiple new entries at once.
+        """
         for item in new_entries:
             self.addEntry(item)
 
     def addSubject(self, new_subject): 
         """
-        Adds a new subject to the Encyclopaedia. Won't allow duplicates
+        Adds a new subject to the Encyclopaedia. Won't allow duplicates.
         
         Returns:
             True if the subject was added, False if it was not
@@ -338,28 +344,58 @@ class Encyclopaedia(store.object):
         Returns:
             Screen Action. Use with a button
         """
-        return actions.ChangeEntryAction(self, -1, self.check_min(self.current_position, 0))
+        return actions.ChangeEntryAction(
+            self,
+            -1,
+            self.check_min(
+                self.current_position,
+                0
+            )
+        )
 
     def NextEntry(self):
         """
         Returns:
             Screen Action. Use with a button
         """
-        return actions.ChangeEntryAction(self, 1, self.check_max(self.current_position, self.max_size - 1))
+        return actions.ChangeEntryAction(
+            self,
+            1,
+            self.check_max(
+                self.current_position,
+                self.max_size - 1
+            )
+        )
 
     def PreviousPage(self):
         """
         Returns:
             Screen Action. Use with a button
         """
-        return actions.ChangePageAction(self, -2, -1, self.check_min(self.sub_current_position, 1))
+        return actions.ChangePageAction(
+            self,
+            -2,
+            -1,
+            self.check_min(
+                self.sub_current_position,
+                1
+            )
+        )
 
     def NextPage(self):
         """
         Returns:
             Screen Action. Use with a button
         """
-        return actions.ChangePageAction(self, 0, 1, self.check_max(self.sub_current_position, self.active.pages))
+        return actions.ChangePageAction(
+            self,
+            0,
+            1,
+            self.check_max(
+                self.sub_current_position,
+                self.active.pages
+            )
+        )
 
     def Sort(self, sorting_mode=None):
         """        
@@ -373,7 +409,7 @@ class Encyclopaedia(store.object):
             sorting_mode = self.sorting_mode
         return actions.SortEncyclopaedia(self, sorting_mode)
 
-    def SetEntry(self,given_entry):
+    def SetEntry(self, given_entry):
         """
         Returns:
             Screen Action. Use with a button.

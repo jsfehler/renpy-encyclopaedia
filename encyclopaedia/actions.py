@@ -50,18 +50,25 @@ class ChangeEntryAction(renpy.ui.Action):
         # Determines if it's going to the previous or next entry
         self.dir = direction
 
+    def get_target_position(self):
+        """
+        If NOT showing locked entries, the next entry we want to see is
+        the next entry in unlocked_entries.
+        Else, the next entry we want is the next entry in all_entries.
+        """
+        if self.enc.show_locked_entry is False:
+            target = self.enc.unlocked_entries[self.enc.current_position]
+        else:
+            target = self.enc.all_entries[self.enc.current_position]
+
+        return target
+
     def __call__(self):
         if self.block is False:
             # Update the current position
             self.enc.current_position += self.dir
 
-            # If NOT showing locked entries, the next entry we want to see is,
-            # the next entry in unlocked_entries. Take that entry, and index
-            # all_entries to find the target_position
-            if self.enc.show_locked_entry is False:
-                target_position = self.enc.unlocked_entries[self.enc.current_position]
-            else:
-                target_position = self.enc.all_entries[self.enc.current_position]
+            target_position = self.get_target_position()
 
             # Update the active entry
             self.enc.active = target_position

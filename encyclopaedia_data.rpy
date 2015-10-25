@@ -39,7 +39,7 @@ init python:
     encyclopaedia = Encyclopaedia(
         show_locked_buttons=True,
         show_locked_entry=True,
-        entry_screen = "encyclopaedia_entry"
+        entry_screen="encyclopaedia_entry"
     )
     
     # If the encyclopaedia is save game independent, run this function to generate the persistent status variables. 

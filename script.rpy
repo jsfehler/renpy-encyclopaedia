@@ -14,7 +14,7 @@
 # along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
 init -1 python:
-	# Encyclopaedia needs to be imported before it can be used
+    # Encyclopaedia needs to be imported before it can be used
     from encyclopaedia.encyclopaedia import Encyclopaedia
     from encyclopaedia.encentry import EncEntry
     from encyclopaedia.utils import GenerateEntryListButtons

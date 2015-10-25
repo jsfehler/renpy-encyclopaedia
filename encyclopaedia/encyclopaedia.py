@@ -14,6 +14,7 @@
 # along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
 import renpy.store as store
+import renpy.exports as renpy
 
 import actions
 from entrylist import EntryList

@@ -64,16 +64,19 @@ class Encyclopaedia(store.object):
         self.show_locked_buttons = show_locked_buttons
         
         # If True, locked entries can be viewed,
-        # but the data is hidden from view with a placeholder (defined in the EncEntry)
+        # but the data is hidden from view with a placeholder
+        # (defined in the EncEntry)
         self.show_locked_entry = show_locked_entry
 
         # Returns the currently open entry
         self.active = None
         
-        # Pointer for the current entry open. Is the current position based on the unlocked list.
+        # Pointer for the current entry open.
+        # The current position based on the unlocked list.
         self.current_position = 0
         
-        # The default sub-entry position is 1 because the parent entry is the first page in the sub-entry list
+        # The default sub-entry position is 1 because
+        # the parent entry is the first page in the sub-entry list
         self.sub_current_position = 1
         
         # The screen to display an open entry
@@ -115,7 +118,9 @@ class Encyclopaedia(store.object):
             tint_amount: tuple containing an RGB value (R, G, B)
         """
         for item_number, item in self.all_entries:
-            item.tint_locked_image((tint_amount[0], tint_amount[1], tint_amount[2]))        
+            item.tint_locked_image(
+                (tint_amount[0], tint_amount[1], tint_amount[2])
+            )
         
     def unlock_entry(self, entry, unlock_flag):
         """
@@ -172,29 +177,40 @@ class Encyclopaedia(store.object):
         """
         return self.unlocked_entries[entry_number]
         
-    # Checks the current_position against the min or max of the encyclopaedia, returns Boolean
+    # Checks the current_position against the min or max of the encyclopaedia,
     # Used to determine if the Prev/Next Actions should be active
     def check_min(self, check_position, min_val):
+        """
+        Returns:
+            boolean
+        """
         if check_position <= min_val:
             return True
         return False
 
     def check_max(self, check_position, max_val):
+        """
+        Returns:
+            boolean
+        """
         if check_position >= max_val:
             return True
         return False
- 
-    def _make_persistent_dict(self, total, master_key, persistent_var_string):
+
+    @staticmethod
+    def _make_persistent_dict(total, master_key, persistent_var_string):
         """
         For the total amount given,
-            1) takes two strings to define a series of keys and values in a dictionary. 
+            1) takes two strings to define a series of keys and values in a
+                dictionary.
             2) Creates two lists and evaluates the values to variables. 
             3) Then combines the lists into a dictionary.
         
         Parameters:
             total: The number of entries in the dictionary that's going to be made
             master_key: The prefix for the keys
-            persistent_var_string: The string that will be turned into the variables for the values in the dictionary
+            persistent_var_string: The string that will be turned into the
+                variables for the values in the dictionary
             
         Returns:
             Dictionary with persistent values
@@ -211,52 +227,77 @@ class Encyclopaedia(store.object):
         combo = zip(keys, vals)
         return dict(combo)  
 
-    def setPersistentStatus(self, entries_total=0, master_key="new", name="new"):
+    def setPersistentStatus(
+            self,
+            entries_total=0,
+            master_key="new",
+            name="new"):
         """
-        Create the persistent status variables to manage the "New!" status if an Encyclopaedia is save game independent.
-        This will create the variables, but it's up to you to use them in the "status" argument for an EncEntry.
+        Create the persistent status variables to manage the "New!" status if
+        the Encyclopaedia is save game independent.
+
+        If the Encyclopaedia is tied to a save game state, using persistent
+        variables is unnecessary.
+
+        This will create the variables, but it's up to you to use them in
+        the "status" argument for an EncEntry.
+
         This function must always be called when the game starts.
         
-        If you want a save game specific "New!" status, don't use persistent variables, 
+        If you want a save game specific "New!" status,
+        don't use persistent variables,
         and create the EncEntry after the start label, not in an init block.
         
         How it works:
-        Two dictionaries are created: persistent.<name>_vals and persistent.<name>_dict.
+        Two dictionaries are created:
+        persistent.<name>_vals
+        persistent.<name>_dict.
+
         master_key is the prefix for all the keys in both dictionaries.
         name is the prefix for the dictionary names.
         Both default to "new".
         
-        When this function runs, each key in persistent.new_vals is given the value of an entry in 
-        persistent.new_dict and vice versa.
+        When this function runs, each key in persistent.new_vals is
+        given the value of an entry in persistent.new_dict and vice versa.
         eg: persistent.new_vals["new_00"] = persistent.new_dict["new_00"]
             persistent.new_dict["new_00"] = persistent.new_dict["new_00"]
             
-        Each EncEntry must use persistent.new_dict["new_<x>"] for their status variable.
-            
+        Each EncEntry must use persistent.new_dict["new_<x>"]
+        for their status variable.
+        <x> being an integer.
+
         Why it works:
         If the value is None or False, "New!" is displayed.
-        As each entry is opened and exited, the value in new_dict is set to True.
+        As each entry is opened and exited, the value in new_dict
+        is set to True.
         
-        Each time the game is started, new_vals is set to whatever the matching new_dict value is.
+        Each time the game is started, new_vals is set to
+        whatever the matching new_dict value is.
         new_dict then sets itself to whatever new_vals is.
         
-        The reason this is all necessary is that if an Encyclopaedia is created in an init block,
-        there's no way to save the data without using persistent data, but you don't want the init to reset
-        the persistent data each time the game opens.
+        The reason this is all necessary is that if an Encyclopaedia
+        is created in an init block, there's no way to save the data without
+        using persistent data, but you don't want the init to reset
+        the persistent data each time the game opens and the Encyclopaedia is
+        created anew.
         """
         global persistent
-        
-        # Set the status variables to the dictionary values.
-        master_key = master_key + "_0%s"
-        vals_name = name + "_vals"
-        dict_name = name + "_dict"
 
+        # Build strings that represent the persistent dictionaries.
+        master_key = master_key + "_0%s"
+        persistent_name = 'persistent.' + name
+
+        vals_name = persistent_name + "_vals"
+        dict_name = persistent_name + "_dict"
+
+        # Set the status variables to the dictionary values.
         try:
-            # Set every value in persistent.<vals_name> to be a key in persistent.<dict_name> 
+            # Set every value in persistent.<vals_name>
+            # to be a key in persistent.<dict_name>
             dict_of_keys = self._make_persistent_dict(
                 entries_total,
                 master_key,
-                'persistent.%s["%s"]' % (dict_name, master_key)
+                '%s["%s"]' % (dict_name, master_key)
             )
             
             # Set persistent.<vals_name> to be a dictionary
@@ -277,11 +318,12 @@ class Encyclopaedia(store.object):
                 {master_key % k: None for k in range(entries_total)}
             )
             
-        # Set every value in persistent.new_dict to be a key in persistent.new_vals    
+        # Set every value in persistent.new_dict
+        # to be a key in persistent.new_vals
         dict_of_values = self._make_persistent_dict(
             entries_total,
             master_key,
-            'persistent.%s["%s"]' % (vals_name, master_key))
+            '%s["%s"]' % (vals_name, master_key))
 
         setattr(
             persistent,

@@ -16,10 +16,11 @@ init python:
     wine2 = "More Wine"
     wine3 = "More Wine 3x" 
     
-    # A list of strings can be used instead of a single string. The default UI will show this as paragraphs.
+    # A list of strings can be used instead of a single string.
+    # The default UI will show this as paragraphs.
     women = [
-    "Who does not Love Wine Wife & Song will be a Fool for his Lifelong!",
-    "Wine, women, and song is a hendiatris that endorses hedonistic lifestyles or behaviours. In modern times, it is usually seen in the form sex, drugs, and rock 'n' roll.",
+        "Who does not Love Wine Wife & Song will be a Fool for his Lifelong!",
+        "Wine, women, and song is a hendiatris that endorses hedonistic lifestyles or behaviours. In modern times, it is usually seen in the form sex, drugs, and rock 'n' roll.",
     ]
 
     # Variables to hold the image paths. The path is relative to your game/ directory.
@@ -48,7 +49,11 @@ init python:
     # entries_total is the total number of EncEntries the Encyclopaedia will hold.
     # master_key and name are what determines the name of the status variables and the name of each key.
     # only change master_key and name if you need multiple encyclopaedias in a game.
-    encyclopaedia.setPersistentStatus(entries_total=7, master_key="new", name="new")
+    encyclopaedia.setPersistentStatus(
+        entries_total=7,
+        master_key="new",
+        name="new"
+    )
   
     # Let's store the names of our subjects as variables. 
     # You can just use the strings when making the EncEntry, but doing it like this will help prevent typos,
@@ -61,13 +66,75 @@ init python:
     # The arguments are: number, name, text, subject, status, locked, image
     # if save game independent, status should always be from the persistent.new_dict or it won't save
     # if locked=False, entry will always be visible, even if new game hasn't been started
-    en1 = EncEntry(1, "Lorem", lorem, subject_lorem_ipsum, status=persistent.new_dict["new_00"], locked=False, image=en1_image)
-    en2 = EncEntry(2, "Cras", cras, subject_lorem_ipsum, status=persistent.new_dict["new_01"],  locked=False, image=en2_image)
-    en3 = EncEntry(3, "In", infeu, subject_lorem_ipsum, status=persistent.new_dict["new_02"], locked=False, image=en3_image)
-    en4 = EncEntry(4, "Morbi", morbi, subject_lorem_ipsum, status=persistent.new_dict["new_03"], locked=persistent.en4_locked, image=en4_image, locked_image=None)
-    en5 = EncEntry(5, "Mauris", mauris, subject_lorem_ipsum, status=persistent.new_dict["new_04"], locked=False)
-    en6 = EncEntry(6, "Wine", wine, subject_virtues, status=persistent.new_dict["new_05"], locked=persistent.en6_locked)
-    en7 = EncEntry(7, "Women", women, subject_virtues, status=persistent.new_dict["new_06"], locked=persistent.en7_locked, image=en7_image, locked_image=None)
+    en1 = EncEntry(
+        1,
+        "Lorem",
+        lorem,
+        subject_lorem_ipsum,
+        status=persistent.new_dict["new_00"],
+        locked=False,
+        image=en1_image
+    )
+
+    en2 = EncEntry(
+        2,
+        "Cras",
+        cras,
+        subject_lorem_ipsum,
+        status=persistent.new_dict["new_01"],
+        locked=False,
+        image=en2_image
+    )
+
+    en3 = EncEntry(
+        3,
+        "In",
+        infeu,
+        subject_lorem_ipsum,
+        status=persistent.new_dict["new_02"],
+        locked=False,
+        image=en3_image
+    )
+
+    en4 = EncEntry(
+        4,
+        "Morbi",
+        morbi,
+        subject_lorem_ipsum,
+        status=persistent.new_dict["new_03"],
+        locked=persistent.en4_locked,
+        image=en4_image,
+        locked_image=None
+    )
+
+    en5 = EncEntry(
+        5,
+        "Mauris",
+        mauris,
+        subject_lorem_ipsum,
+        status=persistent.new_dict["new_04"],
+        locked=False
+    )
+
+    en6 = EncEntry(
+        6,
+        "Wine",
+        wine,
+        subject_virtues,
+        status=persistent.new_dict["new_05"],
+        locked=persistent.en6_locked
+    )
+
+    en7 = EncEntry(
+        7,
+        "Women",
+        women,
+        subject_virtues,
+        status=persistent.new_dict["new_06"],
+        locked=persistent.en7_locked,
+        image=en7_image,
+        locked_image=None
+    )
   
     # Add all entries and sub-entries in an init block.
     encyclopaedia.addEntries(
@@ -82,10 +149,12 @@ init python:
     # To do this one at a time, use addEntry() instead
     # This auto-sorts when adding.
     
-    # en4 and en6 won't be viewed at the start because they're locked by persistent data.
+    # en4 and en6 won't be viewed at the start because
+    # they're locked by persistent data.
     # After they're unlocked, they'll be available whenever the game loads. 
 
-    #When creating sub-entries, the main entry is considered page 1, always start at 2
+    # When creating sub-entries, the main entry is considered page 1,
+    # so always start at 2.
     en2_2 = EncEntry(
         2,
         "Cras 2",

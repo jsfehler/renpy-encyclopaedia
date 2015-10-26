@@ -88,4 +88,4 @@ class LabelController(object):
             enc.SORT_UNREAD: self.sort_unread_label
         }
 
-        return sorting_strings[self.encyclopaedia.sorting_mode]  
+        return sorting_strings[enc.sorting_mode]

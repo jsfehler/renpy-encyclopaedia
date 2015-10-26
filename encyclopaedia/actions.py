@@ -92,8 +92,21 @@ class ChangePageAction(ChangeEntryAction):
     """
     Change the current sub-entry being viewed.
     """
-    def __init__(self, encyclopaedia, direction, direction2, block, *args, **kwargs):
-        super(ChangePageAction, self).__init__(encyclopaedia, direction, block, *args, **kwargs)
+    def __init__(
+            self,
+            encyclopaedia,
+            direction,
+            direction2,
+            block,
+            *args,
+            **kwargs):
+        super(ChangePageAction, self).__init__(
+            encyclopaedia,
+            direction,
+            block,
+            *args,
+            **kwargs
+        )
 
         self.dir1 = direction
         self.dir2 = direction2
@@ -141,7 +154,8 @@ class SaveStatusAction(renpy.ui.Action):
 
     def __call__(self):
         for x in range(len(self.enc.all_entries)):
-            self.persistent_dict[self.tag_string + str(x)] = self.enc.all_entries[x].status
+            key = self.tag_string + str(x)
+            self.persistent_dict[key] = self.enc.all_entries[x].status
 
 
 # Is this still necessary?

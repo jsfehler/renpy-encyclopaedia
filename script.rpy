@@ -17,7 +17,7 @@ init -1 python:
     # Encyclopaedia needs to be imported before it can be used
     from encyclopaedia.encyclopaedia import Encyclopaedia
     from encyclopaedia.encentry import EncEntry
-    from encyclopaedia.utils import GenerateEntryListButtons
+    from encyclopaedia.utils import generate_entry_list_buttons
     
 ##############################################################################
 # Encyclopaedia Button

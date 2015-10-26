@@ -43,26 +43,25 @@ class EntryList(list):
         
     def _send_locked_entries_to_bottom(self):
         """
-        Pushes all the locked entries to the bottom of the list.
-        Used when locked entries should appear at the bottom of the list.
+        Moves all the locked entries to the bottom of the list.
 
         Returns:
             self
         """
         
         # We can't pop and insert directly; the loop will get screwed up.   
-        changed_all_entries = copy.copy(self)
+        changed_list = copy.copy(self)
 
         # Loop over the list, but do the changes to changed_all_entries
         for item in self:
             if item.locked is not False:
-                changed_all_entries = self._push_to_bottom(
-                    changed_all_entries,
+                changed_list = self._push_to_bottom(
+                    changed_list,
                     item
                 )
         
         del self[:]
-        for item in changed_all_entries:
+        for item in changed_list:
             self.append(item)        
         
         return self
@@ -72,6 +71,9 @@ class EntryList(list):
         return item.number
         
     def sort_by_number(self):
+        """
+        Entries are sorted by their number.
+        """
         self.sort(key=self._get_number_key)
         return self
 
@@ -80,6 +82,16 @@ class EntryList(list):
         return item.name        
         
     def sort_by_name(self, reverse=False, locked_at_bottom=True):
+        """
+        Entries are sorted by their name attribute.
+
+        Parameters:
+            reverse: False for A to Z, True for Z to A
+            locked_at_bottom: Locked entries go to the bottom of the list
+
+        Returns:
+            self
+        """
         self.sort(
             reverse=reverse,
             key=self._get_name_key
@@ -95,12 +107,19 @@ class EntryList(list):
         return item.status    
         
     def sort_by_unread(self):
+        """
+        Like sort_by_name, but unread entries appear at the top of the list.
+
+        Returns:
+            self
+        """
+
         # Sort by name first
         self.sort_by_name()
                        
         self.sort(key=self._get_unread_key)
         
-        # In this scenario, locked entries should always be at the bottom,
+        # Locked entries should always be at the bottom,
         # since they can never be unread or read
         self._send_locked_entries_to_bottom()
 

@@ -21,7 +21,8 @@ ui = renpy.ui
 def generate_entry_button(x, enc):
     """ 
     Create a single button for an Entry in an Encyclopaedia.
-    Call this function on a Ren'Py screen, inside whatever other UI (Window, box, etc) you want, inside a for loop.
+    Call this function on a Ren'Py screen, inside whatever other UI
+    (Window, box, etc) you want, inside a for loop.
     
     Parameters:
         x: is the Entry's position in the Encyclopaedia's list of entries.
@@ -33,27 +34,39 @@ def generate_entry_button(x, enc):
     ui.hbox()
     # If locked buttons should be visible.
     if enc.show_locked_buttons:
-        # If the entry is unlocked, make the button point to it. If it's locked, make a "???" button.
+        # If the entry is unlocked, make the button point to it.
+        # If it's locked, make a "???" button.
         if enc.all_entries[x].locked is False:
-            ui.textbutton(enc.all_entries[x].name, clicked=enc.SetEntry(enc.all_entries[x]))
+            ui.textbutton(
+                enc.all_entries[x].name,
+                clicked=enc.SetEntry(enc.all_entries[x])
+            )
             
-            # Make a tag next to the button if it hasn't been viewed by the player yet.
+            # Make a tag next to the button,
+            # if it hasn't been viewed by the player yet.
             if not enc.all_entries[x].status:    
                 ui.textbutton("New!")
 
         else:
-            # If locked entries should be viewable, the "???" button should go to the entry. 
+            # If locked entries should be viewable,
+            # the "???" button should go to the entry.
             # If not, it's an inactive button.
             if enc.show_locked_entry:
-                ui.textbutton("???", clicked=enc.SetEntry(enc.all_entries[x]))
+                ui.textbutton(
+                    "???",
+                    clicked=enc.SetEntry(enc.all_entries[x])
+                )
             else:
                 ui.textbutton("???")
 
     # If locked buttons should not be visible. (No need for the "???" buttons.)
     elif enc.show_locked_buttons is False:
-        ui.textbutton(enc.unlocked_entries[x].name, clicked=enc.SetEntry(enc.unlocked_entries[x]))
+        ui.textbutton(
+            enc.unlocked_entries[x].name,
+            clicked=enc.SetEntry(enc.unlocked_entries[x]))
         
-        # Make a tag next to the button if it hasn't been viewed by the player yet.
+        # Make a tag next to the button
+        # if it hasn't been viewed by the player yet.
         if not enc.unlocked_entries[x].status:
             ui.textbutton("New!")
     ui.close()
@@ -67,7 +80,8 @@ def generate_entry_list_buttons(encyclopaedia):
         encyclopaedia: The Encyclopaedia object to get data from
     """
 
-    # If sorting by subject, display the subject heading and add an entry under it if it's the same subject
+    # If sorting by subject, display the subject heading and
+    # add an entry under it if it's the same subject
     if encyclopaedia.sorting_mode == encyclopaedia.SORT_SUBJECT:
         for x in range(len(encyclopaedia.subjects)):
             ui.text(encyclopaedia.subjects[x])
@@ -83,7 +97,8 @@ def generate_entry_list_buttons(encyclopaedia):
             generate_entry_button(x, encyclopaedia)   
             ui.close()
 
-    # If sorting Alphabetically or Reverse-Alphabetically, don't add anything before the entry
+    # If sorting Alphabetically or Reverse-Alphabetically,
+    # don't add anything before the entry
     else:
         for x in range(encyclopaedia.entry_list_size):
             generate_entry_button(x, encyclopaedia)

@@ -24,7 +24,9 @@ persistent = renpy.game.persistent
 
 
 class Encyclopaedia(store.object): 
-    """ Container that manages the display and sorting of a group of EncEntries. """
+    """
+    Container that manages the display and sorting of a group of EncEntries.
+    """
     
     # Constants for the different types of sorting available.
     SORT_NUMBER = 0
@@ -250,16 +252,16 @@ class Encyclopaedia(store.object):
         
         How it works:
         Two dictionaries are created:
-        persistent.<name>_vals
+        persistent.<name>_cache
         persistent.<name>_dict.
 
         master_key is the prefix for all the keys in both dictionaries.
         name is the prefix for the dictionary names.
         Both default to "new".
         
-        When this function runs, each key in persistent.new_vals is
+        When this function runs, each key in persistent.new_cache is
         given the value of an entry in persistent.new_dict and vice versa.
-        eg: persistent.new_vals["new_00"] = persistent.new_dict["new_00"]
+        eg: persistent.new_cache["new_00"] = persistent.new_dict["new_00"]
             persistent.new_dict["new_00"] = persistent.new_dict["new_00"]
             
         Each EncEntry must use persistent.new_dict["new_<x>"]
@@ -271,9 +273,9 @@ class Encyclopaedia(store.object):
         As each entry is opened and exited, the value in new_dict
         is set to True.
         
-        Each time the game is started, new_vals is set to
+        Each time the game is started, new_cache is set to
         whatever the matching new_dict value is.
-        new_dict then sets itself to whatever new_vals is.
+        new_dict then sets itself to whatever new_cache is.
         
         The reason this is all necessary is that if an Encyclopaedia
         is created in an init block, there's no way to save the data without
@@ -284,46 +286,54 @@ class Encyclopaedia(store.object):
         global persistent
 
         # Build strings that represent the persistent dictionaries.
-        master_key = master_key + "_0%s"
+        # ie: "persistent.new_cache" and "persistent.new_dict"
+        master_key += "_0%s"
         persistent_name = 'persistent.' + name
 
-        vals_name = persistent_name + "_vals"
+        cache_name = persistent_name + "_cache"
         dict_name = persistent_name + "_dict"
 
-        # Set the status variables to the dictionary values.
+        dict_of_keys = self._make_persistent_dict(
+            entries_total,
+            master_key,
+            '%s["%s"]' % (dict_name, master_key)
+        )
+
         try:
-            # Set every value in persistent.<vals_name>
-            # to be a key in persistent.<dict_name>
-            dict_of_keys = self._make_persistent_dict(
-                entries_total,
-                master_key,
-                '%s["%s"]' % (dict_name, master_key)
-            )
-            
-            # Set persistent.<vals_name> to be a dictionary
+            # Set persistent.<cache_name> to be a dictionary in renpy persistent
+            # Set every value in persistent.<cachename>
+            # to be an item in persistent.<dict_name>
+            # ie: persistent.new_cache = {
+            #   'new_01': persistent.new_dict['new_01]'
+            # }
             setattr(
                 persistent,
-                vals_name,
+                cache_name,
                 dict_of_keys
             )
-            
+
         except (TypeError, KeyError) as e:
             # The first time the Encyclopaedia is launched,
             # the persistent dictionary doesn't exist yet, causing a TypeError.
+
             # In development, the dictionary may already exist,
             # but without the correct number of keys, causing a KeyError.
+
+            # ie: persistent.new_cache = {
+            #   'new_01': None'
+            # }
             setattr(
                 persistent,
-                vals_name,
+                cache_name,
                 {master_key % k: None for k in range(entries_total)}
             )
-            
+
         # Set every value in persistent.new_dict
-        # to be a key in persistent.new_vals
+        # to be a key in persistent.new_cache
         dict_of_values = self._make_persistent_dict(
             entries_total,
             master_key,
-            '%s["%s"]' % (vals_name, master_key))
+            '%s["%s"]' % (cache_name, master_key))
 
         setattr(
             persistent,
@@ -377,7 +387,9 @@ class Encyclopaedia(store.object):
         return False
 
     def addSubjects(self, *new_subjects): 
-        """Adds multiple new subjects at once"""
+        """
+        Adds multiple new subjects at once
+        """
         for item in new_subjects:
             self.addSubject(item)                
                 
@@ -442,7 +454,8 @@ class Encyclopaedia(store.object):
     def Sort(self, sorting_mode=None):
         """        
         Parameters: 
-            sorting_mode: The type of sorting to use. If None specified, use the current sorting.
+            sorting_mode: The type of sorting to use.
+                If None specified, use the current sorting.
         
         Returns:
             Screen Action. Use with a button.

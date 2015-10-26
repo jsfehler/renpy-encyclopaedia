@@ -24,7 +24,10 @@ class MissingImageException(Exception):
 
 
 class EncEntry(store.object):
-    """ Stores an Entry's content. EncEntry should be added to an Encyclopaedia. """
+    """
+    Stores an Entry's content.
+    EncEntry should be added to an Encyclopaedia.
+    """
     def __init__(self,
                  number=0,
                  name="Entry Name",
@@ -52,9 +55,11 @@ class EncEntry(store.object):
         if image is not None:
             self.image = image
 
-            # If there's an image, but no locked image is specified, tint the image and use it as the locked image.
+            # If there's an image, but no locked image is specified,
+            # tint the image and use it as the locked image.
             if locked_image is None:
-                 # Tuple is used to set the numbers that tint_locked_image() uses to change the colour of a locked image
+                # Tuple is used to set the numbers that tint_locked_image()
+                # uses to change the colour of a locked image
                 self.tint_locked_image((0.0, 0.0, 0.0))
             
         # Number of pages in the entry
@@ -105,7 +110,8 @@ class EncEntry(store.object):
         the locked placeholder or actual entry data should be returned.
         
         Returns:
-            If True or None, return the data requested, else return the locked placeholder for the data
+            If True or None, return the data requested,
+            else return the locked placeholder for the data
         """
         if self.locked or self.locked is None:
             return locked_data
@@ -114,7 +120,8 @@ class EncEntry(store.object):
     @property
     def name(self):
         """
-        The name for the entry. If the entry is locked, returns the placeholder instead
+        The name for the entry.
+        If the entry is locked, returns the placeholder instead.
         
         Returns:
             The name for the EncEntry
@@ -132,7 +139,8 @@ class EncEntry(store.object):
     @property
     def text(self):
         """
-        The text for the entry. If the entry is locked, returns the placeholder instead
+        The text for the entry.
+        If the entry is locked, returns the placeholder instead.
         
         Returns:
             The text for the EncEntry
@@ -150,7 +158,8 @@ class EncEntry(store.object):
     @property
     def image(self):
         """
-        The image for the entry. If the entry is locked, returns the placeholder instead
+        The image for the entry.
+        If the entry is locked, returns the placeholder instead.
         
         Returns:
             The image for the EncEntry
@@ -184,7 +193,9 @@ class EncEntry(store.object):
             )
             self.locked_image = renpy.display.im.MatrixColor(self._image, matrix)
             return True
-        raise MissingImageException("EncEntry has no image. Cannot tint nothing.")
+        raise MissingImageException(
+            "EncEntry has no image. Cannot tint nothing."
+        )
 
     def addSubEntry(self, sub_entry):
         """
@@ -223,5 +234,6 @@ class EncEntry(store.object):
         item.locked = unlock_flag
         self.addSubEntry(item)
         
-        # If an entry gets sub-entries unlocked, the unread status on the entry is restored
+        # If an entry gets sub-entries unlocked,
+        # the unread status on the entire entry is restored
         self.status = False

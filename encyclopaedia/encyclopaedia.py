@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
+import operator
+
 import renpy.store as store
 
 import actions
@@ -176,24 +178,23 @@ class Encyclopaedia(store.object):
             The entry associated with entry_number from unlocked_entries list
         """
         return self.unlocked_entries[entry_number]
-        
-    # Checks the current_position against the min or max of the encyclopaedia,
-    # Used to determine if the Prev/Next Actions should be active
-    def check_min(self, check_position, min_val):
-        """
-        Returns:
-            boolean
-        """
-        if check_position <= min_val:
-            return True
-        return False
 
-    def check_max(self, check_position, max_val):
+    @staticmethod
+    def check_position(op, current_position, value):
         """
+        Checks the current_position against the min/max value of
+        the encyclopaedia.
+        Used to determine if the Prev/Next Actions should be active.
+
         Returns:
             boolean
         """
-        if check_position >= max_val:
+        operators = {
+            '<=': operator.le,
+            '>=': operator.ge
+        }
+
+        if operators[op](current_position, value):
             return True
         return False
 
@@ -258,7 +259,8 @@ class Encyclopaedia(store.object):
         return actions.ChangeEntryAction(
             self,
             -1,
-            self.check_min(
+            self.check_position(
+                '<=',
                 self.current_position,
                 0
             )
@@ -272,7 +274,8 @@ class Encyclopaedia(store.object):
         return actions.ChangeEntryAction(
             self,
             1,
-            self.check_max(
+            self.check_position(
+                '>=',
                 self.current_position,
                 self.max_size - 1
             )
@@ -287,7 +290,8 @@ class Encyclopaedia(store.object):
             self,
             -2,
             -1,
-            self.check_min(
+            self.check_position(
+                '<=',
                 self.sub_current_position,
                 1
             )
@@ -302,7 +306,8 @@ class Encyclopaedia(store.object):
             self,
             0,
             1,
-            self.check_max(
+            self.check_position(
+                '>=',
                 self.sub_current_position,
                 self.active.pages
             )

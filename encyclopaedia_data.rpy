@@ -64,14 +64,14 @@ init python:
     
     # Here we define each Encyclopaedia Entry
     # The arguments are: number, name, text, subject, status, locked, image
-    # if save game independent, status should always be from the persistent.new_dict or it won't save
+    # if save game independent, status should always be from the persistent.new_status or it won't save
     # if locked=False, entry will always be visible, even if new game hasn't been started
     en1 = EncEntry(
         1,
         "Lorem",
         lorem,
         subject_lorem_ipsum,
-        status=persistent.new_dict["new_00"],
+        status=persistent.new_status["new_00"],
         locked=False,
         image=en1_image
     )
@@ -81,7 +81,7 @@ init python:
         "Cras",
         cras,
         subject_lorem_ipsum,
-        status=persistent.new_dict["new_01"],
+        status=persistent.new_status["new_01"],
         locked=False,
         image=en2_image
     )
@@ -91,7 +91,7 @@ init python:
         "In",
         infeu,
         subject_lorem_ipsum,
-        status=persistent.new_dict["new_02"],
+        status=persistent.new_status["new_02"],
         locked=False,
         image=en3_image
     )
@@ -101,7 +101,7 @@ init python:
         "Morbi",
         morbi,
         subject_lorem_ipsum,
-        status=persistent.new_dict["new_03"],
+        status=persistent.new_status["new_03"],
         locked=persistent.en4_locked,
         image=en4_image,
         locked_image=None
@@ -112,7 +112,7 @@ init python:
         "Mauris",
         mauris,
         subject_lorem_ipsum,
-        status=persistent.new_dict["new_04"],
+        status=persistent.new_status["new_04"],
         locked=False
     )
 
@@ -121,7 +121,7 @@ init python:
         "Wine",
         wine,
         subject_virtues,
-        status=persistent.new_dict["new_05"],
+        status=persistent.new_status["new_05"],
         locked=persistent.en6_locked
     )
 
@@ -130,7 +130,7 @@ init python:
         "Women",
         women,
         subject_virtues,
-        status=persistent.new_dict["new_06"],
+        status=persistent.new_status["new_06"],
         locked=persistent.en7_locked,
         image=en7_image,
         locked_image=None

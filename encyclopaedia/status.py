@@ -1,5 +1,3 @@
-from ast import literal_eval
-
 import renpy.exports as renpy
 
 persistent = renpy.game.persistent

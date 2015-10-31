@@ -49,12 +49,12 @@ init python:
     # entries_total is the total number of EncEntries the Encyclopaedia will hold.
     # master_key and name are what determines the name of the status variables and the name of each key.
     # only change master_key and name if you need multiple encyclopaedias in a game.
-    encyclopaedia.setPersistentStatus(
-        entries_total=7,
-        master_key="new",
+    StatusFlagGenerator.create_persistent_status_flags(
+        total=7,
+        master_key='new',
         name="new"
     )
-  
+
     # Let's store the names of our subjects as variables. 
     # You can just use the strings when making the EncEntry, but doing it like this will help prevent typos,
     # and make it easier to change the subject title if you change your mind during development.  

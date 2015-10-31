@@ -18,6 +18,7 @@ init -1 python:
     from encyclopaedia.encyclopaedia import Encyclopaedia
     from encyclopaedia.encentry import EncEntry
     from encyclopaedia.utils import generate_entry_list_buttons
+    from encyclopaedia.status import StatusFlagGenerator
     
 ##############################################################################
 # Encyclopaedia Button

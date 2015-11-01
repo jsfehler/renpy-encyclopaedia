@@ -41,7 +41,7 @@ class ChangeEntryAction(renpy.ui.Action):
     Scroll through the entries.
     Used by an Encyclopaedia's PreviousEntry and NextEntry functions.
     """
-    def __init__(self, encyclopaedia, direction, block, *args, **kwargs):
+    def __init__(self, encyclopaedia, direction, block):
         self.enc = encyclopaedia
 
         # If the button is active or not

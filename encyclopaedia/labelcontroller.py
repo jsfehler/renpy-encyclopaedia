@@ -13,8 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
-from math import floor
-
 
 class LabelController(object):
     """
@@ -34,8 +32,8 @@ class LabelController(object):
    
         # Variables for the strings representing the different sorting types
         self.sort_number_label = "Number"
-        self.sort_alphabetically_label = "A to Z"
-        self.sort_reverse_alphabetically_label = "Z to A"
+        self.sort_alphabetical_label = "A to Z"
+        self.sort_reverse_alphabetical_label = "Z to A"
         self.sort_subject_label = "Subject"
         self.sort_unread_label = "Unread"
 
@@ -46,13 +44,9 @@ class LabelController(object):
             String displaying the percentage of the encyclopaedia
             that's unlocked, ie: '50%'
         """
-        
-        float_size = float(self.encyclopaedia._size)
-        float_size_all = float(self.encyclopaedia._size_all)
-        
-        amount_unlocked = float_size / float_size_all
-        percentage = floor(amount_unlocked * 100)
-        label = str(int(percentage)) + self.percentage_label 
+
+        percentage_unlocked = self.encyclopaedia.percentage_unlocked
+        label = str(int(percentage_unlocked)) + self.percentage_label
         
         return label   
 
@@ -82,8 +76,8 @@ class LabelController(object):
 
         sorting_strings = {
             enc.SORT_NUMBER: self.sort_number_label,
-            enc.SORT_ALPHABETICALLY: self.sort_alphabetically_label,
-            enc.SORT_REVERSE_ALPHABETICALLY: self.sort_reverse_alphabetically_label,
+            enc.SORT_ALPHABETICALLY: self.sort_alphabetical_label,
+            enc.SORT_REVERSE_ALPHABETICAL: self.sort_reverse_alphabetical_label,
             enc.SORT_SUBJECT: self.sort_subject_label,
             enc.SORT_UNREAD: self.sort_unread_label
         }

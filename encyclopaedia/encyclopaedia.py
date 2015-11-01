@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
+from math import floor
 import operator
 
 import renpy.store as store
@@ -30,7 +31,7 @@ class Encyclopaedia(store.object):
     # Constants for the different types of sorting available.
     SORT_NUMBER = 0
     SORT_ALPHABETICALLY = 1
-    SORT_REVERSE_ALPHABETICALLY = 2
+    SORT_REVERSE_ALPHABETICAL = 2
     SORT_SUBJECT = 3
     SORT_UNREAD = 4
             
@@ -58,7 +59,7 @@ class Encyclopaedia(store.object):
         self.sorting_mode = sorting_mode
 
         self.reverseSorting = False
-        if sorting_mode == self.SORT_REVERSE_ALPHABETICALLY:
+        if sorting_mode == self.SORT_REVERSE_ALPHABETICAL:
             self.reverseSorting = True
 
         # If True, locked entries show a placeholder label on
@@ -89,13 +90,28 @@ class Encyclopaedia(store.object):
 
     def __str__(self):
         return "Encyclopaedia"        
-        
+
+    @property
+    def percentage_unlocked(self):
+        """
+        Returns:
+            float - Percentage of the encyclopaedia that's unlocked
+        """
+
+        float_size = float(self._size)
+        float_size_all = float(self._size_all)
+
+        amount_unlocked = float_size / float_size_all
+        percentage = floor(amount_unlocked * 100)
+
+        return percentage
+
     @property
     def entry_list_size(self):
         """
         Returns:
             Whatever the current size of the entry list should be,
-            based on if locked buttons should be shown or not.
+            based on if locked buttons should be shown or not
         """
         if self.show_locked_buttons:
             return self._size_all
@@ -106,7 +122,7 @@ class Encyclopaedia(store.object):
         """
         Returns:
             Whatever the maximum size of the entry list should be,
-            based on if locked buttons should be shown or not.
+            based on if locked buttons should be shown or not
         """
         if self.show_locked_entry:
             return self._size_all
@@ -320,7 +336,7 @@ class Encyclopaedia(store.object):
                 If None specified, use the current sorting.
         
         Returns:
-            Screen Action. Use with a button.
+            Screen Action. Use with a button
         """
         if None == sorting_mode:
             sorting_mode = self.sorting_mode
@@ -329,41 +345,41 @@ class Encyclopaedia(store.object):
     def SetEntry(self, given_entry):
         """
         Returns:
-            Screen Action. Use with a button.
+            Screen Action. Use with a button
         """
         return actions.SetEntryAction(self, given_entry)
 
     def SaveStatus(self, enc_dict, tag_string):
         """
         Returns:
-            Screen Action. Use with a button.
+            Screen Action. Use with a button
         """
         return actions.SaveStatusAction(self, enc_dict, tag_string)
 
     def ChangeStatus(self, position):
         """
         Returns:
-            Screen Action. Use with a button.
+            Screen Action. Use with a button
         """
         return actions.ChangeStatusAction(self, position)
 
     def ResetSubPage(self):
         """
         Returns:
-            Screen Action. Use with a button.
+            Screen Action. Use with a button
         """
         return actions.ResetSubPageAction(self)
 
     def ToggleShowLockedButtons(self):
         """
         Returns:
-            Screen Action. Use with a button.
+            Screen Action. Use with a button
         """
         return actions.ToggleShowLockedButtonsAction(self)
 
     def ToggleShowLockedEntry(self):
         """
         Returns:
-            Screen Action. Use with a button.
+            Screen Action. Use with a button
         """
         return actions.ToggleShowLockedEntryAction(self)

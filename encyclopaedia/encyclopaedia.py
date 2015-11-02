@@ -101,9 +101,14 @@ class Encyclopaedia(store.object):
         float_size = float(self._size)
         float_size_all = float(self._size_all)
 
-        amount_unlocked = float_size / float_size_all
-        percentage = floor(amount_unlocked * 100)
+        try:
+            amount_unlocked = float_size / float_size_all
+        except ZeroDivisionError:
+            raise Exception(
+                'Cannot display percentage unlocked of empty Encyclopaedia'
+            )
 
+        percentage = floor(amount_unlocked * 100)
         return percentage
 
     @property

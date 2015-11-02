@@ -30,7 +30,7 @@ class Encyclopaedia(store.object):
     
     # Constants for the different types of sorting available.
     SORT_NUMBER = 0
-    SORT_ALPHABETICALLY = 1
+    SORT_ALPHABETICAL = 1
     SORT_REVERSE_ALPHABETICAL = 2
     SORT_SUBJECT = 3
     SORT_UNREAD = 4

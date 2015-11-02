@@ -37,6 +37,12 @@ class LabelController(object):
         self.sort_subject_label = "Subject"
         self.sort_unread_label = "Unread"
 
+        # String for the "Unread Entry" button
+        self.unread_entry_label = "New!"
+
+        # String for the "Locked Entry" button
+        self.locked_entry_label = "???"
+
     @property
     def percentage_unlocked(self): 
         """ 
@@ -76,7 +82,7 @@ class LabelController(object):
 
         sorting_strings = {
             enc.SORT_NUMBER: self.sort_number_label,
-            enc.SORT_ALPHABETICALLY: self.sort_alphabetical_label,
+            enc.SORT_ALPHABETICAL: self.sort_alphabetical_label,
             enc.SORT_REVERSE_ALPHABETICAL: self.sort_reverse_alphabetical_label,
             enc.SORT_SUBJECT: self.sort_subject_label,
             enc.SORT_UNREAD: self.sort_unread_label

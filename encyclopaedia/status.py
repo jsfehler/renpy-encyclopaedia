@@ -110,7 +110,7 @@ class StatusFlagGenerator(object):
                 '%s%s["%s"]' % (persistent_str, status_name, master_key)
             )
 
-        except (TypeError, KeyError) as e:
+        except (TypeError, KeyError):
             # The first time the Encyclopaedia is launched,
             # persistent.new_<dict_name> doesn't exist yet, causing a TypeError.
 

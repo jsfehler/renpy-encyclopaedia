@@ -53,8 +53,8 @@ screen encyclopaedia_list:
         vbox:
             # Buttons to sort entries.
             textbutton "Sort by Number" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_NUMBER)
-            textbutton "Sort A to Z" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_ALPHABETICALLY)
-            textbutton "Sort Z to A" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_REVERSE_ALPHABETICALLY)
+            textbutton "Sort A to Z" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_ALPHABETICAL)
+            textbutton "Sort Z to A" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_REVERSE_ALPHABETICAL)
             textbutton "Sort by Subject" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_SUBJECT)
             textbutton "Sort by Unread" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_UNREAD)
    
@@ -65,7 +65,7 @@ screen encyclopaedia_list:
             #Sort and SaveStatus are unnecessary if you're not using persistent data (ie: if the encyclopaedia is save game independent)
             #Sorting mode has to be by Number to save properly. "new_0" should be whatever the prefix you choose for the persistent dictionary is.
             textbutton "Return"  action [encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_NUMBER), 
-                                                            encyclopaedia.SaveStatus(persistent.new_dict, "new_0"), 
+                                                            encyclopaedia.SaveStatus(persistent.new_status, "new_0"),
                                                             Return()]
 
 ##############################################################################

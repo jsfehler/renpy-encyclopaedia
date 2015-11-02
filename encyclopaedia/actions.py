@@ -129,7 +129,7 @@ class SortEncyclopaedia(renpy.ui.Action):
         self.sorting_mode = sorting_mode
 
         self.reverse = False
-        if sorting_mode == self.enc.SORT_REVERSE_ALPHABETICALLY:
+        if sorting_mode == self.enc.SORT_REVERSE_ALPHABETICAL:
             self.reverse = True
 
     def __call__(self):

@@ -62,11 +62,16 @@ class LabelController(object):
         Returns: 
             String indicating which sub-page of an entry is being viewed
         """
+        try:
+            total_pages = self.encyclopaedia.active.pages
+        except AttributeError:
+            raise Exception("Cannot display current page when no entry is open")
+
         label = "%s %d %s %d" % (
             self.page_label, 
             self.encyclopaedia.sub_current_position, 
             self.page_separator_label, 
-            self.encyclopaedia.active.pages
+            total_pages
         ) 
         
         return label

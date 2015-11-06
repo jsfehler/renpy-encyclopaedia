@@ -95,7 +95,7 @@ class Encyclopaedia(store.object):
     def percentage_unlocked(self):
         """
         Returns:
-            float - Percentage of the encyclopaedia that's unlocked
+            float - Percentage of the Encyclopaedia that's unlocked
         """
 
         float_size = float(self._size)
@@ -204,7 +204,7 @@ class Encyclopaedia(store.object):
     def check_position(op, current_position, value):
         """
         Checks the current_position against the min/max value of
-        the encyclopaedia.
+        the Encyclopaedia.
         Used to determine if the Prev/Next Actions should be active.
 
         Returns:
@@ -221,23 +221,23 @@ class Encyclopaedia(store.object):
 
     def addEntry(self, item):
         """
-        Adds an entry to the encyclopaedia and sorts it.
+        Adds an entry to the Encyclopaedia and sorts it.
+        Attempts to create duplicate subjects are softly ignored.
         """
         
         # Add to list of all entries
-        if not item in self.all_entries:  # Prevents duplicate entries
+        if item not in self.all_entries:
             self.all_entries.append(item)
 
         # Add to list of unlocked entries
         # The unlocked_entries list should only contain entries that
         # have locked=False
-        if not item in self.unlocked_entries:  # Prevents duplicate entries
-            if item.locked is False:
+        if item not in self.unlocked_entries and item.locked is False:
                 self.unlocked_entries.append(item)
 
         # Add the subject to the list
         self.addSubject(item.subject)
-                
+
         self.sort_entries(
             sorting=self.sorting_mode,
             reverse=self.reverseSorting
@@ -255,12 +255,13 @@ class Encyclopaedia(store.object):
 
     def addSubject(self, new_subject): 
         """
-        Adds a new subject to the Encyclopaedia. Won't allow duplicates.
+        Adds a new subject to the Encyclopaedia.
+        Attempts to create duplicate subjects are softly ignored.
         
         Returns:
             True if the subject was added, False if it was not
         """
-        if not new_subject in self.subjects:
+        if new_subject not in self.subjects:
             self.subjects.append(new_subject)
             return True
         return False

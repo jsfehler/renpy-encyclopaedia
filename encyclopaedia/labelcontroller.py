@@ -67,7 +67,7 @@ class LabelController(object):
         except AttributeError:
             raise Exception("Cannot display current page when no entry is open")
 
-        label = "%s %d %s %d" % (
+        label = "{0} {1} {2} {3}".format(
             self.page_label, 
             self.encyclopaedia.sub_current_position, 
             self.page_separator_label, 

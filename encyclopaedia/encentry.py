@@ -20,6 +20,10 @@ import renpy.exports as renpy
 
 
 class MissingImageException(Exception):
+    """
+    Exception thrown if you try to tint an Entry's image when
+    there is no image set.
+    """
     pass
 
 
@@ -202,7 +206,7 @@ class EncEntry(store.object):
         Adds multiple pages to the entry in the form of sub-entries.
         """
         if not [sub_entry.number, sub_entry] in self.sub_entry_list:
-            if not sub_entry in self.sub_entry_list:
+            if sub_entry not in self.sub_entry_list:
                 if sub_entry.locked is False:
                     self.sub_entry_list.append([sub_entry.number, sub_entry])
                     self.sub_entry_list = sorted(

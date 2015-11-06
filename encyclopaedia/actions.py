@@ -83,6 +83,12 @@ class ChangeEntryAction(renpy.ui.Action):
             renpy.restart_interaction()
 
     def get_sensitive(self):
+        """
+        Determines if the button should be alive or not.
+
+        If at the first entry, block "Previous" button.
+        If at the last entry, block "Next" button.
+        """
         if self.block:
             return False
         return True
@@ -153,9 +159,9 @@ class SaveStatusAction(renpy.ui.Action):
         self.tag_string = tag_string
 
     def __call__(self):
-        for x in range(len(self.enc.all_entries)):
-            key = self.tag_string + str(x)
-            self.persistent_dict[key] = self.enc.all_entries[x].status
+        for number, item in enumerate(self.enc.all_entries):
+            key = self.tag_string + str(number)
+            self.persistent_dict[key] = item.status
 
 
 # Is this still necessary?

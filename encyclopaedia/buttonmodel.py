@@ -87,10 +87,11 @@ def generate_entry_list_buttons(enc):
     # If sorting by subject, display the subject heading and
     # add an entry under it if it's the same subject
     if enc.sorting_mode == enc.SORT_SUBJECT:
-        for x in range(len(enc.subjects)):
-            ui.text(enc.subjects[x])
+
+        for number, item in enumerate(enc.subjects):
+            ui.text(item)
             for y in range(enc.entry_list_size):
-                if enc.get_entry_at(y).subject == enc.subjects[x]:
+                if enc.get_entry_at(y).subject == item:
                     ui.hbox()
                     generate_entry_button(y, enc)
                     ui.close()

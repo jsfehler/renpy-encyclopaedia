@@ -4,6 +4,9 @@ persistent = renpy.game.persistent
 
 
 class StatusFlagGenerator(object):
+    """
+    Generates persistent variables for use as status flags.
+    """
 
     @staticmethod
     def __make_persistent_dict(total, master_key, persistent_var_string):
@@ -107,7 +110,7 @@ class StatusFlagGenerator(object):
             dict_of_keys = cls.__make_persistent_dict(
                 total,
                 master_key,
-                '%s%s["%s"]' % (persistent_str, status_name, master_key)
+                '{0}{1}["{2}"]'.format(persistent_str, status_name, master_key)
             )
 
         except (TypeError, KeyError):
@@ -133,7 +136,7 @@ class StatusFlagGenerator(object):
         dict_of_values = cls.__make_persistent_dict(
             total,
             master_key,
-            '%s%s["%s"]' % (persistent_str, cache_name, master_key)
+            '{0}{1}["{2}"]'.format(persistent_str, cache_name, master_key)
         )
 
         # Populate status variables with cache values

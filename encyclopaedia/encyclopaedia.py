@@ -233,7 +233,7 @@ class Encyclopaedia(store.object):
         # The unlocked_entries list should only contain entries that
         # have locked=False
         if item not in self.unlocked_entries and item.locked is False:
-                self.unlocked_entries.append(item)
+            self.unlocked_entries.append(item)
 
         # Add the subject to the list
         self.addSubject(item.subject)

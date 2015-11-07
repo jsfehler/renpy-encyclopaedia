@@ -153,7 +153,7 @@ class Encyclopaedia(store.object):
             Entry that was unlocked
         """
         entry.locked = unlock_flag
-        self.addEntry(entry)
+        self.add_entry(entry)
         return entry
 
     def sort_entries(self, sorting=None, reverse=False):
@@ -219,7 +219,7 @@ class Encyclopaedia(store.object):
             return True
         return False
 
-    def addEntry(self, item):
+    def add_entry(self, item):
         """
         Adds an entry to the Encyclopaedia and sorts it.
         Attempts to create duplicate subjects are softly ignored.
@@ -236,7 +236,7 @@ class Encyclopaedia(store.object):
             self.unlocked_entries.append(item)
 
         # Add the subject to the list
-        self.addSubject(item.subject)
+        self.add_subject(item.subject)
 
         self.sort_entries(
             sorting=self.sorting_mode,
@@ -251,9 +251,9 @@ class Encyclopaedia(store.object):
         Adds multiple new entries at once.
         """
         for item in new_entries:
-            self.addEntry(item)
+            self.add_entry(item)
 
-    def addSubject(self, new_subject): 
+    def add_subject(self, new_subject):
         """
         Adds a new subject to the Encyclopaedia.
         Attempts to create duplicate subjects are softly ignored.
@@ -271,7 +271,7 @@ class Encyclopaedia(store.object):
         Adds multiple new subjects at once
         """
         for item in new_subjects:
-            self.addSubject(item)                
+            self.add_subject(item)
                 
     def PreviousEntry(self):
         """

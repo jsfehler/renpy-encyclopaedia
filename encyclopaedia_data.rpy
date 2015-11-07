@@ -146,7 +146,7 @@ init python:
         en6,
         en7
     )
-    # To do this one at a time, use addEntry() instead
+    # To do this one at a time, use add_entry() instead
     # This auto-sorts when adding.
     
     # en4 and en6 won't be viewed at the start because

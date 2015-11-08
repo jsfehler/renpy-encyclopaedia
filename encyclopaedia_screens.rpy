@@ -52,11 +52,11 @@ screen encyclopaedia_list:
         yalign .98
         vbox:
             # Buttons to sort entries.
-            textbutton "Sort by Number" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_NUMBER)
-            textbutton "Sort A to Z" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_ALPHABETICAL)
-            textbutton "Sort Z to A" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_REVERSE_ALPHABETICAL)
-            textbutton "Sort by Subject" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_SUBJECT)
-            textbutton "Sort by Unread" action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_UNREAD)
+            textbutton "Sort by %s" % encyclopaedia.labels.sort_number_label action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_NUMBER)
+            textbutton "Sort by %s" % encyclopaedia.labels.sort_alphabetical_label action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_ALPHABETICAL)
+            textbutton "Sort by %s" % encyclopaedia.labels.sort_reverse_alphabetical_label action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_REVERSE_ALPHABETICAL)
+            textbutton "Sort by %s" % encyclopaedia.labels.sort_subject_label action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_SUBJECT)
+            textbutton "Sort by %s" % encyclopaedia.labels.sort_unread_label action encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_UNREAD)
    
             # Debug buttons to show off different styles of hiding locked data.
             textbutton "Show/Hide Locked Buttons" action encyclopaedia.ToggleShowLockedButtons()

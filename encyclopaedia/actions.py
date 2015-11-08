@@ -26,6 +26,8 @@ class SetEntryAction(EncyclopaediaEntryAction):
         # The active entry is set to whichever list position was found
         self.enc.active = self.entry
 
+        # If an entry was not locked, then it's been viewed, so change
+        # the status variable.
         if self.enc.active.locked is False:
             self.enc.active.status = True
 
@@ -103,15 +105,11 @@ class ChangePageAction(ChangeEntryAction):
             encyclopaedia,
             direction,
             direction2,
-            block,
-            *args,
-            **kwargs):
+            block):
         super(ChangePageAction, self).__init__(
             encyclopaedia,
             direction,
             block,
-            *args,
-            **kwargs
         )
 
         self.dir1 = direction
@@ -162,16 +160,6 @@ class SaveStatusAction(renpy.ui.Action):
         for number, item in enumerate(self.enc.all_entries):
             key = self.tag_string + str(number)
             self.persistent_dict[key] = item.status
-
-
-# Is this still necessary?
-class ChangeStatusAction(EncyclopaediaEntryAction):
-    """
-    Change the "New!" status of an EncEntry
-    """
-    def __call__(self):
-        self.changed_entry = self.entry
-        self.changed_entry.status = True
 
 
 class ResetSubPageAction(renpy.ui.Action):

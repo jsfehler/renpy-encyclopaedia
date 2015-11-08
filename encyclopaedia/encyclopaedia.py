@@ -362,12 +362,6 @@ class Encyclopaedia(store.object):
         """
         return actions.SaveStatusAction(self, enc_dict, tag_string)
 
-    def ChangeStatus(self, position):
-        """
-        Returns:
-            Screen Action. Use with a button
-        """
-        return actions.ChangeStatusAction(self, position)
 
     def ResetSubPage(self):
         """

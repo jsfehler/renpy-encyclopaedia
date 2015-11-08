@@ -140,8 +140,8 @@ class Encyclopaedia(store.object):
         Parameters:
             tint_amount: tuple containing an RGB value (R, G, B)
         """
-        for item_number, item in self.all_entries:
-            item.tint_locked_image(
+        for item in self.all_entries:
+            item[1].tint_locked_image(
                 (tint_amount[0], tint_amount[1], tint_amount[2])
             )
         

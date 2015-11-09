@@ -53,7 +53,7 @@ class EncEntry(store.object):
         self.locked_name = locked_name
         self.locked_text = self._string_to_list(locked_text)
         self.locked_image = locked_image
-        
+
         # Only set the image if it's not None
         self.has_image = False  
         if image is not None:
@@ -201,7 +201,7 @@ class EncEntry(store.object):
             "EncEntry has no image. Cannot tint nothing."
         )
 
-    def addSubEntry(self, sub_entry):
+    def add_sub_entry(self, sub_entry):
         """
         Adds multiple pages to the entry in the form of sub-entries.
         """
@@ -224,19 +224,20 @@ class EncEntry(store.object):
         Adds multiple new sub-entries at once.
         """
         for item in new_sub_entries:
-            self.addSubEntry(item)
+            self.add_sub_entry(item)
 
-    def getSubEntry(self, page):
+    def unlockSubEntry(self, entry, unlock_flag):
         """
-        Returns the text on given page.
+        Changes the locked status of an entry,
+        Then adds it as a sub-entry.
+
+        Parameters:
+            entry: The sub-entry to unlock
+            unlock_flag: The flag to set the entry's locked status to
         """
-        current_page_text = self.sub_entry_list[page][1].text
 
-        return current_page_text
-
-    def unlockSubEntry(self, item, unlock_flag):
-        item.locked = unlock_flag
-        self.addSubEntry(item)
+        entry.locked = unlock_flag
+        self.add_sub_entry(entry)
         
         # If an entry gets sub-entries unlocked,
         # the unread status on the entire entry is restored

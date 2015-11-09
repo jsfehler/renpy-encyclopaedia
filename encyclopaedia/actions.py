@@ -13,12 +13,11 @@ class EncyclopaediaEntryAction(renpy.ui.Action):
 
 class SetEntryAction(EncyclopaediaEntryAction):
     """
-    Set the selected encyclopaedia entry into the displaying frame.
+    Set the selected Encyclopaedia entry into the displaying frame.
     """
-
     def __call__(self):
         # When setting an entry, index all_entries with the entry.
-        # That position is what the encyclopaedia's active entry should be.
+        # That position is what the Encyclopaedia's active entry should be.
         if self.enc.show_locked_entry is False:
             target_position = self.enc.unlocked_entries.index(self.entry)
         else:
@@ -126,7 +125,7 @@ class ChangePageAction(ChangeEntryAction):
 
 class SortEncyclopaedia(renpy.ui.Action):
     """
-    Sorts the entries based on sorting_mode
+    Sorts the entries based on sorting_mode.
     """
     def __init__(self, encyclopaedia, sorting_mode=0):
         self.enc = encyclopaedia
@@ -148,18 +147,28 @@ class SortEncyclopaedia(renpy.ui.Action):
 
 class SaveStatusAction(renpy.ui.Action):
     """
-    Saves the "New!" status of every entry in an encyclopaedia.
-    Only necessary if using Persistent Data.
+    Saves the status variable of every entry in an Encyclopaedia inside
+    a dictionary.
+
+    Only necessary if using Persistent Data/the Encyclopaedia is save-game
+    independent.
+
+    Parameters:
+        encyclopaedia: The Encyclopaedia that needs entry statues saved
+        status_dictionary: The dictionary that contains all the persistent
+            variables.
+        key_string: The key for the dictionary, minus the number at the end.
+
     """
-    def __init__(self, encyclopaedia, persistent_dict, tag_string):
+    def __init__(self, encyclopaedia, status_dictionary, key_string):
         self.enc = encyclopaedia
-        self.persistent_dict = persistent_dict
-        self.tag_string = tag_string
+        self.status_dictionary = status_dictionary
+        self.key_string = key_string
 
     def __call__(self):
         for number, item in enumerate(self.enc.all_entries):
-            key = self.tag_string + str(number)
-            self.persistent_dict[key] = item.status
+            key = self.key_string + str(number)
+            self.status_dictionary[key] = item.status
 
 
 class ResetSubPageAction(renpy.ui.Action):

@@ -344,7 +344,7 @@ class Encyclopaedia(store.object):
         Returns:
             Screen Action. Use with a button
         """
-        if None == sorting_mode:
+        if sorting_mode is None:
             sorting_mode = self.sorting_mode
         return actions.SortEncyclopaedia(self, sorting_mode)
 

@@ -18,64 +18,122 @@ import renpy.exports as renpy
 ui = renpy.ui
 
 
-def generate_entry_button(position, enc):
+def __unread_tag(encyclopaedia):
+    """
+    Default is an inactive textbutton.
+    If you don't want that then override this function.
+
+    Parameters:
+        encyclopaedia: The encyclopaedia associated with the Entry.
+
+    Returns:
+        Ren'py displayable for indicating that an Entry is unread
+    """
+    tag = ui.textbutton(encyclopaedia.labels.unread_entry_label)
+    return tag
+
+
+def __entry_button(encyclopaedia, entry):
+    """
+    Default is a textbutton.
+    If you don't want that then override this function.
+
+    Returns:
+        A button to open an Entry.
+    """
+
+    tag = ui.textbutton(
+        entry.name,
+        clicked=encyclopaedia.SetEntry(entry)
+    )
+
+    return tag
+
+
+def __placeholder_entry_button(encyclopaedia, entry):
+    """
+    Default is a textbutton.
+    If you don't want that then override this function.
+
+    Returns:
+        A placeholder button to open a locked Entry.
+    """
+    tag = ui.textbutton(
+        encyclopaedia.labels.locked_entry_label,
+        clicked=encyclopaedia.SetEntry(entry)
+    )
+
+    return tag
+
+
+def __inactive_placeholder_entry_button(label):
+    """
+    Default is a textbutton.
+    If you don't want that then override this function.
+
+    Returns:
+        An inactive placeholder for a locked Entry.
+    """
+    tag = ui.textbutton(label)
+    return tag
+
+
+def __add_entry_button(enc, position):
     """ 
-    Create a single button for an Entry in an Encyclopaedia.
+    Add a single button for an Entry in an Encyclopaedia.
+
     Call this function on a Ren'Py screen, inside whatever other UI
-    (Window, box, etc) you want, inside a for loop.
+    (Window, box, etc) you want, usually inside a for loop.
 
     Override this function if you want the buttons to display in a
     different way.
 
     Parameters:
+        enc: The Encyclopaedia object to get data from
+
         position: the Entry's position in the Encyclopaedia's list of entries.
         It will reference either all the entries or only the unlocked ones,
         depending on the given Encyclopaedia's show_locked_buttons variable.
-    
-        enc: The given Encyclopaedia.
     """
     # If locked buttons should be visible.
     if enc.show_locked_buttons:
-        # If the entry is unlocked, make the button point to it.
-        # If it's locked, make a "???" button.
-        if enc.all_entries[position].locked is False:
-            ui.textbutton(
-                enc.all_entries[position].name,
-                clicked=enc.SetEntry(enc.all_entries[position])
-            )
-            
-            # Make a tag next to the button,
-            # if it hasn't been viewed by the player yet.
-            if not enc.all_entries[position].status:
-                ui.textbutton(enc.labels.unread_entry_label)
 
+        entry = enc.all_entries[position]
+
+        # If the entry is unlocked, add an active button.
+        if entry.locked is False:
+            __entry_button(enc, entry)
+
+            # Add tag next to the button, if it hasn't been viewed yet.
+            if not entry.status:
+                __unread_tag(enc)
+
+        # If the entry is locked, add an inactive button.
         else:
-            # If locked entries should be viewable,
-            # the "???" button should go to the entry.
-            # If not, it's an inactive button.
+            # If locked entries should be visible, add an active button
+            # with placeholder text.
             if enc.show_locked_entry:
-                ui.textbutton(
-                    enc.labels.locked_entry_label,
-                    clicked=enc.SetEntry(enc.all_entries[position])
-                )
+                __placeholder_entry_button(enc, entry)
             else:
-                ui.textbutton(enc.labels.locked_entry_label)
+                __inactive_placeholder_entry_button(
+                    enc.labels.locked_entry_label
+                )
 
-    # If locked buttons should not be visible. (No need for the "???" buttons.)
+    # If locked buttons should not be visible.
+    # ie: No need for placeholders.
     elif enc.show_locked_buttons is False:
-        ui.textbutton(
-            enc.unlocked_entries[position].name,
-            clicked=enc.SetEntry(enc.unlocked_entries[position]))
+        entry = enc.unlocked_entries[position]
+
+        __entry_button(enc, entry)
         
-        # Make a tag next to the button
-        # if it hasn't been viewed by the player yet.
-        if not enc.unlocked_entries[position].status:
-            ui.textbutton(enc.labels.unread_entry_label)
+        # Add tag next to the button, if it hasn't been viewed yet.
+        if not entry.status:
+            __unread_tag(enc)
 
 
 def generate_entry_list_buttons(enc):
     """
-    Generates a button for each Encyclopaedia entry.
+    Depending on sorting mode, generates a button for each Encyclopaedia entry.
 
     Override this function if you want the buttons to display in a
     different way.
@@ -92,7 +150,7 @@ def generate_entry_list_buttons(enc):
             for y in range(enc.entry_list_size):
                 if enc.get_entry_at(y).subject == item:
                     ui.hbox()
-                    generate_entry_button(y, enc)
+                    __add_entry_button(enc, y)
                     ui.close()
 
     # If sorting by number, add the number next to the entry
@@ -101,7 +159,7 @@ def generate_entry_list_buttons(enc):
             ui.hbox()
             ui.textbutton(str(enc.get_entry_at(x).number))
             ui.hbox()
-            generate_entry_button(x, enc)
+            __add_entry_button(enc, x)
             ui.close()
             ui.close()
 
@@ -110,5 +168,5 @@ def generate_entry_list_buttons(enc):
     else:
         for x in range(enc.entry_list_size):
             ui.hbox()
-            generate_entry_button(x, enc)
+            __add_entry_button(enc, x)
             ui.close()

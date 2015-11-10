@@ -68,6 +68,10 @@ class EntryList(list):
 
     @staticmethod
     def _get_number_key(item):
+        """
+            Returns:
+                Key for sorting by number
+        """
         return item.number
         
     def sort_by_number(self):
@@ -79,7 +83,11 @@ class EntryList(list):
 
     @staticmethod
     def _get_name_key(item):
-        return item.name        
+        """
+            Returns:
+                Key for sorting by name
+        """
+        return item.name
         
     def sort_by_name(self, reverse=False, locked_at_bottom=True):
         """
@@ -104,7 +112,11 @@ class EntryList(list):
 
     @staticmethod
     def _get_unread_key(item):
-        return item.status    
+        """
+            Returns:
+                Key for sorting by status
+        """
+        return item.status
         
     def sort_by_unread(self):
         """

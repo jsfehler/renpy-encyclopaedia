@@ -78,7 +78,7 @@ def __inactive_placeholder_entry_button(label):
     return tag
 
 
-def __add_entry_button(enc, position):
+def __add_entry_button(enc, entry):
     """ 
     Add a single button for an Entry in an Encyclopaedia.
 
@@ -97,8 +97,6 @@ def __add_entry_button(enc, position):
     """
     # If locked buttons should be visible.
     if enc.show_locked_buttons:
-
-        entry = enc.all_entries[position]
 
         # If the entry is unlocked, add an active button.
         if entry.locked is False:
@@ -122,8 +120,6 @@ def __add_entry_button(enc, position):
     # If locked buttons should not be visible.
     # ie: No need for placeholders.
     elif enc.show_locked_buttons is False:
-        entry = enc.unlocked_entries[position]
-
         __entry_button(enc, entry)
         
         # Add tag next to the button, if it hasn't been viewed yet.
@@ -141,32 +137,38 @@ def generate_entry_list_buttons(enc):
     Parameters:
         enc: The Encyclopaedia object to get data from
     """
+    # The list is chosen based on if we want to show locked entries on the entry
+    # select screen or not.
+    if enc.show_locked_buttons:
+        entries = enc.all_entries
+    else:
+        entries = enc.unlocked_entries
 
     # If sorting by subject, display the subject heading and
     # add an entry under it if it's the same subject
     if enc.sorting_mode == enc.SORT_SUBJECT:
-        for item in enc.subjects:
-            ui.text(item)
-            for y in range(enc.entry_list_size):
-                if enc.get_entry_at(y).subject == item:
+        for subject in enc.subjects:
+            ui.text(subject)
+            for entry in entries:
+                if entry.subject == subject:
                     ui.hbox()
-                    __add_entry_button(enc, y)
+                    __add_entry_button(enc, entry)
                     ui.close()
 
     # If sorting by number, add the number next to the entry
     elif enc.sorting_mode == enc.SORT_NUMBER:
-        for x in range(enc.entry_list_size):
+        for entry in entries:
             ui.hbox()
-            ui.textbutton(str(enc.get_entry_at(x).number))
+            ui.textbutton(str(entry.number))
             ui.hbox()
-            __add_entry_button(enc, x)
+            __add_entry_button(enc, entry)
             ui.close()
             ui.close()
 
-    # If sorting Alphabetically or Reverse-Alphabetically,
+    # If sorting Alphabetically, Reverse-Alphabetically, or Unread,
     # don't add anything before the entry
     else:
-        for x in range(enc.entry_list_size):
+        for entry in entries:
             ui.hbox()
-            __add_entry_button(enc, x)
+            __add_entry_button(enc, entry)
             ui.close()

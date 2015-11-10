@@ -169,36 +169,6 @@ class Encyclopaedia(store.object):
         else:
             self.all_entries.sort_by_name(reverse=reverse)
             self.unlocked_entries.sort_by_name(reverse=reverse)
- 
-    def get_entry_at(self, entry_number): 
-        """ 
-        Used for displaying the buttons.
-        Gets an entry from either all_entries or unlocked_entries
-        Depends on if locked entries should be in the entry list or not.
-        
-        Parameters:
-            entry_number: The list position for the desired entry.
-        
-        Returns: 
-            The entry of the specified entry_number
-        """
-        if self.show_locked_buttons:
-            return self.get_all_entry_at(entry_number)
-        return self.get_unlocked_entry_at(entry_number)
-
-    def get_all_entry_at(self, entry_number): 
-        """
-        Returns: 
-            The entry associated with entry_number from all_entries list
-        """
-        return self.all_entries[entry_number]
-
-    def get_unlocked_entry_at(self, entry_number): 
-        """
-        Returns:
-            The entry associated with entry_number from unlocked_entries list
-        """
-        return self.unlocked_entries[entry_number]
 
     @staticmethod
     def check_position(op, current_position, value):

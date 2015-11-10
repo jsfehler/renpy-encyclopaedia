@@ -1,7 +1,5 @@
-import actions
 import buttonmodel
-import encyclopaedia
-import encentry
-import entrylist
-import labelcontroller
-import status
+from encyclopaedia import Encyclopaedia
+from encentry import EncEntry
+from labelcontroller import LabelController
+from status import StatusFlagGenerator

@@ -106,7 +106,7 @@ class StatusFlagGenerator(object):
 
         try:
             # Create a dictionary with the following key/value pairs:
-            # 'new_01': persistent.new_<dict_name>['new_01']
+            # 'new_01': persistent.<status_name>['new_01']
             dict_of_keys = cls.__make_persistent_dict(
                 total,
                 master_key,
@@ -115,7 +115,7 @@ class StatusFlagGenerator(object):
 
         except (TypeError, KeyError):
             # The first time the Encyclopaedia is launched,
-            # persistent.new_<dict_name> doesn't exist yet, causing a TypeError.
+            # persistent.<status_name> doesn't exist yet, causing a TypeError.
 
             # In development, the dictionary may already exist,
             # but without the correct number of keys, causing a KeyError.
@@ -132,7 +132,7 @@ class StatusFlagGenerator(object):
         )
 
         # Create a dictionary with the following key/value pairs:
-        # 'new_01': persistent.new_<cache_name>['new_01']
+        # 'new_01': persistent.<cache_name>['new_01']
         dict_of_values = cls.__make_persistent_dict(
             total,
             master_key,

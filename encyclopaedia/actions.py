@@ -1,31 +1,25 @@
 import renpy.exports as renpy
 
 
-class EncyclopaediaEntryAction(renpy.ui.Action):
+class SetEntryAction(renpy.ui.Action):
     """
-    Action that acts using a specific Encyclopaedia Entry.
-    This class is inherited by other Encyclopaedia Actions.
+    Set the selected Encyclopaedia entry into the displaying frame.
     """
     def __init__(self, encyclopaedia, entry):
         self.enc = encyclopaedia
         self.entry = entry
 
-
-class SetEntryAction(EncyclopaediaEntryAction):
-    """
-    Set the selected Encyclopaedia entry into the displaying frame.
-    """
     def __call__(self):
-        # When setting an entry, index all_entries with the entry.
-        # That position is what the Encyclopaedia's active entry should be.
+        # Find the position of the entry
         if self.enc.show_locked_entry is False:
             target_position = self.enc.unlocked_entries.index(self.entry)
         else:
             target_position = self.enc.all_entries.index(self.entry)
+
         # The active entry is set to whichever list position was found
         self.enc.active = self.entry
 
-        # If an entry was not locked, then it's been viewed, so change
+        # If an entry was not locked, then it's just been viewed, so change
         # the status variable.
         if self.enc.active.locked is False:
             self.enc.active.status = True
@@ -95,7 +89,7 @@ class ChangeEntryAction(renpy.ui.Action):
         return True
 
 
-class ChangePageAction(ChangeEntryAction):
+class ChangePageAction(renpy.ui.Action):
     """
     Change the current sub-entry being viewed.
     """
@@ -105,12 +99,13 @@ class ChangePageAction(ChangeEntryAction):
             direction,
             direction2,
             block):
-        super(ChangePageAction, self).__init__(
-            encyclopaedia,
-            direction,
-            block,
-        )
 
+        self.enc = encyclopaedia
+
+        # If the button is active or not
+        self.block = block
+
+        # Determines if it's going to the previous or next entry
         self.dir1 = direction
         self.dir2 = direction2
 
@@ -121,6 +116,17 @@ class ChangePageAction(ChangeEntryAction):
             self.enc.active.current_page = self.enc.sub_current_position
 
             renpy.restart_interaction()
+
+    def get_sensitive(self):
+        """
+        Determines if the button should be alive or not.
+
+        If at the first entry, block "Previous" button.
+        If at the last entry, block "Next" button.
+        """
+        if self.block:
+            return False
+        return True
 
 
 class SortEncyclopaedia(renpy.ui.Action):

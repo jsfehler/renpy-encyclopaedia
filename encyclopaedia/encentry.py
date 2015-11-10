@@ -226,7 +226,7 @@ class EncEntry(store.object):
         for item in new_sub_entries:
             self.add_sub_entry(item)
 
-    def unlockSubEntry(self, entry, unlock_flag):
+    def unlock_sub_entry(self, entry, unlock_flag):
         """
         Changes the locked status of an entry,
         Then adds it as a sub-entry.

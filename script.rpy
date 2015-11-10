@@ -15,11 +15,11 @@
 
 init -1 python:
     # Encyclopaedia needs to be imported before it can be used
-    from encyclopaedia.encyclopaedia import Encyclopaedia
-    from encyclopaedia.encentry import EncEntry
+    from encyclopaedia import Encyclopaedia
+    from encyclopaedia import EncEntry
+    from encyclopaedia import StatusFlagGenerator
     from encyclopaedia.buttonmodel import generate_entry_list_buttons
-    from encyclopaedia.status import StatusFlagGenerator
-    
+
 ##############################################################################
 # Encyclopaedia Button
 # Contains a button to open the encyclopaedia at any time during the game
@@ -47,13 +47,13 @@ label start:
             menu:
                 "Add Sub-Entry 6-2 and 6-3":
                     $ persistent.en6_2_locked = False   
-                    $ en6.unlockSubEntry(en6_2, persistent.en6_2_locked)
+                    $ en6.unlock_sub_entry(en6_2, persistent.en6_2_locked)
                     $ persistent.en6_3_locked = False  
-                    $ en6.unlockSubEntry(en6_3, persistent.en6_3_locked)
+                    $ en6.unlock_sub_entry(en6_3, persistent.en6_3_locked)
 
                 "Add Sub-Entry 2-3":
                     $ persistent.en2_3_locked = False   
-                    $ en2.unlockSubEntry(en2_3, persistent.en2_3_locked)
+                    $ en2.unlock_sub_entry(en2_3, persistent.en2_3_locked)
    
                 "Don't Add Sub-Entry":
                     "Ok"  

@@ -40,6 +40,7 @@ init python:
     encyclopaedia = Encyclopaedia(
         show_locked_buttons=True,
         show_locked_entry=True,
+        show_locked_subjects=True,
         entry_screen="encyclopaedia_entry"
     )
     
@@ -137,7 +138,7 @@ init python:
     )
   
     # Add all entries and sub-entries in an init block.
-    encyclopaedia.addEntries(
+    encyclopaedia.add_entries(
         en1,
         en2,
         en3,
@@ -186,5 +187,5 @@ init python:
         locked=persistent.en6_3_locked
     )
 
-    en2.addSubEntries(en2_2, en2_3)
-    en6.addSubEntries(en6_2, en6_3)
+    en2.add_sub_entries(en2_2, en2_3)
+    en6.add_sub_entries(en6_2, en6_3)

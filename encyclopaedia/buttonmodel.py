@@ -144,10 +144,15 @@ def generate_entry_list_buttons(enc):
     else:
         entries = enc.unlocked_entries
 
+    if enc.show_locked_subjects:
+        subjects = enc.all_subjects
+    else:
+        subjects = enc.unlocked_subjects
+
     # If sorting by subject, display the subject heading and
     # add an entry under it if it's the same subject
     if enc.sorting_mode == enc.SORT_SUBJECT:
-        for subject in enc.subjects:
+        for subject in subjects:
             ui.text(subject)
             for entry in entries:
                 if entry.subject == subject:

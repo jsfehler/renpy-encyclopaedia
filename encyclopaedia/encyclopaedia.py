@@ -39,16 +39,34 @@ class Encyclopaedia(store.object):
                  sorting_mode=0,
                  show_locked_buttons=False,
                  show_locked_entry=False,
+                 show_locked_subjects=False,
                  entry_screen=''):
+        # If True, locked entries show a placeholder label on
+        # the listing screen.
+        self.show_locked_buttons = show_locked_buttons
+
+        # If True, locked entries can be viewed,
+        # but the data is hidden from view with a placeholder
+        # (defined in the EncEntry)
+        self.show_locked_entry = show_locked_entry
+
+        self.show_locked_subjects = show_locked_subjects
+
+        # The screen to display an open entry
+        self.entry_screen = entry_screen
+
         # List of all subjects
-        self.subjects = []
-        
+        self.all_subjects = []
+
+        # List of unlocked subjects
+        self.unlocked_subjects = []
+
+        # List of all entries
+        self.all_entries = EntryList()
+
         # List of unlocked entries
         self.unlocked_entries = EntryList()
-        
-        # List of all entries, regardless of if locked or not
-        self.all_entries = EntryList() 
-        
+
         # Length of self.unlocked_entries        
         self._size = 0  
         
@@ -62,15 +80,6 @@ class Encyclopaedia(store.object):
         if sorting_mode == self.SORT_REVERSE_ALPHABETICAL:
             self.reverseSorting = True
 
-        # If True, locked entries show a placeholder label on
-        # the listing screen.
-        self.show_locked_buttons = show_locked_buttons
-        
-        # If True, locked entries can be viewed,
-        # but the data is hidden from view with a placeholder
-        # (defined in the EncEntry)
-        self.show_locked_entry = show_locked_entry
-
         # Returns the currently open entry
         self.active = None
         
@@ -81,10 +90,7 @@ class Encyclopaedia(store.object):
         # The default sub-entry position is 1 because
         # the parent entry is the first page in the sub-entry list
         self.sub_current_position = 1
-        
-        # The screen to display an open entry
-        self.entry_screen = entry_screen
-        
+
         # Load the default (English) label controller
         self.labels = LabelController(self)
 
@@ -97,14 +103,13 @@ class Encyclopaedia(store.object):
         Returns:
             float - Percentage of the Encyclopaedia that's unlocked
         """
-
         float_size = float(self._size)
         float_size_all = float(self._size_all)
 
         try:
             amount_unlocked = float_size / float_size_all
         except ZeroDivisionError:
-            raise Exception(
+            raise ZeroDivisionError(
                 'Cannot display percentage unlocked of empty Encyclopaedia'
             )
 
@@ -191,58 +196,49 @@ class Encyclopaedia(store.object):
 
     def add_entry(self, item):
         """
-        Adds an entry to the Encyclopaedia and sorts it.
-        Attempts to create duplicate subjects are softly ignored.
+        Adds an entry to the Encyclopaedia's internal lists and sorts it.
+        The entry's subject is added to the subject lists.
+        Attempts to create duplicates are softly ignored.
         """
-        
-        # Add to list of all entries
         if item not in self.all_entries:
             self.all_entries.append(item)
 
-        # Add to list of unlocked entries
-        # The unlocked_entries list should only contain entries that
-        # have locked=False
         if item not in self.unlocked_entries and item.locked is False:
             self.unlocked_entries.append(item)
 
-        # Add the subject to the list
-        self.add_subject(item.subject)
-
+        # Sorting mode should be respected when adding entries
         self.sort_entries(
             sorting=self.sorting_mode,
             reverse=self.reverseSorting
         )
 
+        # Update variables used for reporting
         self._size = len(self.unlocked_entries)
         self._size_all = len(self.all_entries)
 
-    def addEntries(self, *new_entries): 
+        self.add_subject_from_entry(item)
+
+    def add_entries(self, *new_entries):
         """
         Adds multiple new entries at once.
         """
         for item in new_entries:
             self.add_entry(item)
 
-    def add_subject(self, new_subject):
+    def add_subject_from_entry(self, entry):
         """
-        Adds a new subject to the Encyclopaedia.
+        Adds a new subject to the Encyclopaedia from an Entry's subject
+        attribute.
         Attempts to create duplicate subjects are softly ignored.
-        
-        Returns:
-            True if the subject was added, False if it was not
         """
-        if new_subject not in self.subjects:
-            self.subjects.append(new_subject)
-            return True
-        return False
+        subject = entry.subject
 
-    def addSubjects(self, *new_subjects): 
-        """
-        Adds multiple new subjects at once
-        """
-        for item in new_subjects:
-            self.add_subject(item)
-                
+        if subject not in self.all_subjects:
+            self.all_subjects.append(subject)
+
+        if subject not in self.unlocked_subjects and entry.locked is False:
+            self.unlocked_subjects.append(subject)
+
     def PreviousEntry(self):
         """
         Returns:

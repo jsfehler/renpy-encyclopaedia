@@ -18,13 +18,7 @@ from operator import itemgetter
 import renpy.store as store
 import renpy.exports as renpy
 
-
-class MissingImageException(Exception):
-    """
-    Exception thrown if you try to tint an Entry's image when
-    there is no image set.
-    """
-    pass
+from encexceptions import MissingImageError
 
 
 class EncEntry(store.object):
@@ -134,10 +128,16 @@ class EncEntry(store.object):
         
     @name.getter
     def name(self):
+        """
+        Getter for name property.
+        """
         return self._get_entry_data(self._name, self.locked_name)
         
     @name.setter
     def name(self, val):
+        """
+        Setter for name property.
+        """
         self._name = val
         
     @property
@@ -153,11 +153,17 @@ class EncEntry(store.object):
         
     @text.getter
     def text(self):
+        """
+        Getter for text property.
+        """
         return self._get_entry_data(self._text, self.locked_text)
         
     @text.setter
     def text(self, val):
-        self._text = val      
+        """
+        Setter for text property.
+        """
+        self._text = val
 
     @property
     def image(self):
@@ -172,22 +178,29 @@ class EncEntry(store.object):
         
     @image.getter
     def image(self):
+        """
+        Getter for image property.
+        """
         return self._get_entry_data(self._image, self.locked_image)
 
     @image.setter
     def image(self, val):
+        """
+        Setter for image property.
+        """
         self.has_image = True
         self._image = val   
 
     def tint_locked_image(self, tint_amount):
         """
-        If the EncEntry has an image, tint it and use it as the locked image.
-        
+        If the EncEntry has an image but no locked image,
+        tint the image and use it as the locked image.
+
         Parameters:
             tint_amount: Tuple for the RGB values to tint the image
         
         Returns:
-            True if successful. Exception if not
+            True if successful
         """
         if self.has_image:
             matrix = renpy.display.im.matrix.tint(
@@ -195,15 +208,25 @@ class EncEntry(store.object):
                 tint_amount[1],
                 tint_amount[2]
             )
-            self.locked_image = renpy.display.im.MatrixColor(self._image, matrix)
+            self.locked_image = renpy.display.im.MatrixColor(
+                self._image,
+                matrix
+            )
             return True
-        raise MissingImageException(
+
+        raise MissingImageError(
             "EncEntry has no image. Cannot tint nothing."
         )
 
     def add_sub_entry(self, sub_entry):
         """
         Adds multiple pages to the entry in the form of sub-entries.
+
+        Parameters:
+            sub_entry: The entry to add as a sub-entry.
+
+        Returns:
+            True if successful
         """
         if not [sub_entry.number, sub_entry] in self.sub_entry_list:
             if sub_entry not in self.sub_entry_list:
@@ -219,7 +242,7 @@ class EncEntry(store.object):
                     return True
         return False
 
-    def addSubEntries(self, *new_sub_entries):
+    def add_sub_entries(self, *new_sub_entries):
         """
         Adds multiple new sub-entries at once.
         """

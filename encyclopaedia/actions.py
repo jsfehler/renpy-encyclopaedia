@@ -3,7 +3,7 @@ import renpy.exports as renpy
 
 class SetEntryAction(renpy.ui.Action):
     """
-    Set the selected Encyclopaedia entry into the displaying frame.
+    Set the selected Encyclopaedia entry as the active entry.
     """
     def __init__(self, encyclopaedia, entry):
         self.enc = encyclopaedia
@@ -27,29 +27,36 @@ class SetEntryAction(renpy.ui.Action):
         # The current position is updated
         self.enc.current_position = target_position
 
+        # Show the renpy screen associated with
+        # the encyclopaedia's entry screen
         renpy.show_screen(self.enc.entry_screen)
         renpy.restart_interaction()
 
 
 class ChangeEntryAction(renpy.ui.Action):
     """
-    Scroll through the entries.
-    Used by an Encyclopaedia's PreviousEntry and NextEntry functions.
+    Switch from one entry to the previous or next one.
+    Used by an Encyclopaedia's PreviousEntry() and NextEntry() functions.
     """
     def __init__(self, encyclopaedia, direction, block):
         self.enc = encyclopaedia
 
+        # Determines if it's going to the previous or next entry
+        self.direction = direction
+
         # If the button is active or not
         self.block = block
 
-        # Determines if it's going to the previous or next entry
-        self.dir = direction
-
     def get_target_position(self):
         """
+        Get the entry at the given index.
+
         If NOT showing locked entries, the next entry we want to see is
         the next entry in unlocked_entries.
         Else, the next entry we want is the next entry in all_entries.
+
+        Returns:
+            EncEntry
         """
         if self.enc.show_locked_entry is False:
             target = self.enc.unlocked_entries[self.enc.current_position]
@@ -61,7 +68,7 @@ class ChangeEntryAction(renpy.ui.Action):
     def __call__(self):
         if self.block is False:
             # Update the current position
-            self.enc.current_position += self.dir
+            self.enc.current_position += self.direction
 
             target_position = self.get_target_position()
 
@@ -75,6 +82,7 @@ class ChangeEntryAction(renpy.ui.Action):
             # When changing an entry, the sub-entry page number is set back to 1
             self.enc.sub_current_position = 1
             self.enc.active.current_page = self.enc.sub_current_position
+
             renpy.restart_interaction()
 
     def get_sensitive(self):
@@ -83,6 +91,9 @@ class ChangeEntryAction(renpy.ui.Action):
 
         If at the first entry, block "Previous" button.
         If at the last entry, block "Next" button.
+
+        Returns:
+            bool
         """
         if self.block:
             return False
@@ -93,26 +104,22 @@ class ChangePageAction(renpy.ui.Action):
     """
     Change the current sub-entry being viewed.
     """
-    def __init__(
-            self,
-            encyclopaedia,
-            direction,
-            direction2,
-            block):
+    def __init__(self, encyclopaedia, direction, block):
 
         self.enc = encyclopaedia
+
+        # Determines if it's going to the previous or next entry
+        self.direction = direction
 
         # If the button is active or not
         self.block = block
 
-        # Determines if it's going to the previous or next entry
-        self.dir1 = direction
-        self.dir2 = direction2
-
     def __call__(self):
         if self.block is False:
-            self.enc.sub_current_position += self.dir2
+            # The encyclopaedia's page display changes
+            self.enc.sub_current_position += self.direction
 
+            # The EncEntry's current page changes to match
             self.enc.active.current_page = self.enc.sub_current_position
 
             renpy.restart_interaction()
@@ -131,7 +138,7 @@ class ChangePageAction(renpy.ui.Action):
 
 class SortEncyclopaedia(renpy.ui.Action):
     """
-    Sorts the entries based on sorting_mode.
+    Sorts the entries based on encyclopaedia.sorting_mode.
     """
     def __init__(self, encyclopaedia, sorting_mode=0):
         self.enc = encyclopaedia
@@ -158,15 +165,16 @@ class SaveStatusAction(renpy.ui.Action):
 
     Only necessary if using Persistent Data/the Encyclopaedia is save-game
     independent.
-
-    Parameters:
-        encyclopaedia: The Encyclopaedia that needs entry statues saved
-        status_dictionary: The dictionary that contains all the persistent
-            variables.
-        key_string: The key for the dictionary, minus the number at the end.
-
     """
     def __init__(self, encyclopaedia, status_dictionary, key_string):
+        """
+        Parameters:
+            encyclopaedia: The Encyclopaedia that needs entry statues saved
+            status_dictionary: The dictionary that contains all the persistent
+                variables.
+            key_string: The key for the dictionary, minus the number at the end
+
+        """
         self.enc = encyclopaedia
         self.status_dictionary = status_dictionary
         self.key_string = key_string
@@ -193,7 +201,6 @@ class ResetSubPageAction(renpy.ui.Action):
 class ToggleShowLockedButtonsAction(renpy.ui.Action):
     """
     Toggles if locked Entries will be shown in the list of Entries or not.
-    For the sake of User Experience, this is best left as a debug option.
     """
     def __init__(self, encyclopaedia):
         self.enc = encyclopaedia
@@ -206,7 +213,6 @@ class ToggleShowLockedButtonsAction(renpy.ui.Action):
 class ToggleShowLockedEntryAction(renpy.ui.Action):
     """
     Toggles if locked Entries can be viewed or not.
-    For the sake of User Experience, this is best left as a debug option.
     """
     def __init__(self, encyclopaedia):
         self.enc = encyclopaedia

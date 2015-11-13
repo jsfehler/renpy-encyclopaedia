@@ -4,3 +4,10 @@ class MissingImageError(Exception):
     there is no image set.
     """
     pass
+
+
+class NoEntryOpenError(Exception):
+    """
+    Occurs if you try to display something
+    """
+    pass

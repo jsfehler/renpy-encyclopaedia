@@ -45,7 +45,7 @@ screen encyclopaedia_list:
      
                         python:
                             # Utility function that generates all the buttons used to access the Entries.
-                            generate_entry_list_buttons(encyclopaedia)
+                            button_model.display_vertical_list()
 
     frame:
         xalign .98
@@ -65,8 +65,8 @@ screen encyclopaedia_list:
             #Sort and SaveStatus are unnecessary if you're not using persistent data (ie: if the encyclopaedia is save game independent)
             #Sorting mode has to be by Number to save properly. "new_0" should be whatever the prefix you choose for the persistent dictionary is.
             textbutton "Return"  action [encyclopaedia.Sort(sorting_mode=encyclopaedia.SORT_NUMBER), 
-                                                            encyclopaedia.SaveStatus(persistent.new_status, "new_0"),
-                                                            Return()]
+                                         encyclopaedia.SaveStatus(persistent.new_status, "new_0"),
+                                         Return()]
 
 ##############################################################################
 # Encyclopaedia Entry

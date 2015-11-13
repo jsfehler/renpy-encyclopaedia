@@ -1,18 +1,3 @@
-# Copyright 2015 Joshua Fehler <jsfehler@gmail.com>
-#
-# This file is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This file is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this file.  If not, see <http://www.gnu.org/licenses/>.
-
 from operator import itemgetter
 
 import renpy.store as store
@@ -48,7 +33,7 @@ class EncEntry(store.object):
         self.locked_text = self._string_to_list(locked_text)
         self.locked_image = locked_image
 
-        # Only set the image if it's not None
+        # Boolean: If the Entry has an image. Set in the image property.
         self.has_image = False  
         if image is not None:
             self.image = image
@@ -60,27 +45,39 @@ class EncEntry(store.object):
                 # uses to change the colour of a locked image
                 self.tint_locked_image((0.0, 0.0, 0.0))
             
-        # Number of pages in the entry
+        # Integer: Number of pages in the entry
         self.pages = 0
 
-        # The parent EncEntry must be the first entry in the sub-entry list.
+        # List: The sub-entries and their position.
+        #   The parent EncEntry must be the one in the sub-entry list.
         self.sub_entry_list = [[1, self]]
         
-        # Default status for an Entry is to have no sub-entries
+        # Boolean: If an entry has any sub-entries
         self.has_sub_entry = False
-        
+
+        # Property: Set with Integer, get returns the page.
         self.current_page = 1
 
     @property
     def current_page(self):
+        """
+        Returns:
+            EncEntry: The page of an entry that is currently being viewed.
+        """
         return self._current_page
 
     @current_page.getter
     def current_page(self):
+        """
+        Getter for current_page property.
+        """
         return self.sub_entry_list[self._current_page][1]
         
     @current_page.setter
     def current_page(self, val):
+        """
+        Setter for current_page property.
+        """
         self._current_page = val - 1
 
     @staticmethod
@@ -90,6 +87,12 @@ class EncEntry(store.object):
         Each list item represents a paragraph.
         If a string is given, convert it to a list,
         assuming a string with no list = one paragraph.
+
+        Parameters:
+            given_text: The string or list of strings for the entry's text
+
+        Returns:
+            list
         """
         # If the text is already in a list, just return it.
         if type(given_text) is renpy.python.RevertableList:
@@ -102,14 +105,14 @@ class EncEntry(store.object):
     def __str__(self):
         return str(self.name)
 
-    def _get_entry_data(self, data, locked_data):
+    def __get_entry_data(self, data, locked_data):
         """
         Used by self.name, self.text, and self.image to control if
         the locked placeholder or actual entry data should be returned.
         
         Returns:
             If True or None, return the data requested,
-            else return the locked placeholder for the data
+            otherwise the placeholder for the data
         """
         if self.locked or self.locked is None:
             return locked_data
@@ -122,7 +125,7 @@ class EncEntry(store.object):
         If the entry is locked, returns the placeholder instead.
         
         Returns:
-            The name for the EncEntry
+            str: The name for the EncEntry
         """
         return self._name
         
@@ -131,7 +134,7 @@ class EncEntry(store.object):
         """
         Getter for name property.
         """
-        return self._get_entry_data(self._name, self.locked_name)
+        return self.__get_entry_data(self._name, self.locked_name)
         
     @name.setter
     def name(self, val):
@@ -156,7 +159,7 @@ class EncEntry(store.object):
         """
         Getter for text property.
         """
-        return self._get_entry_data(self._text, self.locked_text)
+        return self.__get_entry_data(self._text, self.locked_text)
         
     @text.setter
     def text(self, val):
@@ -181,7 +184,7 @@ class EncEntry(store.object):
         """
         Getter for image property.
         """
-        return self._get_entry_data(self._image, self.locked_image)
+        return self.__get_entry_data(self._image, self.locked_image)
 
     @image.setter
     def image(self, val):
@@ -200,7 +203,10 @@ class EncEntry(store.object):
             tint_amount: Tuple for the RGB values to tint the image
         
         Returns:
-            True if successful
+            bool: True if successful
+
+        Raises:
+            MissingImageError: If you try to tint an entry with no image
         """
         if self.has_image:
             matrix = renpy.display.im.matrix.tint(
@@ -229,17 +235,16 @@ class EncEntry(store.object):
             True if successful
         """
         if not [sub_entry.number, sub_entry] in self.sub_entry_list:
-            if sub_entry not in self.sub_entry_list:
-                if sub_entry.locked is False:
-                    self.sub_entry_list.append([sub_entry.number, sub_entry])
-                    self.sub_entry_list = sorted(
-                        self.sub_entry_list,
-                        key=itemgetter(0)
-                    )
-                    self.has_sub_entry = True
-            
-                    self.pages = len(self.sub_entry_list)
-                    return True
+            if sub_entry.locked is False:
+                self.sub_entry_list.append([sub_entry.number, sub_entry])
+                self.sub_entry_list = sorted(
+                    self.sub_entry_list,
+                    key=itemgetter(0)
+                )
+                self.has_sub_entry = True
+
+                self.pages = len(self.sub_entry_list)
+                return True
         return False
 
     def add_sub_entries(self, *new_sub_entries):
@@ -258,8 +263,8 @@ class EncEntry(store.object):
             entry: The sub-entry to unlock
             unlock_flag: The flag to set the entry's locked status to
         """
-
         entry.locked = unlock_flag
+
         self.add_sub_entry(entry)
         
         # If an entry gets sub-entries unlocked,

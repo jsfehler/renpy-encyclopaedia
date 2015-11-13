@@ -40,10 +40,11 @@ init python:
     encyclopaedia = Encyclopaedia(
         show_locked_buttons=True,
         show_locked_entry=True,
-        show_locked_subjects=True,
         entry_screen="encyclopaedia_entry"
     )
-    
+
+    button_model = ButtonModel(encyclopaedia)
+
     # If the encyclopaedia is save game independent, run this function to generate the persistent status variables. 
     # If the encyclopaedia is unique for each save game, comment out or delete this.
     

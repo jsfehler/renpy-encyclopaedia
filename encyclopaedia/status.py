@@ -7,7 +7,6 @@ class StatusFlagGenerator(object):
     """
     Generates persistent variables for use as status flags.
     """
-
     @staticmethod
     def __make_persistent_dict(total, master_key, persistent_var_string):
         """
@@ -27,7 +26,6 @@ class StatusFlagGenerator(object):
         Returns:
             Dictionary with persistent values
         """
-
         # eg: [new_00, new_01, etc]
         keys = [master_key % x for x in range(total)]
 
@@ -35,10 +33,13 @@ class StatusFlagGenerator(object):
         # "persistent.new_status["new_00"]",
         # "persistent.new_status["new_01"]", etc
         value_str = [persistent_var_string % x for x in range(total)]
+
         # Eval strings into the actual variables
         values = [eval(item) for item in value_str]
         combo = zip(keys, values)
-        return dict(combo)
+
+        persistent_dict = dict(combo)
+        return persistent_dict
 
     @classmethod
     def create_persistent_status_flags(
@@ -95,7 +96,6 @@ class StatusFlagGenerator(object):
         the persistent data each time the game opens and the Encyclopaedia is
         created anew.
         """
-
         # Build strings that represent the persistent dictionaries.
         # ie: "persistent.new_cache" and "persistent.new_status"
         master_key += "_0%s"

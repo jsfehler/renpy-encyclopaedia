@@ -1,18 +1,3 @@
-# Copyright 2015 Joshua Fehler <jsfehler@gmail.com>
-#
-# This file is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This file is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this file.  If not, see <http://www.gnu.org/licenses/>.
-
 import copy
 
 
@@ -21,7 +6,6 @@ class EntryList(list):
     list that's been extended with specific sorting options.
     EntryList should only contain EncEntry objects.
     """
-
     @staticmethod
     def _push_to_bottom(list_instance, item):
         """
@@ -29,11 +13,11 @@ class EntryList(list):
         Pop the item from the list and insert it at the bottom.
         
         Parameters:
-            list_instance: The list to use
-            item: The item to push to the bottom
+            list_instance (EntryList): The list to use
+            item (EncEntry): The item to push to the bottom
         
         Returns:
-            The list_instance
+            EntryList
         """
         list_length = len(list_instance)
         popped = list_instance.pop(list_instance.index(item))
@@ -48,7 +32,6 @@ class EntryList(list):
         Returns:
             self
         """
-        
         # We can't pop and insert directly; the loop will get screwed up.   
         changed_list = copy.copy(self)
 
@@ -69,14 +52,14 @@ class EntryList(list):
     @staticmethod
     def _get_number_key(item):
         """
-            Returns:
-                Key for sorting by number
+        Returns:
+            Key for sorting by number
         """
         return item.number
         
     def sort_by_number(self):
         """
-        Entries are sorted by their number.
+        Sorts entries by their number.
         """
         self.sort(key=self._get_number_key)
         return self
@@ -84,18 +67,18 @@ class EntryList(list):
     @staticmethod
     def _get_name_key(item):
         """
-            Returns:
-                Key for sorting by name
+        Returns:
+            Key for sorting by name
         """
         return item.name
         
     def sort_by_name(self, reverse=False, locked_at_bottom=True):
         """
-        Entries are sorted by their name attribute.
+        Sorts entries by their name attribute.
 
         Parameters:
-            reverse: False for A to Z, True for Z to A
-            locked_at_bottom: Locked entries go to the bottom of the list
+            reverse (bool): False for A to Z, True for Z to A
+            locked_at_bottom (bool): Locked entries go to the bottom of the list
 
         Returns:
             self
@@ -113,8 +96,8 @@ class EntryList(list):
     @staticmethod
     def _get_unread_key(item):
         """
-            Returns:
-                Key for sorting by status
+        Returns:
+            Key for sorting by status
         """
         return item.status
         
@@ -125,7 +108,6 @@ class EntryList(list):
         Returns:
             self
         """
-
         # Sort by name first
         self.sort_by_name()
                        

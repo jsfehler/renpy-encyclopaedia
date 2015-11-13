@@ -1,179 +1,167 @@
-# Copyright 2015 Joshua Fehler <jsfehler@gmail.com>
-#
-# This file is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This file is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this file.  If not, see <http://www.gnu.org/licenses/>.
+from itertools import groupby
 
 import renpy.exports as renpy
 
 ui = renpy.ui
 
 
-def __unread_tag(encyclopaedia):
+class ButtonModel(object):
     """
-    Default is an inactive textbutton.
-    If you don't want that then override this function.
-
-    Parameters:
-        encyclopaedia: The encyclopaedia associated with the Entry.
-
-    Returns:
-        Ren'py displayable for indicating that an Entry is unread
+    Subclass this to override and use custom ways of displaying buttons.
     """
-    tag = ui.textbutton(encyclopaedia.labels.unread_entry_label)
-    return tag
+    def __init__(self, encyclopaedia):
+        self.enc = encyclopaedia
 
+    def __unread_tag(self):
+        """
+        Default is an inactive textbutton.
+        If you don't want that then override this function.
 
-def __entry_button(encyclopaedia, entry):
-    """
-    Default is a textbutton.
-    If you don't want that then override this function.
+        Parameters:
+            encyclopaedia: The encyclopaedia associated with the Entry.
 
-    Returns:
-        A button to open an Entry.
-    """
+        Returns:
+            Ren'py displayable for indicating that an Entry is unread
+        """
+        tag = ui.textbutton(self.enc.labels.unread_entry_label)
+        return tag
 
-    tag = ui.textbutton(
-        entry.name,
-        clicked=encyclopaedia.SetEntry(entry)
-    )
+    def __entry_button(self, entry):
+        """
+        Default is a textbutton.
+        If you don't want that then override this function.
 
-    return tag
+        Returns:
+            A button to open an Entry.
+        """
+        tag = ui.textbutton(
+            entry.name,
+            clicked=self.enc.SetEntry(entry)
+        )
 
+        return tag
 
-def __placeholder_entry_button(encyclopaedia, entry):
-    """
-    Default is a textbutton.
-    If you don't want that then override this function.
+    def __placeholder_entry_button(self, entry):
+        """
+        Default is a textbutton.
+        If you don't want that then override this function.
 
-    Returns:
-        A placeholder button to open a locked Entry.
-    """
-    tag = ui.textbutton(
-        encyclopaedia.labels.locked_entry_label,
-        clicked=encyclopaedia.SetEntry(entry)
-    )
+        Returns:
+            A placeholder button to open a locked Entry.
+        """
+        tag = ui.textbutton(
+            self.enc.labels.locked_entry_label,
+            clicked=self.enc.SetEntry(entry)
+        )
 
-    return tag
+        return tag
 
+    def __inactive_placeholder_entry_button(self):
+        """
+        Default is a textbutton.
+        If you don't want that then override this function.
 
-def __inactive_placeholder_entry_button(label):
-    """
-    Default is a textbutton.
-    If you don't want that then override this function.
+        Returns:
+            An inactive placeholder for a locked Entry.
+        """
+        tag = ui.textbutton(self.enc.labels.locked_entry_label)
+        return tag
 
-    Returns:
-        An inactive placeholder for a locked Entry.
-    """
-    tag = ui.textbutton(label)
-    return tag
+    def __add_entry_button(self, entry):
+        """
+        Add a single button for an Entry in an Encyclopaedia.
 
+        Call this function on a Ren'Py screen, inside whatever other UI
+        (Window, box, etc) you want, usually inside a for loop.
 
-def __add_entry_button(enc, entry):
-    """ 
-    Add a single button for an Entry in an Encyclopaedia.
+        Override this function if you want the buttons to display in a
+        different way.
 
-    Call this function on a Ren'Py screen, inside whatever other UI
-    (Window, box, etc) you want, usually inside a for loop.
+        Parameters:
+            enc: The Encyclopaedia object to get data from
 
-    Override this function if you want the buttons to display in a
-    different way.
+            position: the Entry's position in the Encyclopaedia's list of
+                entries. It will reference either all the entries or
+                only the unlocked ones, depending on
+                the given Encyclopaedia's show_locked_buttons variable.
+        """
+        # If locked buttons should be visible.
+        if self.enc.show_locked_buttons:
 
-    Parameters:
-        enc: The Encyclopaedia object to get data from
+            # If the entry is unlocked, add an active button.
+            if entry.locked is False:
+                self.__entry_button(entry)
 
-        position: the Entry's position in the Encyclopaedia's list of entries.
-        It will reference either all the entries or only the unlocked ones,
-        depending on the given Encyclopaedia's show_locked_buttons variable.
-    """
-    # If locked buttons should be visible.
-    if enc.show_locked_buttons:
+                # Add tag next to the button, if it hasn't been viewed yet.
+                if not entry.status:
+                    self.__unread_tag()
 
-        # If the entry is unlocked, add an active button.
-        if entry.locked is False:
-            __entry_button(enc, entry)
+            # If the entry is locked, add an inactive button.
+            else:
+                # If locked entries should be visible, add an active button
+                # with placeholder text.
+                if self.enc.show_locked_entry:
+                    self.__placeholder_entry_button(entry)
+                else:
+                    self.__inactive_placeholder_entry_button()
+
+        # If locked buttons should not be visible.
+        # ie: No need for placeholders.
+        elif self.enc.show_locked_buttons is False:
+            self.__entry_button(entry)
 
             # Add tag next to the button, if it hasn't been viewed yet.
             if not entry.status:
-                __unread_tag(enc)
+                self.__unread_tag()
 
-        # If the entry is locked, add an inactive button.
+    def display_vertical_list(self):
+        """
+        Depending on sorting mode, generates a button for each
+        Encyclopaedia entry and displays them vertically.
+
+        Parameters:
+            enc: The Encyclopaedia object to get data from
+        """
+        # The list is chosen based on if we want to show locked entries on
+        # the entry select screen or not.
+        if self.enc.show_locked_buttons:
+            entries = self.enc.all_entries
         else:
-            # If locked entries should be visible, add an active button
-            # with placeholder text.
-            if enc.show_locked_entry:
-                __placeholder_entry_button(enc, entry)
-            else:
-                __inactive_placeholder_entry_button(
-                    enc.labels.locked_entry_label
-                )
+            entries = self.enc.unlocked_entries
 
-    # If locked buttons should not be visible.
-    # ie: No need for placeholders.
-    elif enc.show_locked_buttons is False:
-        __entry_button(enc, entry)
-        
-        # Add tag next to the button, if it hasn't been viewed yet.
-        if not entry.status:
-            __unread_tag(enc)
-
-
-def generate_entry_list_buttons(enc):
-    """
-    Depending on sorting mode, generates a button for each Encyclopaedia entry.
-
-    Override this function if you want the buttons to display in a
-    different way.
-
-    Parameters:
-        enc: The Encyclopaedia object to get data from
-    """
-    # The list is chosen based on if we want to show locked entries on the entry
-    # select screen or not.
-    if enc.show_locked_buttons:
-        entries = enc.all_entries
-    else:
-        entries = enc.unlocked_entries
-
-    if enc.show_locked_subjects:
-        subjects = enc.all_subjects
-    else:
-        subjects = enc.unlocked_subjects
-
-    # If sorting by subject, display the subject heading and
-    # add an entry under it if it's the same subject
-    if enc.sorting_mode == enc.SORT_SUBJECT:
-        for subject in subjects:
-            ui.text(subject)
-            for entry in entries:
-                if entry.subject == subject:
+        # If sorting by subject, display the subject heading and
+        # add an entry under it if it's the same subject
+        if self.enc.sorting_mode == self.enc.SORT_SUBJECT:
+            # Split entries by subject
+            for key, group in groupby(entries, lambda x: x.subject):
+                ui.text(key)
+                for entry in group:
                     ui.hbox()
-                    __add_entry_button(enc, entry)
+                    self.__add_entry_button(entry)
                     ui.close()
 
-    # If sorting by number, add the number next to the entry
-    elif enc.sorting_mode == enc.SORT_NUMBER:
-        for entry in entries:
-            ui.hbox()
-            ui.textbutton(str(entry.number))
-            ui.hbox()
-            __add_entry_button(enc, entry)
-            ui.close()
-            ui.close()
+        # If sorting by number, add the number next to the entry
+        elif self.enc.sorting_mode == self.enc.SORT_NUMBER:
+            for entry in entries:
+                ui.hbox()
+                ui.textbutton(str(entry.number))
+                ui.hbox()
+                self.__add_entry_button(entry)
+                ui.close()
+                ui.close()
 
-    # If sorting Alphabetically, Reverse-Alphabetically, or Unread,
-    # don't add anything before the entry
-    else:
-        for entry in entries:
-            ui.hbox()
-            __add_entry_button(enc, entry)
-            ui.close()
+        # If sorting Alphabetically, Reverse-Alphabetically, or Unread.
+        else:
+            if self.enc.nest_alphabetical_sort:
+                for key, group in groupby(entries, lambda x: x.name[0]):
+                    ui.text(key)
+                    for entry in group:
+                        ui.hbox()
+                        self.__add_entry_button(entry)
+                        ui.close()
+
+            else:
+                for entry in entries:
+                    ui.hbox()
+                    self.__add_entry_button(entry)
+                    ui.close()

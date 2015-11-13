@@ -1,17 +1,4 @@
-# Copyright 2015 Joshua Fehler <jsfehler@gmail.com>
-#
-# This file is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This file is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this file.  If not, see <http://www.gnu.org/licenses/>.
+from encexceptions import NoEntryOpenError
 
 
 class LabelController(object):
@@ -37,10 +24,10 @@ class LabelController(object):
         self.sort_subject_label = "Subject"
         self.sort_unread_label = "Unread"
 
-        # String for the "Unread Entry" button
+        # String for an "Unread Entry" button
         self.unread_entry_label = "New!"
 
-        # String for the "Locked Entry" button
+        # String for a "Locked Entry" button
         self.locked_entry_label = "???"
 
     @property
@@ -50,7 +37,6 @@ class LabelController(object):
             String displaying the percentage of the encyclopaedia
             that's unlocked, ie: '50%'
         """
-
         percentage_unlocked = self.encyclopaedia.percentage_unlocked
         label = str(int(percentage_unlocked)) + self.percentage_label
         
@@ -60,12 +46,14 @@ class LabelController(object):
     def entry_current_page(self):
         """
         Returns: 
-            String indicating which sub-page of an entry is being viewed
+            str: The sub-page of an entry that is being viewed
         """
         try:
             total_pages = self.encyclopaedia.active.pages
         except AttributeError:
-            raise Exception("Cannot display current page when no entry is open")
+            raise NoEntryOpenError(
+                "Cannot display Entry's current page when no entry is open."
+            )
 
         label = "{0} {1} {2} {3}".format(
             self.page_label, 
@@ -80,9 +68,8 @@ class LabelController(object):
     def sorting_mode(self):
         """
         Returns:
-            String representation of the current sorting mode
+            str: The current sorting mode
         """
-
         enc = self.encyclopaedia
 
         sorting_strings = {

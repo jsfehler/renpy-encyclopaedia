@@ -1,34 +1,23 @@
 #Encyclopaedia Framework for Ren'Py
 Ren'Py plugin for managing text entries. 
 Useful for an encyclopaedia, bestiary, or similar system. 
-The Encyclopaedia holds multiple EncEntries and offers different ways to sort
-and display them.
 
-##Features
-- Sort entries by Number, Alphabetical, Reverse Alphabetical, Subject, or Unread status.
+###Features
+- Sorting by Number, Alphabetical, Reverse Alphabetical, Subject, or Unread status.
+- Filtering by Subject.
 - Entries can have multiple sub-pages.
-- Entries can be locked at the start of the game and then unlocked as players progress.
-- Locked entries can be displayed with placeholders or outright hidden.
-- Unlocks can be tied to save games or independent.
+- Entries can be locked at the start of the game and then unlocked as the story progresses.
+- Locked entries can be displayed with customizable placeholders or outright hidden.
+- Unlocks can be tied to save games or independent using persistent data.
 - Unread Entries can be tagged.
 - Access can be from the main menu or during the game.
 
-##Quick Start
-Dump the contents of this repo into a new Ren'Py project, replacing the existing script.rpy, and run it.
-
-###Basic Usage
-    encyclopaedia = Encyclopaedia()
-    encyclopaedia.add_subject("Lorem Ipsum")
-    en1 = EncEntry(number=1, 
-                   name="Lorem", 
-                   text="Lorem", 
-                   subject="Lorem Ipsum", 
-                   status=persistent.new_dict["new_00"], 
-                   locked=False, 
-                   image=en1_image)
-    
-    encyclopaedia.add_entry(en1)
-    
+###Documentation / Running the demo
+All documentation is available inside the demo game.
+To run the demo:
+1 - Create a new Ren'Py project
+2 - Add the encyclopaedia build files into the project's game directory 
+3 - Replace the existing script.rpy file with the demo's script.rpy
 
 ###Handling Translations:
     # Create a new French LabelController

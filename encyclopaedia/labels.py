@@ -1,57 +1,62 @@
-from encexceptions import NoEntryOpenError
+class Labels(object):
+    """Controls how the labels that display Encyclopaedia data appear.
 
+    Attributes:
+        percentage_label (str): Placed next to the percentage unlocked number
+        page_label (str): Placed before the entry page displayed
+        page_separator_label (str): Placed in-between the
+            current page number and the total page number
 
-class LabelController(object):
-    """
-    Controls how the labels that display Encyclopaedia data appear.
+        sort_number_label (str): Label for Number Sorting
+        sort_alphabetical_label (str): Label for Alphabetical sorting
+        sort_reverse_alphabetical_label (str): Label for Reverse Alphabetical
+            sorting
+        sort_subject_label (str): Label for Subject sorting
+        sort_unread_label (str): Label for Unread sorting
+
+        unread_entry_label (str): Default for the tag next to unread entries
+        locked_entry_label (str): Default for a "Locked Entry" button
     """
     def __init__(self, encyclopaedia):
         self.encyclopaedia = encyclopaedia
-   
-        # Placed next to the percentage unlocked number
+
         self.percentage_label = '%'
-        
-        # Placed before the entry page displayed
         self.page_label = 'Page'
-        
-        # Placed in-between the current page number and the total page number 
         self.page_separator_label = '/'
-   
-        # Variables for the strings representing the different sorting types
+
         self.sort_number_label = "Number"
         self.sort_alphabetical_label = "A to Z"
         self.sort_reverse_alphabetical_label = "Z to A"
         self.sort_subject_label = "Subject"
         self.sort_unread_label = "Unread"
 
-        # String for an "Unread Entry" button
         self.unread_entry_label = "New!"
-
-        # String for a "Locked Entry" button
         self.locked_entry_label = "???"
 
     @property
     def percentage_unlocked(self): 
-        """ 
-        Returns: 
-            String displaying the percentage of the encyclopaedia
-            that's unlocked, ie: '50%'
+        """The percentage of the encyclopaedia that's unlocked.
+
+        ie: '50%'
+
+        Returns:
+            str
         """
         percentage_unlocked = self.encyclopaedia.percentage_unlocked
-        label = str(int(percentage_unlocked)) + self.percentage_label
-        
-        return label   
+
+        return str(int(percentage_unlocked)) + self.percentage_label
 
     @property
     def entry_current_page(self):
-        """
-        Returns: 
-            str: The sub-page of an entry that is being viewed
+        """The sub-page of an entry that is being viewed.
+
+        Returns:
+            str
         """
         try:
             total_pages = self.encyclopaedia.active.pages
         except AttributeError:
-            raise NoEntryOpenError(
+            raise AttributeError(
                 "Cannot display Entry's current page when no entry is open."
             )
 
@@ -66,9 +71,10 @@ class LabelController(object):
      
     @property
     def sorting_mode(self):
-        """
+        """Label for the encyclopaedia's current sorting mode.
+
         Returns:
-            str: The current sorting mode
+            str
         """
         enc = self.encyclopaedia
 

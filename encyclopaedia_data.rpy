@@ -29,6 +29,7 @@ init python:
     en3_image = "enc_images/Rtx-011.jpg"
     en4_image = "enc_images/Xord_concept.jpg"
     en7_image = "enc_images/Thanatos_sprite.png"
+    getting_started = "img/getting_started.png"
 
     # Define an encyclopaedia object.
     
@@ -37,13 +38,13 @@ init python:
     
     # If show_locked_entry=False, it will prevent the player from viewing the locked entry.
     # if True, locked entries can be viewed, but the title, text, and image will be replaced with "???".
+
     encyclopaedia = Encyclopaedia(
+        sorting_mode = Encyclopaedia.SORT_NUMBER,
         show_locked_buttons=True,
         show_locked_entry=True,
         entry_screen="encyclopaedia_entry"
     )
-
-    button_model = ButtonModel(encyclopaedia)
 
     # If the encyclopaedia is save game independent, run this function to generate the persistent status variables. 
     # If the encyclopaedia is unique for each save game, comment out or delete this.
@@ -51,10 +52,10 @@ init python:
     # entries_total is the total number of EncEntries the Encyclopaedia will hold.
     # master_key and name are what determines the name of the status variables and the name of each key.
     # only change master_key and name if you need multiple encyclopaedias in a game.
-    StatusFlagGenerator.create_persistent_status_flags(
-        total=7,
-        master_key='new',
-        name="new"
+    persistent_status_flags(
+        total=8,
+        master_key="new",
+        status_name="new_status"
     )
 
     # Let's store the names of our subjects as variables. 
@@ -69,88 +70,238 @@ init python:
     # if save game independent, status should always be from the persistent.new_status or it won't save
     # if locked=False, entry will always be visible, even if new game hasn't been started
     en1 = EncEntry(
+        encyclopaedia,
         1,
         "Lorem",
         lorem,
         subject_lorem_ipsum,
-        status=persistent.new_status["new_00"],
+        viewed=persistent.new_status["new_00"],
         locked=False,
         image=en1_image
     )
 
     en2 = EncEntry(
+        encyclopaedia,
         2,
         "Cras",
         cras,
         subject_lorem_ipsum,
-        status=persistent.new_status["new_01"],
+        viewed=persistent.new_status["new_01"],
         locked=False,
         image=en2_image
     )
 
     en3 = EncEntry(
+        encyclopaedia,
         3,
         "In",
         infeu,
         subject_lorem_ipsum,
-        status=persistent.new_status["new_02"],
+        viewed=persistent.new_status["new_02"],
         locked=False,
         image=en3_image
     )
 
     en4 = EncEntry(
+        encyclopaedia,
         4,
         "Morbi",
         morbi,
         subject_lorem_ipsum,
-        status=persistent.new_status["new_03"],
+        viewed=persistent.new_status["new_03"],
         locked=persistent.en4_locked,
         image=en4_image,
         locked_image=None
     )
 
     en5 = EncEntry(
+        encyclopaedia,
         5,
         "Mauris",
         mauris,
         subject_lorem_ipsum,
-        status=persistent.new_status["new_04"],
+        viewed=persistent.new_status["new_04"],
         locked=False
     )
 
     en6 = EncEntry(
+        encyclopaedia,
         6,
         "Wine",
         wine,
         subject_virtues,
-        status=persistent.new_status["new_05"],
+        viewed=persistent.new_status["new_05"],
         locked=persistent.en6_locked
     )
 
     en7 = EncEntry(
+        encyclopaedia,
         7,
         "Women",
         women,
         subject_virtues,
-        status=persistent.new_status["new_06"],
+        viewed=persistent.new_status["new_06"],
         locked=persistent.en7_locked,
         image=en7_image,
         locked_image=None
     )
-  
-    # Add all entries and sub-entries in an init block.
-    encyclopaedia.add_entries(
-        en1,
-        en2,
-        en3,
-        en4,
-        en5,
-        en6,
-        en7
+
+    ################
+    # Documentation
+    #
+
+    # Basic Usage
+    getting_started = EncEntry(
+        encyclopaedia,
+        8,
+        "Getting Started",
+        [
+            "Inside an init python block, create a new Encyclopaedia object.",
+        ],
+        "Basic Usage",
+        viewed=persistent.new_status["new_07"],
+        locked=False,
+        image=getting_started,
     )
-    # To do this one at a time, use add_entry() instead
-    # This auto-sorts when adding.
-    
+
+    getting_started_1 = EncEntry(
+        getting_started,
+        2,
+        "Getting Started",
+        [
+            "Once you have an Encyclopaedia, EncEntry objects can be created and placed inside the Encyclopaedia.",
+            "Each EncEntry is an individual entry in an encyclopaedia.",
+            "The minimum arguments to create an EncEntry are:",
+            "\n parent: The container for the entry. Can be an Encyclopaedia or another EncEntry (for sub-pages)",
+            "\n number: The number for the entry. Must be unique.",
+            "\n name: A name for the entry. Doesn't need to be unique.",
+            "\n text: The text for the entry. Can be a string or list of strings."
+        ],
+        "Basic Usage",
+        viewed=False,
+        locked=False,
+        image=en7_image,
+    )
+
+    getting_started_2 = EncEntry(
+        getting_started,
+        3,
+        "Getting Started",
+        [
+            "Once your Encyclopaedia is created and filled with EncEntries, you need to give players a way to access the encyclopaedia screens.",
+            "You can add a button on the main menu, add a button in-game, or both, depending on your game.",
+            "The default screen included with the framework is encyclopaedia_list. It takes one argument: the encyclopaedia you want to show on it."
+        ],
+        "Basic Usage",
+        viewed=False,
+        locked=False,
+        image=en7_image
+    )
+
+    locking_unlocking_entries = EncEntry(
+        encyclopaedia,
+        9,
+        "Locking and Unlocking Entries",
+        [
+            "By default, all EncEntry objects are unlocked. They can be viewed by players at any time.",
+            "However, when creating an EncEntry, the locked argument can be given with a variable as a flag, effectively hiding the entry until the condition is true.",
+            "The entry will be locked until an the unlock_entry() function is called on the entry to unlock it.",
+        ],
+        "Basic Usage"
+    )
+
+    locking_unlocking_entries_1 = EncEntry(
+        locking_unlocking_entries,
+        2,
+        "Locking and Unlocking Entries",
+        [
+            "If the encyclopaedia is tied to a save game, setting an entry as locked is as easy as giving the locked argument a boolean. Unlocking only requires calling unlock_entry().",
+            "However, if the encyclopaedia's state must persist outside of an individual save game, Ren'Py persistent data must be given as an argument, and it must be explicitly set to unlock it.",
+            "The framework includes a function to create the necessary persistent variables for you. This is convered in the In-Depth section."
+        ],
+        "Basic Usage"
+    )
+
+
+    adding_pages = EncEntry(
+        encyclopaedia,
+        10,
+        "Adding Sub-Pages",
+        [
+            "Just like an Encyclopaedia holds EncEntry objects, each EncEntry can hold other EncEntry. This allows entries to have multiple pages.",
+            "EncEntry that are used as sub-pages are created the same way as other EncEntry, but instead of providing an Encyclopaedia as the parent, an EncEntry is given.",
+        ],
+        "Basic Usage",
+    )
+
+    adding_pages_1 = EncEntry(
+        adding_pages,
+        2,
+        "Adding Sub-Pages",
+        [
+            "When adding sub-pages, the parent EncEntry is considered the first page, so the number argument for sub-pages must start at 2."
+        ],
+        "Basic Usage",
+    )
+
+    placeholders = EncEntry(
+        encyclopaedia,
+        11,
+        "Placeholders",
+        [""],
+        "Basic Usage"
+    )
+
+    # In-Depth
+    # Encyclopaedia
+    # EncEntry
+    # Actions
+
+    encyclopaedia_options = EncEntry(
+        encyclopaedia,
+        20,
+        "Encyclopaedia",
+        [
+            "Encyclopaedias can take four optional arguments when being created:"
+            " \n 1 - The default sorting mode. Default is by number."
+            " \n 2 - If locked buttons should be displayed or not. Default is False."
+            " \n 3 - If locked entries should be displayed or not. Default is False."
+            " \n 4 - The screen to display individual entries on. Default is 'encyclopaedia_entry'."
+        ],
+        "In-Depth",
+        viewed=False,
+        locked=False
+    )
+
+    customizing_screens = EncEntry(
+        encyclopaedia,
+        11,
+        "Customizing Screens",
+        [""],
+        "In-Depth",
+    )
+
+    translations = EncEntry(
+        encyclopaedia,
+        12,
+        "Translations",
+        [""],
+        "In-Depth",
+    )
+
+    # Sorting
+    # Filtering
+
+    for x in range(13, 500):
+        e = EncEntry(
+            encyclopaedia,
+            x,
+            "Test Entry: " + str(x),
+            "Test Entry",
+            "Test Entries",
+        )
+
+
     # en4 and en6 won't be viewed at the start because
     # they're locked by persistent data.
     # After they're unlocked, they'll be available whenever the game loads. 
@@ -158,6 +309,7 @@ init python:
     # When creating sub-entries, the main entry is considered page 1,
     # so always start at 2.
     en2_2 = EncEntry(
+        en2,
         2,
         "Cras 2",
         "Cras 2",
@@ -166,6 +318,7 @@ init python:
     )
 
     en2_3 = EncEntry(
+        en2,
         3,
         "Cras 3",
         "Cras 3",
@@ -174,6 +327,7 @@ init python:
     )
 
     en6_2 = EncEntry(
+        en6,
         2,
         "Wine 2",
         wine2,
@@ -181,12 +335,10 @@ init python:
         locked=persistent.en6_2_locked
     )
     en6_3 = EncEntry(
+        en6,
         3,
         "Wine 3",
         wine3,
         "Virtues",
         locked=persistent.en6_3_locked
     )
-
-    en2.add_sub_entries(en2_2, en2_3)
-    en6.add_sub_entries(en6_2, en6_3)

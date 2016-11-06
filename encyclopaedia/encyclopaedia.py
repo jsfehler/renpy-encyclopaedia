@@ -91,6 +91,8 @@ class Encyclopaedia(store.object):
 
         self.locked_at_bottom = True
 
+        self.unlock_callback = None
+
     def __repr__(self):
         return "Encyclopaedia: {} entries total".format(self._size_all)
 
@@ -175,6 +177,8 @@ class Encyclopaedia(store.object):
     def unlock_entry(self, entry):
         """Unlocks an EncEntry and adds it to the list of unlocked entries.
 
+        If an unlock callback is available, it is run after the entry is added.
+
         Args:
             entry (EncEntry): The Entry to unlock
         """
@@ -182,6 +186,9 @@ class Encyclopaedia(store.object):
 
         # Run entry through add_entry() again to add it to unlocked_entries
         self.add_entry(entry)
+
+        if self.unlock_callback is not None:
+            self.unlock_callback()
 
     def sort_entries(self, sorting=0, reverse=False):
         """Sort entry lists by whatever the current sorting mode is.

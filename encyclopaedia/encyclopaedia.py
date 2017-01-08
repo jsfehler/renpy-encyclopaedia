@@ -63,9 +63,9 @@ class Encyclopaedia(store.object):
         self.show_locked_entry = show_locked_entry
         self.entry_screen = entry_screen
 
-        self.all_entries = list()
-        self.unlocked_entries = list()
-        self.filtered_entries = list()
+        self.all_entries = []
+        self.unlocked_entries = []
+        self.filtered_entries = []
 
         self.filtering = False
 
@@ -83,14 +83,12 @@ class Encyclopaedia(store.object):
 
         self.labels = Labels(self)
 
-        self.subjects = list()
+        self.subjects = []
 
         self.active = None
-
         self._current_entries = self.all_entries
 
         self.locked_at_bottom = True
-
         self.unlock_callback = None
 
     def __repr__(self):
@@ -143,8 +141,7 @@ class Encyclopaedia(store.object):
 
     @property
     def number_of_visible_entries(self):
-        """
-        Whatever the maximum size of the entry list should be,
+        """Whatever the maximum size of the entry list should be,
         based on if locked entries should be shown or not
 
         Returns:
@@ -199,7 +196,6 @@ class Encyclopaedia(store.object):
         """
         if sorting == self.SORT_NUMBER:
             self.current_entries.sort(key=attrgetter('number'))
-
         else:
             self.current_entries.sort(reverse=reverse, key=attrgetter('name'))
 

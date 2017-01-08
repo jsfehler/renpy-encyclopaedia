@@ -74,6 +74,8 @@ class EncEntry(store.object):
         if parent is not None:
             parent.add_entry(self)
 
+        self.viewed_callback = None
+
     def __repr__(self):
         return "EncEntry: {}".format(self.label)
 
@@ -169,13 +171,6 @@ class EncEntry(store.object):
     @text.setter
     def text(self, val):
         self._text = val
-
-        self.viewed = False
-
-    def add_text(self, new_text):
-        """Append new text and set the entry to not viewed.
-        """
-        self._text.append(new_text)
 
         self.viewed = False
 

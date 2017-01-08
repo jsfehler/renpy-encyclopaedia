@@ -38,11 +38,14 @@ class SetEntryAction(EncyclopaediaAction):
 
         # If an entry was not locked, then setting it makes it viewed.
         if self.enc.active.locked is False:
+            if self.entry.viewed is False:
+                if self.entry.viewed_callback is not None:
+                    self.entry.viewed_callback[0](self.entry.viewed_callback[1])
             self.enc.active.viewed = True
 
         # Update the current position
         self.enc.current_position = target_position
-
+        
         # Show the renpy screen associated with the encyclopaedia's entry screen
         renpy.show_screen(self.enc.entry_screen, self.enc)
         renpy.restart_interaction()
@@ -54,7 +57,6 @@ class ChangeAction(EncyclopaediaAction):
     Args:
         block (bool): True if at the first or last entry
     """
-
     def __init__(self, encyclopaedia, direction, block):
         super(ChangeAction, self).__init__(encyclopaedia)
 
@@ -108,6 +110,8 @@ class ChangeEntryAction(ChangeAction):
 
             # Mark the entry as viewed, if it's not locked
             if self.enc.active.locked is False:
+                if self.enc.active.viewed_callback is not None:
+                    self.enc.active.viewed_callback[0](self.enc.active.viewed_callback[1])
                 self.enc.active.viewed = True
 
             # When changing an entry, the sub-entry page number is set back to 1
@@ -126,9 +130,12 @@ class ChangePageAction(ChangeAction):
         if self.block is False:
             # The encyclopaedia's page display changes
             self.enc.sub_current_position += self.direction
-
+            
             # The EncEntry's current page changes to match
             self.enc.active.current_page = self.enc.sub_current_position
+
+            if self.enc.active.current_page.viewed is False:
+                self.enc.active.current_page.viewed = True
 
             renpy.restart_interaction()
 
@@ -163,13 +170,11 @@ def _build_subject_filter(enc, subject):
         subject (str): The subject for the filter.
     """
     if enc.show_locked_buttons is False:
-        enc.filtered_entries = [
-            i for i in enc.unlocked_entries if i.subject == subject
-        ]
+        entries = enc.unlocked_entries
     else:
-        enc.filtered_entries = [
-            i for i in enc.all_entries if i.subject == subject
-        ]
+        entries = enc.all_entries
+
+    enc.filtered_entries = [i for i in entries if i.subject == subject]
 
 
 class FilterBySubject(EncyclopaediaAction):

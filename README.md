@@ -13,21 +13,8 @@ Useful for an encyclopaedia, bestiary, or similar system.
 
 ###Documentation
 All documentation is available inside the demo game.
+
 ####Running the demo:
 1. Create a new Ren'Py project
 2. Add the encyclopaedia files into the project's game directory 
 3. Replace the existing script.rpy file with the demo's script.rpy
-
-###Handling Translations:
-    # Create a new French LabelController
-    french_labels = LabelController()
-    
-    #Change the labels to french
-    french_labels.unread_entry_label = 'Nouveau!'
-    
-    # Create an Encyclopaedia
-    encyclopaedia = Encyclopaedia()
-    
-    If the game's language is French, use the French labels instead of English.
-    if language == 'French':
-        encyclopaedia.labels = french_labels

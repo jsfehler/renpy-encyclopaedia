@@ -7,8 +7,7 @@ from renpy.python import RevertableList
 
 class EncEntry(store.object):
     """Stores an Entry's content.
-
-    EncEntry should be added to an Encyclopaedia.
+    EncEntry instances should be added to an Encyclopaedia.
 
     Args:
         parent (Encyclopaedia)
@@ -18,17 +17,17 @@ class EncEntry(store.object):
         subject (str)
         viewed (bool)
         locked (bool)
-        image (Displayable)
+        image (str)
         locked_name (str)
         locked_text (str)
-        locked_image
+        locked_image (str)
+        locked_image_tint (tuple)
 
     Attributes:
         has_image (bool): True if image was provided, else False
         pages (int): Number of pages in the entry
 
         has_sub_entry (bool): If an entry has any sub-entries
-
     """
     def __init__(self, parent=None, number=0, name="", text="", subject="",
                  viewed=None, locked=False, image=None, locked_name="???",
@@ -69,7 +68,7 @@ class EncEntry(store.object):
         # Property: Set with Integer, get returns the page.
         self.current_page = 1
 
-        # Place the entry into the assigned encyclopaedia or entry.
+        # Place the entry into the assigned Encyclopaedia or EncEntry.
         if parent is not None:
             parent.add_entry(self)
 
@@ -195,18 +194,14 @@ class EncEntry(store.object):
         self.viewed = False
 
     def _tint_locked_image(self, tint_amount):
-        """
-        If the EncEntry has an image but no locked image,
-        tint the image and use it as the locked image.
+        """If the EncEntry has an image but no locked image, tint the image
+        and use it as the locked image.
 
         Args:
             tint_amount: Tuple for the RGB values to tint the image
         
         Returns:
-            bool: True if successful
-
-        Raises:
-            MissingImageError: If you try to tint an entry with no image
+            bool: True if successful, else False
         """
         if self.has_image:
             matrix = renpy.display.im.matrix.tint(

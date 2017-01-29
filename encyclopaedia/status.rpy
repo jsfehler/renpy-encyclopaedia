@@ -1,12 +1,11 @@
 init python:
-    def persistent_status_flags(total, master_key='new', status_name='new_status'):
+    def persistent_status_flags(total,
+                                master_key='new', status_name='new_status'):
         """Create a dictionary in ren'py persistent with None pre-filled for
         the values.
 
-        Adds the dict to Ren'Py's persistent variables.
-
-        Used only if an Encyclopaedia is not tied to a save game state and should
-        unlock entries across all save games.
+        Used only if an Encyclopaedia is not tied to a save game state and
+        should unlock entries across all save games.
 
         This creates the variables, but it's up to you to use them in
         the "viewed" argument for an EncEntry.
@@ -15,13 +14,14 @@ init python:
 
         Args:
             total (int): Number of entries to create.
-            master_key (str): Name of the key prefix. ie: {<master_key>_01: None}
+            master_key (str): Name of the key prefix.
+                              ie: {<master_key>_01: None}
             status_name (str): Name of the persistent variable.
 
         Returns:
             bool: True if persistent dict created, False if not
         """
-        # If the dictionary for the status variables doesn't exist yet, create it.
+        # If the dict for the status variables doesn't exist yet, create it.
         if getattr(persistent, status_name) is None:
 
             # Add a number to the end of master_key

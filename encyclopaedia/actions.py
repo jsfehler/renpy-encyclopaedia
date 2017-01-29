@@ -33,20 +33,22 @@ class SetEntryAction(EncyclopaediaAction):
         else:
             target_position = self.enc.all_entries.index(self.entry)
 
-        # The active entry is set to whichever list position was found
+        # The active entry is set to whichever list position was found.
         self.enc.active = self.entry
 
-        # If an entry was not locked, then setting it makes it viewed.
         if self.enc.active.locked is False:
             if self.entry.viewed is False:
+                # Run the callback, if provided.
                 if self.entry.viewed_callback is not None:
                     self.entry.viewed_callback[0](self.entry.viewed_callback[1])
+            # Mark the entry as viewed.
             self.enc.active.viewed = True
 
-        # Update the current position
+        # Update the current position.
         self.enc.current_position = target_position
         
-        # Show the renpy screen associated with the encyclopaedia's entry screen
+        # Show the renpy screen associated with
+        # the encyclopaedia's entry screen.
         renpy.show_screen(self.enc.entry_screen, self.enc)
         renpy.restart_interaction()
 
@@ -60,10 +62,10 @@ class ChangeAction(EncyclopaediaAction):
     def __init__(self, encyclopaedia, direction, block):
         super(ChangeAction, self).__init__(encyclopaedia)
 
-        # Determines if it's going to the previous or next entry
+        # Determines if it's going to the previous or next entry.
         self.direction = direction
 
-        # If the button is active or not
+        # If the button is active or not.
         self.block = block
 
     def get_sensitive(self):
@@ -102,19 +104,23 @@ class ChangeEntryAction(ChangeAction):
 
     def __call__(self):
         if self.block is False:
-            # Update the current position
+            # Update the current position.
             self.enc.current_position += self.direction
 
-            # Update the active entry
+            # Update the active entry.
             self.enc.active = self.get_entry()
 
-            # Mark the entry as viewed, if it's not locked
             if self.enc.active.locked is False:
+                # Run the callback, if provided.
                 if self.enc.active.viewed_callback is not None:
-                    self.enc.active.viewed_callback[0](self.enc.active.viewed_callback[1])
+                    self.enc.active.viewed_callback[0](
+                        self.enc.active.viewed_callback[1]
+                    )
+                # Mark the entry as viewed.
                 self.enc.active.viewed = True
 
-            # When changing an entry, the sub-entry page number is set back to 1
+            # When changing an entry, the current sub-entry page number is
+            # set back to 1.
             self.enc.sub_current_position = 1
             self.enc.active.current_page = self.enc.sub_current_position
 
@@ -128,10 +134,10 @@ class ChangePageAction(ChangeAction):
     """
     def __call__(self):
         if self.block is False:
-            # The encyclopaedia's page display changes
+            # The Encyclopaedia's page display changes.
             self.enc.sub_current_position += self.direction
             
-            # The EncEntry's current page changes to match
+            # The EncEntry's current page changes to match.
             self.enc.active.current_page = self.enc.sub_current_position
 
             if self.enc.active.current_page.viewed is False:
@@ -198,7 +204,6 @@ class ClearFilter(EncyclopaediaAction):
     """
     def __call__(self):
         self.enc.filtering = False
-
         renpy.restart_interaction()
 
 
@@ -244,9 +249,11 @@ class ToggleShowLockedButtonsAction(EncyclopaediaAction):
     def __call__(self):
         self.enc.show_locked_buttons = not self.enc.show_locked_buttons
 
+        # Ensure the filtering isn't broken by hiding buttons.
         if self.enc.filtering:
             _build_subject_filter(self.enc, self.enc.filtering)
 
+        # Ensure the sorting isn't broken by hiding buttons.
         reverse = False
         if self.enc.sorting_mode == self.enc.SORT_REVERSE_ALPHABETICAL:
             reverse = True

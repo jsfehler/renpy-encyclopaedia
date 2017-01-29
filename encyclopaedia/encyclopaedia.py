@@ -47,11 +47,11 @@ class Encyclopaedia(store.object):
     SORT_SUBJECT = 3
     SORT_UNREAD = 4
 
-    # Constants for the direction when scrolling through EncEntry
+    # Constants for the direction when scrolling through EncEntry.
     DIRECTION_FORWARD = 1
     DIRECTION_BACKWARD = -1
 
-    # Used by check_position()
+    # Used by check_position().
     operators = {'<=': operator.le, '>=': operator.ge}
 
     def __init__(self, sorting_mode=0, show_locked_buttons=False,
@@ -227,7 +227,6 @@ class Encyclopaedia(store.object):
         """Adds an entry to the Encyclopaedia's internal lists and sorts it.
 
         Attempts to create duplicates are softly ignored.
-
         subjects list is updated when a new entry is added.
 
         Args:

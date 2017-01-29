@@ -198,15 +198,10 @@ screen encyclopaedia_entry(enc):
                 # If the entry or sub-entry has an image
                 if enc.active.current_page.has_image:
                     frame:
-                        style_prefix "encyclopaedia"
-                        yfill True
-                        xfill True
-
-                        xmaximum half_screen_width
-                        ymaximum half_screen_height
+                        style_prefix "encyclopaedia_image"
 
                         viewport:
-                            scrollbars False
+                            scrollbars None
                             draggable True
                             mousewheel True
                             edgescroll (1.0, 1.0)
@@ -302,6 +297,12 @@ style encyclopaedia_frame is default:
     padding (8, 8)
     xmargin 8
     top_margin 8
+
+style encyclopaedia_image_frame is encyclopaedia_frame:
+    yfill True
+    xfill True
+    xmaximum half_screen_width
+    ymaximum half_screen_height
 
 style encyclopaedia_scrollbar is scrollbar:
     base_bar Frame(Solid(color_dark_orange), gui.scrollbar_borders, tile=gui.scrollbar_tile)

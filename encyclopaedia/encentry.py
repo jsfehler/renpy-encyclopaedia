@@ -4,8 +4,6 @@ import renpy.store as store
 import renpy.exports as renpy
 from renpy.python import RevertableList
 
-from encexceptions import MissingImageError
-
 
 class EncEntry(store.object):
     """Stores an Entry's content.
@@ -34,7 +32,8 @@ class EncEntry(store.object):
     """
     def __init__(self, parent=None, number=0, name="", text="", subject="",
                  viewed=None, locked=False, image=None, locked_name="???",
-                 locked_text="???", locked_image=None):
+                 locked_text="???", locked_image=None,
+                 locked_image_tint=(0.0, 0.0, 0.0)):
 
         self.number = number
         self._name = name
@@ -57,7 +56,7 @@ class EncEntry(store.object):
             if locked_image is None:
                 # Tuple is used to set the numbers that tint_locked_image()
                 # uses to change the colour of a locked image
-                self.tint_locked_image((0.0, 0.0, 0.0))
+                self._tint_locked_image(locked_image_tint)
 
         self.pages = 0
 
@@ -195,7 +194,7 @@ class EncEntry(store.object):
 
         self.viewed = False
 
-    def tint_locked_image(self, tint_amount):
+    def _tint_locked_image(self, tint_amount):
         """
         If the EncEntry has an image but no locked image,
         tint the image and use it as the locked image.
@@ -221,9 +220,7 @@ class EncEntry(store.object):
             )
             return True
 
-        raise MissingImageError(
-            "EncEntry: {} has no image. Cannot tint nothing.".format(self.label)
-        )
+        return False
 
     def add_entry(self, sub_entry):
         """Adds multiple pages to the entry in the form of sub-entries.

@@ -123,7 +123,7 @@ screen encyclopaedia_list(enc):
                 frame:
                     style_prefix "encyclopaedia"
                     yfill True
-                    xmaximum 400
+                    xmaximum 600
                     bottom_margin 10
 
                     viewport:
@@ -224,7 +224,7 @@ screen encyclopaedia_entry(enc):
                                 spacing 15
                                 # Display the current entry's text
                                 for item in enc.active.current_page.text:
-                                    text item
+                                    text item style "encyclopaedia_entry_text"
 
                 # If there's no image                        
                 else:
@@ -245,7 +245,7 @@ screen encyclopaedia_entry(enc):
                                 spacing 15
                                 # Display the current entry's text
                                 for item in enc.active.current_page.text:
-                                    text item
+                                    text item style "encyclopaedia_entry_text"
 
             frame:
                 style_prefix "encyclopaedia"
@@ -323,10 +323,12 @@ style encyclopaedia_button_text:
     insensitive_color color_dark_purple
 
 style encyclopaedia_entry_button is encyclopaedia_button:
-    xfill True
+    xfill False
 
 style encyclopaedia_entry_button_text is encyclopaedia_button_text
 
+style encyclopaedia_entry_text is default:
+    size 18
 
 ############################
 # Encyclopaedia Misc Setup

@@ -44,11 +44,9 @@ class SetEntryAction(EncyclopaediaAction):
             # Mark the entry as viewed.
             self.enc.active.viewed = True
 
-        # Update the current position.
         self.enc.current_position = target_position
-        
-        # Show the renpy screen associated with
-        # the encyclopaedia's entry screen.
+
+        # Show the entry screen associated with the encyclopaedia.
         renpy.show_screen(self.enc.entry_screen, self.enc)
         renpy.restart_interaction()
 
@@ -230,7 +228,7 @@ class SaveStatusAction(EncyclopaediaAction):
         persistent dict.
         """
         for number, item in enumerate(self.enc.all_entries):
-            key = self.key_string + "_%02d" % number
+            key = '{}_{:02d}'.format(self.key_string, number)
             self.status_dict[key] = item.viewed
 
 

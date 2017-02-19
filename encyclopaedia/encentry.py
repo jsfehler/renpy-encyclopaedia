@@ -29,7 +29,7 @@ class EncEntry(store.object):
 
         has_sub_entry (bool): If an entry has any sub-entries
     """
-    def __init__(self, parent=None, number=0, name="", text="", subject="",
+    def __init__(self, parent=None, number=None, name="", text="", subject="",
                  viewed=None, locked=False, image=None, locked_name="???",
                  locked_text="???", locked_image=None,
                  locked_image_tint=(0.0, 0.0, 0.0)):
@@ -57,10 +57,11 @@ class EncEntry(store.object):
                 # uses to change the colour of a locked image
                 self._tint_locked_image(locked_image_tint)
 
+        # Int: Number of pages this entry contains.
         self.pages = 0
 
         # List: The sub-entries and their position.
-        #   The parent EncEntry must be the one in the sub-entry list.
+        #   The parent EncEntry must be the first in the sub-entry list.
         self.sub_entry_list = [[1, self]]
 
         self.has_sub_entry = False
@@ -226,6 +227,9 @@ class EncEntry(store.object):
         Returns:
             bool: True if anything was added, else False
         """
+        if sub_entry.number is None:
+            sub_entry.number = self.pages + 1
+
         if not [sub_entry.number, sub_entry] in self.sub_entry_list:
             if sub_entry.locked is False:
                 self.sub_entry_list.append([sub_entry.number, sub_entry])

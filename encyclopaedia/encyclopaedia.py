@@ -232,6 +232,30 @@ class Encyclopaedia(store.object):
         Args:
             entry (EncEntry): The Entry to add to the Encyclopaedia
         """
+        if entry.number is not None:
+            for item in self.all_entries:
+                if item.number == entry.number:
+                    raise ValueError(
+                        "{} is already taken.".format(entry.number)
+                    )
+
+        elif entry.number is None:
+            if self._size_all > 0:
+                # All possible numbers
+                all_numbers = range(self.all_entries[-1].number + 1)[1:]
+                used_numbers = [item.number for item in self.all_entries]
+                free_numbers = set(all_numbers) - set(used_numbers)
+
+                if len(free_numbers) > 0:
+                    # If there are unused numbers.
+                    entry.number = min(free_numbers)
+                else:
+                    # Else the entry is the last one.
+                    entry.number = self._size_all + 1
+            else:
+                # If there's no entries in the Encyclopaedia yet.
+                entry.number = 1
+
         self.all_entries.append(entry)
 
         if entry.locked is False:

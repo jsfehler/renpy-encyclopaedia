@@ -38,7 +38,6 @@ init python:
     ### Basic Usage ###
     getting_started = EncEntry(
         parent=encyclopaedia,
-        number=1,
         name="Getting Started",
         text=[
             "Inside an init python block, create a new Encyclopaedia object.",
@@ -51,7 +50,6 @@ init python:
 
     getting_started_1 = EncEntry(
         parent=getting_started,
-        number=2,
         name="Getting Started",
         text=[
             "Once you have an Encyclopaedia, EncEntry objects can be created and placed inside the Encyclopaedia.",
@@ -69,7 +67,6 @@ init python:
 
     getting_started_2 = EncEntry(
         parent=getting_started,
-        number=3,
         name="Getting Started",
         text=[
             "Once your Encyclopaedia is created and filled with EncEntries, you need to give players a way to access the encyclopaedia screens.",
@@ -82,86 +79,78 @@ init python:
     )
 
     locking_unlocking_entries = EncEntry(
-        encyclopaedia,
-        2,
-        "Locking and Unlocking Entries",
-        [
+        parent=encyclopaedia,
+        name="Locking and Unlocking Entries",
+        text=[
             "By default, all EncEntry objects are unlocked. They can be viewed by players at any time.",
             "However, when creating an EncEntry, the locked argument can be given with a variable as a flag, effectively hiding the entry until the condition is true.",
             "The entry will be locked until an the unlock_entry() function is called on the entry to unlock it."
         ],
-        "Basic Usage"
+        subject="Basic Usage"
     )
 
     locking_unlocking_entries_1 = EncEntry(
-        locking_unlocking_entries,
-        2,
-        "Locking and Unlocking Entries",
-        [
+        parent=locking_unlocking_entries,
+        name="Locking and Unlocking Entries",
+        text=[
             "If the encyclopaedia is tied to a save game, setting an entry as locked is as easy as giving the locked argument a boolean. Unlocking only requires calling unlock_entry().",
             "However, if the encyclopaedia's state must persist outside of an individual save game, Ren'Py persistent data must be given as an argument, and it must be explicitly set to unlock it.",
             "The framework includes a function to create the necessary persistent variables for you. This is covered in the In-Depth section.",
             "The following page in this entry can be unlocked by playing through the game."
         ],
-        "Basic Usage"
+        subject="Basic Usage"
     )
 
     locking_unlocking_entries_3 = EncEntry(
-        locking_unlocking_entries,
-        3,
-        "Locking and Unlocking Entries",
-        [
-            "This entry was unlocked while playing."
-        ],
-        "Basic Usage",
+        parent=locking_unlocking_entries,
+        name="Locking and Unlocking Entries",
+        text=["This entry was unlocked while playing."],
+        subject="Basic Usage",
         locked = persistent.lock_unlock_3
     )
 
     adding_pages = EncEntry(
-        encyclopaedia,
-        3,
-        "Adding Sub-Pages",
-        [
+        parent=encyclopaedia,
+        name="Adding Sub-Pages",
+        text=[
             "Just like an Encyclopaedia holds EncEntry objects, each EncEntry can hold other EncEntry. This allows entries to have multiple pages.",
             "EncEntry that are used as sub-pages are created the same way as other EncEntry, but instead of providing an Encyclopaedia as the parent, an EncEntry is given.",
         ],
-        "Basic Usage",
+        subject="Basic Usage",
     )
 
     adding_pages_1 = EncEntry(
-        adding_pages,
-        2,
-        "Adding Sub-Pages",
-        [
+        parent=adding_pages,
+        name="Adding Sub-Pages",
+        text=[
             "When adding sub-pages, the parent EncEntry is considered the first page, so the number argument for sub-pages must start at 2."
         ],
-        "Basic Usage",
+        subject="Basic Usage",
     )
 
     placeholders = EncEntry(
-        encyclopaedia,
-        4,
-        "Placeholders",
-        [
+        parent=encyclopaedia,
+        number=4,
+        name="Placeholders",
+        text=[
             "If an entry is locked but you want the existence of the entry to be visible to players, locked entries can be displayed with placeholders for the name, text, and image.",
             "An example of this can be seen in the next entry.",
         ],
-        "Basic Usage"
+        subject="Basic Usage"
     )
 
     placeholders_locked = EncEntry(
-        encyclopaedia,
-        5,
-        "Placeholders",
-        ["This entry was unlocked."],
-        "Basic Usage",
+        parent=encyclopaedia,
+        number=5,
+        name="Placeholders",
+        text=["This entry was unlocked."],
+        subject="Basic Usage",
         locked=True,
         image=image_locked_image
     )
 
     writing_text = EncEntry(
         parent=encyclopaedia,
-        number=99,
         name="Writing Text",
         text=[
             "Text in an EncEntry is stored in a list."
@@ -187,26 +176,24 @@ init python:
     # Actions
 
     encyclopaedia_options = EncEntry(
-        encyclopaedia,
-        6,
-        "Encyclopaedia Object",
-        [
+        parent=encyclopaedia,
+        name="Encyclopaedia Object",
+        text=[
             "Encyclopaedias can take four optional arguments when being created:"
             " \n 1 - The default sorting mode. If not set, will be by number."
             " \n 2 - If locked buttons should be displayed or not. Default is False. Locked buttons will use placeholder values."
             " \n 3 - If locked entries should be displayed or not. Default is False. Locked entries will use placeholder values."
             " \n 4 - The screen to display individual entries on. Default is 'encyclopaedia_entry'."
         ],
-        "In-Depth",
+        subject="In-Depth",
         viewed=False,
         locked=False
     )
 
     customizing_screens = EncEntry(
-        encyclopaedia,
-        7,
-        "Customizing Screens",
-        [
+        parent=encyclopaedia,
+        name="Customizing Screens",
+        text=[
             "The following screens are provided in the framework:",
             "encyclopaedia_list - Displays all the buttons used to visit entries, along with sorting and filtering options. It takes one argument: The Encyclopaedia you want to display on it.",
             "encyclopaedia_entry - Displays one single entry. It takes one argument: The Encyclopaedia you want fetch entries from.",
@@ -214,18 +201,17 @@ init python:
             "If your game has multiple Encyclopaedias, they can all use the same screens, if that's visually appropriate.",
             "You can also duplicate and modify these screens as much as desired, creating separate ones for each Encyclopaedia."
         ],
-        "In-Depth",
+        subject="In-Depth",
     )
 
     translations = EncEntry(
-        encyclopaedia,
-        8,
-        "Translations",
-        [
+        parent=encyclopaedia,
+        name="Translations",
+        text=[
             "Translating the labels used by an Encyclopaedia can be done through the LabelController object.",
             "Every Encyclopaedia is created with a default one that can be replaced.",
         ],
-        "In-Depth",
+        subject="In-Depth",
         image=image_translations
     )
 

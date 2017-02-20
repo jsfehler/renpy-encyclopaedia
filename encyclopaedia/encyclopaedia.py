@@ -33,9 +33,9 @@ class Encyclopaedia(store.object):
             each letter as a subject.
         current_position (int): Index for the current entry open.
         sub_current_position (int): Index for the current sub-entry open.
-            Starts at 1, not 0.
-        labels (Labels): The current label controller
-        subjects (list): Collection of every subject
+            Starts at 1.
+        labels (Labels): The current label controller.
+        subjects (list): Collection of every subject.
         active (EncEntry): The currently open entry.
         locked_at_bottom (bool): If locked entries should appear at the bottom
             of the entry list or not.

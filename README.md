@@ -1,5 +1,7 @@
 #Encyclopaedia Framework for Ren'Py
-Useful for an encyclopaedia, bestiary, or similar system. 
+For an encyclopaedia, bestiary, or similar system. 
+
+####Compatible Ren'Py Version: 6.99.12.3 and higher
 
 ###Features
 - Sort entries by Number, Alphabetical, Reverse Alphabetical, Subject, or Unread status.

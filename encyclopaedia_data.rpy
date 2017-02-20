@@ -12,7 +12,6 @@ init python:
 
     # Define an encyclopaedia object.
     encyclopaedia = Encyclopaedia(
-        sorting_mode = Encyclopaedia.SORT_NUMBER,
         show_locked_buttons=True,
         show_locked_entry=True,
         entry_screen="encyclopaedia_entry"
@@ -40,7 +39,8 @@ init python:
         parent=encyclopaedia,
         name="Getting Started",
         text=[
-            "Inside an init python block, create a new Encyclopaedia object.",
+            "Inside an init python block, create a new Encyclopaedia object."
+            " This is the top-level container for all your entries.",
         ],
         subject="Basic Usage",
         viewed=persistent.new_status["new_01"],
@@ -56,9 +56,9 @@ init python:
             "Each EncEntry represents an individual entry in an encyclopaedia.",
             "The minimum arguments to create an EncEntry are:",
             "\n parent: The container for the entry. Can be an Encyclopaedia or another EncEntry (for sub-pages)",
-            "\n number: The number for the entry. Must be unique.",
-            "\n name: A name for the entry. Doesn't need to be unique.",
-            "\n text: The text for the entry. Can be a string or list of strings."
+            "\n name: The name for the entry. Doesn't need to be unique.",
+            "\n text: The text for the entry. Can be a string or list of strings.",
+
         ],
         subject="Basic Usage",
         viewed=False,
@@ -71,7 +71,8 @@ init python:
         text=[
             "Once your Encyclopaedia is created and filled with EncEntries, you need to give players a way to access the encyclopaedia screens.",
             "You can add a button on the main menu, add a button in-game, or both, depending on your game.",
-            "The default screen included with the framework is encyclopaedia_list. It takes one argument: the encyclopaedia you want to show on it."
+            "The action to use for the button is ShowMenu() with 2 arguments. The first must be the name of the screen, and the second the encyclopaedia object.",
+            "The default screen included with the framework is encyclopaedia_list."
         ],
         subject="Basic Usage",
         viewed=False,
@@ -123,7 +124,7 @@ init python:
         parent=adding_pages,
         name="Adding Sub-Pages",
         text=[
-            "When adding sub-pages, the parent EncEntry is considered the first page, so the number argument for sub-pages must start at 2."
+            "When adding sub-pages, the parent EncEntry is considered the first page in the entry. Added sub-pages are numbered starting from 2."
         ],
         subject="Basic Usage",
     )
@@ -131,9 +132,11 @@ init python:
     placeholders = EncEntry(
         parent=encyclopaedia,
         number=4,
-        name="Placeholders",
+        name="Placeholder Data",
         text=[
-            "If an entry is locked but you want the existence of the entry to be visible to players, locked entries can be displayed with placeholders for the name, text, and image.",
+            "Every EncEntry can be given placeholders for the name, text, and image.",
+            "This allows you to display a locked entry without revealing what the content of the entry is until it has been unlocked.",
+            "If no specific placeholders are provided, a default placeholder is used for the name and text. The default placeholder image will be a dark tinted version of the normal image.",
             "An example of this can be seen in the next entry.",
         ],
         subject="Basic Usage"
@@ -142,7 +145,7 @@ init python:
     placeholders_locked = EncEntry(
         parent=encyclopaedia,
         number=5,
-        name="Placeholders",
+        name="Placeholder Data Example",
         text=["This entry was unlocked."],
         subject="Basic Usage",
         locked=True,
@@ -180,10 +183,26 @@ init python:
         name="Encyclopaedia Object",
         text=[
             "Encyclopaedias can take four optional arguments when being created:"
-            " \n 1 - The default sorting mode. If not set, will be by number."
+            " \n 1 - The default sorting mode. If not set, will use sorting by number."
             " \n 2 - If locked buttons should be displayed or not. Default is False. Locked buttons will use placeholder values."
             " \n 3 - If locked entries should be displayed or not. Default is False. Locked entries will use placeholder values."
-            " \n 4 - The screen to display individual entries on. Default is 'encyclopaedia_entry'."
+            " \n 4 - The screen to display individual entries on. Default is 'encyclopaedia_entry'.",
+
+            "The following attributes are available:",
+            "all_entries (list): All entries, regardless of status.",
+            "unlocked_entries (list): Only unlocked entries.",
+            "filtered_entries (list): Entries that match a subject filter.",
+            "filtering (bool|str): The subject that's being used as a filter.",
+            "size_all (int): Length of all_entries.",
+            "size_unlocked (int): Length of unlocked_entries.",
+            "reverse_sorting (bool): Should sorting occur in reverse or not.",
+            "nest_alphabetical_sort (bool): Should alphabetical sorting display each letter as a subject.",
+            "current_position (int): Index for the current entry open.",
+            "sub_current_position (int): Index for the current sub-entry open. Starts at 1.",
+            "labels (Labels): The current label controller.",
+            "subjects (list): Collection of every subject.",
+            "active (EncEntry): The currently open entry.",
+            "locked_at_bottom (bool): If locked entries should appear at the bottom of the entry list or not."
         ],
         subject="In-Depth",
         viewed=False,
@@ -208,8 +227,23 @@ init python:
         parent=encyclopaedia,
         name="Translations",
         text=[
-            "Translating the labels used by an Encyclopaedia can be done through the LabelController object.",
+            "Translating the labels used by an Encyclopaedia can be done through the Labels object.",
             "Every Encyclopaedia is created with a default one that can be replaced.",
+
+            "The following attributes are available:",
+            "percentage_label (str): Placed next to the percentage unlocked number",
+            "page_label (str): Placed before the entry page displayed",
+            "page_separator_label (str): Placed in-between the current page number and the total page number",
+
+            "sort_number_label (str): Label for Number Sorting",
+            "sort_alphabetical_label (str): Label for Alphabetical sorting",
+            "sort_reverse_alphabetical_label (str): Label for Reverse Alphabetical sorting",
+            "sort_subject_label (str): Label for Subject sorting",
+            "sort_unread_label (str): Label for Unread sorting",
+
+            "unread_entry_label (str): Default for the tag next to unread entries",
+            'locked_entry_label (str): Default for a "Locked Entry" button',
+
         ],
         subject="In-Depth",
         image=image_translations

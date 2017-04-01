@@ -134,7 +134,7 @@ class ChangePageAction(ChangeAction):
         if self.block is False:
             # The Encyclopaedia's page display changes.
             self.enc.sub_current_position += self.direction
-            
+
             # The EncEntry's current page changes to match.
             self.enc.active.current_page = self.enc.sub_current_position
 
@@ -227,8 +227,8 @@ class SaveStatusAction(EncyclopaediaAction):
         """Go through every EncEntry and place the viewed variable into the
         persistent dict.
         """
-        for number, item in enumerate(self.enc.all_entries):
-            key = '{}_{:02d}'.format(self.key_string, number)
+        for item in self.enc.all_entries:
+            key = '{}_{:02d}'.format(self.key_string, item.number)
             self.status_dict[key] = item.viewed
 
 

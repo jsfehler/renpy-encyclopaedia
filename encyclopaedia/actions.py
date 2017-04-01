@@ -3,11 +3,10 @@ from renpy.ui import Action
 
 
 class EncyclopaediaAction(Action):
-    """Action that requires an Encyclopaedia.
+    """Base Action that requires an Encyclopaedia.
 
     Args:
         encyclopaedia (Encyclopaedia): The encyclopaedia to use.
-
     """
     def __init__(self, encyclopaedia):
         self.enc = encyclopaedia

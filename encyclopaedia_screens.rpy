@@ -1,12 +1,11 @@
 ################################################################################
-# Entry Button
+#    Entry Button:
+#    Sub-screen to determine what sort of button to show for an entry.
+#    Used by the vertical_list sub-screen.
 #
-# Sub-screen to determine what sort of button to show for an entry.
-# Used by the Vertical List sub-screen.
-#
-# Args:
-#   enc (Encyclopaedia): The encyclopaedia to use on this screen.
-#   entry (EncEntry): The entry to associate with the button.
+#    Args:
+#        enc (Encyclopaedia): The encyclopaedia to use on this screen.
+#        entry (EncEntry): The entry to associate with the button.
 ################################################################################
 screen entry_button(enc, entry):
     if enc.show_locked_buttons:
@@ -17,7 +16,7 @@ screen entry_button(enc, entry):
             if not entry.viewed:
                 text enc.labels.unread_entry_label
 
-        # If the entry is locked, add a button depending on what should be shown.
+        # Else if the entry is locked, add a button depending on what should be shown.
         else:
             if enc.show_locked_entry:
                 textbutton enc.labels.locked_entry_label action enc.SetEntry(entry) style "encyclopaedia_entry_button"
@@ -31,19 +30,18 @@ screen entry_button(enc, entry):
         if not entry.viewed:
             text enc.labels.unread_entry_label
 
+
 ################################################################################
-# Vertical List
+#    Vertical List:
+#    Sub-screen that displays a vertical list of entry buttons.
+#    Used by the encyclopaedia_list screen.
 #
-# Sub-screen that displays a vertical list of entry buttons.
-# Used by the Encyclopaedia List screen.
-#
-# Args:
-#   enc (Encyclopaedia): The encyclopaedia to use on this screen.
+#    Args:
+#        enc (Encyclopaedia): The encyclopaedia to use on this screen.
 ################################################################################
 screen vertical_list(enc):
     # The list used is chosen based on if we want to show locked entries on
     #   the entry select screen or not.
-
     if enc.sorting_mode == enc.SORT_SUBJECT:
         # Split entries by subject
         for key, group in groupby(enc.current_entries, attrgetter("subject")):
@@ -74,12 +72,13 @@ screen vertical_list(enc):
                 hbox:
                     use entry_button(enc, entry)
 
+
 ################################################################################
-# Encyclopaedia List
+#    Encyclopaedia List:
+#    Screen that's used to display the list of entries.
 #
-# Screen that's used to display the list of entries.
-# Args:
-#   enc (Encyclopaedia): The encyclopaedia to use on this screen.
+#    Args:
+#        enc (Encyclopaedia): The encyclopaedia to use on this screen.
 ################################################################################
 screen encyclopaedia_list(enc):
     tag menu
@@ -90,17 +89,17 @@ screen encyclopaedia_list(enc):
 
         vbox:
             spacing 10
-  
+
             frame:
                 style_prefix "encyclopaedia"
                 xfill True
 
                 text "Welcome to the Demo Encyclopaedia"
-    
+
             frame:
                 style_prefix "encyclopaedia"
                 xfill True
-    
+
                 hbox:
                     xfill True
                     # Percentage unlocked display
@@ -144,11 +143,11 @@ screen encyclopaedia_list(enc):
 
                     vbox:
                         # Buttons to sort entries.
-                        textbutton "Sort by %s" % enc.labels.sort_number_label action enc.Sort(sorting_mode=enc.SORT_NUMBER) style "encyclopaedia_button" xfill True
-                        textbutton "Sort by %s" % enc.labels.sort_alphabetical_label action enc.Sort(sorting_mode=enc.SORT_ALPHABETICAL) style "encyclopaedia_button" xfill True
-                        textbutton "Sort by %s" % enc.labels.sort_reverse_alphabetical_label action enc.Sort(sorting_mode=enc.SORT_REVERSE_ALPHABETICAL) style "encyclopaedia_button" xfill True
-                        textbutton "Sort by %s" % enc.labels.sort_subject_label action enc.Sort(sorting_mode=enc.SORT_SUBJECT) style "encyclopaedia_button" xfill True
-                        textbutton "Sort by %s" % enc.labels.sort_unread_label action enc.Sort(sorting_mode=enc.SORT_UNREAD) style "encyclopaedia_button" xfill True
+                        textbutton "Sort by {}".format(enc.labels.sort_number_label) action enc.Sort(sorting_mode=enc.SORT_NUMBER) style "encyclopaedia_button" xfill True
+                        textbutton "Sort by {}".format(enc.labels.sort_alphabetical_label) action enc.Sort(sorting_mode=enc.SORT_ALPHABETICAL) style "encyclopaedia_button" xfill True
+                        textbutton "Sort by {}".format(enc.labels.sort_reverse_alphabetical_label) action enc.Sort(sorting_mode=enc.SORT_REVERSE_ALPHABETICAL) style "encyclopaedia_button" xfill True
+                        textbutton "Sort by {}".format(enc.labels.sort_subject_label) action enc.Sort(sorting_mode=enc.SORT_SUBJECT) style "encyclopaedia_button" xfill True
+                        textbutton "Sort by {}".format(enc.labels.sort_unread_label) action enc.Sort(sorting_mode=enc.SORT_UNREAD) style "encyclopaedia_button" xfill True
 
                         # Buttons to show different styles of hiding locked data.
                         textbutton "Show/Hide Locked Buttons" action enc.ToggleShowLockedButtons() style "encyclopaedia_button" xfill True
@@ -161,12 +160,13 @@ screen encyclopaedia_list(enc):
                                                      Hide("encyclopaedia_list"),
                                                      Return()] style "encyclopaedia_button" xfill True
 
+
 ################################################################################
-# Encyclopaedia Entry
+#    Encyclopaedia Entry:
+#    Screen that's used to display an individual entry.
 #
-# Screen that's used to display an individual entry.
-# Args:
-#   enc (Encyclopaedia): The encyclopaedia to use on this screen.
+#    Args:
+#        enc (Encyclopaedia): The encyclopaedia to use on this screen.
 ################################################################################
 screen encyclopaedia_entry(enc):
     tag menu
@@ -177,13 +177,13 @@ screen encyclopaedia_entry(enc):
 
         vbox:
             spacing 10
-  
+
             frame:
                 style_prefix "encyclopaedia"
                 xfill True
                 # Flavour text to indicate which entry we're currently on
                 text enc.active.label
-  
+
             frame:
                 style_prefix "encyclopaedia"
                 id "entry_nav"
@@ -193,7 +193,7 @@ screen encyclopaedia_entry(enc):
                     # Previous / Next is relative to the sorting mode
                     textbutton "Previous Entry" xalign .02 action enc.PreviousEntry() style "encyclopaedia_button"
                     textbutton "Next Entry" xalign .98 action enc.NextEntry() style "encyclopaedia_button"
-       
+
             hbox:
                 # If the entry or sub-entry has an image
                 if enc.active.current_page.has_image:
@@ -206,7 +206,7 @@ screen encyclopaedia_entry(enc):
                             mousewheel True
                             edgescroll (1.0, 1.0)
                             add enc.active.current_page.image
-   
+
                     frame:
                         style_prefix "encyclopaedia"
                         id "entry_window"
@@ -216,17 +216,17 @@ screen encyclopaedia_entry(enc):
                         ymaximum half_screen_height
                         viewport:
                             scrollbars "vertical"
-                            mousewheel True  
+                            mousewheel True
                             draggable True
                             xfill True
-                            yfill True  
+                            yfill True
                             vbox:
                                 spacing 15
                                 # Display the current entry's text
                                 for item in enc.active.current_page.text:
                                     text item style "encyclopaedia_entry_text"
 
-                # If there's no image                        
+                # If there's no image
                 else:
                     frame:
                         style_prefix "encyclopaedia"
@@ -237,10 +237,10 @@ screen encyclopaedia_entry(enc):
                         ymaximum half_screen_height
                         viewport:
                             scrollbars "vertical"
-                            mousewheel True  
+                            mousewheel True
                             draggable True
                             xfill True
-                            yfill True  
+                            yfill True
                             vbox:
                                 spacing 15
                                 # Display the current entry's text
@@ -329,6 +329,7 @@ style encyclopaedia_entry_button_text is encyclopaedia_button_text
 
 style encyclopaedia_entry_text is default:
     size 18
+
 
 ############################
 # Encyclopaedia Misc Setup

@@ -162,7 +162,7 @@ class Encyclopaedia(store.object):
 
     def set_global_locked_image_tint(self, tint_amount):
         """Sets all the locked images for all entries to use the same tint.
-        
+
         Args:
             tint_amount (tuple): An RGB value, ie:(R, G, B)
         """
@@ -351,10 +351,10 @@ class Encyclopaedia(store.object):
     def Sort(self, sorting_mode=None):
         """Wrapper around an Action. Use with a renpy button.
 
-        Parameters: 
+        Args:
             sorting_mode: The type of sorting to use.
                 If None specified, use the current sorting.
-        
+
         Returns:
             Screen Action
         """

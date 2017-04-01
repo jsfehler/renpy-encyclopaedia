@@ -1,8 +1,8 @@
 # In the following example, an encyclopaedia is created inside an "init python" block.
-# This allows an encyclopaedia's content to be independent of the saved games. 
+# This allows an encyclopaedia's content to be independent of the saved games.
 # ie: Whenever encyclopaedia content is unlocked, it's unlocked for all save games.
 # If you want an encyclopaedia that is bound to a save game file, create the encyclopaedia in a "python" block inside the "start" label.
-# Then, for the "locked" argument in each entry, don't use a persistent variable.    
+# Then, for the "locked" argument in each entry, don't use a persistent variable.
 
 init python:
     # Variables to hold the image paths. The path is relative to your game/ directory.
@@ -20,12 +20,12 @@ init python:
     # If the encyclopaedia is save game independent, run this function to
     # generate the persistent status variables.
     # If the encyclopaedia is unique for each save game, you don't need this.
-    
+
     # entries_total is the total number of EncEntries the Encyclopaedia will hold.
     # master_key and name are what determines the name of the status variables and the name of each key.
     # Only change master_key and name if you need multiple encyclopaedias in a game.
     persistent_status_flags(
-        total=8,
+        total=12,
         master_key="new",
         status_name="new_status"
     )
@@ -58,7 +58,6 @@ init python:
             "\n parent: The container for the entry. Can be an Encyclopaedia or another EncEntry (for sub-pages)",
             "\n name: The name for the entry. Doesn't need to be unique.",
             "\n text: The text for the entry. Can be a string or list of strings.",
-
         ],
         subject="Basic Usage",
         viewed=False,
@@ -87,7 +86,8 @@ init python:
             "However, when creating an EncEntry, the locked argument can be given with a variable as a flag, effectively hiding the entry until the condition is true.",
             "The entry will be locked until an the unlock_entry() function is called on the entry to unlock it."
         ],
-        subject="Basic Usage"
+        subject="Basic Usage",
+        viewed=persistent.new_status["new_02"]
     )
 
     locking_unlocking_entries_1 = EncEntry(
@@ -107,7 +107,7 @@ init python:
         name="Locking and Unlocking Entries",
         text=["This entry was unlocked while playing."],
         subject="Basic Usage",
-        locked = persistent.lock_unlock_3
+        locked=persistent.lock_unlock_3
     )
 
     adding_pages = EncEntry(
@@ -118,6 +118,7 @@ init python:
             "EncEntry that are used as sub-pages are created the same way as other EncEntry, but instead of providing an Encyclopaedia as the parent, an EncEntry is given.",
         ],
         subject="Basic Usage",
+        viewed=persistent.new_status["new_03"]
     )
 
     adding_pages_1 = EncEntry(
@@ -131,7 +132,6 @@ init python:
 
     placeholders = EncEntry(
         parent=encyclopaedia,
-        number=4,
         name="Placeholder Data",
         text=[
             "Every EncEntry can be given placeholders for the name, text, and image.",
@@ -139,16 +139,17 @@ init python:
             "If no specific placeholders are provided, a default placeholder is used for the name and text. The default placeholder image will be a dark tinted version of the normal image.",
             "An example of this can be seen in the next entry.",
         ],
-        subject="Basic Usage"
+        subject="Basic Usage",
+        viewed=persistent.new_status["new_04"]
     )
 
     placeholders_locked = EncEntry(
         parent=encyclopaedia,
-        number=5,
         name="Placeholder Data Example",
         text=["This entry was unlocked."],
         subject="Basic Usage",
         locked=True,
+        viewed=persistent.new_status["new_05"],
         image=image_locked_image
     )
 
@@ -169,7 +170,7 @@ init python:
             "They're on three separate lines in the script, but will be displayed as one line since there's no comma separating them. They count as one list item.",
         ],
         subject="Basic Usage",
-        viewed=False,
+        viewed=persistent.new_status["new_06"],
         locked=False,
     )
 
@@ -205,7 +206,30 @@ init python:
             "locked_at_bottom (bool): If locked entries should appear at the bottom of the entry list or not."
         ],
         subject="In-Depth",
-        viewed=False,
+        viewed=persistent.new_status["new_07"],
+        locked=False
+    )
+
+    encentry_options = EncEntry(
+        parent=encyclopaedia,
+        name="EncEntry Object",
+        text=[
+            "EncEntry can take the following arguments when being created:",
+                "parent (Encyclopaedia|EncEntry): The container for the EncEntry. Either an Encyclopaedia or another EncEntry.",
+                "number (int): The number for the entry. If this is not set then it will be given a number automatically.",
+                "name (str): The name that will be displayed for the entry's button and labels.",
+                "text (str|list): The text that will be displayed when the entry is viewed",
+                "subject (str): The subject to associate the entry with. Used for sorting and filtering.",
+                "viewed (bool): Determines if the entry has been seen or not. This should only be set if the Encyclopaedia is save-game independent.",
+                "locked (bool): Determines if the entry can be viewed or not. Defaults to False.",
+                "image (str): The image displayed with the Entry text. Default is None.",
+                "locked_name (str): Placeholder text for the name. Shown when the entry is locked.",
+                "locked_text (str): Placeholder text for the text. Shown when the entry is locked.",
+                "locked_image (str): Placeholder text for the image. Shown when the entry is locked.",
+                "locked_image_tint (tuple): If no specific locked image is provided, a tinted version of the image will be used. The amount of tinting can be set with RGB values in a tuple.",
+        ],
+        subject="In-Depth",
+        viewed=persistent.new_status["new_08"],
         locked=False
     )
 
@@ -221,6 +245,7 @@ init python:
             "You can also duplicate and modify these screens as much as desired, creating separate ones for each Encyclopaedia."
         ],
         subject="In-Depth",
+        viewed=persistent.new_status["new_09"]
     )
 
     translations = EncEntry(
@@ -229,6 +254,7 @@ init python:
         text=[
             "Translating the labels used by an Encyclopaedia can be done through the Labels object.",
             "Every Encyclopaedia is created with a default one that can be replaced.",
+            "The attributes in the Labels object are used on the Encyclopaedia screens."
 
             "The following attributes are available:",
             "percentage_label (str): Placed next to the percentage unlocked number",
@@ -246,8 +272,23 @@ init python:
 
         ],
         subject="In-Depth",
+        viewed=persistent.new_status["new_10"],
         image=image_translations
     )
+
+    numbering = EncEntry(
+        parent=encyclopaedia,
+        name="Manually Numbering Entries",
+        text = [
+            "When creating an entry, the 'number' argument can be used to specify what number the entry will have."
+            " If it's not provided then the entry will be automatically assigned the next available number.",
+            "Numbered entries must be defined before non-numbered entries."
+        ],
+        subject="In-Depth",
+        viewed=persistent.new_status["new_11"]
+    )
+
+    #persistent_status = EncEntry()
 
     # Sorting
     # Filtering

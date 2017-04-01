@@ -10,10 +10,10 @@ class EncEntry(store.object):
     EncEntry instances should be added to an Encyclopaedia.
 
     Args:
-        parent (Encyclopaedia)
+        parent (Encyclopaedia|EncEntry)
         number (int)
         name (str)
-        text (str)
+        text (str|list)
         subject (str)
         viewed (bool)
         locked (bool)

@@ -156,7 +156,6 @@ screen encyclopaedia_list(enc):
                         # Sort and SaveStatus are unnecessary if you're not using persistent data (ie: if the encyclopaedia is save game independent)
                         # Sorting mode has to be by Number to save properly. "new_0" should be whatever the prefix you choose for the persistent dictionary is.
                         textbutton "Return"  action [enc.Sort(sorting_mode=enc.default_sorting_mode),
-                                                     enc.SaveStatus(persistent.new_status, "new"),
                                                      Hide("encyclopaedia_list"),
                                                      Return()] style "encyclopaedia_button" xfill True
 

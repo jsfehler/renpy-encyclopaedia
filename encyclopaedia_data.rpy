@@ -17,19 +17,6 @@ init python:
         entry_screen="encyclopaedia_entry"
     )
 
-    # If the encyclopaedia is save game independent, run this function to
-    # generate the persistent status variables.
-    # If the encyclopaedia is unique for each save game, you don't need this.
-
-    # entries_total is the total number of EncEntries the Encyclopaedia will hold.
-    # master_key and name are what determines the name of the status variables and the name of each key.
-    # Only change master_key and name if you need multiple encyclopaedias in a game.
-    persistent_status_flags(
-        total=12,
-        master_key="new",
-        status_name="new_status"
-    )
-
     ################
     # Documentation
     ################
@@ -43,7 +30,7 @@ init python:
             " This is the top-level container for all your entries.",
         ],
         subject="Basic Usage",
-        viewed=persistent.new_status["new_01"],
+        viewed_persistent=True,
         locked=False,
         image=image_getting_started,
     )
@@ -87,7 +74,7 @@ init python:
             "The entry will be locked until an the unlock_entry() function is called on the entry to unlock it."
         ],
         subject="Basic Usage",
-        viewed=persistent.new_status["new_02"]
+        viewed_persistent=True
     )
 
     locking_unlocking_entries_1 = EncEntry(
@@ -118,7 +105,7 @@ init python:
             "EncEntry that are used as sub-pages are created the same way as other EncEntry, but instead of providing an Encyclopaedia as the parent, an EncEntry is given.",
         ],
         subject="Basic Usage",
-        viewed=persistent.new_status["new_03"]
+        viewed_persistent=True
     )
 
     adding_pages_1 = EncEntry(
@@ -140,7 +127,7 @@ init python:
             "An example of this can be seen in the next entry.",
         ],
         subject="Basic Usage",
-        viewed=persistent.new_status["new_04"]
+        viewed_persistent=True
     )
 
     placeholders_locked = EncEntry(
@@ -149,7 +136,7 @@ init python:
         text=["This entry was unlocked."],
         subject="Basic Usage",
         locked=True,
-        viewed=persistent.new_status["new_05"],
+        viewed_persistent=True,
         image=image_locked_image
     )
 
@@ -170,7 +157,7 @@ init python:
             "They're on three separate lines in the script, but will be displayed as one line since there's no comma separating them. They count as one list item.",
         ],
         subject="Basic Usage",
-        viewed=persistent.new_status["new_06"],
+        viewed_persistent=True,
         locked=False,
     )
 
@@ -206,7 +193,7 @@ init python:
             "locked_at_bottom (bool): If locked entries should appear at the bottom of the entry list or not."
         ],
         subject="In-Depth",
-        viewed=persistent.new_status["new_07"],
+        viewed_persistent=True,
         locked=False
     )
 
@@ -229,7 +216,7 @@ init python:
                 "locked_image_tint (tuple): If no specific locked image is provided, a tinted version of the image will be used. The amount of tinting can be set with RGB values in a tuple.",
         ],
         subject="In-Depth",
-        viewed=persistent.new_status["new_08"],
+        viewed_persistent=True,
         locked=False
     )
 
@@ -245,7 +232,7 @@ init python:
             "You can also duplicate and modify these screens as much as desired, creating separate ones for each Encyclopaedia."
         ],
         subject="In-Depth",
-        viewed=persistent.new_status["new_09"]
+        viewed_persistent=True
     )
 
     translations = EncEntry(
@@ -272,7 +259,7 @@ init python:
 
         ],
         subject="In-Depth",
-        viewed=persistent.new_status["new_10"],
+        viewed_persistent=True,
         image=image_translations
     )
 
@@ -285,7 +272,7 @@ init python:
             "Numbered entries must be defined before non-numbered entries."
         ],
         subject="In-Depth",
-        viewed=persistent.new_status["new_11"]
+        viewed_persistent=True
     )
 
     #persistent_status = EncEntry()

@@ -204,33 +204,6 @@ class ClearFilter(EncyclopaediaAction):
         renpy.restart_interaction()
 
 
-class SaveStatusAction(EncyclopaediaAction):
-    """Save the "viewed" state of every EncEntry in an Encyclopaedia.
-
-    WARNING:
-    Only necessary if using Persistent Data to store the viewed state.
-    ie: The Encyclopaedia is save-game independent.
-
-    Args:
-        status_dict: The dictionary that contains all the persistent
-            variables.
-        key_string: The key for the dictionary
-    """
-    def __init__(self, encyclopaedia, status_dict, key_string):
-        super(SaveStatusAction, self).__init__(encyclopaedia)
-
-        self.status_dict = status_dict
-        self.key_string = key_string
-
-    def __call__(self):
-        """Go through every EncEntry and place the viewed variable into the
-        persistent dict.
-        """
-        for item in self.enc.all_entries:
-            key = '{}_{:02d}'.format(self.key_string, item.number)
-            self.status_dict[key] = item.viewed
-
-
 class ResetSubPageAction(EncyclopaediaAction):
     """Resets the sub-page count to 1. Used when closing the entry screen.
     """

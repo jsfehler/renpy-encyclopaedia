@@ -1,5 +1,4 @@
 init python:
-
     from operator import itemgetter
 
     from renpy.python import RevertableList

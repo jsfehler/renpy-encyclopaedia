@@ -3,20 +3,23 @@
 #    Sub-screen to determine what sort of button to show for an entry.
 #    Used by the vertical_list sub-screen.
 #
+#    Determining which button to use for the entry is based on the following factors:
+#       - Should locked buttons be displayed?
+#       - If yes, the button to show depends on if the entry is locked or not, then if locked entries should be accessible or not..
+#       - If no, whatever entry needs to be shown will need a button
+#
 #    Args:
 #        enc (Encyclopaedia): The encyclopaedia to use on this screen.
 #        entry (EncEntry): The entry to associate with the button.
 ################################################################################
 screen entry_button(enc, entry):
     if enc.show_locked_buttons:
-        # If the entry is unlocked, add an active button.
         if entry.locked is False:
             textbutton entry.name action enc.SetEntry(entry) style "encyclopaedia_entry_button"
 
             if not entry.viewed:
                 text enc.labels.unread_entry_label
 
-        # Else if the entry is locked, add a button depending on what should be shown.
         else:
             if enc.show_locked_entry:
                 textbutton enc.labels.locked_entry_label action enc.SetEntry(entry) style "encyclopaedia_entry_button"
@@ -26,7 +29,6 @@ screen entry_button(enc, entry):
     elif enc.show_locked_buttons is False:
         textbutton entry.name action enc.SetEntry(entry) style "encyclopaedia_entry_button"
 
-        # Add tag next to the button, if it hasn't been viewed yet.
         if not entry.viewed:
             text enc.labels.unread_entry_label
 

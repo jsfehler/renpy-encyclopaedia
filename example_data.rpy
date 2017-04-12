@@ -1,8 +1,10 @@
+################################################################################
 # In the following example, an encyclopaedia is created inside an "init python" block.
 # This allows an encyclopaedia's content to be independent of the saved games.
 # ie: Whenever encyclopaedia content is unlocked, it's unlocked for all save games.
 # If you want an encyclopaedia that is bound to a save game file, create the encyclopaedia in a "python" block inside the "start" label.
 # Then, for the "locked" argument in each entry, don't use a persistent variable.
+################################################################################
 
 init python:
     # Variables to hold the image paths. The path is relative to your game/ directory.
@@ -274,8 +276,6 @@ init python:
         subject="In-Depth",
         viewed_persistent=True
     )
-
-    #persistent_status = EncEntry()
 
     # Sorting
     # Filtering

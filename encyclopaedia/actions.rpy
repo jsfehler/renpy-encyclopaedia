@@ -10,12 +10,12 @@ init -1500 python:
 
 
     class SetEntryAction(EncyclopaediaAction):
-        """Set the selected Encyclopaedia entry as the active entry.
+        """Set the given Encyclopaedia entry as the active entry.
 
-        Used for opening entries from the main encyclopaedia page.
+        Used for opening entries directly.
 
         Attributes:
-            entry (EncEntry): The entry to be made active
+            entry (EncEntry): The entry to be made active.
         """
         def __init__(self, encyclopaedia, entry):
             super(SetEntryAction, self).__init__(encyclopaedia)
@@ -48,7 +48,7 @@ init -1500 python:
 
 
     class ChangeAction(EncyclopaediaAction):
-        """Action that swaps one entry or page for another.
+        """Base Action that swaps one entry or page for another.
 
         Args:
             block (bool): True if at the first or last entry
@@ -75,6 +75,8 @@ init -1500 python:
 
     class ChangeEntryAction(ChangeAction):
         """Change the current entry being viewed.
+
+        Used for switching from one entry to another.
 
         Used by an Encyclopaedia's PreviousEntry() and NextEntry() functions.
         """
@@ -123,6 +125,8 @@ init -1500 python:
 
     class ChangePageAction(ChangeAction):
         """Change the current sub-entry being viewed.
+
+        Used for switching from one page to another.
 
         Used by an Encyclopaedia's PreviousPage() and NextPage() functions.
         """

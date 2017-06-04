@@ -23,10 +23,10 @@ init python:
             locked_image_tint (tuple)
 
         Attributes:
-            has_image (bool): True if image was provided, else False
-            pages (int): Number of pages in the entry
+            has_image (bool): True if image was provided, else False.
+            pages (int): Number of pages this entry contains.
 
-            has_sub_entry (bool): If an entry has any sub-entries
+            has_sub_entry (bool): If an entry has any sub-entries.
         """
         def __init__(self,
                      parent=None,
@@ -66,7 +66,6 @@ init python:
                     # uses to change the colour of a locked image
                     self._tint_locked_image(locked_image_tint)
 
-            # Int: Number of pages this entry contains.
             self.pages = 0
 
             # List: The sub-entries and their position.

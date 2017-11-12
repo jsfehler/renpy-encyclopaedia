@@ -1,12 +1,16 @@
 ################################################################################
 #    Entry Button:
-#    Sub-screen to determine what sort of button to show for an entry.
+#    Sub-screen to determine what sort of button to show for any given entry in a list of entries.
 #    Used by the vertical_list sub-screen.
 #
-#    Determining which button to use for the entry is based on the following factors:
+#    Determining which button to show for the entry is based on the following factors:
 #       - Should locked buttons be displayed?
-#       - If yes, the button to show depends on if the entry is locked or not, then if locked entries should be accessible or not..
-#       - If no, whatever entry needs to be shown will need a button
+#           - If yes, the button to show depends on:
+#               - If the entry is unlocked, add a button with the correct label and link
+#               - If the entry is locked, then:
+#                   - If locked entries should be accessible, add a button with the correct label and link.
+#                   - If locked entries should not be accessible, add a disabled button
+#           - If no, simply add a button with the correct label and link, knowing only unlocked entries are being fed in
 #
 #    Args:
 #        enc (Encyclopaedia): The encyclopaedia to use on this screen.
@@ -36,6 +40,7 @@ screen entry_button(enc, entry):
 ################################################################################
 #    Vertical List:
 #    Sub-screen that displays a vertical list of entry buttons.
+#    The way entry buttons are displayed depends on the Encyclopaedia's sorting mode.
 #    Used by the encyclopaedia_list screen.
 #
 #    Args:
@@ -77,7 +82,7 @@ screen vertical_list(enc):
 
 ################################################################################
 #    Encyclopaedia List:
-#    Screen that's used to display the list of entries.
+#    Screen that's used to display the list of entries, the filter buttons, and the sorting buttons
 #
 #    Args:
 #        enc (Encyclopaedia): The encyclopaedia to use on this screen.

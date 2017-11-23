@@ -1,0 +1,131 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Translations &#8212; Renpy-Encyclopaedia 2.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="translations">
+<h1>Translations<a class="headerlink" href="#translations" title="Permalink to this headline">¶</a></h1>
+<p>The easiest way to support Translations is to create multiple Encyclopaedias for each language in your game.</p>
+<p>However, this alone won’t change the labels used on the screens. By default these are all in English.</p>
+<p>Modifying an Encyclopaedia’s labels can be done using the Labels object.
+Every Encyclopaedia is created with a default one that can be replaced.</p>
+<p>To customize the labels, create a new Labels object, rewrite the labels inside it, and assign the object to your Encyclopaedia.</p>
+<p>The following attributes are available:</p>
+<ul class="simple">
+<li>percentage_label (str): Placed next to the percentage unlocked number</li>
+<li>page_label (str): Placed before the entry page displayed</li>
+<li>page_separator_label (str): Placed in-between the current page number and the total page number</li>
+<li>sort_number_label (str): Label for Number Sorting</li>
+<li>sort_alphabetical_label (str): Label for Alphabetical sorting</li>
+<li>sort_reverse_alphabetical_label (str): Label for Reverse Alphabetical sorting</li>
+<li>sort_subject_label (str): Label for Subject sorting</li>
+<li>sort_unread_label (str): Label for Unread sorting</li>
+<li>unread_entry_label (str): Default for the tag next to unread entries</li>
+<li>locked_entry_label (str): Default for a “Locked Entry” button</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># English</span>
+<span class="n">en_encyclopaedia</span> <span class="o">=</span> <span class="n">Encyclopaedia</span><span class="p">()</span>
+
+<span class="c1"># French</span>
+<span class="n">fr_encyclopaedia</span> <span class="o">=</span> <span class="n">Encyclopaedia</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Renpy-Encyclopaedia</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="contents.html">Documentation</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Joshua Fehler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/translations.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

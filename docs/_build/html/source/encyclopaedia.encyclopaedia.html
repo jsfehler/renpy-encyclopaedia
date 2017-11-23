@@ -1,0 +1,530 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>encyclopaedia.encyclopaedia module &#8212; Renpy-Encyclopaedia 2.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-encyclopaedia.encyclopaedia">
+<span id="encyclopaedia-encyclopaedia-module"></span><h1>encyclopaedia.encyclopaedia module<a class="headerlink" href="#module-encyclopaedia.encyclopaedia" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia">
+<em class="property">class </em><code class="descclassname">encyclopaedia.encyclopaedia.</code><code class="descname">Encyclopaedia</code><span class="sig-paren">(</span><em>sorting_mode=0</em>, <em>show_locked_buttons=False</em>, <em>show_locked_entry=False</em>, <em>entry_screen='encyclopaedia_entry'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">renpy.store.object</span></code></p>
+<p>Container that manages the behaviour of a collection of EncEntry objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sorting_mode</strong> (<em>int</em>) – The type of sorting used.
+Default sorting is by Number.</li>
+<li><strong>show_locked_buttons</strong> (<em>bool</em>) – If True, locked entries show a
+placeholder label on the listing screen.</li>
+<li><strong>show_locked_entry</strong> (<em>bool</em>) – If True, locked entries can be viewed, but
+the data is hidden from view with a placeholder.</li>
+<li><strong>entry_screen</strong> (<em>str</em>) – The Ren’Py screen to display an open entry.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.all_entries">
+<code class="descname">all_entries</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.all_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – All entries, regardless of status.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.unlocked_entries">
+<code class="descname">unlocked_entries</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.unlocked_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – Only unlocked entries.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.filtered_entries">
+<code class="descname">filtered_entries</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.filtered_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – Entries that match a subject filter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.filtering">
+<code class="descname">filtering</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.filtering" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool|str</em> – The subject that’s being used as a filter.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.size_all">
+<code class="descname">size_all</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.size_all" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Length of self.all_entries.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.size_unlocked">
+<code class="descname">size_unlocked</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.size_unlocked" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Length of self.unlocked_entries.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.reverse_sorting">
+<code class="descname">reverse_sorting</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.reverse_sorting" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – Should sorting occur in reverse or not.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.nest_alphabetical_sort">
+<code class="descname">nest_alphabetical_sort</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.nest_alphabetical_sort" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – Should alphabetical sorting display
+each letter as a subject.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.current_position">
+<code class="descname">current_position</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.current_position" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Index for the current entry open.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.sub_current_position">
+<code class="descname">sub_current_position</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.sub_current_position" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Index for the current sub-entry open.
+Starts at 1.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.labels">
+<code class="descname">labels</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Labels</em> – The current label controller.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.subjects">
+<code class="descname">subjects</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.subjects" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – Collection of every subject.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.active">
+<code class="descname">active</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.active" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>EncEntry</em> – The currently open entry.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.locked_at_bottom">
+<code class="descname">locked_at_bottom</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.locked_at_bottom" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – If locked entries should appear at the bottom
+of the entry list or not.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.ClearFilter">
+<code class="descname">ClearFilter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.ClearFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.ClearFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around an Action. Use with a renpy button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Screen Action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.DIRECTION_BACKWARD">
+<code class="descname">DIRECTION_BACKWARD</code><em class="property"> = -1</em><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.DIRECTION_BACKWARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.DIRECTION_FORWARD">
+<code class="descname">DIRECTION_FORWARD</code><em class="property"> = 1</em><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.DIRECTION_FORWARD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.FilterBySubject">
+<code class="descname">FilterBySubject</code><span class="sig-paren">(</span><em>subject</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.FilterBySubject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.FilterBySubject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around an Action. Use with a renpy button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Screen Action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.NextEntry">
+<code class="descname">NextEntry</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.NextEntry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.NextEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around an Action. Use with a renpy button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Screen Action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.NextPage">
+<code class="descname">NextPage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.NextPage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.NextPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around an Action. Use with a renpy button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Screen Action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.PreviousEntry">
+<code class="descname">PreviousEntry</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.PreviousEntry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.PreviousEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around an Action. Use with a renpy button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Screen Action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.PreviousPage">
+<code class="descname">PreviousPage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.PreviousPage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.PreviousPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around an Action. Use with a renpy button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Screen Action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.ResetSubPage">
+<code class="descname">ResetSubPage</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.ResetSubPage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.ResetSubPage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around an Action. Use with a renpy button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Screen Action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.SORT_ALPHABETICAL">
+<code class="descname">SORT_ALPHABETICAL</code><em class="property"> = 1</em><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.SORT_ALPHABETICAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.SORT_NUMBER">
+<code class="descname">SORT_NUMBER</code><em class="property"> = 0</em><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.SORT_NUMBER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.SORT_REVERSE_ALPHABETICAL">
+<code class="descname">SORT_REVERSE_ALPHABETICAL</code><em class="property"> = 2</em><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.SORT_REVERSE_ALPHABETICAL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.SORT_SUBJECT">
+<code class="descname">SORT_SUBJECT</code><em class="property"> = 3</em><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.SORT_SUBJECT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.SORT_UNREAD">
+<code class="descname">SORT_UNREAD</code><em class="property"> = 4</em><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.SORT_UNREAD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.SetEntry">
+<code class="descname">SetEntry</code><span class="sig-paren">(</span><em>given_entry</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.SetEntry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.SetEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around an Action. Use with a renpy button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Screen Action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.Sort">
+<code class="descname">Sort</code><span class="sig-paren">(</span><em>sorting_mode=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.Sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.Sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around an Action. Use with a renpy button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sorting_mode</strong> – The type of sorting to use.
+If None specified, use the current sorting.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Screen Action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.ToggleShowLockedButtons">
+<code class="descname">ToggleShowLockedButtons</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.ToggleShowLockedButtons"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.ToggleShowLockedButtons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around an Action. Use with a renpy button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Screen Action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.ToggleShowLockedEntry">
+<code class="descname">ToggleShowLockedEntry</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.ToggleShowLockedEntry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.ToggleShowLockedEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around an Action. Use with a renpy button.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Screen Action</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.add_entry">
+<code class="descname">add_entry</code><span class="sig-paren">(</span><em>entry</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.add_entry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.add_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an entry to the Encyclopaedia’s internal lists and sorts it.</p>
+<p>Attempts to create duplicates are softly ignored.
+subjects list is updated when a new entry is added.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entry</strong> (<a class="reference internal" href="encyclopaedia.encentry.html#encyclopaedia.encentry.EncEntry" title="encyclopaedia.encentry.EncEntry"><em>EncEntry</em></a>) – The Entry to add to the Encyclopaedia</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.check_position">
+<code class="descname">check_position</code><span class="sig-paren">(</span><em>op</em>, <em>position</em>, <em>wall</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.check_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.check_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if the Prev/Next Actions should be active or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>op</strong> (<em>str</em>) – The operator to use</li>
+<li><strong>position</strong> (<em>int</em>) – The position of the entry</li>
+<li><strong>wall</strong> (<em>int</em>) – The limit to check against</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.current_entries">
+<code class="descname">current_entries</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.current_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – Depending on which viewing options are set,
+returns a list of entries.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.number_of_visible_entries">
+<code class="descname">number_of_visible_entries</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.number_of_visible_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Whatever the maximum size of the entry list should be,
+based on if locked entries should be shown or not.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.operators">
+<code class="descname">operators</code><em class="property"> = {'&lt;=': &lt;built-in function le&gt;, '&gt;=': &lt;built-in function ge&gt;}</em><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.operators" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.percentage_unlocked">
+<code class="descname">percentage_unlocked</code><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.percentage_unlocked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the percentage of the Encyclopaedia that’s unlocked.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Percentage of the Encyclopaedia that’s unlocked</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal"><span class="pre">ZeroDivisionError</span></code> – If the Encyclopaedia is empty</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.set_global_locked_image_tint">
+<code class="descname">set_global_locked_image_tint</code><span class="sig-paren">(</span><em>tint_amount</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.set_global_locked_image_tint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.set_global_locked_image_tint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets all the locked images for all entries to use the same tint.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tint_amount</strong> (<em>tuple</em>) – An RGB value, ie:(R, G, B)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.set_global_locked_name">
+<code class="descname">set_global_locked_name</code><span class="sig-paren">(</span><em>placeholder</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.set_global_locked_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.set_global_locked_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets all the locked names for all entries to the same string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>placeholder</strong> (<em>str</em>) – Text to use for every locked name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.sort_entries">
+<code class="descname">sort_entries</code><span class="sig-paren">(</span><em>sorting=0</em>, <em>reverse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.sort_entries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.sort_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort entry lists by whatever the current sorting mode is.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>sorting</strong> (<em>int</em>) – The sorting mode to use</li>
+<li><strong>reverse</strong> (<em>bool</em>) – If the sorting should be done in reverse or not</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Renpy-Encyclopaedia</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="contents.html">Documentation</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Joshua Fehler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/source/encyclopaedia.encyclopaedia.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

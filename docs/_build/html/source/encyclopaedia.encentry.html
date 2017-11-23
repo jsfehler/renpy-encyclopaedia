@@ -1,0 +1,229 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>encyclopaedia.encentry module &#8212; Renpy-Encyclopaedia 2.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-encyclopaedia.encentry">
+<span id="encyclopaedia-encentry-module"></span><h1>encyclopaedia.encentry module<a class="headerlink" href="#module-encyclopaedia.encentry" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="encyclopaedia.encentry.EncEntry">
+<em class="property">class </em><code class="descclassname">encyclopaedia.encentry.</code><code class="descname">EncEntry</code><span class="sig-paren">(</span><em>parent=None</em>, <em>number=None</em>, <em>name=''</em>, <em>text=''</em>, <em>subject=''</em>, <em>viewed=None</em>, <em>viewed_persistent=False</em>, <em>locked=False</em>, <em>locked_persistent=False</em>, <em>image=None</em>, <em>locked_name='???'</em>, <em>locked_text='???'</em>, <em>locked_image=None</em>, <em>locked_image_tint=(0.0</em>, <em>0.0</em>, <em>0.0)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encentry.html#EncEntry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encentry.EncEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">renpy.store.object</span></code></p>
+<p>Stores an Entry’s content.
+EncEntry instances should be added to an Encyclopaedia.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>parent</strong> (<a class="reference internal" href="encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia" title="encyclopaedia.encyclopaedia.Encyclopaedia"><em>Encyclopaedia</em></a><em>, </em><a class="reference internal" href="#encyclopaedia.encentry.EncEntry" title="encyclopaedia.encentry.EncEntry"><em>EncEntry</em></a>) – </li>
+<li><strong>number</strong> (<em>int</em>) – The entry’s number.
+If this is not set then it will be given a number automatically.</li>
+<li><strong>name</strong> (<em>str</em>) – The name that will be displayed for the entry’s button and labels.</li>
+<li><strong>text</strong> (<em>str</em><em>, </em><em>list</em>) – The text that will be displayed when the entry is viewed.</li>
+<li><strong>subject</strong> (<em>str</em>) – The subject to associate the entry with.
+Used for sorting and filtering.</li>
+<li><strong>viewed</strong> (<em>bool</em>) – Determines if the entry has been seen or not.
+This should only be set if the Encyclopaedia is
+save-game independent.</li>
+<li><strong>viewed_persistent</strong> (<em>bool</em>) – Determines if the Entry’s viewed status uses persistent data or not.</li>
+<li><strong>locked</strong> (<em>bool</em>) – Determines if the entry can be viewed or not. Defaults to False.</li>
+<li><strong>locked_persistent</strong> (<em>bool</em>) – Determines if the Entry’s locked status uses persistent data or not.</li>
+<li><strong>image</strong> (<em>str</em>) – The image displayed with the Entry text. Default is None.</li>
+<li><strong>locked_name</strong> (<em>str</em>) – Placeholder text for the name. Shown when the entry is locked.</li>
+<li><strong>locked_text</strong> (<em>str</em>) – Placeholder text for the text. Shown when the entry is locked.</li>
+<li><strong>locked_image</strong> (<em>str</em>) – Placeholder text for the image. Shown when the entry is locked.</li>
+<li><strong>locked_image_tint</strong> (<em>tuple</em>) – If no specific locked image is provided,
+a tinted version of the image will be used.
+The amount of tinting can be set with RGB values in a tuple.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="encyclopaedia.encentry.EncEntry.has_image">
+<code class="descname">has_image</code><a class="headerlink" href="#encyclopaedia.encentry.EncEntry.has_image" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – True if an image was provided, else False.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encentry.EncEntry.pages">
+<code class="descname">pages</code><a class="headerlink" href="#encyclopaedia.encentry.EncEntry.pages" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – Number of pages this entry contains.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encentry.EncEntry.has_sub_entry">
+<code class="descname">has_sub_entry</code><a class="headerlink" href="#encyclopaedia.encentry.EncEntry.has_sub_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – If an entry has any sub-entries.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="encyclopaedia.encentry.EncEntry.add_entry">
+<code class="descname">add_entry</code><span class="sig-paren">(</span><em>sub_entry</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encentry.html#EncEntry.add_entry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encentry.EncEntry.add_entry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds multiple pages to the entry in the form of sub-entries.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sub_entry</strong> – The entry to add as a sub-entry.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if anything was added, else False</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encentry.EncEntry.current_page">
+<code class="descname">current_page</code><a class="headerlink" href="#encyclopaedia.encentry.EncEntry.current_page" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>EncEntry</em> – Gets the sub-page that’s currently viewing viewed.
+Setting this attribute should be done using an integer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encentry.EncEntry.image">
+<code class="descname">image</code><a class="headerlink" href="#encyclopaedia.encentry.EncEntry.image" title="Permalink to this definition">¶</a></dt>
+<dd><p>The image for the entry.
+If the entry is locked, returns the placeholder instead.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encentry.EncEntry.label">
+<code class="descname">label</code><a class="headerlink" href="#encyclopaedia.encentry.EncEntry.label" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – The number and name of the entry, in the format of
+‘number: name’</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encentry.EncEntry.locked">
+<code class="descname">locked</code><a class="headerlink" href="#encyclopaedia.encentry.EncEntry.locked" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – Determines if the entry’s data can be viewed or not.
+Changing this variable will modify the entry’s locked status.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encentry.EncEntry.name">
+<code class="descname">name</code><a class="headerlink" href="#encyclopaedia.encentry.EncEntry.name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – The name for the entry.
+If the entry is locked, returns the placeholder instead.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encentry.EncEntry.text">
+<code class="descname">text</code><a class="headerlink" href="#encyclopaedia.encentry.EncEntry.text" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list</em> – The text for the entry.
+If the entry is locked, returns the placeholder instead.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="encyclopaedia.encentry.EncEntry.viewed">
+<code class="descname">viewed</code><a class="headerlink" href="#encyclopaedia.encentry.EncEntry.viewed" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – Determines if the entry’s data has been viewed or not.
+Changing this variable will modify the entry’s viewed status.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Renpy-Encyclopaedia</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="contents.html">Documentation</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Joshua Fehler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/source/encyclopaedia.encentry.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,139 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Locking and Unlocking Entries &#8212; Renpy-Encyclopaedia 2.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="locking-and-unlocking-entries">
+<h1>Locking and Unlocking Entries<a class="headerlink" href="#locking-and-unlocking-entries" title="Permalink to this headline">¶</a></h1>
+<p>By default, all EncEntry objects are unlocked and can be viewed by players at any time.
+However, when creating an EncEntry the locked argument can be used, effectively hiding the entry.”,</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">about_zeus</span> <span class="o">=</span> <span class="n">EncEntry</span><span class="p">(</span>
+    <span class="n">parent</span><span class="o">=</span><span class="n">your_new_encyclopaedia</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Zeus&quot;</span><span class="p">,</span>
+    <span class="n">text</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;Zeus is the sky and thunder god in ancient Greek religion, who ruled as king of the gods of Mount Olympus.&quot;</span>
+        <span class="s2">&quot; His name is cognate with the first element of his Roman equivalent Jupiter.&quot;</span>
+        <span class="s2">&quot; His mythologies and powers are similar, though not identical, to those of Indo-European deities such as Indra, Jupiter, Perun, Thor, and Odin.&quot;</span>
+    <span class="p">],</span>
+    <span class="n">locked</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The entry will be locked until its locked attribute is set to False.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">about_zeus</span><span class="o">.</span><span class="n">locked</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>In order to tie an EncEntry’s locked state to a persistent variable, add the “locked_persistent” argument</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">about_zeus</span> <span class="o">=</span> <span class="n">EncEntry</span><span class="p">(</span>
+    <span class="n">parent</span><span class="o">=</span><span class="n">your_new_encyclopaedia</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Zeus&quot;</span><span class="p">,</span>
+    <span class="n">text</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;Zeus is the sky and thunder god in ancient Greek religion, who ruled as king of the gods of Mount Olympus.&quot;</span>
+        <span class="s2">&quot; His name is cognate with the first element of his Roman equivalent Jupiter.&quot;</span>
+        <span class="s2">&quot; His mythologies and powers are similar, though not identical, to those of Indo-European deities such as Indra, Jupiter, Perun, Thor, and Odin.&quot;</span>
+    <span class="p">],</span>
+    <span class="n">locked</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">locked_persistent</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>If you Encyclopaedia is global, you must use the locked_persistent argument.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Renpy-Encyclopaedia</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="contents.html">Documentation</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Joshua Fehler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/locking-and-unlocking.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,282 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>encyclopaedia.py_to_rpy &#8212; Renpy-Encyclopaedia 2.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for encyclopaedia.py_to_rpy</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">errno</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;files&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;List of files to convert&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s2">&quot;--dest&quot;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The folder to place transpiled files into&quot;</span><span class="p">,</span>
+    <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s2">&quot;--strict&quot;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;When this flag is active, all renpy imports are skipped&quot;</span><span class="p">,</span>
+    <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span>
+<span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+    <span class="s2">&quot;--minify&quot;</span><span class="p">,</span>
+    <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output rpy to one file instead of multiple&quot;</span><span class="p">,</span>
+    <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span>
+<span class="p">)</span>
+
+<span class="n">extra_indent</span> <span class="o">=</span> <span class="s2">&quot;    &quot;</span>
+
+
+<span class="k">def</span> <span class="nf">__get_config</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get data from the config file.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;py_to_rpy.json&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">raw</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span>
+
+
+<span class="k">def</span> <span class="nf">__safe_new_directory</span><span class="p">(</span><span class="n">dest</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a directory if it doesn&#39;t already exist.</span>
+<span class="sd">    If it exists, do nothing.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        OSError if any other error occurs.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if new directory created, else False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">errno</span><span class="o">.</span><span class="n">EEXIST</span><span class="p">:</span>
+            <span class="k">raise</span>
+
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">__is_forbidden</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks if a line should be skipped.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        line (string): The line of to validate.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        True if any forbidden lines found, else False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">forbidden_lines</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># No need to import renpy in .rpy files</span>
+        <span class="s2">&quot;import renpy.exports as renpy&quot;</span><span class="p">,</span>
+        <span class="c1"># .rpy files don&#39;t need renpy imports</span>
+        <span class="s2">&quot;from renpy.&quot;</span>
+    <span class="p">]</span>
+
+    <span class="n">ignore_lines</span> <span class="o">=</span> <span class="n">__get_config</span><span class="p">()[</span><span class="s2">&quot;ignore&quot;</span><span class="p">]</span>
+    <span class="n">remove_lines</span> <span class="o">=</span> <span class="n">__get_config</span><span class="p">()[</span><span class="s2">&quot;remove&quot;</span><span class="p">]</span>
+    
+    <span class="c1"># Strip lines that are specifically declared.</span>
+    <span class="k">for</span> <span class="n">remove_line</span> <span class="ow">in</span> <span class="n">remove_lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">remove_line</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="c1"># Don&#39;t strip lines that are specifically ignored.</span>
+    <span class="k">for</span> <span class="n">ignore_line</span> <span class="ow">in</span> <span class="n">ignore_lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">ignore_line</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">for</span> <span class="n">forbidden_line</span> <span class="ow">in</span> <span class="n">forbidden_lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">forbidden_line</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="py_to_rpy"><a class="viewcode-back" href="../../source/encyclopaedia.py_to_rpy.html#encyclopaedia.py_to_rpy.py_to_rpy">[docs]</a><span class="k">def</span> <span class="nf">py_to_rpy</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transpiles a Python file to a Ren&#39;Py file.</span>
+
+<span class="sd">    Creates a new .rpy file with an &#39;init python&#39; block.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        dest (string): The folder to place transpiled files into.</span>
+<span class="sd">        strict (boolean): If true, all renpy imports are skipped.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">dest</span><span class="p">:</span>
+        <span class="n">dest_string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+        <span class="n">__safe_new_directory</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dest_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="n">py_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">.py&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">rpy_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">.rpy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dest_string</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">py_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">py_file</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">rpy_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">rpy_file</span><span class="p">:</span>
+        <span class="n">rpy_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;init python:&quot;</span><span class="p">)</span>
+        <span class="n">rpy_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">py_file</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">strict</span> <span class="ow">and</span> <span class="n">__is_forbidden</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>  <span class="c1"># Line has content on it</span>
+                <span class="n">rpy_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">extra_indent</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># Line had only whitespace</span>
+                <span class="n">rpy_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="combine_rpy_files"><a class="viewcode-back" href="../../source/encyclopaedia.py_to_rpy.html#encyclopaedia.py_to_rpy.combine_rpy_files">[docs]</a><span class="k">def</span> <span class="nf">combine_rpy_files</span><span class="p">(</span><span class="n">filenames</span><span class="p">,</span> <span class="n">final_filename</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Combines multiple .rpy files into one.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filenames (list): The files to combine.</span>
+<span class="sd">        final_filename (string): The name for the combined file.</span>
+<span class="sd">        dest (string): The directory to place the file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">dest</span><span class="p">:</span>
+        <span class="n">dest_string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dest_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">.rpy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dest_string</span><span class="p">,</span> <span class="n">final_filename</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="n">f_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">.rpy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dest_string</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="remove_generated_files"><a class="viewcode-back" href="../../source/encyclopaedia.py_to_rpy.html#encyclopaedia.py_to_rpy.remove_generated_files">[docs]</a><span class="k">def</span> <span class="nf">remove_generated_files</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Deletes all the generated .rpy files.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        files (list): The files to remove.</span>
+<span class="sd">        dest (string): The directory the files are in.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">dest</span><span class="p">:</span>
+        <span class="n">dest_string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dest_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}{}</span><span class="s2">.rpy&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dest_string</span><span class="p">,</span> <span class="n">file</span><span class="p">))</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">file_list</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span><span class="o">.</span><span class="n">files</span>
+    <span class="n">dest_dir</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span><span class="o">.</span><span class="n">dest</span>
+    <span class="n">strict</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span><span class="o">.</span><span class="n">strict</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+        <span class="n">py_to_rpy</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="n">dest_dir</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="n">strict</span><span class="p">)</span>
+
+    <span class="n">minify_filename</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span><span class="o">.</span><span class="n">minify</span>
+    <span class="k">if</span> <span class="n">minify_filename</span><span class="p">:</span>
+        <span class="n">combine_rpy_files</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">minify_filename</span><span class="p">,</span> <span class="n">dest_dir</span><span class="p">)</span>
+        <span class="n">remove_generated_files</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">dest_dir</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Renpy-Encyclopaedia</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="contents.html">Documentation</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../encyclopaedia.html">encyclopaedia</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Joshua Fehler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

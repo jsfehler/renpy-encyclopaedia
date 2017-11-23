@@ -1,22 +1,28 @@
-# Encyclopaedia Framework for Ren'Py
-For an encyclopaedia, bestiary, glossary, or similar system.
+Encyclopaedia Framework for Ren'Py
+==================================
 
-#### Compatible Ren'Py Version: 6.99.12.3 and higher
+A plugin for the `Ren'py Visual Novel engine <https://www.renpy.org/>`_
 
-### Features
-- Sort entries in an Encyclopaedia by Number, Alphabetical, Reverse Alphabetical, Subject, or Unread status.
-- Filter entries by Subject.
-- Encyclopaedia Entries can have nested Entries, functioning as sub-pages. This allows each Entry be unlocked progressively.
-- Entries can be locked at the start of the game and then unlocked as the story progresses.
-- Locked entries can be displayed with customizable placeholders or outright hidden.
-- Entry Unlocks can be tied to save games or independent (using Ren'py persistent data).
-- Unread Entries can be tagged.
-- Access can be from the main menu, during the game, or customized to be anywhere.
+Simplifies creating an encyclopaedia, bestiary, glossary, or similar system.
 
-### Documentation
-All documentation is available inside the demo game.
+Compatible Ren'Py Version: 6.99.12.3 and higher
 
-#### Running the demo:
+
+Documentation
+-------------
+Please see :ref:`Contents <contents>` for full documentation, including installation and tutorials.
+
+Development
+-----------
+
+Building the project
+~~~~~~~~~~~~~~~~~~~~
+Requirements: `tox`
+
+Running tox will run the tests and build the distribution file
+
+Running the demo:
+~~~~~~~~~~~~~~~~~
 1. Create a new Ren'Py project
 2. Add the encyclopaedia files into the project's game directory 
 3. Replace the existing script.rpy file with the demo's script.rpy

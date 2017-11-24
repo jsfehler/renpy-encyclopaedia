@@ -1,5 +1,5 @@
-from . import actions
-from . import encentry
-from . import encyclopaedia
-from . import entry_sorting
-from . import labels
+from . import actions  # NOQA
+from . import encentry  # NOQA
+from . import encyclopaedia  # NOQA
+from . import entry_sorting  # NOQA
+from . import labels  # NOQA

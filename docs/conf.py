@@ -20,9 +20,9 @@
 import os
 import sys
 
+# Import a mocked out renpy so the encyclopaedia imports don't fail
 sys.path.insert(0, os.path.abspath('../mock_renpy'))
 
-# Import a mocked out renpy so the encyclopaedia imports don't fail
 import renpy
 
 sys.path.insert(0, os.path.abspath('../'))
@@ -101,10 +101,18 @@ html_theme = 'alabaster'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {}
+html_theme_options = {
+    "github_user": "jsfehler",
+    "github_repo": "renpy-encyclopaedia",
+    "github_button": True,
+    "github_banner": True,
+
+
+}
 
 html_theme_options['extra_nav_links'] = {
-    "Documentation": "contents.html"
+    "Documentation": "documentation.html",
+    "Module Index": "py-modindex.html"
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -122,7 +130,6 @@ html_sidebars = {
         'about.html',
         'navigation.html',
         'localtoc.html',
-        #'globaltoc.html',
         'relations.html',  # needs 'show_related': True theme option to display
         'searchbox.html',
     ]

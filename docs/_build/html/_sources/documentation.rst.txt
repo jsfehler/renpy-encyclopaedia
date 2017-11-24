@@ -1,11 +1,13 @@
-.. _contents:
+.. _documentation:
+
+Encyclopaedia Framework for Ren'Py
+==================================
 
 Documentation
-=============
+-------------
 
 .. toctree::
-   :maxdepth: 1
-   :caption: Contents
+   :maxdepth: 2
 
    getting-started
    writing-text

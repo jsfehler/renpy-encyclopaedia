@@ -14,29 +14,20 @@ Compatible Ren'Py Version: 6.99.12.3 and higher
 
 Features
 --------
-- Sort entries in an Encyclopaedia by Number, Alphabetical, Reverse Alphabetical, Subject, or Unread status.
+- Sort entries by Number, Alphabetically, Reverse Alphabetically, by Subject, or by Unread status.
 - Filter entries by Subject.
-- Sub-page system for nesting entries. Allows an Entry to be unlocked progressively.
-- Entries can be locked at the start of the game and then unlocked as the story progresses.
+- Sub-page system for nesting entries. Allows an entry to be unlocked progressively.
+- Locking/unlocking allows you to decide when entries should be accessible.
 - Locked entries can be displayed with customizable placeholders or outright hidden.
-- Entry Unlocks can be tied to save games or independent (using Ren'py persistent data).
-- Unread Entries can be tagged.
-- Access can be from the main menu, during the game, or customized to be anywhere.
-- Default visual template is provided, but can be completely customized using Ren'py Screen Language.
+- Entry Unlocks can be tied to individual save games or universal (using Ren'py persistent data).
+- Default visual template is provided, but can be completely customized or replaced using `Ren'py Screen Language <https://www.renpy.org/doc/html/screens.html>`_.
 
 Documentation
 -------------
-The :ref:`Contents <contents>` section has installation instructions and tutorials.
+The :ref:`Documentation <documentation>` section has installation instructions and tutorials.
 
 The :ref:`Module Index <modindex>` has in-depth information on the Encyclopaedia's classes and functions.
 
 Contributing
 ------------
 For filing bugs or feature requests, please use the `GitHub issue tracker <https://github.com/jsfehler/renpy-encyclopaedia/issues>`_
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`

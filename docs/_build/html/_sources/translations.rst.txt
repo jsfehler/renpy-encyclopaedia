@@ -39,5 +39,8 @@ The following attributes are available:
 
     # French
     fr_encyclopaedia = Encyclopaedia()
+    fr_labels = Labels()
+    fr_labels.sort_alphabetical_label = "De A à Z"
 
+    fr_encyclopaedia.labels = fr_labels
 

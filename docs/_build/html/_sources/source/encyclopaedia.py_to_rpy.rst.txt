@@ -1,7 +1,0 @@
-encyclopaedia\.py\_to\_rpy module
-=================================
-
-.. automodule:: encyclopaedia.py_to_rpy
-    :members:
-    :undoc-members:
-    :show-inheritance:

@@ -3,8 +3,8 @@
 	"remove": [
         "import renpy.exports as renpy",
         "from renpy.",
-		"from actions import *",
-		"from labels import Labels",
-		"from entry_sorting import push_locked_to_bottom"
+		"from .actions import *",
+		"from .labels import Labels",
+		"from .entry_sorting import push_locked_to_bottom"
 	]
 }

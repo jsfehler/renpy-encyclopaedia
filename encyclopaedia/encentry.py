@@ -28,11 +28,11 @@ class EncEntry(store.object):
             This should only be set if the Encyclopaedia is
             save-game independent.
         viewed_persistent(bool) -
-            Determines if the Entry's viewed status uses persistent data or not.
+            Determines if the Entry's viewed status uses persistent data.
         locked (bool) -
             Determines if the entry can be viewed or not. Defaults to False.
         locked_persistent(bool) -
-            Determines if the Entry's locked status uses persistent data or not.
+            Determines if the Entry's locked status uses persistent data.
         image (str) -
             The image displayed with the Entry text. Default is None.
         locked_name (str) -

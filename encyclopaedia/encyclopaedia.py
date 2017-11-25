@@ -4,7 +4,7 @@ from operator import attrgetter
 
 from renpy import store
 
-from .actions import *
+from .actions import *  # NOQA: F403
 from .labels import Labels
 from .entry_sorting import push_locked_to_bottom
 
@@ -281,7 +281,7 @@ class Encyclopaedia(store.object):
             wall=0
         )
 
-        return ChangeEntryAction(
+        return ChangeEntryAction(  # NOQA: F405
             encyclopaedia=self,
             direction=self.DIRECTION_BACKWARD,
             block=block
@@ -299,7 +299,7 @@ class Encyclopaedia(store.object):
             wall=self.number_of_visible_entries - 1
         )
 
-        return ChangeEntryAction(
+        return ChangeEntryAction(  # NOQA: F405
             encyclopaedia=self,
             direction=self.DIRECTION_FORWARD,
             block=block
@@ -317,7 +317,7 @@ class Encyclopaedia(store.object):
             wall=1
         )
 
-        return ChangePageAction(
+        return ChangePageAction(  # NOQA: F405
             encyclopaedia=self,
             direction=self.DIRECTION_BACKWARD,
             block=block
@@ -335,13 +335,13 @@ class Encyclopaedia(store.object):
             wall=self.active.pages
         )
 
-        return ChangePageAction(
+        return ChangePageAction(  # NOQA: F405
             encyclopaedia=self,
             direction=self.DIRECTION_FORWARD,
             block=block
         )
 
-    def Sort(self, sorting_mode=None):
+    def Sort(self, sorting_mode=None):  # NOQA: F405
         """Wrapper around an Action. Use with a renpy button.
 
         Args:
@@ -354,7 +354,7 @@ class Encyclopaedia(store.object):
         if sorting_mode is None:
             sorting_mode = self.sorting_mode
 
-        return SortEncyclopaedia(self, sorting_mode)
+        return SortEncyclopaedia(self, sorting_mode)  # NOQA: F405
 
     def SetEntry(self, given_entry):
         """Wrapper around an Action. Use with a renpy button.
@@ -362,7 +362,7 @@ class Encyclopaedia(store.object):
         Returns:
             Screen Action
         """
-        return SetEntryAction(self, given_entry)
+        return SetEntryAction(self, given_entry)  # NOQA: F405
 
     def ResetSubPage(self):
         """Wrapper around an Action. Use with a renpy button.
@@ -370,7 +370,7 @@ class Encyclopaedia(store.object):
         Returns:
             Screen Action
         """
-        return ResetSubPageAction(self)
+        return ResetSubPageAction(self)  # NOQA: F405
 
     def ToggleShowLockedButtons(self):
         """Wrapper around an Action. Use with a renpy button.
@@ -378,7 +378,7 @@ class Encyclopaedia(store.object):
         Returns:
             Screen Action
         """
-        return ToggleShowLockedButtonsAction(self)
+        return ToggleShowLockedButtonsAction(self)  # NOQA: F405
 
     def ToggleShowLockedEntry(self):
         """Wrapper around an Action. Use with a renpy button.
@@ -386,7 +386,7 @@ class Encyclopaedia(store.object):
         Returns:
             Screen Action
         """
-        return ToggleShowLockedEntryAction(self)
+        return ToggleShowLockedEntryAction(self)  # NOQA: F405
 
     def FilterBySubject(self, subject):
         """Wrapper around an Action. Use with a renpy button.
@@ -394,7 +394,7 @@ class Encyclopaedia(store.object):
         Returns:
             Screen Action
         """
-        return FilterBySubject(self, subject)
+        return FilterBySubject(self, subject)  # NOQA: F405
 
     def ClearFilter(self):
         """Wrapper around an Action. Use with a renpy button.
@@ -402,4 +402,4 @@ class Encyclopaedia(store.object):
         Returns:
             Screen Action
         """
-        return ClearFilter(self)
+        return ClearFilter(self)  # NOQA: F405

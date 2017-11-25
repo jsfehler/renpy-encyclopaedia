@@ -82,7 +82,7 @@ class Labels(store.object):
         sorting_strings = {
             enc.SORT_NUMBER: self.sort_number_label,
             enc.SORT_ALPHABETICAL: self.sort_alphabetical_label,
-            enc.SORT_REVERSE_ALPHABETICAL: self.sort_reverse_alphabetical_label,
+            enc.SORT_REVERSE_ALPHABETICAL: self.sort_reverse_alphabetical_label,  # NOQA: E501
             enc.SORT_SUBJECT: self.sort_subject_label,
             enc.SORT_UNREAD: self.sort_unread_label
         }

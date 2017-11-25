@@ -1,6 +1,10 @@
 Encyclopaedia Framework for Ren'Py
 ==================================
 
+.. image:: https://api.travis-ci.org/jsfehler/renpy-encyclopaedia.svg?branch=master
+    :target: https://travis-ci.org/jsfehler/renpy-encyclopaedia
+    :alt: See Build Status on Travis CI
+
 A plugin for the `Ren'py Visual Novel engine <https://www.renpy.org/>`_
 
 Simplifies creating an encyclopaedia, bestiary, glossary, or similar system.
@@ -14,9 +18,31 @@ Documentation is available at http://renpy-encyclopaedia.readthedocs.io/en/lates
 
 Development
 -----------
-
-Building the project
-~~~~~~~~~~~~~~~~~~~~
 Requirements: `tox`
 
-Running tox will run the tests and build the distribution file
+`Tox <https://tox.readthedocs.io/en/latest/>`_ is used for managing the test environments.
+
+Running the unit tests
+~~~~~~~~~~~~~~~~~~~~~~
+
+The unit tests can be run in any of the follow envs: py27, py33, py34, py35, py36, pypy
+
+
+.. code-block:: console
+
+    tox -e {env}
+
+Running the code linter
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+    tox -e flake8
+
+
+Building the distribution file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: console
+
+    tox -e build

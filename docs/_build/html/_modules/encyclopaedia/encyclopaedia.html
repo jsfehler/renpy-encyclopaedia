@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>encyclopaedia.encyclopaedia &#8212; Renpy-Encyclopaedia 2.0.0 documentation</title>
+    <title>encyclopaedia.encyclopaedia &#8212; Renpy-Encyclopaedia 2.0.0-beta documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.0',
+        VERSION:     '2.0.0-beta',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -45,7 +45,7 @@
 
 <span class="kn">from</span> <span class="nn">renpy</span> <span class="k">import</span> <span class="n">store</span>
 
-<span class="kn">from</span> <span class="nn">.actions</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.actions</span> <span class="k">import</span> <span class="o">*</span>  <span class="c1"># NOQA: F403</span>
 <span class="kn">from</span> <span class="nn">.labels</span> <span class="k">import</span> <span class="n">Labels</span>
 <span class="kn">from</span> <span class="nn">.entry_sorting</span> <span class="k">import</span> <span class="n">push_locked_to_bottom</span>
 
@@ -322,7 +322,7 @@
             <span class="n">wall</span><span class="o">=</span><span class="mi">0</span>
         <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">ChangeEntryAction</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">ChangeEntryAction</span><span class="p">(</span>  <span class="c1"># NOQA: F405</span>
             <span class="n">encyclopaedia</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="n">direction</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DIRECTION_BACKWARD</span><span class="p">,</span>
             <span class="n">block</span><span class="o">=</span><span class="n">block</span>
@@ -340,7 +340,7 @@
             <span class="n">wall</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">number_of_visible_entries</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">ChangeEntryAction</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">ChangeEntryAction</span><span class="p">(</span>  <span class="c1"># NOQA: F405</span>
             <span class="n">encyclopaedia</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="n">direction</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DIRECTION_FORWARD</span><span class="p">,</span>
             <span class="n">block</span><span class="o">=</span><span class="n">block</span>
@@ -358,7 +358,7 @@
             <span class="n">wall</span><span class="o">=</span><span class="mi">1</span>
         <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">ChangePageAction</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">ChangePageAction</span><span class="p">(</span>  <span class="c1"># NOQA: F405</span>
             <span class="n">encyclopaedia</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="n">direction</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DIRECTION_BACKWARD</span><span class="p">,</span>
             <span class="n">block</span><span class="o">=</span><span class="n">block</span>
@@ -376,13 +376,13 @@
             <span class="n">wall</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">pages</span>
         <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">ChangePageAction</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">ChangePageAction</span><span class="p">(</span>  <span class="c1"># NOQA: F405</span>
             <span class="n">encyclopaedia</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="n">direction</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">DIRECTION_FORWARD</span><span class="p">,</span>
             <span class="n">block</span><span class="o">=</span><span class="n">block</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Encyclopaedia.Sort"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.Sort">[docs]</a>    <span class="k">def</span> <span class="nf">Sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sorting_mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Encyclopaedia.Sort"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.Sort">[docs]</a>    <span class="k">def</span> <span class="nf">Sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sorting_mode</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>  <span class="c1"># NOQA: F405</span>
         <span class="sd">&quot;&quot;&quot;Wrapper around an Action. Use with a renpy button.</span>
 
 <span class="sd">        Args:</span>
@@ -395,7 +395,7 @@
         <span class="k">if</span> <span class="n">sorting_mode</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">sorting_mode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorting_mode</span>
 
-        <span class="k">return</span> <span class="n">SortEncyclopaedia</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sorting_mode</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">SortEncyclopaedia</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sorting_mode</span><span class="p">)</span>  <span class="c1"># NOQA: F405</span></div>
 
 <div class="viewcode-block" id="Encyclopaedia.SetEntry"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.SetEntry">[docs]</a>    <span class="k">def</span> <span class="nf">SetEntry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">given_entry</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wrapper around an Action. Use with a renpy button.</span>
@@ -403,7 +403,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Screen Action</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">SetEntryAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">given_entry</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">SetEntryAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">given_entry</span><span class="p">)</span>  <span class="c1"># NOQA: F405</span></div>
 
 <div class="viewcode-block" id="Encyclopaedia.ResetSubPage"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.ResetSubPage">[docs]</a>    <span class="k">def</span> <span class="nf">ResetSubPage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wrapper around an Action. Use with a renpy button.</span>
@@ -411,7 +411,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Screen Action</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">ResetSubPageAction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ResetSubPageAction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># NOQA: F405</span></div>
 
 <div class="viewcode-block" id="Encyclopaedia.ToggleShowLockedButtons"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.ToggleShowLockedButtons">[docs]</a>    <span class="k">def</span> <span class="nf">ToggleShowLockedButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wrapper around an Action. Use with a renpy button.</span>
@@ -419,7 +419,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Screen Action</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">ToggleShowLockedButtonsAction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ToggleShowLockedButtonsAction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># NOQA: F405</span></div>
 
 <div class="viewcode-block" id="Encyclopaedia.ToggleShowLockedEntry"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.ToggleShowLockedEntry">[docs]</a>    <span class="k">def</span> <span class="nf">ToggleShowLockedEntry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wrapper around an Action. Use with a renpy button.</span>
@@ -427,7 +427,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Screen Action</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">ToggleShowLockedEntryAction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">ToggleShowLockedEntryAction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># NOQA: F405</span></div>
 
 <div class="viewcode-block" id="Encyclopaedia.FilterBySubject"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.FilterBySubject">[docs]</a>    <span class="k">def</span> <span class="nf">FilterBySubject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wrapper around an Action. Use with a renpy button.</span>
@@ -435,7 +435,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Screen Action</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">FilterBySubject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">FilterBySubject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">)</span>  <span class="c1"># NOQA: F405</span></div>
 
 <div class="viewcode-block" id="Encyclopaedia.ClearFilter"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.ClearFilter">[docs]</a>    <span class="k">def</span> <span class="nf">ClearFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wrapper around an Action. Use with a renpy button.</span>
@@ -443,7 +443,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            Screen Action</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">ClearFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">ClearFilter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>  <span class="c1"># NOQA: F405</span></div></div>
 </pre></div>
 
           </div>

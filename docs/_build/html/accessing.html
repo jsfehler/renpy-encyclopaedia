@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Accessing the Encyclopaedia &#8212; Renpy-Encyclopaedia 2.0.0 documentation</title>
+    <title>Accessing the Encyclopaedia &#8212; Renpy-Encyclopaedia 2.0.0-beta documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.0',
+        VERSION:     '2.0.0-beta',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -40,20 +40,21 @@
             
   <div class="section" id="accessing-the-encyclopaedia">
 <h1>Accessing the Encyclopaedia<a class="headerlink" href="#accessing-the-encyclopaedia" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="screens">
-<h2>Screens<a class="headerlink" href="#screens" title="Permalink to this headline">¶</a></h2>
 <p>Just creating an Encyclopaedia isn’t enough. You must give players a way to view it.</p>
-<p>The framework includes default <cite>screens</cite> you can use to display the Encyclopaedia’s data.</p>
-<p>The screens don’t contain any of data or state control.
-They can be skinned, customized, or only used as a reference. It all depends on the needs of your game.</p>
-</div>
 <div class="section" id="opening-the-encyclopaedia">
 <h2>Opening the Encyclopaedia<a class="headerlink" href="#opening-the-encyclopaedia" title="Permalink to this headline">¶</a></h2>
 <p>While the specifics of opening the Encyclopaedia will depend on your game, most likely you’ll need to add a button somewhere.
 This can be on the main menu, in-game, or wherever is appropriate for your game.</p>
-<p>If you use the default screens, the <cite>Action</cite> you want to use for the button is <cite>ShowMenu()</cite> with 2 arguments.
+<p>If you use the default screens, the <a class="reference external" href="https://www.renpy.org/doc/html/screen_actions.html">Action</a>
+you want to use for the button is <a class="reference external" href="https://www.renpy.org/doc/html/screen_actions.html#ShowMenu">ShowMenu()</a> with 2 arguments.
 The first must be the name of the screen, and the second an <cite>Encyclopaedia</cite> object.</p>
 <p>The default screen’s name is “encyclopaedia_list”.</p>
+</div>
+<div class="section" id="screens">
+<h2>Screens<a class="headerlink" href="#screens" title="Permalink to this headline">¶</a></h2>
+<p>The framework includes default <a class="reference external" href="https://www.renpy.org/doc/html/screens.html">screens</a> you can use to display the Encyclopaedia’s data.</p>
+<p>They can be skinned, customized, or only used as a reference. It all depends on the needs of your game.</p>
+<p>The screens are located in encyclopaedia_screens.rpy.</p>
 </div>
 </div>
 
@@ -94,8 +95,8 @@ The first must be the name of the screen, and the second an <cite>Encyclopaedia<
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Accessing the Encyclopaedia</a><ul>
-<li><a class="reference internal" href="#screens">Screens</a></li>
 <li><a class="reference internal" href="#opening-the-encyclopaedia">Opening the Encyclopaedia</a></li>
+<li><a class="reference internal" href="#screens">Screens</a></li>
 </ul>
 </li>
 </ul>

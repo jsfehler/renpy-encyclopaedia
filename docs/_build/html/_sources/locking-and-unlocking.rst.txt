@@ -2,7 +2,7 @@ Locking and Unlocking Entries
 =============================
 
 By default, all EncEntry objects are unlocked and can be viewed by players at any time.
-However, when creating an EncEntry the locked argument can be used, effectively hiding the entry.",
+However, when creating an EncEntry the `locked` argument can be used, effectively hiding the entry.",
 
 .. code-block:: python
 

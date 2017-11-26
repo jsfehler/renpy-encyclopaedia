@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Getting Started &#8212; Renpy-Encyclopaedia 2.0.0 documentation</title>
+    <title>Getting Started &#8212; Renpy-Encyclopaedia 2.0.0-beta documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.0',
+        VERSION:     '2.0.0-beta',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -42,10 +42,10 @@
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>To add the Encyclopaedia to your game,</p>
+<p>To add the Encyclopaedia to your game:</p>
 <ol class="arabic simple">
 <li>Download the latest release at <a class="reference external" href="https://github.com/jsfehler/renpy-encyclopaedia/releases">https://github.com/jsfehler/renpy-encyclopaedia/releases</a></li>
-<li>Place the Encyclopaedia files into your project’s ‘game’ directory.</li>
+<li>Place <cite>enc.rpy</cite> and <cite>encyclopaedia_screens.rpy</cite> into your project’s <cite>game</cite> directory.</li>
 </ol>
 </div>
 <div class="section" id="creating-an-encyclopaedia">
@@ -53,14 +53,16 @@
 <div class="section" id="global-vs-local">
 <h3>Global vs Local<a class="headerlink" href="#global-vs-local" title="Permalink to this headline">¶</a></h3>
 <p>An Encyclopaedia can either be created in an <a class="reference external" href="https://www.renpy.org/doc/html/python.html#init-python-statement">“init python:”</a> block
-or in a <a class="reference external" href="https://www.renpy.org/doc/html/python.html#python-statement">“python”</a> block inside the start label.</p>
-<p>The difference is that the former is a global Encyclopaedia: Reading and unlocking entries at any point will affect the Encyclopaedia permanently.
-The latter is local; the state of the Encyclopaedia will be different across every saved game.</p>
-<p>Global Encyclopaedia’s must use <a class="reference external" href="https://www.renpy.org/doc/html/persistent.html">persistent data</a> to save their state.</p>
+or in a <a class="reference external" href="https://www.renpy.org/doc/html/python.html#python-statement">“python”</a> block inside a label (usually the start label).</p>
+<p>The difference is that the former is a global Encyclopaedia. It’s initialized when the application is opened and can be accessed even if the player hasn’t started a new game yet.
+(ie: From the main menu). Since it runs outside of the normal game flow, global Encyclopaedias must use <a class="reference external" href="https://www.renpy.org/doc/html/persistent.html">persistent data</a> to save their state.
+As a result, a global Encyclopaedia’s state will not be bound to any particular save game.</p>
+<p>The latter is local; the state of the Encyclopaedia will be different across every saved game. The state of the Encyclopaedia is saved when the player saves their game.
+A local Encyclopaedia can only be accessed from within a new game. It should never be accessed from the main menu.</p>
 </div>
 <div class="section" id="creating-the-encyclopaedia-object">
 <h3>Creating the Encyclopaedia object<a class="headerlink" href="#creating-the-encyclopaedia-object" title="Permalink to this headline">¶</a></h3>
-<p>After deciding what type of Encyclopaedia you want, now you need to initialize one with the Encyclopaedia object.</p>
+<p>After deciding what type of Encyclopaedia you want, now you need to create one with the Encyclopaedia object.</p>
 <p>This is the top-level container for all your entries.</p>
 <p>Global:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">init</span> <span class="n">python</span><span class="p">:</span>

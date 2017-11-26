@@ -11,12 +11,15 @@ The default placeholder image will be a dark tinted version of the normal image.
 
     about_zeus = EncEntry(
         parent=your_new_encyclopaedia,
-        name="Zeus",
+        name="Area 51",
         locked_name="Unknown"
         text=[
-            "Zeus is the sky and thunder god in ancient Greek religion, who ruled as king of the gods of Mount Olympus."
-            " His name is cognate with the first element of his Roman equivalent Jupiter."
-            " His mythologies and powers are similar, though not identical, to those of Indo-European deities such as Indra, Jupiter, Perun, Thor, and Odin."
+            "The base's current primary purpose is publicly unknown; however, based on historical evidence, "
+            "it most likely supports the development and testing of experimental aircraft and weapons systems (black projects). "
+            "The intense secrecy surrounding the base has made it the frequent subject of conspiracy theories and a central component to unidentified flying object (UFO) folklore. "
+            "Although the base has never been declared a secret base, all research and occurrences in Area 51 are Top Secret/Sensitive Compartmented Information (TS/SCI). "
+            "On 25 June 2013, following a Freedom of Information Act (FOIA) request filed in 2005, "
+            "the CIA publicly acknowledged the existence of the base for the first time, declassifying documents detailing the history and purpose of Area 51."
         ],
         locked_text=["Classified"]
     )

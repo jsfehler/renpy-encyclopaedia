@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Sorting &#8212; Renpy-Encyclopaedia 2.0.0-beta documentation</title>
+    <title>Callbacks &#8212; Renpy-Encyclopaedia 2.0.0-beta documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -38,36 +38,30 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="sorting">
-<h1>Sorting<a class="headerlink" href="#sorting" title="Permalink to this headline">¶</a></h1>
-<p>The list of entries in an Encyclopaedia can be sorted by:</p>
-<ul class="simple">
-<li>Alphabetical order</li>
-<li>Reverse Alphabetical order</li>
-<li>Subject</li>
-<li>Number</li>
-<li>Unread</li>
-</ul>
-<p>Changing the sorting mode is handled by the Encyclopaedia.Sort() action.</p>
-<div class="section" id="changing-the-default-sorting-mode">
-<h2>Changing the default sorting mode<a class="headerlink" href="#changing-the-default-sorting-mode" title="Permalink to this headline">¶</a></h2>
-<p>By default, when an Encyclopaedia is opened the sorting mode is by Number.</p>
-<p>This can be changed when creating a new Encyclopaedia with the <cite>sorting_mode</cite> argument.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">your_new_encyclopaedia</span> <span class="o">=</span> <span class="n">Encyclopaedia</span><span class="p">(</span>
-    <span class="n">sorting_mode</span><span class="o">=</span><span class="n">Encyclopaedia</span><span class="o">.</span><span class="n">SORT_ALPHABETICAL</span>
-<span class="p">)</span>
+  <div class="section" id="callbacks">
+<h1>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this headline">¶</a></h1>
+<p>Encyclopaedia and EncEntry have callbacks which can be used to connect events occurring in an encyclopaedia to the rest of the game.</p>
+<div class="section" id="unlock-callback">
+<h2>unlock_callback<a class="headerlink" href="#unlock-callback" title="Permalink to this headline">¶</a></h2>
+<p>Both Encyclopadedia and EncEntry have a parameter called <cite>unlock_callback</cite>.</p>
+<p>When a function is assigned to unlock_callback, that function will be called whenever a child entry is unlocked.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">increase_intelligence</span><span class="p">():</span>
+    <span class="n">nerd_points</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">unlock_callback</span> <span class="o">=</span> <span class="n">increase_intelligence</span>
 </pre></div>
 </div>
-<p>The following parameters are valid:</p>
-<blockquote>
-<div><ul class="simple">
-<li>Encyclopaedia.SORT_NUMBER</li>
-<li>Encyclopaedia.SORT_ALPHABETICAL</li>
-<li>Encyclopaedia.SORT_REVERSE_ALPHABETICAL</li>
-<li>Encyclopaedia.SORT_SUBJECT</li>
-<li>Encyclopaedia.SORT_UNREAD</li>
-</ul>
-</div></blockquote>
+</div>
+<div class="section" id="viewed-callback">
+<h2>viewed_callback<a class="headerlink" href="#viewed-callback" title="Permalink to this headline">¶</a></h2>
+<p>EncEntry has a parameter called <cite>viewed_callback</cite>.</p>
+<p>When a function is assigned to viewed_callback, that function will be called when the entry is first viewed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kung_fu_callback</span><span class="p">():</span>
+    <span class="n">knows_kung_fu</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="n">my_entry</span><span class="o">.</span><span class="n">viewed_callback</span> <span class="o">=</span> <span class="n">kung_fu_callback</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -107,8 +101,9 @@
 
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Sorting</a><ul>
-<li><a class="reference internal" href="#changing-the-default-sorting-mode">Changing the default sorting mode</a></li>
+<li><a class="reference internal" href="#">Callbacks</a><ul>
+<li><a class="reference internal" href="#unlock-callback">unlock_callback</a></li>
+<li><a class="reference internal" href="#viewed-callback">viewed_callback</a></li>
 </ul>
 </li>
 </ul>
@@ -141,7 +136,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/sorting.rst.txt"
+      <a href="_sources/callbacks.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

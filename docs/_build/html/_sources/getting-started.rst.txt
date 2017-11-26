@@ -4,10 +4,10 @@ Getting Started
 Installation
 ------------
 
-To add the Encyclopaedia to your game,
+To add the Encyclopaedia to your game:
 
 1. Download the latest release at https://github.com/jsfehler/renpy-encyclopaedia/releases
-2. Place the Encyclopaedia files into your project's 'game' directory.
+2. Place `enc.rpy` and `encyclopaedia_screens.rpy` into your project's `game` directory.
 
 Creating an Encyclopaedia
 -------------------------
@@ -16,18 +16,20 @@ Global vs Local
 ~~~~~~~~~~~~~~~
 
 An Encyclopaedia can either be created in an `"init python:" <https://www.renpy.org/doc/html/python.html#init-python-statement>`_ block
-or in a `"python" <https://www.renpy.org/doc/html/python.html#python-statement>`_ block inside the start label.
+or in a `"python" <https://www.renpy.org/doc/html/python.html#python-statement>`_ block inside a label (usually the start label).
 
-The difference is that the former is a global Encyclopaedia: Reading and unlocking entries at any point will affect the Encyclopaedia permanently.
-The latter is local; the state of the Encyclopaedia will be different across every saved game.
+The difference is that the former is a global Encyclopaedia. It's initialized when the application is opened and can be accessed even if the player hasn't started a new game yet.
+(ie: From the main menu). Since it runs outside of the normal game flow, global Encyclopaedias must use `persistent data <https://www.renpy.org/doc/html/persistent.html>`_ to save their state.
+As a result, a global Encyclopaedia's state will not be bound to any particular save game.
 
-Global Encyclopaedia's must use `persistent data <https://www.renpy.org/doc/html/persistent.html>`_ to save their state.
 
+The latter is local; the state of the Encyclopaedia will be different across every saved game. The state of the Encyclopaedia is saved when the player saves their game.
+A local Encyclopaedia can only be accessed from within a new game. It should never be accessed from the main menu.
 
 Creating the Encyclopaedia object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-After deciding what type of Encyclopaedia you want, now you need to initialize one with the Encyclopaedia object.
+After deciding what type of Encyclopaedia you want, now you need to create one with the Encyclopaedia object.
 
 This is the top-level container for all your entries.
 

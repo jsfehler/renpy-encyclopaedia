@@ -6,7 +6,7 @@ By default, entries are numbered in the order they are added to the Encyclopaedi
 However, if you need an entry to have a specific number, you can specify this when creating the entry.
 
 WARNING: This will only work if the number you want to use has not already been automatically assigned.
-ie: If you have six entries, then for the seventh try to assign it to 4, this will fail.
+(ie: If you have six entries, then for the seventh try to assign it to 4, it will fail.)
 
 .. code-block:: python
 

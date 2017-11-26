@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>encyclopaedia.encentry &#8212; Renpy-Encyclopaedia 2.0.0 documentation</title>
+    <title>encyclopaedia.encentry &#8212; Renpy-Encyclopaedia 2.0.0-beta documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.0',
+        VERSION:     '2.0.0-beta',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -69,11 +69,11 @@
 <span class="sd">            This should only be set if the Encyclopaedia is</span>
 <span class="sd">            save-game independent.</span>
 <span class="sd">        viewed_persistent(bool) -</span>
-<span class="sd">            Determines if the Entry&#39;s viewed status uses persistent data or not.</span>
+<span class="sd">            Determines if the Entry&#39;s viewed status uses persistent data.</span>
 <span class="sd">        locked (bool) -</span>
 <span class="sd">            Determines if the entry can be viewed or not. Defaults to False.</span>
 <span class="sd">        locked_persistent(bool) -</span>
-<span class="sd">            Determines if the Entry&#39;s locked status uses persistent data or not.</span>
+<span class="sd">            Determines if the Entry&#39;s locked status uses persistent data.</span>
 <span class="sd">        image (str) -</span>
 <span class="sd">            The image displayed with the Entry text. Default is None.</span>
 <span class="sd">        locked_name (str) -</span>
@@ -217,7 +217,7 @@
         <span class="sd">&quot;&quot;&quot;EncEntry: Gets the sub-page that&#39;s currently viewing viewed.</span>
 <span class="sd">            Setting this attribute should be done using an integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_entry_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_page</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_entry_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="nd">@current_page</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">current_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>

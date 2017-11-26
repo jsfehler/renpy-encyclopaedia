@@ -10,9 +10,9 @@ Documentation
    :maxdepth: 2
 
    getting-started
+   accessing
    writing-text
    locking-and-unlocking
-   accessing
    customizing-screens
    sub-pages
    placeholders
@@ -20,3 +20,4 @@ Documentation
    translations
    sorting
    filtering
+   callbacks

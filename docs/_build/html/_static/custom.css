@@ -77,3 +77,85 @@ div.highlight-python pre {
     border-width: 1px;
     border-radius: 5px;
 }
+
+/* -- search --------------------------------------------------------------- */
+
+div.sphinxsidebar .search {
+    width: 100%;
+}
+
+div.sphinxsidebar .search > div {
+    margin: 0 auto;
+    display: inline-block;
+}
+
+/* Search form div */
+div.sphinxsidebar .search > div:first-child {
+    width: 72%;
+}
+
+/* Search submit div */
+div.sphinxsidebar .search > div:nth-child(2) {
+    width: 25%;
+}
+
+input[type="text"] {
+    width: 72%;
+    box-sizing: border-box;
+    padding: 5px;
+    background: #ffffee;
+    border-color: #fef1d3;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    box-shadow: inset 1px 1px 4px 0 #000058;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/* Only on the sidebar */
+div.sphinxsidebar #searchbox input[type="text"] {
+    width: 100%;
+    border-color: #FABE58;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+input[type="submit"] {
+    color: #ffffee;
+    width: 25%;
+    margin: 0 auto;
+    padding: 5px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background: #3e2702;
+    border-radius: 5px;
+    border-color: #3e2702;
+    border-style: solid;
+    cursor: pointer;
+    box-shadow: 0 3px 10px 0 #644003;
+}
+
+input[type="submit"]:active {
+    top: 5px;
+    position: relative;
+    box-shadow: 0 3px 3px 0 #644003;
+}
+
+/* Only on the sidebar */
+div.sphinxsidebar #searchbox input[type="submit"] {
+    color: #ffffee;
+    width: 100%;
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 5px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background: #3e2702;
+    border-color: #3e2702;
+    cursor: pointer;
+    box-shadow: 0 3px 10px 0 #644003;
+}
+
+/* Only on the sidebar */
+div.sphinxsidebar #searchbox input[type="submit"]:active {
+    top: 5px;
+    position: relative;
+    box-shadow: 0 3px 3px 0 #644003;
+}

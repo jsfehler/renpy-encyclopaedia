@@ -99,7 +99,7 @@
                  <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
                  <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
                  <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-                 <span class="n">viewed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">viewed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">viewed_persistent</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">locked</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                  <span class="n">locked_persistent</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -138,7 +138,7 @@
                 <span class="c1"># uses to change the colour of a locked image</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_tint_locked_image</span><span class="p">(</span><span class="n">locked_image_tint</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">pages</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pages</span> <span class="o">=</span> <span class="mi">1</span>
 
         <span class="c1"># List: The sub-entries and their position.</span>
         <span class="c1">#   The parent EncEntry must be the first in the sub-entry list.</span>

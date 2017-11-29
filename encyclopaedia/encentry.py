@@ -58,7 +58,7 @@ class EncEntry(store.object):
                  name="",
                  text="",
                  subject="",
-                 viewed=None,
+                 viewed=False,
                  viewed_persistent=False,
                  locked=False,
                  locked_persistent=False,
@@ -97,7 +97,7 @@ class EncEntry(store.object):
                 # uses to change the colour of a locked image
                 self._tint_locked_image(locked_image_tint)
 
-        self.pages = 0
+        self.pages = 1
 
         # List: The sub-entries and their position.
         #   The parent EncEntry must be the first in the sub-entry list.

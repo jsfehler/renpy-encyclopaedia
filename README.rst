@@ -5,6 +5,9 @@ Encyclopaedia Framework for Ren'Py
     :target: https://travis-ci.org/jsfehler/renpy-encyclopaedia
     :alt: See Build Status on Travis CI
 
+.. image:: https://coveralls.io/repos/github/jsfehler/renpy-encyclopaedia/badge.svg?branch=master
+    :target: https://coveralls.io/github/jsfehler/renpy-encyclopaedia?branch=master
+
 A plugin for the `Ren'py Visual Novel engine <https://www.renpy.org/>`_
 
 Simplifies creating an encyclopaedia, bestiary, glossary, or similar system.

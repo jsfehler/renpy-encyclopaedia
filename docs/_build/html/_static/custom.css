@@ -24,6 +24,18 @@ div.body {
     background: #fef1d3;
 }
 
+div.sphinxsidebar a:focus {
+    border-bottom: 1px solid #6D4100;
+
+    outline: 0;
+}
+
+a.reference:focus {
+    border-bottom: 1px solid #6D4100;
+
+    outline: 0;
+}
+
 div.sphinxsidebarwrapper {
     background-color: #FABE58;
     border-radius: 5px;
@@ -112,11 +124,23 @@ input[type="text"] {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
+input[type="text"]:focus {
+    border: 1px solid #6D4100;
+
+    outline: 0;
+}
+
 /* Only on the sidebar */
 div.sphinxsidebar #searchbox input[type="text"] {
     width: 100%;
     border-color: #FABE58;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+div.sphinxsidebar #searchbox input[type="text"]:focus {
+    border: 1px solid #6D4100;
+
+    outline: 0;
 }
 
 input[type="submit"] {
@@ -139,6 +163,12 @@ input[type="submit"]:active {
     box-shadow: 0 3px 3px 0 #644003;
 }
 
+input[type="submit"]:focus {
+    border: 1px dotted lightyellow;
+
+    outline: 0;
+}
+
 /* Only on the sidebar */
 div.sphinxsidebar #searchbox input[type="submit"] {
     color: #ffffee;
@@ -158,4 +188,10 @@ div.sphinxsidebar #searchbox input[type="submit"]:active {
     top: 5px;
     position: relative;
     box-shadow: 0 3px 3px 0 #644003;
+}
+
+div.sphinxsidebar #searchbox input[type="submit"]:focus {
+    border: 1px dotted lightyellow;
+
+    outline: 0;
 }

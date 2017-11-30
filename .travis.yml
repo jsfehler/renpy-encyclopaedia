@@ -19,7 +19,7 @@ matrix:
         env: TOX_ENV=flake8
 
 install:
-  - pip install tox
+  - pip install tox coveralls
 
 script:
   - tox -e $TOX_ENV
@@ -30,3 +30,6 @@ before_cache:
 cache:
   directories:
     - $HOME/.cache/pip
+
+after_success:
+    - coveralls

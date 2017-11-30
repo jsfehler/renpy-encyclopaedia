@@ -9,7 +9,7 @@ The default placeholder image will be a dark tinted version of the normal image.
 
 .. code-block:: python
 
-    about_zeus = EncEntry(
+    about_area_51 = EncEntry(
         parent=your_new_encyclopaedia,
         name="Area 51",
         locked_name="Unknown"

@@ -13,10 +13,11 @@ Documentation
    accessing
    writing-text
    locking-and-unlocking
-   customizing-screens
    sub-pages
    placeholders
    manual-numbering
+   actions
+   customizing-screens
    translations
    sorting
    filtering

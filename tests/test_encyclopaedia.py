@@ -4,6 +4,32 @@ from encyclopaedia.encyclopaedia import Encyclopaedia
 from encyclopaedia.encentry import EncEntry
 
 
+def test_unlock_callback():
+    enc = Encyclopaedia()
+
+    global baz
+    baz = 0
+
+    def foobar():
+        global baz
+        baz += 1
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+        locked=True,
+    )
+
+    enc.unlock_callback = foobar
+
+    # Unlock the first entry
+    e.locked = False
+    assert e.locked is False
+
+    assert 1 == baz
+
+
 def test_duplicate_entry_numbers():
     """When trying to assign a number to an EncEntry that's already taken,
     an Exception should be thrown.

@@ -64,3 +64,55 @@ def test_unlock_subpage():
     # Unlock the sub-page
     ee.locked = False
     assert ee.locked is False
+
+
+def test_label():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+        locked=False,
+    )
+
+    assert "01: Test Name" == e.label
+
+
+def test_name():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+        locked=False,
+    )
+
+    assert "Test Name" == e.name
+
+
+def test_name_locked():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+        locked=True,
+    )
+
+    assert "???" == e.name
+
+
+def test_text_locked():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+        locked=True,
+    )
+
+    assert ["???"] == e.text

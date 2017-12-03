@@ -4,6 +4,135 @@ from encyclopaedia.encyclopaedia import Encyclopaedia
 from encyclopaedia.encentry import EncEntry
 
 
+def test_setting_entry_number():
+    """
+    When some entries have a pre-determined number,
+    And some do not,
+    Then the ones that do not should select the first available number.
+    """
+
+    enc = Encyclopaedia()
+
+    EncEntry(
+        parent=enc,
+        number=4,
+        name="Apple",
+        text=["Test Text"],
+    )
+
+    for x in range(0, 5):
+        e = EncEntry(
+            parent=enc,
+            name="Test Name {}".format(x + 1),
+            text=["Test Text"],
+        )
+
+    assert 6 == e.number
+
+
+def test_filtering():
+    enc = Encyclopaedia()
+
+    apple = EncEntry(
+        parent=enc,
+        name="Apple",
+        text=["Test Text"],
+        subject="Fruits"
+    )
+
+    banana = EncEntry(
+        parent=enc,
+        name="Banana",
+        text=["Test Text"],
+        subject="Fruits"
+    )
+
+    cantaloupe = EncEntry(
+        parent=enc,
+        name="Cantaloupe",
+        text=["Test Text"],
+        subject="Fruits"
+    )
+
+    cucumber = EncEntry(
+        parent=enc,
+        name="Cucumber",
+        text=["Test Text"],
+        subject="Vegetables"
+    )
+
+    enc.FilterBySubject("Fruits")()
+
+    assert "Fruits" == enc.filtering
+    assert [apple, banana, cantaloupe] == enc.current_entries
+
+
+def test_clear_filtering():
+    enc = Encyclopaedia()
+
+    apple = EncEntry(
+        parent=enc,
+        name="Apple",
+        text=["Test Text"],
+        subject="Fruits"
+    )
+
+    banana = EncEntry(
+        parent=enc,
+        name="Banana",
+        text=["Test Text"],
+        subject="Fruits"
+    )
+
+    cantaloupe = EncEntry(
+        parent=enc,
+        name="Cantaloupe",
+        text=["Test Text"],
+        subject="Fruits"
+    )
+
+    cucumber = EncEntry(
+        parent=enc,
+        name="Cucumber",
+        text=["Test Text"],
+        subject="Vegetables"
+    )
+
+    enc.FilterBySubject("Fruits")()
+
+    assert "Fruits" == enc.filtering
+    assert [apple, banana, cantaloupe] == enc.current_entries
+
+    enc.ClearFilter()()
+
+    assert False == enc.filtering
+    assert [apple, banana, cantaloupe, cucumber] == enc.current_entries
+
+
+def test_reverse_alphabetical_sorting():
+    enc = Encyclopaedia(sorting_mode=Encyclopaedia.SORT_REVERSE_ALPHABETICAL)
+
+    apple = EncEntry(
+        parent=enc,
+        name="Apple",
+        text=["Test Text"],
+    )
+
+    banana = EncEntry(
+        parent=enc,
+        name="Banana",
+        text=["Test Text"],
+    )
+
+    cantaloupe = EncEntry(
+        parent=enc,
+        name="Cantaloupe",
+        text=["Test Text"],
+    )
+
+    assert [cantaloupe, banana, apple] == enc.all_entries
+
+
 def test_unlock_callback():
     enc = Encyclopaedia()
 

@@ -96,7 +96,7 @@ class Encyclopaedia(store.object):
         # A function that's run whenever a child entry is unlocked.
         self.unlock_callback = None
 
-    def __repr__(self):
+    def __str__(self):
         return "Encyclopaedia: {} entries total".format(self._size_all)
 
     @property

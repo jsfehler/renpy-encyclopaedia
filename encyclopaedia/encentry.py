@@ -123,7 +123,7 @@ class EncEntry(store.object):
         if self.viewed_persistent:
             self._viewed = getattr(persistent, self._name + "_viewed")
 
-    def __repr__(self):
+    def __str__(self):
         return "EncEntry: {}".format(self.label)
 
     @property

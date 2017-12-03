@@ -24,6 +24,9 @@ The entry will be locked until its locked attribute is set to False.
     about_zeus.locked = False
 
 
+Unlocking is a one-way street. Once en entry has been unlocked, it cannot be relocked.
+Setting an unlocked entry's locked attribute back to True will not hide it.
+
 In order to tie an EncEntry's locked state to a persistent variable, add the "locked_persistent" argument
 
 .. code-block:: python

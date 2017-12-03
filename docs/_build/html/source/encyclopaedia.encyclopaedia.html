@@ -358,6 +358,20 @@ subjects list is updated when a new entry is added.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="encyclopaedia.encyclopaedia.Encyclopaedia.add_entry_to_unlocked_entries">
+<code class="descname">add_entry_to_unlocked_entries</code><span class="sig-paren">(</span><em>entry</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.add_entry_to_unlocked_entries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.add_entry_to_unlocked_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an entry to the list of unlocked entries.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>entry</strong> (<a class="reference internal" href="encyclopaedia.encentry.html#encyclopaedia.encentry.EncEntry" title="encyclopaedia.encentry.EncEntry"><em>EncEntry</em></a>) – The Entry to add to the unlocked entries list.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="encyclopaedia.encyclopaedia.Encyclopaedia.check_position">
 <code class="descname">check_position</code><span class="sig-paren">(</span><em>op</em>, <em>position</em>, <em>wall</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.check_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.check_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the Prev/Next Actions should be active or not.</p>
@@ -446,13 +460,14 @@ based on if locked entries should be shown or not.</p>
 
 <dl class="method">
 <dt id="encyclopaedia.encyclopaedia.Encyclopaedia.sort_entries">
-<code class="descname">sort_entries</code><span class="sig-paren">(</span><em>sorting=0</em>, <em>reverse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.sort_entries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.sort_entries" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sort_entries</code><span class="sig-paren">(</span><em>entries</em>, <em>sorting=0</em>, <em>reverse=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/encyclopaedia.html#Encyclopaedia.sort_entries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.encyclopaedia.Encyclopaedia.sort_entries" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sort entry lists by whatever the current sorting mode is.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>entries</strong> (<em>list</em>) – The entry list to sort</li>
 <li><strong>sorting</strong> (<em>int</em>) – The sorting mode to use</li>
 <li><strong>reverse</strong> (<em>bool</em>) – If the sorting should be done in reverse or not</li>
 </ul>

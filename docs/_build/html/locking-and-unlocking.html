@@ -58,6 +58,8 @@ However, when creating an EncEntry the <cite>locked</cite> argument can be used,
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">about_zeus</span><span class="o">.</span><span class="n">locked</span> <span class="o">=</span> <span class="bp">False</span>
 </pre></div>
 </div>
+<p>Unlocking is a one-way street. Once en entry has been unlocked, it cannot be relocked.
+Setting an unlocked entry’s locked attribute back to True will not hide it.</p>
 <p>In order to tie an EncEntry’s locked state to a persistent variable, add the “locked_persistent” argument</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">about_zeus</span> <span class="o">=</span> <span class="n">EncEntry</span><span class="p">(</span>
     <span class="n">parent</span><span class="o">=</span><span class="n">your_new_encyclopaedia</span><span class="p">,</span>

@@ -182,7 +182,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_locked</span> <span class="o">=</span> <span class="n">new_value</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_locked</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">add_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="p">,</span> <span class="n">EncEntry</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">add_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">add_entry_to_unlocked_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">unlock_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">unlock_callback</span><span class="p">()</span>

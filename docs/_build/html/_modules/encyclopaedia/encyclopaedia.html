@@ -214,26 +214,27 @@
                 <span class="p">(</span><span class="n">tint_amount</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tint_amount</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tint_amount</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
             <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Encyclopaedia.sort_entries"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.sort_entries">[docs]</a>    <span class="k">def</span> <span class="nf">sort_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sorting</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Encyclopaedia.sort_entries"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.sort_entries">[docs]</a>    <span class="k">def</span> <span class="nf">sort_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entries</span><span class="p">,</span> <span class="n">sorting</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sort entry lists by whatever the current sorting mode is.</span>
 
 <span class="sd">        Args:</span>
+<span class="sd">            entries (list): The entry list to sort</span>
 <span class="sd">            sorting (int): The sorting mode to use</span>
 <span class="sd">            reverse (bool): If the sorting should be done in reverse or not</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">sorting</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">SORT_NUMBER</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">current_entries</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">))</span>
+            <span class="n">entries</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">current_entries</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))</span>
+            <span class="n">entries</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">))</span>
 
             <span class="k">if</span> <span class="n">sorting</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">SORT_UNREAD</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">current_entries</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;viewed&#39;</span><span class="p">))</span>
+                <span class="n">entries</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;viewed&#39;</span><span class="p">))</span>
 
             <span class="k">elif</span> <span class="n">sorting</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">SORT_SUBJECT</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">current_entries</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;subject&#39;</span><span class="p">))</span>
+                <span class="n">entries</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">attrgetter</span><span class="p">(</span><span class="s1">&#39;subject&#39;</span><span class="p">))</span>
 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">locked_at_bottom</span><span class="p">:</span>
-                <span class="n">push_locked_to_bottom</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_entries</span><span class="p">)</span></div>
+                <span class="n">push_locked_to_bottom</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Encyclopaedia.check_position"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.check_position">[docs]</a>    <span class="k">def</span> <span class="nf">check_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">wall</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Determines if the Prev/Next Actions should be active or not.</span>
@@ -250,6 +251,26 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
+<div class="viewcode-block" id="Encyclopaedia.add_entry_to_unlocked_entries"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.add_entry_to_unlocked_entries">[docs]</a>    <span class="k">def</span> <span class="nf">add_entry_to_unlocked_entries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds an entry to the list of unlocked entries.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            entry (EncEntry): The Entry to add to the unlocked entries list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">unlocked_entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
+
+        <span class="c1"># Remove duplicates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unlocked_entries</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unlocked_entries</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sort_entries</span><span class="p">(</span>
+            <span class="n">entries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unlocked_entries</span><span class="p">,</span>
+            <span class="n">sorting</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sorting_mode</span><span class="p">,</span>
+            <span class="n">reverse</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reverse_sorting</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_size_unlocked</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unlocked_entries</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="Encyclopaedia.add_entry"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.add_entry">[docs]</a>    <span class="k">def</span> <span class="nf">add_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entry</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds an entry to the Encyclopaedia&#39;s internal lists and sorts it.</span>
 
@@ -262,12 +283,6 @@
 
         <span class="c1"># When a new entry has a number, ensure it&#39;s not already used.</span>
         <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">number</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># for item in self.all_entries:</span>
-            <span class="c1">#     if item.number == entry.number:</span>
-            <span class="c1">#        raise ValueError(</span>
-            <span class="c1">#            &quot;{} is already taken.&quot;.format(entry.number)</span>
-            <span class="c1">#        )</span>
-
             <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_entries</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">number</span> <span class="o">==</span> <span class="n">entry</span><span class="o">.</span><span class="n">number</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                     <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is already taken.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
@@ -292,19 +307,20 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">all_entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">locked</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">unlocked_entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
-
+        <span class="c1"># Ensure no duplicates in the entry lists.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">all_entries</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_entries</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">unlocked_entries</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unlocked_entries</span><span class="p">))</span>
 
+        <span class="c1"># Ensure correct sorting of entry lists.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sort_entries</span><span class="p">(</span>
+            <span class="n">entries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">all_entries</span><span class="p">,</span>
             <span class="n">sorting</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sorting_mode</span><span class="p">,</span>
             <span class="n">reverse</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reverse_sorting</span>
         <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_size_unlocked</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unlocked_entries</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_size_all</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_entries</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">entry</span><span class="o">.</span><span class="n">locked</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_entry_to_unlocked_entries</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">subjects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="o">.</span><span class="n">subject</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subjects</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subjects</span><span class="p">))</span>
@@ -397,7 +413,7 @@
 
         <span class="k">return</span> <span class="n">SortEncyclopaedia</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sorting_mode</span><span class="p">)</span>  <span class="c1"># NOQA: F405</span></div>
 
-<div class="viewcode-block" id="Encyclopaedia.SetEntry"><a class="viewcode-back" href="../../actions.html#encyclopaedia.encyclopaedia.Encyclopaedia.SetEntry">[docs]</a>    <span class="k">def</span> <span class="nf">SetEntry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">given_entry</span><span class="p">):</span>
+<div class="viewcode-block" id="Encyclopaedia.SetEntry"><a class="viewcode-back" href="../../source/encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia.SetEntry">[docs]</a>    <span class="k">def</span> <span class="nf">SetEntry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">given_entry</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wrapper around an Action. Use with a renpy button.</span>
 
 <span class="sd">        Returns:</span>

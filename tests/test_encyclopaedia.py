@@ -4,6 +4,39 @@ from encyclopaedia.encyclopaedia import Encyclopaedia
 from encyclopaedia.encentry import EncEntry
 
 
+def test_duplicate_entry_numbers():
+    """When trying to assign a number to an EncEntry that's already taken,
+    an Exception should be thrown.
+    """
+    enc = Encyclopaedia()
+
+    EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+        locked=False
+    )
+
+    EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+        locked=False
+    )
+
+    with pytest.raises(ValueError) as e:
+        EncEntry(
+            parent=enc,
+            number=1,
+            name="Test Name",
+            text=["Test Text"],
+            locked=False
+        )
+
+    message = '1 is already taken.'
+    assert message == str(e.value)
+
+
 def test_set_entry_show_locked_buttons():
     """Given an Encyclopaedia with 10 unlocked entries and 5 locked entries,
     And show_locked_buttons is true,

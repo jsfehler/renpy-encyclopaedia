@@ -121,26 +121,6 @@ def test_set_entry_show_locked_entry():
     assert 14 == enc.current_position
 
 
-def test_add_subpage():
-    enc = Encyclopaedia()
-
-    e = EncEntry(
-        parent=enc,
-        name="Test Name",
-        text=["Test Text"],
-        locked=False
-    )
-
-    ee = EncEntry(
-        parent=e,
-        name="A Sub-Page",
-        text=["Test Text"],
-        locked=False
-    )
-
-    assert [[1, e], [2, ee]] == e.sub_entry_list
-
-
 def test_current_entries_show_unlocked():
     """With filtering off and show_locked_buttons set to False,
     Encyclopaedia.current_entries property should return

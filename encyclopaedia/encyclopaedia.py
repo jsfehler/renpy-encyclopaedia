@@ -210,6 +210,26 @@ class Encyclopaedia(store.object):
             return True
         return False
 
+    def add_entry_to_unlocked_entries(self, entry):
+        """Adds an entry to the list of unlocked entries.
+
+        Args:
+            entry (EncEntry): The Entry to add to the unlocked entries list.
+        """
+
+        self.unlocked_entries.append(entry)
+
+        # Remove duplicates
+        self.unlocked_entries = list(set(self.unlocked_entries))
+
+        self.sort_entries(
+            entries=self.unlocked_entries,
+            sorting=self.sorting_mode,
+            reverse=self.reverse_sorting
+        )
+
+        self._size_unlocked = len(self.unlocked_entries)
+
     def add_entry(self, entry):
         """Adds an entry to the Encyclopaedia's internal lists and sorts it.
 
@@ -222,12 +242,6 @@ class Encyclopaedia(store.object):
 
         # When a new entry has a number, ensure it's not already used.
         if entry.number is not None:
-            # for item in self.all_entries:
-            #     if item.number == entry.number:
-            #        raise ValueError(
-            #            "{} is already taken.".format(entry.number)
-            #        )
-
             if any(i for i in self.all_entries if i.number == entry.number):
                 raise ValueError(
                     "{} is already taken.".format(entry.number)
@@ -252,12 +266,8 @@ class Encyclopaedia(store.object):
 
         self.all_entries.append(entry)
 
-        if entry.locked is False:
-            self.unlocked_entries.append(entry)
-
         # Ensure no duplicates in the entry lists.
         self.all_entries = list(set(self.all_entries))
-        self.unlocked_entries = list(set(self.unlocked_entries))
 
         # Ensure correct sorting of entry lists.
         self.sort_entries(
@@ -266,14 +276,10 @@ class Encyclopaedia(store.object):
             reverse=self.reverse_sorting
         )
 
-        self.sort_entries(
-            entries=self.unlocked_entries,
-            sorting=self.sorting_mode,
-            reverse=self.reverse_sorting
-        )
-
-        self._size_unlocked = len(self.unlocked_entries)
         self._size_all = len(self.all_entries)
+
+        if entry.locked is False:
+            self.add_entry_to_unlocked_entries(entry)
 
         self.subjects.append(entry.subject)
         self.subjects = list(set(self.subjects))

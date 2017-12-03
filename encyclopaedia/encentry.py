@@ -141,7 +141,10 @@ class EncEntry(store.object):
         self._locked = new_value
 
         if self._locked is False:
-            self.parent.add_entry(self)
+            if isinstance(self.parent, EncEntry):
+                self.parent.add_entry(self)
+            else:
+                self.parent.add_entry_to_unlocked_entries(self)
 
             if self.parent.unlock_callback is not None:
                 self.parent.unlock_callback()

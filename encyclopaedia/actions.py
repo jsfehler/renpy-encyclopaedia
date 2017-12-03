@@ -173,6 +173,7 @@ class SortEncyclopaedia(EncyclopaediaAction):
 
     def __call__(self):
         self.enc.sort_entries(
+            entries=self.enc.current_entries,
             sorting=self.sorting_mode,
             reverse=self.reverse
         )
@@ -244,7 +245,11 @@ class ToggleShowLockedButtonsAction(EncyclopaediaAction):
         if self.enc.sorting_mode == self.enc.SORT_REVERSE_ALPHABETICAL:
             reverse = True
 
-        self.enc.sort_entries(sorting=self.enc.sorting_mode, reverse=reverse)
+        self.enc.sort_entries(
+            entries=self.enc.current_entries,
+            sorting=self.enc.sorting_mode,
+            reverse=reverse
+        )
 
         renpy.restart_interaction()
 

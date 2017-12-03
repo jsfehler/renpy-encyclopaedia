@@ -4,6 +4,90 @@ from encyclopaedia.encyclopaedia import Encyclopaedia
 from encyclopaedia.encentry import EncEntry
 
 
+def test_set_entry_show_locked_buttons():
+    """Given an Encyclopaedia with 10 unlocked entries and 5 locked entries,
+    And show_locked_buttons is true,
+    When I set the 10th unlocked entry to be the active entry,
+    Then the entry should be marked as viewed,
+    And the entry should be the active entry,
+    And the Encyclopaedia's current_position should be 9
+    """
+    enc = Encyclopaedia(show_locked_buttons=True, show_locked_entry=False)
+
+    for x in range(0, 5):
+        EncEntry(
+            parent=enc,
+            name="Test Name {}".format(x + 1),
+            text=["Test Text"],
+            locked=False
+        )
+
+    for x in range(5, 10):
+        EncEntry(
+            parent=enc,
+            name="Test Name {}".format(x + 1),
+            text=["Test Text"],
+            locked=True
+        )
+
+    for x in range(10, 15):
+        e = EncEntry(
+            parent=enc,
+            name="Test Name {}".format(x + 1),
+            text=["Test Text"],
+            locked=False
+        )
+
+    # Use the last unlocked Entry created for the test.
+    enc.SetEntry(e)()
+
+    assert e == enc.active
+    assert e.viewed
+    assert 9 == enc.current_position
+
+
+def test_set_entry_show_locked_entry():
+    """Given an Encyclopaedia with 10 unlocked entries and 5 locked entries,
+    And show_locked_entry is true,
+    When I set the 10th unlocked entry to be the active entry,
+    Then the entry should be marked as viewed,
+    And the entry should be the active entry,
+    And the Encyclopaedia's current_position should be 14
+    """
+    enc = Encyclopaedia(show_locked_buttons=False, show_locked_entry=True)
+
+    for x in range(0, 5):
+        EncEntry(
+            parent=enc,
+            name="Test Name {}".format(x + 1),
+            text=["Test Text"],
+            locked=False
+        )
+
+    for x in range(5, 10):
+        EncEntry(
+            parent=enc,
+            name="Test Name {}".format(x + 1),
+            text=["Test Text"],
+            locked=True
+        )
+
+    for x in range(10, 15):
+        e = EncEntry(
+            parent=enc,
+            name="Test Name {}".format(x + 1),
+            text=["Test Text"],
+            locked=False
+        )
+
+    # Use the last unlocked Entry created for the test.
+    enc.SetEntry(e)()
+
+    assert e == enc.active
+    assert e.viewed
+    assert 14 == enc.current_position
+
+
 def test_add_subpage():
     enc = Encyclopaedia()
 

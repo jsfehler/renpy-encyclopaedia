@@ -173,26 +173,27 @@ class Encyclopaedia(store.object):
                 (tint_amount[0], tint_amount[1], tint_amount[2])
             )
 
-    def sort_entries(self, sorting=0, reverse=False):
+    def sort_entries(self, entries, sorting=0, reverse=False):
         """Sort entry lists by whatever the current sorting mode is.
 
         Args:
+            entries (list): The entry list to sort
             sorting (int): The sorting mode to use
             reverse (bool): If the sorting should be done in reverse or not
         """
         if sorting == self.SORT_NUMBER:
-            self.current_entries.sort(key=attrgetter('number'))
+            entries.sort(key=attrgetter('number'))
         else:
-            self.current_entries.sort(reverse=reverse, key=attrgetter('name'))
+            entries.sort(reverse=reverse, key=attrgetter('name'))
 
             if sorting == self.SORT_UNREAD:
-                self.current_entries.sort(key=attrgetter('viewed'))
+                entries.sort(key=attrgetter('viewed'))
 
             elif sorting == self.SORT_SUBJECT:
-                self.current_entries.sort(key=attrgetter('subject'))
+                entries.sort(key=attrgetter('subject'))
 
             if self.locked_at_bottom:
-                push_locked_to_bottom(self.current_entries)
+                push_locked_to_bottom(entries)
 
     def check_position(self, op, position, wall):
         """Determines if the Prev/Next Actions should be active or not.
@@ -254,10 +255,19 @@ class Encyclopaedia(store.object):
         if entry.locked is False:
             self.unlocked_entries.append(entry)
 
+        # Ensure no duplicates in the entry lists.
         self.all_entries = list(set(self.all_entries))
         self.unlocked_entries = list(set(self.unlocked_entries))
 
+        # Ensure correct sorting of entry lists.
         self.sort_entries(
+            entries=self.all_entries,
+            sorting=self.sorting_mode,
+            reverse=self.reverse_sorting
+        )
+
+        self.sort_entries(
+            entries=self.unlocked_entries,
             sorting=self.sorting_mode,
             reverse=self.reverse_sorting
         )

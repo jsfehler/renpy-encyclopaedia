@@ -106,7 +106,7 @@ class EncEntry(store.object):
         self.has_sub_entry = False
 
         # Property: Set with Integer, get returns the page.
-        self._current_page = 1
+        self._current_page = 0
 
         # Place the entry into the assigned Encyclopaedia or EncEntry.
         if parent is not None:
@@ -179,7 +179,7 @@ class EncEntry(store.object):
         """EncEntry: Gets the sub-page that's currently viewing viewed.
             Setting this attribute should be done using an integer.
         """
-        return self.sub_entry_list[self._current_page - 1][1]
+        return self.sub_entry_list[self._current_page][1]
 
     @current_page.setter
     def current_page(self, val):

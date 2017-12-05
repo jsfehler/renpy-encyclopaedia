@@ -2,6 +2,21 @@ from encyclopaedia.encyclopaedia import Encyclopaedia
 from encyclopaedia.encentry import EncEntry
 
 
+def test_image():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+        image="placeholder",
+        locked_image="placeholder"
+    )
+
+    assert "placeholder" == e.image
+    assert e.has_image
+
+
 def test_unlock_entry():
     enc = Encyclopaedia()
 

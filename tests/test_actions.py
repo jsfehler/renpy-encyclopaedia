@@ -2,6 +2,65 @@ from encyclopaedia.encyclopaedia import Encyclopaedia
 from encyclopaedia.encentry import EncEntry
 
 
+def test_viewed_callback_set_entry():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"]
+    )
+
+    global i
+    i = 0
+
+    def cb(*args):
+        global i
+        i += 1
+
+    e.viewed_callback = (cb,)
+
+    assert 0 == i
+
+    enc.SetEntry(e)()
+
+    assert 1 == i
+
+
+def test_viewed_callback_change_entry():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"]
+    )
+
+    e2 = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"]
+    )
+
+    global i
+    i = 0
+
+    def cb(*args):
+        global i
+        i += 1
+
+    e2.viewed_callback = (cb,)
+
+    assert 0 == i
+
+    enc.SetEntry(e)()
+    assert 0 == i
+
+    enc.NextEntry()()
+
+    assert 1 == i
+
+
 def test_reset_sub_page():
     enc = Encyclopaedia()
 

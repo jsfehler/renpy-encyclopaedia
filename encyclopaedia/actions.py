@@ -44,7 +44,7 @@ class SetEntryAction(EncyclopaediaAction):
                 # Run the callback, if provided.
                 if self.entry.viewed_callback is not None:
                     self.entry.viewed_callback[0](
-                        self.entry.viewed_callback[1]
+                        self.entry.viewed_callback[1:]
                     )
             # Mark the entry as viewed.
             self.enc.active.viewed = True
@@ -121,7 +121,7 @@ class ChangeEntryAction(ChangeAction):
                 # Run the callback, if provided.
                 if self.enc.active.viewed_callback is not None:
                     self.enc.active.viewed_callback[0](
-                        self.enc.active.viewed_callback[1]
+                        self.enc.active.viewed_callback[1:]
                     )
                 # Mark the entry as viewed.
                 self.enc.active.viewed = True

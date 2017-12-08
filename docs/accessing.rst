@@ -13,7 +13,7 @@ If you use the default screens, the `Action <https://www.renpy.org/doc/html/scre
 you want to use for the button is `ShowMenu() <https://www.renpy.org/doc/html/screen_actions.html#ShowMenu>`_ with 2 arguments.
 The first must be the name of the screen, and the second an `Encyclopaedia` object.
 
-The default screen's name is "encyclopaedia_list".
+The default screen used is called "encyclopaedia_list".
 
 Screens
 -------

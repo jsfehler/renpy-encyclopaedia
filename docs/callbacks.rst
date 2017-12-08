@@ -23,11 +23,14 @@ viewed_callback
 
 EncEntry has a parameter called `viewed_callback`.
 
-When a function is assigned to viewed_callback, that function will be called when the entry is first viewed.
+When a function is passed to viewed_callback, that function will be called when the entry is first viewed.
 
 .. code-block:: python
 
-    def kung_fu_callback():
+    def kung_fu_callback(*args):
+        global knows_kung_fu
         knows_kung_fu = True
 
-    my_entry.viewed_callback = kung_fu_callback
+    my_entry.viewed_callback = (kung_fu_callback,)
+
+viewed_callback takes a tuple with the first item being the function and subsequent items being arguments for that function.

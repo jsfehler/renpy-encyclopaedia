@@ -254,6 +254,40 @@ def test_toggle_show_locked_buttons():
     assert True is enc.show_locked_buttons
 
 
+def test_toggle_show_locked_buttons_reverse_sorting():
+    """Ensure reverse sorting isn't broken when toggling show_locked_buttons."""
+
+    enc = Encyclopaedia(sorting_mode=Encyclopaedia.SORT_REVERSE_ALPHABETICAL)
+
+    entry_names = ["Apple", "Carrot", "Deer", "Eel", "Fajita"]
+
+    for x in range(5):
+        EncEntry(
+            parent=enc,
+            name=entry_names[x],
+            text=["Test Text"],
+            locked=False
+        )
+
+    locked_entry = EncEntry(
+        parent=enc,
+        name="Banana",
+        text=["Test Text"],
+        locked=True
+    )
+
+    # Locked entry should be the first entry, due to reverse sorting
+    assert str(enc.all_entries[0]) == str(locked_entry)
+
+    # Locked entry should not be visible on screen
+    assert locked_entry not in enc.current_entries
+
+    # Start showing locked buttons
+    enc.ToggleShowLockedButtons()()
+
+    assert str(enc.current_entries[0]) == str(locked_entry)
+
+
 def test_toggle_show_locked_entry():
     """Test Actions through their implementation in Encyclopaedia."""
 

@@ -120,7 +120,7 @@ screen encyclopaedia_list(enc):
                     text "Filters"
                     hbox:
                         xfill True
-                        # Percentage unlocked display
+                        # Buttons to filter the entries that are displayed
                         textbutton "All" action enc.ClearFilter() style "encyclopaedia_button"
                         for subject in enc.subjects:
                             textbutton subject action enc.FilterBySubject(subject) style "encyclopaedia_button"

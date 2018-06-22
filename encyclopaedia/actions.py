@@ -230,7 +230,8 @@ class ResetSubPageAction(EncyclopaediaAction):
     """
     def __call__(self):
         self.enc.sub_current_position = 1
-        self.enc.active.current_page = 1
+        if self.enc.active is not None:
+            self.enc.active.current_page = 1
         renpy.restart_interaction()
 
 

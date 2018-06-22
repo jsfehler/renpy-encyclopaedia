@@ -29,7 +29,7 @@ class SetEntryAction(EncyclopaediaAction):
 
         self.entry = entry
 
-    def __call__(self):
+    def set_entry(self):
         # Find the position of the entry
         if self.enc.show_locked_entry is False:
             target_position = self.enc.unlocked_entries.index(self.entry)
@@ -50,6 +50,9 @@ class SetEntryAction(EncyclopaediaAction):
             self.enc.active.viewed = True
 
         self.enc.current_position = target_position
+
+    def __call__(self):
+        self.set_entry()
 
         # Show the entry screen associated with the encyclopaedia.
         renpy.show_screen(self.enc.entry_screen, self.enc)

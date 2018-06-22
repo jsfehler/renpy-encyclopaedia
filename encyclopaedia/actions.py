@@ -212,6 +212,10 @@ class FilterBySubject(EncyclopaediaAction):
 
         renpy.restart_interaction()
 
+    def get_selected(self):
+        self.selected = self.enc.filtering == self.subject
+        return self.selected
+
 
 class ClearFilter(EncyclopaediaAction):
     """Stop filtering an Encyclopaedia.

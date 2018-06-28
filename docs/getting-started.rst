@@ -73,3 +73,22 @@ The minimum arguments to create an EncEntry are:
         ]
     )
 
+Persistent Entries
+~~~~~~~~~~~~~~~~~~
+
+If you want an entry's viewed status to be persistent (ie: not tied to a particular save game), you must provide the viewed_persistent argument.
+
+.. code-block:: python
+
+    about_zeus = EncEntry(
+        parent=your_new_encyclopaedia,
+        name="Zeus",
+        text=[
+            "Zeus is the sky and thunder god in ancient Greek religion, who ruled as king of the gods of Mount Olympus."
+            " His name is cognate with the first element of his Roman equivalent Jupiter."
+            " His mythologies and powers are similar, though not identical, to those of Indo-European deities such as Indra, Jupiter, Perun, Thor, and Odin."
+        ],
+        viewed_persistent=True,
+    )
+
+If your Encyclopaedia is global, you must use viewed_persistent to be able to save the viewed status of an entry.

@@ -41,11 +41,33 @@
   <div class="section" id="customizing-screens">
 <h1>Customizing Screens<a class="headerlink" href="#customizing-screens" title="Permalink to this headline">¶</a></h1>
 <p>The following screens are provided in the framework and are found inside encyclopaedia_screens.rpy:</p>
-<p>encyclopaedia_list: Displays all the buttons used to visit entries in a vertical list, along with sorting and filtering options. It takes one argument: The Encyclopaedia you want to display.</p>
-<p>encyclopaedia_entry: Displays one single entry. It takes one argument: The Encyclopaedia you want to fetch entries from.</p>
+<ul class="simple">
+<li>encyclopaedia_list</li>
+<li>encyclopaedia_entry</li>
+</ul>
 <p>Both these screens can be skinned by modifying their styles or using Ren’Py Screen Language.</p>
 <p>They can also be used as guides for creating completely customized screens.
-The screens an Encyclopaedia uses can be changed, making the use of the default screens completely optional.</p>
+The screens an Encyclopaedia uses can be changed, making the use of these default screens completely optional.</p>
+<div class="section" id="encyclopaedia-list">
+<h2>encyclopaedia_list<a class="headerlink" href="#encyclopaedia-list" title="Permalink to this headline">¶</a></h2>
+<p>This is the default screen shown when the Encyclopaedia is opened.
+It displays all the buttons used to visit entries in a vertical list, along with sorting and filtering options.
+It takes one argument: The Encyclopaedia you want to display.</p>
+<p>It uses Textbuttons for links to each EncEntry.</p>
+<p>encyclopaedia_list has 2 subscreens:</p>
+<ul class="simple">
+<li>entry_button: Decides which Textbutton to show for each EncEntry.</li>
+<li>vertical_list: Creates a vertical list of Textbuttons.</li>
+</ul>
+</div>
+<div class="section" id="encyclopaedia-entry">
+<h2>encyclopaedia_entry<a class="headerlink" href="#encyclopaedia-entry" title="Permalink to this headline">¶</a></h2>
+<p>The default screen for showing the data in a single EncEntry.
+It takes one argument: The Encyclopaedia you want to fetch entries from.</p>
+<p>This screen should only be opened using the SetEntry Action.
+When swapping the data of one entry for another, the PreviousEntry or NextEntry Actions should be used.
+When swapping the data of one page for another, the PreviousPage or NextPage Actions should be used.</p>
+</div>
 </div>
 
 
@@ -80,6 +102,15 @@ The screens an Encyclopaedia uses can be changed, making the use of the default 
     
     <li class="toctree-l1"><a href="py-modindex.html">Module Index</a></li>
     
+</ul>
+
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Customizing Screens</a><ul>
+<li><a class="reference internal" href="#encyclopaedia-list">encyclopaedia_list</a></li>
+<li><a class="reference internal" href="#encyclopaedia-entry">encyclopaedia_entry</a></li>
+</ul>
+</li>
 </ul>
 <div class="relations">
 <h3>Related Topics</h3>

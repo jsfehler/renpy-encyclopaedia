@@ -70,7 +70,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">entry</span> <span class="o">=</span> <span class="n">entry</span>
 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SetEntryAction.set_entry"><a class="viewcode-back" href="../../source/encyclopaedia.actions.html#encyclopaedia.actions.SetEntryAction.set_entry">[docs]</a>    <span class="k">def</span> <span class="nf">set_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># Find the position of the entry</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">show_locked_entry</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">target_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">unlocked_entries</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">entry</span><span class="p">)</span>
@@ -85,12 +85,15 @@
                 <span class="c1"># Run the callback, if provided.</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">viewed_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">viewed_callback</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">viewed_callback</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">entry</span><span class="o">.</span><span class="n">viewed_callback</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
                     <span class="p">)</span>
             <span class="c1"># Mark the entry as viewed.</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">viewed</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">current_position</span> <span class="o">=</span> <span class="n">target_position</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">current_position</span> <span class="o">=</span> <span class="n">target_position</span></div>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_entry</span><span class="p">()</span>
 
         <span class="c1"># Show the entry screen associated with the encyclopaedia.</span>
         <span class="n">renpy</span><span class="o">.</span><span class="n">show_screen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">entry_screen</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="p">)</span>
@@ -162,7 +165,7 @@
                 <span class="c1"># Run the callback, if provided.</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">viewed_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">viewed_callback</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">viewed_callback</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">viewed_callback</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
                     <span class="p">)</span>
                 <span class="c1"># Mark the entry as viewed.</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">viewed</span> <span class="o">=</span> <span class="kc">True</span>
@@ -251,7 +254,11 @@
 
         <span class="n">_build_subject_filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">subject</span><span class="p">)</span>
 
-        <span class="n">renpy</span><span class="o">.</span><span class="n">restart_interaction</span><span class="p">()</span></div>
+        <span class="n">renpy</span><span class="o">.</span><span class="n">restart_interaction</span><span class="p">()</span>
+
+<div class="viewcode-block" id="FilterBySubject.get_selected"><a class="viewcode-back" href="../../source/encyclopaedia.actions.html#encyclopaedia.actions.FilterBySubject.get_selected">[docs]</a>    <span class="k">def</span> <span class="nf">get_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">filtering</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">subject</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">selected</span></div></div>
 
 
 <div class="viewcode-block" id="ClearFilter"><a class="viewcode-back" href="../../source/encyclopaedia.actions.html#encyclopaedia.actions.ClearFilter">[docs]</a><span class="k">class</span> <span class="nc">ClearFilter</span><span class="p">(</span><span class="n">EncyclopaediaAction</span><span class="p">):</span>
@@ -267,7 +274,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">sub_current_position</span> <span class="o">=</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">current_page</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">active</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enc</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">current_page</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">renpy</span><span class="o">.</span><span class="n">restart_interaction</span><span class="p">()</span></div>
 
 

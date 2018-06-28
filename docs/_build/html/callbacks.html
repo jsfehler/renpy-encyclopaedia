@@ -55,13 +55,15 @@
 <div class="section" id="viewed-callback">
 <h2>viewed_callback<a class="headerlink" href="#viewed-callback" title="Permalink to this headline">¶</a></h2>
 <p>EncEntry has a parameter called <cite>viewed_callback</cite>.</p>
-<p>When a function is assigned to viewed_callback, that function will be called when the entry is first viewed.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kung_fu_callback</span><span class="p">():</span>
+<p>When a function is passed to viewed_callback, that function will be called when the entry is first viewed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kung_fu_callback</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">knows_kung_fu</span>
     <span class="n">knows_kung_fu</span> <span class="o">=</span> <span class="bp">True</span>
 
-<span class="n">my_entry</span><span class="o">.</span><span class="n">viewed_callback</span> <span class="o">=</span> <span class="n">kung_fu_callback</span>
+<span class="n">my_entry</span><span class="o">.</span><span class="n">viewed_callback</span> <span class="o">=</span> <span class="p">(</span><span class="n">kung_fu_callback</span><span class="p">,)</span>
 </pre></div>
 </div>
+<p>viewed_callback takes a tuple with the first item being the function and subsequent items being arguments for that function.</p>
 </div>
 </div>
 

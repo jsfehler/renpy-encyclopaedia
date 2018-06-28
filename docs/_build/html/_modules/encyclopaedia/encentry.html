@@ -147,7 +147,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">has_sub_entry</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="c1"># Property: Set with Integer, get returns the page.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_current_page</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_page</span> <span class="o">=</span> <span class="mi">0</span>
 
         <span class="c1"># Place the entry into the assigned Encyclopaedia or EncEntry.</span>
         <span class="k">if</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -164,7 +164,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">viewed_persistent</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_viewed</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">persistent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">+</span> <span class="s2">&quot;_viewed&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;EncEntry: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -220,7 +220,7 @@
         <span class="sd">&quot;&quot;&quot;EncEntry: Gets the sub-page that&#39;s currently viewing viewed.</span>
 <span class="sd">            Setting this attribute should be done using an integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_entry_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_entry_list</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_page</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="nd">@current_page</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">current_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>

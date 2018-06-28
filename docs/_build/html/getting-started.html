@@ -98,6 +98,23 @@ The minimum arguments to create an EncEntry are:</p>
 <span class="p">)</span>
 </pre></div>
 </div>
+<div class="section" id="persistent-entries">
+<h3>Persistent Entries<a class="headerlink" href="#persistent-entries" title="Permalink to this headline">¶</a></h3>
+<p>If you want an entry’s viewed status to be persistent (ie: not tied to a particular save game), you must provide the viewed_persistent argument.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">about_zeus</span> <span class="o">=</span> <span class="n">EncEntry</span><span class="p">(</span>
+    <span class="n">parent</span><span class="o">=</span><span class="n">your_new_encyclopaedia</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Zeus&quot;</span><span class="p">,</span>
+    <span class="n">text</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;Zeus is the sky and thunder god in ancient Greek religion, who ruled as king of the gods of Mount Olympus.&quot;</span>
+        <span class="s2">&quot; His name is cognate with the first element of his Roman equivalent Jupiter.&quot;</span>
+        <span class="s2">&quot; His mythologies and powers are similar, though not identical, to those of Indo-European deities such as Indra, Jupiter, Perun, Thor, and Odin.&quot;</span>
+    <span class="p">],</span>
+    <span class="n">viewed_persistent</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>If your Encyclopaedia is global, you must use viewed_persistent to be able to save the viewed status of an entry.</p>
+</div>
 </div>
 </div>
 
@@ -144,7 +161,10 @@ The minimum arguments to create an EncEntry are:</p>
 <li><a class="reference internal" href="#creating-the-encyclopaedia-object">Creating the Encyclopaedia object</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#adding-entries">Adding Entries</a></li>
+<li><a class="reference internal" href="#adding-entries">Adding Entries</a><ul>
+<li><a class="reference internal" href="#persistent-entries">Persistent Entries</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

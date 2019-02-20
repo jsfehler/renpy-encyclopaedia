@@ -184,6 +184,9 @@ class SortEncyclopaedia(EncyclopaediaAction):
         self.enc.sorting_mode = self.sorting_mode
         renpy.restart_interaction()
 
+    def get_selected(self):
+        return self.enc.sorting_mode == self.sorting_mode
+
 
 def _build_subject_filter(enc, subject):
     """Build an encyclopaedia's filtered_entries based on the subject given.

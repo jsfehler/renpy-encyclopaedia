@@ -3,3 +3,4 @@
 .tox
 *.pyc
 *.idea
+.pytest_cache

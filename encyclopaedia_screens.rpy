@@ -150,21 +150,17 @@ screen encyclopaedia_list(enc):
 
                     vbox:
                         # Buttons to sort entries.
-                        textbutton "Sort by {}".format(enc.labels.sort_number_label) action enc.Sort(sorting_mode=enc.SORT_NUMBER) style "encyclopaedia_button" xfill True
-                        textbutton "Sort by {}".format(enc.labels.sort_alphabetical_label) action enc.Sort(sorting_mode=enc.SORT_ALPHABETICAL) style "encyclopaedia_button" xfill True
-                        textbutton "Sort by {}".format(enc.labels.sort_reverse_alphabetical_label) action enc.Sort(sorting_mode=enc.SORT_REVERSE_ALPHABETICAL) style "encyclopaedia_button" xfill True
-                        textbutton "Sort by {}".format(enc.labels.sort_subject_label) action enc.Sort(sorting_mode=enc.SORT_SUBJECT) style "encyclopaedia_button" xfill True
-                        textbutton "Sort by {}".format(enc.labels.sort_unread_label) action enc.Sort(sorting_mode=enc.SORT_UNREAD) style "encyclopaedia_button" xfill True
+                        textbutton "Sort by {}".format(enc.labels.sort_number_label) action enc.Sort(sorting_mode=enc.SORT_NUMBER) xfill True
+                        textbutton "Sort by {}".format(enc.labels.sort_alphabetical_label) action enc.Sort(sorting_mode=enc.SORT_ALPHABETICAL) xfill True
+                        textbutton "Sort by {}".format(enc.labels.sort_reverse_alphabetical_label) action enc.Sort(sorting_mode=enc.SORT_REVERSE_ALPHABETICAL) xfill True
+                        textbutton "Sort by {}".format(enc.labels.sort_subject_label) action enc.Sort(sorting_mode=enc.SORT_SUBJECT) xfill True
+                        textbutton "Sort by {}".format(enc.labels.sort_unread_label) action enc.Sort(sorting_mode=enc.SORT_UNREAD) xfill True
 
                         # Buttons to show different styles of hiding locked data.
-                        textbutton "Show/Hide Locked Buttons" action enc.ToggleShowLockedButtons() style "encyclopaedia_button" xfill True
-                        textbutton "Show/Hide Locked Entry" action enc.ToggleShowLockedEntry() style "encyclopaedia_button" xfill True
+                        textbutton "Show/Hide Locked Buttons" action enc.ToggleShowLockedButtons() xfill True
+                        textbutton "Show/Hide Locked Entry" action enc.ToggleShowLockedEntry() xfill True
 
-                        # Sort and SaveStatus are unnecessary if you're not using persistent data (ie: if the encyclopaedia is save game independent)
-                        # Sorting mode has to be by Number to save properly. "new_0" should be whatever the prefix you choose for the persistent dictionary is.
-                        textbutton "Return"  action [enc.Sort(sorting_mode=enc.default_sorting_mode),
-                                                     Hide("encyclopaedia_list"),
-                                                     Return()] style "encyclopaedia_button" xfill True
+                        textbutton "Return"  action [Hide("encyclopaedia_list"), Return()] xfill True
 
 
 ################################################################################
@@ -321,6 +317,7 @@ style encyclopaedia_vscrollbar is vscrollbar:
 style encyclopaedia_button:
     background color_beige
     hover_background color_bright_orange
+    selected_background color_bright_orange
     insensitive_background color_dark_red
 
 style encyclopaedia_button_text:

@@ -28,7 +28,7 @@ Requirements: `tox`
 Running the unit tests
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The unit tests can be run in any of the follow envs: py27, py33, py34, py35, py36, pypy
+The unit tests can be run in any of the follow envs: py27, py35, py36
 
 
 .. code-block:: console

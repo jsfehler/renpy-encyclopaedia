@@ -1,10 +1,10 @@
 from operator import itemgetter
 
-
 from renpy.python import RevertableList
 from renpy import store
 from renpy.game import persistent
-from renpy.display import im
+
+from .utils import tint
 
 
 class EncEntry(store.object):
@@ -66,7 +66,8 @@ class EncEntry(store.object):
                  locked_name="???",
                  locked_text="???",
                  locked_image=None,
-                 locked_image_tint=(0.0, 0.0, 0.0)):
+                 locked_image_tint=(0.0, 0.0, 0.0),
+                 tint_locked_image=True):
 
         self.parent = parent
         self.number = number
@@ -92,10 +93,10 @@ class EncEntry(store.object):
 
             # If there's an image, but no locked image is specified,
             # tint the image and use it as the locked image.
-            if locked_image is None:
+            if locked_image is None and tint_locked_image:
                 # Tuple is used to set the numbers that tint_locked_image()
                 # uses to change the colour of a locked image
-                self._tint_locked_image(locked_image_tint)
+                self.locked_image = tint(self._image, locked_image_tint)
 
         self.pages = 1
 
@@ -266,30 +267,6 @@ class EncEntry(store.object):
         self._image = val
 
         self.viewed = False
-
-    def _tint_locked_image(self, tint_amount):
-        """If the EncEntry has an image but no locked image, tint the image
-        and use it as the locked image.
-
-        Args:
-            tint_amount: Tuple for the RGB values to tint the image
-
-        Returns:
-            bool: True if successful, else False
-        """
-        if self.has_image:
-            matrix = im.matrix.tint(
-                tint_amount[0],
-                tint_amount[1],
-                tint_amount[2]
-            )
-            self.locked_image = im.MatrixColor(
-                self._image,
-                matrix
-            )
-            return True
-
-        return False
 
     def add_entry(self, sub_entry):
         """Adds multiple pages to the entry in the form of sub-entries.

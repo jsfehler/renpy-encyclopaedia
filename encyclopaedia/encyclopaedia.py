@@ -58,13 +58,16 @@ class Encyclopaedia(store.object):
                  sorting_mode=0,
                  show_locked_buttons=False,
                  show_locked_entry=False,
-                 entry_screen="encyclopaedia_entry"):
+                 entry_screen="encyclopaedia_entry",
+                 tint_locked_image=True):
 
         self.sorting_mode = sorting_mode
         self.default_sorting_mode = sorting_mode
         self.show_locked_buttons = show_locked_buttons
         self.show_locked_entry = show_locked_entry
         self.entry_screen = entry_screen
+
+        self.tint_locked_image = tint_locked_image
 
         self.all_entries = []
         self.unlocked_entries = []

@@ -66,8 +66,9 @@ class EncEntry(store.object):
                  locked_name="???",
                  locked_text="???",
                  locked_image=None,
-                 locked_image_tint=(0.0, 0.0, 0.0),
-                 tint_locked_image=True):
+                 locked_image_tint=(0.0, 0.0, 0.0)):
+
+        self.tint_locked_image = parent.tint_locked_image
 
         self.parent = parent
         self.number = number
@@ -93,7 +94,7 @@ class EncEntry(store.object):
 
             # If there's an image, but no locked image is specified,
             # tint the image and use it as the locked image.
-            if locked_image is None and tint_locked_image:
+            if locked_image is None and self.tint_locked_image:
                 # Tuple is used to set the numbers that tint_locked_image()
                 # uses to change the colour of a locked image
                 self.locked_image = tint(self._image, locked_image_tint)

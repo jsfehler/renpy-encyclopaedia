@@ -4,7 +4,7 @@ from renpy.python import RevertableList
 from renpy import store
 from renpy.game import persistent
 
-from .utils import tint
+from .utils import enc_tint
 
 
 class EncEntry(store.object):
@@ -97,7 +97,9 @@ class EncEntry(store.object):
             if locked_image is None and self.tint_locked_image:
                 # Tuple is used to set the numbers that tint_locked_image()
                 # uses to change the colour of a locked image
-                self.locked_image = tint(self._image, locked_image_tint)
+                self.locked_image = enc_tint(
+                    self._image, locked_image_tint
+                )
 
         self.pages = 1
 

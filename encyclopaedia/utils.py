@@ -1,7 +1,7 @@
 from renpy.display import im
 
 
-def tint(image, tint_amount):
+def enc_tint(image, tint_amount):
     """Tint an image.
 
     If the EncEntry has an image but no locked image, tint the image
@@ -18,11 +18,12 @@ def tint(image, tint_amount):
     matrix = im.matrix.tint(
         tint_amount[0],
         tint_amount[1],
-        tint_amount[2]
+        tint_amount[2],
     )
+
     tinted_image = im.MatrixColor(
         image,
-        matrix
+        matrix,
     )
 
     return tinted_image

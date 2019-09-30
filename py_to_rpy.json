@@ -7,6 +7,6 @@
     "from .actions import *",
     "from .labels import Labels",
     "from .entry_sorting import push_locked_to_bottom",
-    "from .utils import tint"
+    "from .utils import enc_tint"
   ]
 }

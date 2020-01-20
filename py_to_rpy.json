@@ -5,6 +5,7 @@
     "from renpy.",
     "from renpy import store",
     "from .actions import *",
+    "from .encentry import EncEntry",
     "from .labels import Labels",
     "from .entry_sorting import push_locked_to_bottom",
     "from .utils import enc_tint"

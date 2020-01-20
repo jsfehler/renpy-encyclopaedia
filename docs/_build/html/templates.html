@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Placeholders &#8212; Renpy-Encyclopaedia 2.4 documentation</title>
+    <title>Templates &#8212; Renpy-Encyclopaedia 2.4 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -28,28 +28,18 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="placeholders">
-<h1>Placeholders<a class="headerlink" href="#placeholders" title="Permalink to this headline">¶</a></h1>
-<p>Every EncEntry can be given placeholders for the name, text, and image.
-This allows you to display a locked entry without revealing what the content of the entry is.</p>
-<p>If no specific placeholders are provided, a default text placeholder is used for the name and text.
-The default placeholder image will be a dark tinted version of the normal image.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">about_area_51</span> <span class="o">=</span> <span class="n">EncEntry</span><span class="p">(</span>
-    <span class="n">parent</span><span class="o">=</span><span class="n">your_new_encyclopaedia</span><span class="p">,</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Area 51&quot;</span><span class="p">,</span>
-    <span class="n">locked_name</span><span class="o">=</span><span class="s2">&quot;Unknown&quot;</span>
-    <span class="n">text</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;The base&#39;s current primary purpose is publicly unknown; however, based on historical evidence, &quot;</span>
-        <span class="s2">&quot;it most likely supports the development and testing of experimental aircraft and weapons systems (black projects). &quot;</span>
-        <span class="s2">&quot;The intense secrecy surrounding the base has made it the frequent subject of conspiracy theories and a central component to unidentified flying object (UFO) folklore. &quot;</span>
-        <span class="s2">&quot;Although the base has never been declared a secret base, all research and occurrences in Area 51 are Top Secret/Sensitive Compartmented Information (TS/SCI). &quot;</span>
-        <span class="s2">&quot;On 25 June 2013, following a Freedom of Information Act (FOIA) request filed in 2005, &quot;</span>
-        <span class="s2">&quot;the CIA publicly acknowledged the existence of the base for the first time, declassifying documents detailing the history and purpose of Area 51.&quot;</span>
-    <span class="p">],</span>
-    <span class="n">locked_text</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Classified&quot;</span><span class="p">]</span>
-<span class="p">)</span>
+  <div class="section" id="templates">
+<h1>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h1>
+<p>When many entries have identical parameters, such as subject, EncEntryTemplate can be used
+to reduce the amount of duplication necessary.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">about_gods</span> <span class="o">=</span> <span class="n">Encyclopaedia</span><span class="p">()</span>
+
+<span class="n">GreekGodsEntry</span> <span class="o">=</span> <span class="n">EncEntryTemplate</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">about_gods</span><span class="p">,</span> <span class="n">subject</span><span class="o">=</span><span class="s2">&quot;Greek Gods&quot;</span><span class="p">)</span>
+
+<span class="n">about_zeus</span> <span class="o">=</span> <span class="n">GreekGodsEntry</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Zeus&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>Any valid argument for EncEntry can be used in EncEntryTemplate.</p>
 </div>
 
 
@@ -114,7 +104,7 @@ The default placeholder image will be a dark tinted version of the normal image.
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/placeholders.rst.txt"
+      <a href="_sources/templates.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

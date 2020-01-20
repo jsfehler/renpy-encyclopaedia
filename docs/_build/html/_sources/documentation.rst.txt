@@ -22,3 +22,4 @@ Documentation
    sorting
    filtering
    callbacks
+   templates

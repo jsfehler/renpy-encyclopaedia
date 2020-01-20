@@ -1,26 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>encyclopaedia.encentry &#8212; Renpy-Encyclopaedia 2.0.0-beta documentation</title>
+    <meta charset="utf-8" />
+    <title>encyclopaedia.encentry &#8212; Renpy-Encyclopaedia 2.4 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '2.0.0-beta',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -29,8 +20,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -41,11 +31,11 @@
   <h1>Source code for encyclopaedia.encentry</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">itemgetter</span>
 
-
 <span class="kn">from</span> <span class="nn">renpy.python</span> <span class="k">import</span> <span class="n">RevertableList</span>
 <span class="kn">from</span> <span class="nn">renpy</span> <span class="k">import</span> <span class="n">store</span>
 <span class="kn">from</span> <span class="nn">renpy.game</span> <span class="k">import</span> <span class="n">persistent</span>
-<span class="kn">from</span> <span class="nn">renpy.display</span> <span class="k">import</span> <span class="n">im</span>
+
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">enc_tint</span>
 
 
 <div class="viewcode-block" id="EncEntry"><a class="viewcode-back" href="../../source/encyclopaedia.encentry.html#encyclopaedia.encentry.EncEntry">[docs]</a><span class="k">class</span> <span class="nc">EncEntry</span><span class="p">(</span><span class="n">store</span><span class="o">.</span><span class="n">object</span><span class="p">):</span>
@@ -109,6 +99,8 @@
                  <span class="n">locked_image</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">locked_image_tint</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)):</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">tint_locked_image</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">tint_locked_image</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
 
@@ -133,10 +125,12 @@
 
             <span class="c1"># If there&#39;s an image, but no locked image is specified,</span>
             <span class="c1"># tint the image and use it as the locked image.</span>
-            <span class="k">if</span> <span class="n">locked_image</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">locked_image</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">tint_locked_image</span><span class="p">:</span>
                 <span class="c1"># Tuple is used to set the numbers that tint_locked_image()</span>
                 <span class="c1"># uses to change the colour of a locked image</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_tint_locked_image</span><span class="p">(</span><span class="n">locked_image_tint</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">locked_image</span> <span class="o">=</span> <span class="n">enc_tint</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="p">,</span> <span class="n">locked_image_tint</span>
+                <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">pages</span> <span class="o">=</span> <span class="mi">1</span>
 
@@ -308,30 +302,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">viewed</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">_tint_locked_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tint_amount</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;If the EncEntry has an image but no locked image, tint the image</span>
-<span class="sd">        and use it as the locked image.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            tint_amount: Tuple for the RGB values to tint the image</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            bool: True if successful, else False</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_image</span><span class="p">:</span>
-            <span class="n">matrix</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">tint</span><span class="p">(</span>
-                <span class="n">tint_amount</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                <span class="n">tint_amount</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                <span class="n">tint_amount</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">locked_image</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">MatrixColor</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_image</span><span class="p">,</span>
-                <span class="n">matrix</span>
-            <span class="p">)</span>
-            <span class="k">return</span> <span class="kc">True</span>
-
-        <span class="k">return</span> <span class="kc">False</span>
-
 <div class="viewcode-block" id="EncEntry.add_entry"><a class="viewcode-back" href="../../source/encyclopaedia.encentry.html#encyclopaedia.encentry.EncEntry.add_entry">[docs]</a>    <span class="k">def</span> <span class="nf">add_entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub_entry</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Adds multiple pages to the entry in the form of sub-entries.</span>
 
@@ -400,13 +370,13 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -417,7 +387,7 @@
       &copy;2017, Joshua Fehler.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
     </div>

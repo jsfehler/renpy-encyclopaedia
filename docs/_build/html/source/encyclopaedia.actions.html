@@ -1,26 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>encyclopaedia.actions module &#8212; Renpy-Encyclopaedia 2.0.0-beta documentation</title>
+    <meta charset="utf-8" />
+    <title>encyclopaedia.actions module &#8212; Renpy-Encyclopaedia 2.4 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '2.0.0-beta',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
    
@@ -29,8 +20,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -42,70 +32,61 @@
 <span id="encyclopaedia-actions-module"></span><h1>encyclopaedia.actions module<a class="headerlink" href="#module-encyclopaedia.actions" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="encyclopaedia.actions.ChangeAction">
-<em class="property">class </em><code class="descclassname">encyclopaedia.actions.</code><code class="descname">ChangeAction</code><span class="sig-paren">(</span><em>encyclopaedia</em>, <em>direction</em>, <em>block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ChangeAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ChangeAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">encyclopaedia.actions.</code><code class="sig-name descname">ChangeAction</code><span class="sig-paren">(</span><em class="sig-param">encyclopaedia</em>, <em class="sig-param">direction</em>, <em class="sig-param">block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ChangeAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ChangeAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
 <p>Base Action that swaps an open entry/page for the previous or next one.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>encyclopaedia</strong> (<a class="reference internal" href="encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia" title="encyclopaedia.encyclopaedia.Encyclopaedia"><em>Encyclopaedia</em></a>) – The Encyclopaedia instance to use.</li>
-<li><strong>direction</strong> (<em>bool</em>) – The direction to go in. 0 for back, 1 for forward.</li>
-<li><strong>block</strong> (<em>bool</em>) – True if at the first or last entry</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encyclopaedia</strong> (<a class="reference internal" href="encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia" title="encyclopaedia.encyclopaedia.Encyclopaedia"><em>Encyclopaedia</em></a>) – The Encyclopaedia instance to use.</p></li>
+<li><p><strong>direction</strong> (<em>bool</em>) – The direction to go in. 0 for back, 1 for forward.</p></li>
+<li><p><strong>block</strong> (<em>bool</em>) – True if at the first or last entry</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="encyclopaedia.actions.ChangeAction.get_sensitive">
-<code class="descname">get_sensitive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ChangeAction.get_sensitive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ChangeAction.get_sensitive" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_sensitive</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ChangeAction.get_sensitive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ChangeAction.get_sensitive" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the button should be alive or not.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the button should be alive, else False.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if the button should be alive, else False.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="encyclopaedia.actions.ChangeEntryAction">
-<em class="property">class </em><code class="descclassname">encyclopaedia.actions.</code><code class="descname">ChangeEntryAction</code><span class="sig-paren">(</span><em>encyclopaedia</em>, <em>direction</em>, <em>block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ChangeEntryAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ChangeEntryAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.ChangeAction" title="encyclopaedia.actions.ChangeAction"><code class="xref py py-class docutils literal"><span class="pre">encyclopaedia.actions.ChangeAction</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">encyclopaedia.actions.</code><code class="sig-name descname">ChangeEntryAction</code><span class="sig-paren">(</span><em class="sig-param">encyclopaedia</em>, <em class="sig-param">direction</em>, <em class="sig-param">block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ChangeEntryAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ChangeEntryAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.ChangeAction" title="encyclopaedia.actions.ChangeAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">encyclopaedia.actions.ChangeAction</span></code></a></p>
 <p>Change the current entry being viewed.</p>
 <p>Used for switching from one entry to another.</p>
 <p>Used by Encyclopaedia’s PreviousEntry() and NextEntry() functions.</p>
 <dl class="method">
 <dt id="encyclopaedia.actions.ChangeEntryAction.get_entry">
-<code class="descname">get_entry</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ChangeEntryAction.get_entry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ChangeEntryAction.get_entry" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_entry</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ChangeEntryAction.get_entry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ChangeEntryAction.get_entry" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the entry at the given index.</p>
 <p>If NOT showing locked entries, the next entry we want to see is
 the next entry in unlocked_entries.
 Else, the next entry we want is the next entry in all_entries.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">EncEntry</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>EncEntry</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="encyclopaedia.actions.ChangePageAction">
-<em class="property">class </em><code class="descclassname">encyclopaedia.actions.</code><code class="descname">ChangePageAction</code><span class="sig-paren">(</span><em>encyclopaedia</em>, <em>direction</em>, <em>block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ChangePageAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ChangePageAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.ChangeAction" title="encyclopaedia.actions.ChangeAction"><code class="xref py py-class docutils literal"><span class="pre">encyclopaedia.actions.ChangeAction</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">encyclopaedia.actions.</code><code class="sig-name descname">ChangePageAction</code><span class="sig-paren">(</span><em class="sig-param">encyclopaedia</em>, <em class="sig-param">direction</em>, <em class="sig-param">block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ChangePageAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ChangePageAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.ChangeAction" title="encyclopaedia.actions.ChangeAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">encyclopaedia.actions.ChangeAction</span></code></a></p>
 <p>Change the current sub-entry being viewed.</p>
 <p>Used for switching from one page to another.</p>
 <p>Used by an Encyclopaedia’s PreviousPage() and NextPage() functions.</p>
@@ -113,102 +94,96 @@ Else, the next entry we want is the next entry in all_entries.</p>
 
 <dl class="class">
 <dt id="encyclopaedia.actions.ClearFilter">
-<em class="property">class </em><code class="descclassname">encyclopaedia.actions.</code><code class="descname">ClearFilter</code><span class="sig-paren">(</span><em>encyclopaedia</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ClearFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ClearFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">encyclopaedia.actions.</code><code class="sig-name descname">ClearFilter</code><span class="sig-paren">(</span><em class="sig-param">encyclopaedia</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ClearFilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ClearFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
 <p>Stop filtering an Encyclopaedia.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="encyclopaedia.actions.EncyclopaediaAction">
-<em class="property">class </em><code class="descclassname">encyclopaedia.actions.</code><code class="descname">EncyclopaediaAction</code><span class="sig-paren">(</span><em>encyclopaedia</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#EncyclopaediaAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.EncyclopaediaAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">renpy.ui.MockAction</span></code></p>
+<em class="property">class </em><code class="sig-prename descclassname">encyclopaedia.actions.</code><code class="sig-name descname">EncyclopaediaAction</code><span class="sig-paren">(</span><em class="sig-param">encyclopaedia</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#EncyclopaediaAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.EncyclopaediaAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">renpy.ui.MockAction</span></code></p>
 <p>Base Action that requires an Encyclopaedia as an argument.</p>
 <p>Should only be used for class inheritance.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>encyclopaedia</strong> (<a class="reference internal" href="encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia" title="encyclopaedia.encyclopaedia.Encyclopaedia"><em>Encyclopaedia</em></a>) – The Encyclopaedia instance to use.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>encyclopaedia</strong> (<a class="reference internal" href="encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia" title="encyclopaedia.encyclopaedia.Encyclopaedia"><em>Encyclopaedia</em></a>) – The Encyclopaedia instance to use.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="class">
 <dt id="encyclopaedia.actions.FilterBySubject">
-<em class="property">class </em><code class="descclassname">encyclopaedia.actions.</code><code class="descname">FilterBySubject</code><span class="sig-paren">(</span><em>encyclopaedia</em>, <em>subject</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#FilterBySubject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.FilterBySubject" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">encyclopaedia.actions.</code><code class="sig-name descname">FilterBySubject</code><span class="sig-paren">(</span><em class="sig-param">encyclopaedia</em>, <em class="sig-param">subject</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#FilterBySubject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.FilterBySubject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
 <p>Create a filter for entries, based on the given subject.</p>
 <dl class="method">
 <dt id="encyclopaedia.actions.FilterBySubject.get_selected">
-<code class="descname">get_selected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#FilterBySubject.get_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.FilterBySubject.get_selected" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_selected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#FilterBySubject.get_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.FilterBySubject.get_selected" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="encyclopaedia.actions.ResetSubPageAction">
-<em class="property">class </em><code class="descclassname">encyclopaedia.actions.</code><code class="descname">ResetSubPageAction</code><span class="sig-paren">(</span><em>encyclopaedia</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ResetSubPageAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ResetSubPageAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">encyclopaedia.actions.</code><code class="sig-name descname">ResetSubPageAction</code><span class="sig-paren">(</span><em class="sig-param">encyclopaedia</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ResetSubPageAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ResetSubPageAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
 <p>Resets the sub-page count to 1. Used when closing the entry screen.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="encyclopaedia.actions.SetEntryAction">
-<em class="property">class </em><code class="descclassname">encyclopaedia.actions.</code><code class="descname">SetEntryAction</code><span class="sig-paren">(</span><em>encyclopaedia</em>, <em>entry</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#SetEntryAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.SetEntryAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">encyclopaedia.actions.</code><code class="sig-name descname">SetEntryAction</code><span class="sig-paren">(</span><em class="sig-param">encyclopaedia</em>, <em class="sig-param">entry</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#SetEntryAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.SetEntryAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
 <p>Set an Encyclopaedia entry as the active entry,
 then opens the Encyclopaedia’s Entry Screen</p>
 <p>Used for opening entries directly with a button.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>encyclopaedia</strong> (<a class="reference internal" href="encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia" title="encyclopaedia.encyclopaedia.Encyclopaedia"><em>Encyclopaedia</em></a>) – The Encyclopaedia instance to use.</li>
-<li><strong>entry</strong> (<a class="reference internal" href="encyclopaedia.encentry.html#encyclopaedia.encentry.EncEntry" title="encyclopaedia.encentry.EncEntry"><em>EncEntry</em></a>) – The entry to be made active.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encyclopaedia</strong> (<a class="reference internal" href="encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia" title="encyclopaedia.encyclopaedia.Encyclopaedia"><em>Encyclopaedia</em></a>) – The Encyclopaedia instance to use.</p></li>
+<li><p><strong>entry</strong> (<a class="reference internal" href="encyclopaedia.encentry.html#encyclopaedia.encentry.EncEntry" title="encyclopaedia.encentry.EncEntry"><em>EncEntry</em></a>) – The entry to be made active.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="encyclopaedia.actions.SetEntryAction.set_entry">
-<code class="descname">set_entry</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#SetEntryAction.set_entry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.SetEntryAction.set_entry" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_entry</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#SetEntryAction.set_entry"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.SetEntryAction.set_entry" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="encyclopaedia.actions.SortEncyclopaedia">
-<em class="property">class </em><code class="descclassname">encyclopaedia.actions.</code><code class="descname">SortEncyclopaedia</code><span class="sig-paren">(</span><em>encyclopaedia</em>, <em>sorting_mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#SortEncyclopaedia"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.SortEncyclopaedia" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">encyclopaedia.actions.</code><code class="sig-name descname">SortEncyclopaedia</code><span class="sig-paren">(</span><em class="sig-param">encyclopaedia</em>, <em class="sig-param">sorting_mode=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#SortEncyclopaedia"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.SortEncyclopaedia" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
 <p>Sorts the entries based on encyclopaedia.sorting_mode.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>encyclopaedia</strong> (<a class="reference internal" href="encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia" title="encyclopaedia.encyclopaedia.Encyclopaedia"><em>Encyclopaedia</em></a>) – The Encyclopaedia instance to use.</li>
-<li><strong>sorting_mode</strong> (<em>bool</em>) – The sorting mode to sort by.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encyclopaedia</strong> (<a class="reference internal" href="encyclopaedia.encyclopaedia.html#encyclopaedia.encyclopaedia.Encyclopaedia" title="encyclopaedia.encyclopaedia.Encyclopaedia"><em>Encyclopaedia</em></a>) – The Encyclopaedia instance to use.</p></li>
+<li><p><strong>sorting_mode</strong> (<em>bool</em>) – The sorting mode to sort by.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+<dl class="method">
+<dt id="encyclopaedia.actions.SortEncyclopaedia.get_selected">
+<code class="sig-name descname">get_selected</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#SortEncyclopaedia.get_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.SortEncyclopaedia.get_selected" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="encyclopaedia.actions.ToggleShowLockedButtonsAction">
-<em class="property">class </em><code class="descclassname">encyclopaedia.actions.</code><code class="descname">ToggleShowLockedButtonsAction</code><span class="sig-paren">(</span><em>encyclopaedia</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ToggleShowLockedButtonsAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ToggleShowLockedButtonsAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">encyclopaedia.actions.</code><code class="sig-name descname">ToggleShowLockedButtonsAction</code><span class="sig-paren">(</span><em class="sig-param">encyclopaedia</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ToggleShowLockedButtonsAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ToggleShowLockedButtonsAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
 <p>Toggles if locked Entries will be visible in the list of Entries.</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="encyclopaedia.actions.ToggleShowLockedEntryAction">
-<em class="property">class </em><code class="descclassname">encyclopaedia.actions.</code><code class="descname">ToggleShowLockedEntryAction</code><span class="sig-paren">(</span><em>encyclopaedia</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ToggleShowLockedEntryAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ToggleShowLockedEntryAction" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">encyclopaedia.actions.</code><code class="sig-name descname">ToggleShowLockedEntryAction</code><span class="sig-paren">(</span><em class="sig-param">encyclopaedia</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/encyclopaedia/actions.html#ToggleShowLockedEntryAction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#encyclopaedia.actions.ToggleShowLockedEntryAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#encyclopaedia.actions.EncyclopaediaAction" title="encyclopaedia.actions.EncyclopaediaAction"><code class="xref py py-class docutils literal notranslate"><span class="pre">encyclopaedia.actions.EncyclopaediaAction</span></code></a></p>
 <p>Toggles if locked Entries can be viewed.</p>
 </dd></dl>
 
@@ -255,13 +230,13 @@ then opens the Encyclopaedia’s Entry Screen</p>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -272,7 +247,7 @@ then opens the Encyclopaedia’s Entry Screen</p>
       &copy;2017, Joshua Fehler.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

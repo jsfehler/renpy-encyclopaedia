@@ -1,26 +1,17 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Screen Actions &#8212; Renpy-Encyclopaedia 2.0.0-beta documentation</title>
+    <meta charset="utf-8" />
+    <title>Screen Actions &#8212; Renpy-Encyclopaedia 2.4 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '2.0.0-beta',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
    
@@ -29,8 +20,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body>
+  </head><body>
   
 
     <div class="document">
@@ -47,7 +37,7 @@ available.</p>
 <h2>PreviousEntry<a class="headerlink" href="#previousentry" title="Permalink to this headline">¶</a></h2>
 <p>Changes the currently active EncEntry to the previous one.
 If the currently active EncEntry is the first one, this action will do nothing.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Previous Entry&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">PreviousEntry</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Previous Entry&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">PreviousEntry</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -55,7 +45,7 @@ If the currently active EncEntry is the first one, this action will do nothing.<
 <h2>NextEntry<a class="headerlink" href="#nextentry" title="Permalink to this headline">¶</a></h2>
 <p>Changes the currently active EncEntry to the next one.
 If the currently active EncEntry is the last one, this action will do nothing.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Next Entry&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">NextEntry</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Next Entry&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">NextEntry</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -63,7 +53,7 @@ If the currently active EncEntry is the last one, this action will do nothing.</
 <h2>PreviousPage<a class="headerlink" href="#previouspage" title="Permalink to this headline">¶</a></h2>
 <p>Changes the currently active EncEntry’s Sub-Page to the previous one.
 If the currently active Sub-Page is the first one, this action will do nothing.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Previous Page&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">PreviousPage</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Previous Page&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">PreviousPage</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -71,7 +61,7 @@ If the currently active Sub-Page is the first one, this action will do nothing.<
 <h2>NextPage<a class="headerlink" href="#nextpage" title="Permalink to this headline">¶</a></h2>
 <p>Changes the currently active EncEntry’s Sub-Page to the next one.
 If the currently active Sub-Page is the last one, this action will do nothing.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Next Page&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">NextPage</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Next Page&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">NextPage</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -79,49 +69,49 @@ If the currently active Sub-Page is the last one, this action will do nothing.</
 <h2>Sort<a class="headerlink" href="#sort" title="Permalink to this headline">¶</a></h2>
 <p>Sorts the encyclopaedia by the sorting mode provided.</p>
 <p>Takes a valid sorting mode as an argument.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Sort By Unread&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">Sort</span><span class="p">(</span><span class="n">Encyclopaedia</span><span class="o">.</span><span class="n">SORT_UNREAD</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Sort By Unread&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">Sort</span><span class="p">(</span><span class="n">Encyclopaedia</span><span class="o">.</span><span class="n">SORT_UNREAD</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="setentry">
 <h2>SetEntry<a class="headerlink" href="#setentry" title="Permalink to this headline">¶</a></h2>
 <p>Set an EncEntry as the active entry, then opens the Encyclopaedia’s Entry Screen.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Open an Entry&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">SetEntry</span><span class="p">(</span><span class="n">my_enc_entry</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Open an Entry&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">SetEntry</span><span class="p">(</span><span class="n">my_enc_entry</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="resetsubpage">
 <h2>ResetSubPage<a class="headerlink" href="#resetsubpage" title="Permalink to this headline">¶</a></h2>
 <p>Sets the currently active EncEntry’s Sub-Page to the first page.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Return to First Page&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">ResetSubPage</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Return to First Page&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">ResetSubPage</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="toggleshowlockedbuttons">
 <h2>ToggleShowLockedButtons<a class="headerlink" href="#toggleshowlockedbuttons" title="Permalink to this headline">¶</a></h2>
 <p>Toggles if locked Entries will be visible in the list of Entries.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Show Locked Buttons&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">ToggleShowLockedButtons</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Show Locked Buttons&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">ToggleShowLockedButtons</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="toggleshowlockedentry">
 <h2>ToggleShowLockedEntry<a class="headerlink" href="#toggleshowlockedentry" title="Permalink to this headline">¶</a></h2>
 <p>Toggles if locked Entries can be viewed.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Show Locked Entries&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">ToggleShowLockedEntry</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Show Locked Entries&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">ToggleShowLockedEntry</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="filterbysubject">
 <h2>FilterBySubject<a class="headerlink" href="#filterbysubject" title="Permalink to this headline">¶</a></h2>
 <p>Create a filter for EncEntry in an Encyclopaedia, based on the “subject” attribute.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Only Show Blue Things&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">FilterBySubject</span><span class="p">(</span><span class="s2">&quot;Blue&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Only Show Blue Things&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">FilterBySubject</span><span class="p">(</span><span class="s2">&quot;Blue&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="clearfilter">
 <h2>ClearFilter<a class="headerlink" href="#clearfilter" title="Permalink to this headline">¶</a></h2>
 <p>If a filter is active, this will clear it.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Clear Filter&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">ClearFilter</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">textbutton</span> <span class="s2">&quot;Clear Filter&quot;</span> <span class="n">action</span> <span class="n">my_encyclopaedia</span><span class="o">.</span><span class="n">ClearFilter</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -161,7 +151,7 @@ If the currently active Sub-Page is the last one, this action will do nothing.</
     
 </ul>
 
-  <h3><a href="index.html">Table Of Contents</a></h3>
+  <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Screen Actions</a><ul>
 <li><a class="reference internal" href="#previousentry">PreviousEntry</a></li>
@@ -186,13 +176,13 @@ If the currently active Sub-Page is the last one, this action will do nothing.</
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -203,7 +193,7 @@ If the currently active Sub-Page is the last one, this action will do nothing.</
       &copy;2017, Joshua Fehler.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

@@ -42,10 +42,7 @@ class SetEntryAction(EncyclopaediaAction):
         if self.enc.active.locked is False:
             if self.entry.viewed is False:
                 # Run the callback, if provided.
-                if self.entry.viewed_callback is not None:
-                    self.entry.viewed_callback[0](
-                        self.entry.viewed_callback[1:]
-                    )
+                self.entry.emit("viewed")
             # Mark the entry as viewed.
             self.enc.active.viewed = True
 
@@ -122,10 +119,8 @@ class ChangeEntryAction(ChangeAction):
 
             if self.enc.active.locked is False:
                 # Run the callback, if provided.
-                if self.enc.active.viewed_callback is not None:
-                    self.enc.active.viewed_callback[0](
-                        self.enc.active.viewed_callback[1:]
-                    )
+                self.enc.active.emit("viewed")
+
                 # Mark the entry as viewed.
                 self.enc.active.viewed = True
 

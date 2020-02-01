@@ -1,13 +1,13 @@
 from operator import itemgetter
 
-from renpy.python import RevertableList
 from renpy import store
 from renpy.game import persistent
 
-from .utils import enc_tint
+from .utils import enc_tint, string_to_list
+from .eventemitter import EventEmitter
 
 
-class EncEntry(store.object):
+class EncEntry(EventEmitter, store.object):
     """Stores an Entry's content.
     EncEntry instances should be added to an Encyclopaedia.
 
@@ -68,17 +68,20 @@ class EncEntry(store.object):
                  locked_image=None,
                  locked_image_tint=(0.0, 0.0, 0.0)):
 
-        self.tint_locked_image = parent.tint_locked_image
+        self.tint_locked_image = False
+        # Place the entry into the assigned Encyclopaedia or EncEntry.
 
-        self.parent = parent
+        # self.parent is set to None so that add_entry doesn't think
+        # this EncEntry is already inside an Encyclopaedia.
+        self.parent = None
         self.number = number
 
         self.locked_name = locked_name
-        self.locked_text = self._string_to_list(locked_text)
+        self.locked_text = string_to_list(locked_text)
         self.locked_image = locked_image
 
         self._name = name
-        self._text = self._string_to_list(text)
+        self._text = string_to_list(text)
         self._viewed = viewed
         self.subject = subject
         self._locked = locked
@@ -86,6 +89,10 @@ class EncEntry(store.object):
         self.locked_persistent = locked_persistent
         if self.locked_persistent:
             self._locked = getattr(persistent, self._name + "_locked")
+
+        if parent is not None:
+            parent.add_entry(self)
+            self.tint_locked_image = parent.tint_locked_image
 
         self.has_image = False
         if image is not None:
@@ -112,15 +119,10 @@ class EncEntry(store.object):
         # Property: Set with Integer, get returns the page.
         self._current_page = 0
 
-        # Place the entry into the assigned Encyclopaedia or EncEntry.
-        if parent is not None:
-            parent.add_entry(self)
-
-        # A function that's run whenever a child entry is unlocked.
-        self.unlock_callback = None
-
-        # A function that's run when this entry is viewed for the first time.
-        self.viewed_callback = None
+        self.callbacks = {
+            "viewed": [],  # Run when this entry is viewed for the first time.
+            "unlock": [],  # Run whenever a child entry is unlocked.
+        }
 
         # When viewed is persistent, we get the viewed flag from persistent
         self.viewed_persistent = viewed_persistent
@@ -150,8 +152,7 @@ class EncEntry(store.object):
             else:
                 self.parent.add_entry_to_unlocked_entries(self)
 
-            if self.parent.unlock_callback is not None:
-                self.parent.unlock_callback()
+            self.parent.emit("unlock")
 
     @property
     def viewed(self):
@@ -176,10 +177,6 @@ class EncEntry(store.object):
 
     @property
     def current_page(self):
-        return self._current_page
-
-    @current_page.getter
-    def current_page(self):
         """EncEntry: Gets the sub-page that's currently viewing viewed.
             Setting this attribute should be done using an integer.
         """
@@ -188,24 +185,6 @@ class EncEntry(store.object):
     @current_page.setter
     def current_page(self, val):
         self._current_page = val - 1
-
-    @staticmethod
-    def _string_to_list(given_text):
-        """Accepts a string or a list of strings for the 'given_text' argument.
-        Each list item represents a paragraph.
-        If a string is given, convert it to a list,
-        assuming a string with no list = one paragraph.
-
-        Args:
-            given_text: The string or list of strings for the entry's text
-
-        Returns:
-            list
-        """
-        # If the text is already in a list, just return it.
-        if type(given_text) is RevertableList:
-            return given_text
-        return [given_text]
 
     def __get_entry_data(self, data, locked_data):
         """Used by self.name, self.text, and self.image to control if
@@ -221,10 +200,6 @@ class EncEntry(store.object):
 
     @property
     def name(self):
-        return self._name
-
-    @name.getter
-    def name(self):
         """str: The name for the entry.
             If the entry is locked, returns the placeholder instead.
         """
@@ -237,10 +212,6 @@ class EncEntry(store.object):
         self.viewed = False
 
     @property
-    def text(self):
-        return self._text
-
-    @text.getter
     def text(self):
         """list: The text for the entry.
             If the entry is locked, returns the placeholder instead.
@@ -255,10 +226,6 @@ class EncEntry(store.object):
 
     @property
     def image(self):
-        return self._image
-
-    @image.getter
-    def image(self):
         """The image for the entry.
             If the entry is locked, returns the placeholder instead.
         """
@@ -271,7 +238,7 @@ class EncEntry(store.object):
 
         self.viewed = False
 
-    def add_entry(self, sub_entry):
+    def add_entry(self, entry):
         """Adds multiple pages to the entry in the form of sub-entries.
 
         Args:
@@ -280,12 +247,26 @@ class EncEntry(store.object):
         Returns:
             bool: True if anything was added, else False
         """
-        if sub_entry.number is None:
-            sub_entry.number = self.pages + 1
+        if entry.parent is not None and entry.parent != self:
+            raise ValueError(
+                "{} is already a sub-page of another EncEntry".format(entry),
+            )
 
-        if not [sub_entry.number, sub_entry] in self.sub_entry_list:
-            if sub_entry.locked is False:
-                self.sub_entry_list.append([sub_entry.number, sub_entry])
+        # When a new entry has a number, ensure it's not already used.
+        if entry.number is not None:
+            if any(i for i in self.sub_entry_list if i[1].number == entry.number):
+                raise ValueError(
+                    "{} is already taken.".format(entry.number)
+                )
+
+        elif entry.number is None:
+            entry.number = self.pages + 1
+
+        entry.parent = self
+
+        if not [entry.number, entry] in self.sub_entry_list:
+            if entry.locked is False:
+                self.sub_entry_list.append([entry.number, entry])
                 self.sub_entry_list = sorted(
                     self.sub_entry_list,
                     key=itemgetter(0)
@@ -293,5 +274,6 @@ class EncEntry(store.object):
                 self.has_sub_entry = True
 
                 self.pages = len(self.sub_entry_list)
+
                 return True
         return False

@@ -7,9 +7,10 @@ from renpy import store
 from .actions import *  # NOQA: F403
 from .labels import Labels
 from .entry_sorting import push_locked_to_bottom
+from .eventemitter import EventEmitter
 
 
-class Encyclopaedia(store.object):
+class Encyclopaedia(EventEmitter, store.object):
     """Container that manages the behaviour of a collection of EncEntry objects.
 
     Args:
@@ -96,8 +97,9 @@ class Encyclopaedia(store.object):
 
         self.locked_at_bottom = True
 
-        # A function that's run whenever a child entry is unlocked.
-        self.unlock_callback = None
+        self.callbacks = {
+            "unlock": [],  # Run whenever a child entry is unlocked.
+        }
 
     def __str__(self):
         return "Encyclopaedia: {} entries total".format(self._size_all)
@@ -242,6 +244,10 @@ class Encyclopaedia(store.object):
         Args:
             entry (EncEntry): The Entry to add to the Encyclopaedia
         """
+        if entry.parent is not None and entry.parent != self:
+            raise ValueError(
+                "{} is already inside another Encyclopaedia".format(entry),
+            )
 
         # When a new entry has a number, ensure it's not already used.
         if entry.number is not None:
@@ -268,6 +274,7 @@ class Encyclopaedia(store.object):
                 entry.number = 1
 
         self.all_entries.append(entry)
+        entry.parent = self
 
         # Ensure no duplicates in the entry lists.
         self.all_entries = list(set(self.all_entries))

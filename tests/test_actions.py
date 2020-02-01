@@ -14,11 +14,10 @@ def test_viewed_callback_set_entry():
     global i
     i = 0
 
-    def cb(*args):
+    @e.on("viewed")
+    def cb(entry):
         global i
         i += 1
-
-    e.viewed_callback = (cb,)
 
     assert 0 == i
 
@@ -45,11 +44,10 @@ def test_viewed_callback_change_entry():
     global i
     i = 0
 
-    def cb(*args):
+    @e2.on("viewed")
+    def cb(entry):
         global i
         i += 1
-
-    e2.viewed_callback = (cb,)
 
     assert 0 == i
 
@@ -59,6 +57,40 @@ def test_viewed_callback_change_entry():
     enc.NextEntry()()
 
     assert 1 == i
+
+
+def test_viewed_callback_multiple():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"]
+    )
+
+    global i
+    i = 0
+
+    global j
+    j = 50
+
+    @e.on("viewed")
+    def cb(entry):
+        global i
+        i += 1
+
+    @e.on("viewed")
+    def cb2(entry):
+        global j
+        j += 10
+
+    assert 0 == i
+    assert 50 == j
+
+    enc.SetEntry(e)()
+
+    assert 1 == i
+    assert 60 == j
 
 
 def test_reset_sub_page():

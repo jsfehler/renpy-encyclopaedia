@@ -1,4 +1,5 @@
 from renpy.display import im
+from renpy.python import RevertableList
 
 
 def enc_tint(image, tint_amount):
@@ -27,3 +28,22 @@ def enc_tint(image, tint_amount):
     )
 
     return tinted_image
+
+
+def string_to_list(given_text):
+    """Turn a string into a list containing that string.
+
+    Each list item represents a paragraph.
+    If a string is given, convert it to a list,
+    assuming a string with no list = one paragraph.
+
+    Args:
+        given_text [str|list]
+
+    Returns:
+        list
+    """
+    # If the text is already in a list, just return it.
+    if type(given_text) is RevertableList:
+        return given_text
+    return [given_text]

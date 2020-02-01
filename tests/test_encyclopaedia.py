@@ -139,7 +139,8 @@ def test_unlock_callback():
     global baz
     baz = 0
 
-    def foobar():
+    @enc.on("unlock")
+    def foobar(enc):
         global baz
         baz += 1
 
@@ -149,8 +150,6 @@ def test_unlock_callback():
         text=["Test Text"],
         locked=True,
     )
-
-    enc.unlock_callback = foobar
 
     # Unlock the first entry
     e.locked = False

@@ -121,7 +121,8 @@ class EncEntry(EventEmitter, store.object):
 
         self.callbacks = {
             "viewed": [],  # Run when this entry is viewed for the first time.
-            "unlock": [],  # Run whenever a child entry is unlocked.
+            "unlocked": [],  # Run when this entry is unlocked.
+            "entry_unlocked": [],  # Run whenever a child entry is unlocked.
         }
 
         # When viewed is persistent, we get the viewed flag from persistent
@@ -152,7 +153,8 @@ class EncEntry(EventEmitter, store.object):
             else:
                 self.parent.add_entry_to_unlocked_entries(self)
 
-            self.parent.emit("unlock")
+            self.parent.emit("entry_unlocked")
+            self.emit("unlocked")
 
     @property
     def viewed(self):

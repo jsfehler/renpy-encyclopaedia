@@ -7,4 +7,5 @@ class MockPersistent(object):
 
         return None
 
+
 persistent = MockPersistent()

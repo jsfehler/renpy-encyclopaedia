@@ -1,6 +1,8 @@
 from encyclopaedia.encyclopaedia import Encyclopaedia
 from encyclopaedia.encentry import EncEntry
 
+from renpy.game import persistent
+
 
 def test_image():
     enc = Encyclopaedia()
@@ -73,7 +75,7 @@ def test_unlock_subpage():
         parent=e,
         name="A Sub-Page",
         text=["Test Text"],
-        locked=True
+        locked=True,
     )
 
     # Unlock the sub-page
@@ -131,3 +133,79 @@ def test_text_locked():
     )
 
     assert ["???"] == e.text
+
+
+def test_locked_persistent_get():
+    """When locked status is controlled by a persistent variable
+    Then the EncEntry's locked attribute should be linked to a persistent
+    variable.
+    """
+    enc = Encyclopaedia()
+
+    about_zeus = EncEntry(
+        parent=enc,
+        name="Zeus",
+        text=["Test Text"],
+        locked=True,
+        locked_persistent=True,
+    )
+
+    assert about_zeus.locked == persistent.Zeus_locked
+
+
+def test_locked_persistent_set():
+    """When locked status is controlled by a persistent variable
+    Then the EncEntry's locked attribute should be linked to a persistent
+    variable.
+    """
+    enc = Encyclopaedia()
+
+    about_zeus = EncEntry(
+        parent=enc,
+        name="Zeus",
+        text=["Test Text"],
+        locked=True,
+        locked_persistent=True,
+    )
+
+    about_zeus.locked = False
+
+    assert persistent.Zeus_locked is False
+    assert about_zeus.locked == persistent.Zeus_locked
+
+
+def test_viewed_persistent_get():
+    """When viewed status is controlled by a persistent variable
+    Then the EncEntry's viewed attribute should be linked to a persistent
+    variable.
+    """
+    enc = Encyclopaedia()
+
+    about_zeus = EncEntry(
+        parent=enc,
+        name="Zeus",
+        text=["Test Text"],
+        viewed_persistent=True,
+    )
+
+    assert about_zeus.viewed == persistent.Zeus_viewed
+
+
+def test_viewed_persistent_set():
+    """When locked status is controlled by a persistent variable
+    Then the EncEntry's locked attribute should be linked to a persistent
+    variable.
+    """
+    enc = Encyclopaedia()
+
+    about_zeus = EncEntry(
+        parent=enc,
+        name="Zeus",
+        text=["Test Text"],
+        viewed_persistent=True,
+    )
+
+    about_zeus.viewed = True
+
+    assert persistent.Zeus_viewed is True
+    assert about_zeus.viewed == persistent.Zeus_viewed

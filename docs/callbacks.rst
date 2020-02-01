@@ -1,36 +1,39 @@
-Callbacks
-=========
+Events & Callbacks
+==================
 
-Encyclopaedia and EncEntry have callbacks which can be used to connect events occurring in an encyclopaedia to the rest of the game.
+Encyclopaedia and EncEntry emit events which can be subscribed to by your own callback functions.
+This can be used to connect events occurring in an Encyclopaedia to the rest of the game.
 
-unlock_callback
----------------
+Events send the source of the event to the callback function.
 
-Both Encyclopadedia and EncEntry have a parameter called `unlock_callback`.
-
-When a function is assigned to unlock_callback, that function will be called whenever a child entry is unlocked.
+Encyclopaedia and EncEntry emit the "entry_unlocked" event. Occurs when any entry (or sub-entry) is unlocked.
 
 .. code-block:: python
 
-    def increase_intelligence():
+    greek_gods = Encyclopaedia()
+
+    @greek_gods.on("entry_unlocked")
+    def increase_intelligence(source):
+        global nerd_points
         nerd_points += 1
 
-    my_encyclopaedia.unlock_callback = increase_intelligence
 
+EncEntry emits the following events:
 
-viewed_callback
----------------
-
-EncEntry has a parameter called `viewed_callback`.
-
-When a function is passed to viewed_callback, that function will be called when the entry is first viewed.
+- "unlocked". Triggered when the entry is unlocked
+- "viewed". Triggered when the entry is viewed for the first time.
 
 .. code-block:: python
 
-    def kung_fu_callback(*args):
+    greek_gods = Encyclopaedia()
+
+    about_zeus = EncEntry(
+        parent=greek_gods,
+        name="Zeus",
+        text=[""]
+    )
+
+    @about_zeus.on("viewed")
+    def cb(source):
         global knows_kung_fu
         knows_kung_fu = True
-
-    my_entry.viewed_callback = (kung_fu_callback,)
-
-viewed_callback takes a tuple with the first item being the function and subsequent items being arguments for that function.

@@ -213,7 +213,7 @@ class EncEntry(EventEmitter, store.object):
         self.viewed = False
 
     @property
-    def text(self):  # type: () -> List[str]
+    def text(self):  # type: () -> list[str]
         """The text for the entry.
             If the entry is locked, returns the placeholder instead.
         """

@@ -134,14 +134,14 @@ class EncEntry(EventEmitter, store.object):
         return "EncEntry: {}".format(self.label)
 
     @property
-    def locked(self):
-        """bool: Determines if the entry's data can be viewed or not.
+    def locked(self):  # type: () -> bool
+        """Determine if the entry's data can be viewed or not.
             Changing this variable will modify the entry's locked status.
         """
         return self._locked
 
     @locked.setter
-    def locked(self, new_value):
+    def locked(self, new_value):  # type: (bool) -> None
         if self.locked_persistent:
             setattr(persistent, self._name + "_locked", new_value)
 
@@ -157,13 +157,13 @@ class EncEntry(EventEmitter, store.object):
             self.emit("unlocked")
 
     @property
-    def viewed(self):
-        """bool: Determines if the entry's data has been viewed or not.
+    def viewed(self):  # type: () -> bool
+        """Determines if the entry has been viewed or not.
             Changing this variable will modify the entry's viewed status.
         """
         return self._viewed
 
-    @viewed.setter
+    @viewed.setter  # type: (bool) -> None
     def viewed(self, new_value):
         if self.viewed_persistent:
             setattr(persistent, self._name + "_viewed", new_value)
@@ -171,15 +171,14 @@ class EncEntry(EventEmitter, store.object):
         self._viewed = new_value
 
     @property
-    def label(self):
-        """str: The number and name of the entry, in the format of
-                'number: name'
+    def label(self):  # type: () -> str
+        """The number and name of the entry, in the format of 'number: name'
         """
         return "{:02}: {}".format(self.number, self.name)
 
     @property
-    def current_page(self):
-        """EncEntry: Gets the sub-page that's currently viewing viewed.
+    def current_page(self):  # type: () -> EncEntry
+        """Get the sub-page that's currently viewing viewed.
             Setting this attribute should be done using an integer.
         """
         return self.sub_entry_list[self._current_page][1]
@@ -201,9 +200,9 @@ class EncEntry(EventEmitter, store.object):
         return data
 
     @property
-    def name(self):
-        """str: The name for the entry.
-            If the entry is locked, returns the placeholder instead.
+    def name(self):  # type: () -> str
+        """The name for the entry.
+            If the entry is locked, return the placeholder instead.
         """
         return self.__get_entry_data(self._name, self.locked_name)
 
@@ -214,8 +213,8 @@ class EncEntry(EventEmitter, store.object):
         self.viewed = False
 
     @property
-    def text(self):
-        """list: The text for the entry.
+    def text(self):  # type: () -> List[str]
+        """The text for the entry.
             If the entry is locked, returns the placeholder instead.
         """
         return self.__get_entry_data(self._text, self.locked_text)
@@ -240,11 +239,11 @@ class EncEntry(EventEmitter, store.object):
 
         self.viewed = False
 
-    def add_entry(self, entry):
+    def add_entry(self, entry):  # type: (EncEntry) -> bool
         """Adds multiple pages to the entry in the form of sub-entries.
 
         Args:
-            sub_entry: The entry to add as a sub-entry.
+            entry: The entry to add as a sub-entry.
 
         Returns:
             bool: True if anything was added, else False

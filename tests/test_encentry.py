@@ -135,6 +135,46 @@ def test_text_locked():
     assert ["???"] == e.text
 
 
+def test_text_modify():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+    )
+
+    # Pretend we viewed the entry
+    e.viewed = True
+
+    # Modify text
+    e.text = ["New Text"]
+
+    assert e.viewed is False
+
+
+def test_image_add():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+    )
+
+    # Ensure EncEntry knows it has no image
+    e.has_image = False
+
+    # Pretend we viewed the entry
+    e.viewed = True
+
+    # Add image
+    e.image = "foobar"
+
+    assert e.has_image
+    assert e.viewed is False
+
+
 def test_locked_persistent_get():
     """When locked status is controlled by a persistent variable
     Then the EncEntry's locked attribute should be linked to a persistent

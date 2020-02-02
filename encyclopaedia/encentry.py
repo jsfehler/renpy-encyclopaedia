@@ -85,6 +85,7 @@ class EncEntry(EventEmitter, store.object):
         self._viewed = viewed
         self.subject = subject
         self._locked = locked
+        self._image = image
 
         self.locked_persistent = locked_persistent
         if self.locked_persistent:
@@ -96,7 +97,6 @@ class EncEntry(EventEmitter, store.object):
 
         self.has_image = False
         if image is not None:
-            self._image = image
             self.has_image = True
 
             # If there's an image, but no locked image is specified,

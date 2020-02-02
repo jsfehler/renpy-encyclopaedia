@@ -105,7 +105,7 @@ def test_clear_filtering():
 
     enc.ClearFilter()()
 
-    assert False == enc.filtering
+    assert False is enc.filtering
     assert [apple, banana, cantaloupe, cucumber] == enc.current_entries
 
 
@@ -139,7 +139,7 @@ def test_unlock_callback():
     global baz
     baz = 0
 
-    @enc.on("unlock")
+    @enc.on("entry_unlocked")
     def foobar(enc):
         global baz
         baz += 1

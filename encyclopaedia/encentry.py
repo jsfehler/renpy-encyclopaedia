@@ -201,9 +201,7 @@ class EncEntry(EventEmitter, store.object):
 
     @property
     def name(self):  # type: () -> str
-        """The name for the entry.
-            If the entry is locked, return the placeholder instead.
-        """
+        """The name for the entry. Return placeholder when entry is locked."""
         return self.__get_entry_data(self._name, self.locked_name)
 
     @name.setter
@@ -214,9 +212,7 @@ class EncEntry(EventEmitter, store.object):
 
     @property
     def text(self):  # type: () -> list[str]
-        """The text for the entry.
-            If the entry is locked, returns the placeholder instead.
-        """
+        """The text for the entry. Return placeholder when entry is locked."""
         return self.__get_entry_data(self._text, self.locked_text)
 
     @text.setter
@@ -226,10 +222,8 @@ class EncEntry(EventEmitter, store.object):
         self.viewed = False
 
     @property
-    def image(self):
-        """The image for the entry.
-            If the entry is locked, returns the placeholder instead.
-        """
+    def image(self):  # type: () -> str
+        """The image for the entry. Return placeholder when entry is locked."""
         return self.__get_entry_data(self._image, self.locked_image)
 
     @image.setter

@@ -254,7 +254,7 @@ class ToggleShowLockedButtonsAction(EncyclopaediaAction):
         self.enc.sort_entries(
             entries=self.enc.current_entries,
             sorting=self.enc.sorting_mode,
-            reverse=reverse
+            reverse=reverse,
         )
 
         renpy.restart_interaction()

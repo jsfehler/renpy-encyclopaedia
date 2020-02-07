@@ -105,12 +105,8 @@ class Encyclopaedia(EventEmitter, store.object):
         return "Encyclopaedia: {} entries total".format(self._size_all)
 
     @property
-    def current_entries(self):
-        return self._current_entries
-
-    @current_entries.getter
-    def current_entries(self):
-        """list: Depending on which viewing options are set,
+    def current_entries(self):  # type: () -> list
+        """Depending on which viewing options are set,
         returns a list of entries.
         """
         if self.filtering:
@@ -127,7 +123,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self._current_entries = item
 
     @property
-    def percentage_unlocked(self):
+    def percentage_unlocked(self):  # type: () -> float
         """Gets the percentage of the Encyclopaedia that's unlocked.
 
         Returns:
@@ -150,8 +146,8 @@ class Encyclopaedia(EventEmitter, store.object):
         return percentage
 
     @property
-    def number_of_visible_entries(self):
-        """int: Whatever the maximum size of the entry list should be,
+    def number_of_visible_entries(self):  # type: () -> int
+        """Whatever the maximum size of the entry list should be,
         based on if locked entries should be shown or not.
         """
         if self.show_locked_entry:
@@ -216,7 +212,7 @@ class Encyclopaedia(EventEmitter, store.object):
         return False
 
     def add_entry_to_unlocked_entries(self, entry):
-        """Adds an entry to the list of unlocked entries.
+        """Add an entry to the list of unlocked entries.
 
         Args:
             entry (EncEntry): The Entry to add to the unlocked entries list.

@@ -79,9 +79,7 @@ class ChangeAction(EncyclopaediaAction):
         Returns:
             bool: True if the button should be alive, else False.
         """
-        if self.block:
-            return False
-        return True
+        return not self.block
 
 
 class ChangeEntryAction(ChangeAction):

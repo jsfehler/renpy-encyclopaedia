@@ -29,7 +29,7 @@ class SetEntryAction(EncyclopaediaAction):
 
         self.entry = entry
 
-    def set_entry(self):
+    def set_entry(self):  # type: () -> None
         # Find the position of the entry
         if self.enc.show_locked_entry is False:
             target_position = self.enc.unlocked_entries.index(self.entry)
@@ -73,7 +73,7 @@ class ChangeAction(EncyclopaediaAction):
         # If the button is active or not.
         self.block = block
 
-    def get_sensitive(self):
+    def get_sensitive(self):  # type: () -> bool
         """Determines if the button should be alive or not.
 
         Returns:
@@ -90,7 +90,7 @@ class ChangeEntryAction(ChangeAction):
     Used by Encyclopaedia's PreviousEntry() and NextEntry() functions.
     """
 
-    def get_entry(self):
+    def get_entry(self):  # type: () -> EncEntry
         """Get the entry at the given index.
 
         If NOT showing locked entries, the next entry we want to see is

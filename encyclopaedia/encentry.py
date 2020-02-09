@@ -54,19 +54,21 @@ class EncEntry(EventEmitter, store.object):
     """
     def __init__(self,
                  parent=None,
-                 number=None,
-                 name="",
-                 text="",
-                 subject="",
-                 viewed=False,
-                 viewed_persistent=False,
-                 locked=False,
-                 locked_persistent=False,
-                 image=None,
-                 locked_name="???",
-                 locked_text="???",
-                 locked_image=None,
-                 locked_image_tint=(0.0, 0.0, 0.0)):
+                 number=None,  # type:  Optional[int]
+                 name="",  # type: Optional[str]
+                 text="",  # type: Optional[str]
+                 subject="",  # type: Optional[str]
+                 viewed=False,  # type: Optional[bool]
+                 viewed_persistent=False,  # type: Optional[bool]
+                 locked=False,  # type: Optional[bool]
+                 locked_persistent=False,  # type: Optional[bool]
+                 image=None,  # type: Optional[str]
+                 locked_name="???",  # type: Optional[str]
+                 locked_text="???",  # type: Optional[str]
+                 locked_image=None,  # type: Optional[str]
+                 locked_image_tint=(0.0, 0.0, 0.0)
+                 ):
+        # type: (...) -> None
 
         self.tint_locked_image = False
         # Place the entry into the assigned Encyclopaedia or EncEntry.
@@ -130,7 +132,7 @@ class EncEntry(EventEmitter, store.object):
         if self.viewed_persistent:
             self._viewed = getattr(persistent, self._name + "_viewed")
 
-    def __str__(self):
+    def __str__(self):  # type: () -> str
         return "EncEntry: {}".format(self.label)
 
     @property
@@ -163,8 +165,8 @@ class EncEntry(EventEmitter, store.object):
         """
         return self._viewed
 
-    @viewed.setter  # type: (bool) -> None
-    def viewed(self, new_value):
+    @viewed.setter
+    def viewed(self, new_value):  # type: (bool) -> None
         if self.viewed_persistent:
             setattr(persistent, self._name + "_viewed", new_value)
 
@@ -184,10 +186,10 @@ class EncEntry(EventEmitter, store.object):
         return self.sub_entry_list[self._current_page][1]
 
     @current_page.setter
-    def current_page(self, val):
+    def current_page(self, val):  # type: (int) -> None
         self._current_page = val - 1
 
-    def __get_entry_data(self, data, locked_data):
+    def __get_entry_data(self, data, locked_data):  # type: (Any, Any) -> Any
         """Used by self.name, self.text, and self.image to control if
         the locked placeholder or actual entry data should be returned.
 
@@ -205,7 +207,7 @@ class EncEntry(EventEmitter, store.object):
         return self.__get_entry_data(self._name, self.locked_name)
 
     @name.setter
-    def name(self, val):
+    def name(self, val):  # type: (str) -> None
         self._name = val
 
         self.viewed = False
@@ -216,7 +218,7 @@ class EncEntry(EventEmitter, store.object):
         return self.__get_entry_data(self._text, self.locked_text)
 
     @text.setter
-    def text(self, val):
+    def text(self, val):  # type: (str) -> None
         self._text = val
 
         self.viewed = False
@@ -227,7 +229,7 @@ class EncEntry(EventEmitter, store.object):
         return self.__get_entry_data(self._image, self.locked_image)
 
     @image.setter
-    def image(self, val):
+    def image(self, val):  # type: (str) -> None
         self.has_image = True
         self._image = val
 

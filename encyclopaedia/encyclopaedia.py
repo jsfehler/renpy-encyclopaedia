@@ -56,11 +56,12 @@ class Encyclopaedia(EventEmitter, store.object):
     operators = {'<=': operator.le, '>=': operator.ge}
 
     def __init__(self,
-                 sorting_mode=0,
-                 show_locked_buttons=False,
-                 show_locked_entry=False,
-                 entry_screen="encyclopaedia_entry",
-                 tint_locked_image=True):
+                 sorting_mode=0,  # type: (int)
+                 show_locked_buttons=False,  # type: (bool)
+                 show_locked_entry=False,  # type: (bool)
+                 entry_screen="encyclopaedia_entry",  # type: (str)
+                 tint_locked_image=True,  # type: (bool)
+                 ):
 
         self.sorting_mode = sorting_mode
         self.default_sorting_mode = sorting_mode
@@ -70,9 +71,9 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.tint_locked_image = tint_locked_image
 
-        self.all_entries = []
-        self.unlocked_entries = []
-        self.filtered_entries = []
+        self.all_entries = []  # type: (List)
+        self.unlocked_entries = []  # type: (List)
+        self.filtered_entries = []  # type: (List)
 
         self.filtering = False
 
@@ -90,7 +91,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.labels = Labels(self)
 
-        self.subjects = []
+        self.subjects = []  # type: (List)
 
         self.active = None
         self._current_entries = self.all_entries
@@ -101,11 +102,11 @@ class Encyclopaedia(EventEmitter, store.object):
             "entry_unlocked": [],  # Run whenever a child entry is unlocked.
         }
 
-    def __str__(self):
+    def __str__(self):  # type: () -> str
         return "Encyclopaedia: {} entries total".format(self._size_all)
 
     @property
-    def current_entries(self):  # type: () -> list
+    def current_entries(self):  # type: () -> List[EncEntry]
         """Depending on which viewing options are set,
         returns a list of entries.
         """
@@ -119,7 +120,7 @@ class Encyclopaedia(EventEmitter, store.object):
         return current_entries
 
     @current_entries.setter
-    def current_entries(self, item):
+    def current_entries(self, item):  # type: (List) -> None
         self._current_entries = item
 
     @property
@@ -154,7 +155,7 @@ class Encyclopaedia(EventEmitter, store.object):
             return self._size_all
         return self._size_unlocked
 
-    def set_global_locked_name(self, placeholder):
+    def set_global_locked_name(self, placeholder):  # type: (str) -> None
         """Sets all the locked names for all entries to the same string.
 
         Args:

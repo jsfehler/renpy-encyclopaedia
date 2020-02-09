@@ -20,7 +20,7 @@ class Labels(store.object):
         unread_entry_label (str): Default for the tag next to unread entries
         locked_entry_label (str): Default for a "Locked Entry" button
     """
-    def __init__(self, encyclopaedia):
+    def __init__(self, encyclopaedia):  # type: (Encyclopaedia) -> None
         self.encyclopaedia = encyclopaedia
 
         self.percentage_label = '%'
@@ -37,7 +37,7 @@ class Labels(store.object):
         self.locked_entry_label = "???"
 
     @property
-    def percentage_unlocked(self):
+    def percentage_unlocked(self):  # type: () -> str
         """Percentage representation of the amount of the encyclopaedia
         that's unlocked. ie: '50%'.
 
@@ -48,7 +48,7 @@ class Labels(store.object):
         return "{}{}".format(percentage_unlocked, self.percentage_label)
 
     @property
-    def entry_current_page(self):
+    def entry_current_page(self):  # type: () -> str
         """The sub-page of an entry that is being viewed.
 
         Returns:
@@ -71,7 +71,7 @@ class Labels(store.object):
         return label
 
     @property
-    def sorting_mode(self):
+    def sorting_mode(self):  # type: () -> str
         """Label for the encyclopaedia's current sorting mode.
 
         Returns:

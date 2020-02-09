@@ -30,7 +30,7 @@ def enc_tint(image, tint_amount):
     return tinted_image
 
 
-def string_to_list(given_text):
+def string_to_list(given_text):  # type: (Optional[str, List]) -> List
     """Turn a string into a list containing that string.
 
     Each list item represents a paragraph.

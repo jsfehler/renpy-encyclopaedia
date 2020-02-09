@@ -7,7 +7,7 @@ class EventEmitter:
 
         return wrapper
 
-    def emit(self, ev_name):
+    def emit(self, ev_name):  # type: (str) -> None
         """Emit an event, triggered every callback registered to it."""
         for callback in self.callbacks[ev_name]:
             callback(self)

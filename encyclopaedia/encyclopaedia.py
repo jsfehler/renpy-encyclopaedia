@@ -292,6 +292,18 @@ class Encyclopaedia(EventEmitter, store.object):
         self.subjects = list(set(self.subjects))
         self.subjects.sort()
 
+    @property
+    def word_count(self):
+        """Get the total word count for the Encyclopaedia.
+
+        Returns:
+            int
+        """
+        count = 0
+        for entry in self.all_entries:
+            count += entry.word_count
+        return count
+
     def PreviousEntry(self):
         """Wrapper around an Action. Use with a renpy button.
 

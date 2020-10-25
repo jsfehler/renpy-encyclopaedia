@@ -274,3 +274,15 @@ class EncEntry(EventEmitter, store.object):
 
                 return True
         return False
+
+    @property
+    def word_count(self):
+        """Get the word count for the EncEntry's text.
+
+        Returns:
+            int
+        """
+        count = 0
+        for item in self._text:
+            count += len(item.split())
+        return count

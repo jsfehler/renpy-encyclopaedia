@@ -44,6 +44,6 @@ def string_to_list(given_text):  # type: (Optional[str, List]) -> List
         list
     """
     # If the text is already in a list, just return it.
-    if type(given_text) is RevertableList:
+    if type(given_text) in (RevertableList, list):
         return given_text
     return [given_text]

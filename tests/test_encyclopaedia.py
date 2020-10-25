@@ -374,3 +374,37 @@ def test_percentage_unlocked_empty():
 
     message = 'Cannot calculate percentage unlocked of empty Encyclopaedia'
     assert message == str(e.value)
+
+
+def test_word_count():
+    """When checking the word count of an Encyclopaedia,
+    Then the number returned is correct.
+    """
+    enc = Encyclopaedia()
+
+    for x in range(5):
+        EncEntry(
+            parent=enc,
+            name="Test Name",
+            text=["Test Text"],
+        )
+
+    assert 10 == enc.word_count
+
+
+def test_word_count_locked():
+    """When checking the word count of an Encyclopaedia,
+    And entries are locked,
+    Then the number returned is correct.
+    """
+    enc = Encyclopaedia()
+
+    for x in range(5):
+        EncEntry(
+            parent=enc,
+            name="Test Name",
+            text=["Test Text"],
+            locked=True
+        )
+
+    assert 10 == enc.word_count

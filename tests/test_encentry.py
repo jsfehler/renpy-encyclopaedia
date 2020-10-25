@@ -249,3 +249,18 @@ def test_viewed_persistent_set():
 
     assert persistent.Zeus_viewed is True
     assert about_zeus.viewed == persistent.Zeus_viewed
+
+
+def test_word_count():
+    """When checking the word count of an EncEntry,
+    Then the number returned is correct.
+    """
+    enc = Encyclopaedia()
+
+    about_zeus = EncEntry(
+        parent=enc,
+        name="Zeus",
+        text=["Test Text To Check Word Count"],
+    )
+
+    assert 6 == about_zeus.word_count

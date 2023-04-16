@@ -44,7 +44,7 @@ jobs:
         run: tox run -e ${{matrix.PY_VER}};
 
       - name: "Upload coverage"
-        if: ${{ matrix.PY_VER == 'py39' }}
+        uses: coverallsapp/github-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: coveralls
+        if: ${{ matrix.PY_VER == 'py39' }}

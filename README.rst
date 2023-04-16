@@ -1,9 +1,9 @@
 Encyclopaedia Framework for Ren'Py
 ==================================
 
-.. image:: https://api.travis-ci.org/jsfehler/renpy-encyclopaedia.svg?branch=master
-    :target: https://travis-ci.org/jsfehler/renpy-encyclopaedia
-    :alt: See Build Status on Travis CI
+.. image:: https://github.com/jsfehler/renpy-encyclopaedia/workflows/CI/badge.svg
+    :target: https://github.com/jsfehler/renpy-encyclopaedia/actions/workflows/test.yml
+    :alt: Build status
 
 .. image:: https://coveralls.io/repos/github/jsfehler/renpy-encyclopaedia/badge.svg?branch=master
     :target: https://coveralls.io/github/jsfehler/renpy-encyclopaedia?branch=master

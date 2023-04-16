@@ -46,6 +46,3 @@ jobs:
       - name: "Upload coverage"
         if: ${{ matrix.PY_VER == 'py39' }}
         run: coveralls
-        with:
-          fail_ci_if_error: true
-          verbose: true

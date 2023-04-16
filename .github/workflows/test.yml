@@ -45,5 +45,6 @@ jobs:
 
       - name: "Upload coverage"
         if: ${{ matrix.PY_VER == 'py39' }}
-        env: GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: coveralls

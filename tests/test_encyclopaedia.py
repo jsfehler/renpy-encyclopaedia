@@ -54,7 +54,7 @@ def test_filtering():
         subject="Fruits"
     )
 
-    cucumber = EncEntry(
+    EncEntry(
         parent=enc,
         name="Cucumber",
         text=["Test Text"],

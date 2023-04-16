@@ -102,13 +102,13 @@ def test_reset_sub_page():
         text=["Test Text"],
     )
 
-    ee = EncEntry(
+    EncEntry(
         parent=e,
         name="Sub1",
         text=["Test Text"],
     )
 
-    eee = EncEntry(
+    EncEntry(
         parent=e,
         name="Sub2",
         text=["Test Text"],
@@ -146,7 +146,7 @@ def test_next_page():
         text=["Test Text"],
     )
 
-    eee = EncEntry(
+    EncEntry(
         parent=e,
         name="Sub2",
         text=["Test Text"],

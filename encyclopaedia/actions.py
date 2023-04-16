@@ -1,8 +1,9 @@
 import renpy.exports as renpy
+from renpy.store import DictEquality
 from renpy.ui import Action
 
 
-class EncyclopaediaAction(Action):
+class EncyclopaediaAction(Action, DictEquality):
     """Base Action that requires an Encyclopaedia as an argument.
 
     Should only be used for class inheritance.
@@ -10,7 +11,7 @@ class EncyclopaediaAction(Action):
     Args:
         encyclopaedia (Encyclopaedia): The Encyclopaedia instance to use.
     """
-    def __init__(self, encyclopaedia):
+    def __init__(self, encyclopaedia):  # type: (Encyclopaedia) -> None
         self.enc = encyclopaedia
 
 

@@ -30,7 +30,7 @@ class SetEntryAction(EncyclopaediaAction):
 
         self.entry = entry
 
-    def set_entry(self):  # type: () -> None
+    def set_entry(self) -> None:
         # Find the position of the entry
         if self.enc.show_locked_entry is False:
             target_position = self.enc.unlocked_entries.index(self.entry)
@@ -74,7 +74,7 @@ class ChangeAction(EncyclopaediaAction):
         # If the button is active or not.
         self.block = block
 
-    def get_sensitive(self):  # type: () -> bool
+    def get_sensitive(self) -> bool:
         """Determines if the button should be alive or not.
 
         Returns:
@@ -182,7 +182,7 @@ class SortEncyclopaedia(EncyclopaediaAction):
         return self.enc.sorting_mode == self.sorting_mode
 
 
-def _build_subject_filter(enc, subject):
+def _build_subject_filter(enc, subject: str) -> None:
     """Build an encyclopaedia's filtered_entries based on the subject given.
 
     Args:
@@ -212,7 +212,7 @@ class FilterBySubject(EncyclopaediaAction):
 
         renpy.restart_interaction()
 
-    def get_selected(self):
+    def get_selected(self) -> bool:
         self.selected = self.enc.filtering == self.subject
         return self.selected
 
@@ -220,7 +220,7 @@ class FilterBySubject(EncyclopaediaAction):
 class ClearFilter(EncyclopaediaAction):
     """Stop filtering an Encyclopaedia.
     """
-    def __call__(self):
+    def __call__(self) -> None:
         self.enc.filtering = False
         renpy.restart_interaction()
 
@@ -262,6 +262,6 @@ class ToggleShowLockedButtonsAction(EncyclopaediaAction):
 class ToggleShowLockedEntryAction(EncyclopaediaAction):
     """Toggles if locked Entries can be viewed.
     """
-    def __call__(self):
+    def __call__(self) -> None:
         self.enc.show_locked_entry = not self.enc.show_locked_entry
         renpy.restart_interaction()

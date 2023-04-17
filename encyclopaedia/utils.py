@@ -1,3 +1,5 @@
+from typing import Union
+
 from renpy.display import im
 from renpy.python import RevertableList
 
@@ -30,7 +32,7 @@ def enc_tint(image, tint_amount):
     return tinted_image
 
 
-def string_to_list(given_text):  # type: (Optional[str, List]) -> List
+def string_to_list(given_text: Union[str, list[str]]) -> list[str]:
     """Turn a string into a list containing that string.
 
     Each list item represents a paragraph.
@@ -38,10 +40,10 @@ def string_to_list(given_text):  # type: (Optional[str, List]) -> List
     assuming a string with no list = one paragraph.
 
     Args:
-        given_text [str|list]
+        given_text
 
     Returns:
-        list
+        list[str]
     """
     # If the text is already in a list, just return it.
     if type(given_text) in (RevertableList, list):

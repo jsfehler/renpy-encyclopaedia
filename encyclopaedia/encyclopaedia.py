@@ -14,13 +14,13 @@ class Encyclopaedia(EventEmitter, store.object):
     """Container that manages the behaviour of a collection of EncEntry objects.
 
     Args:
-        sorting_mode (int): The type of sorting used.
+        sorting_mode: The type of sorting used.
             Default sorting is by Number.
-        show_locked_buttons (bool): If True, locked entries show a
+        show_locked_buttons: If True, locked entries show a
             placeholder label on the listing screen.
-        show_locked_entry (bool): If True, locked entries can be viewed, but
+        show_locked_entry: If True, locked entries can be viewed, but
             the data is hidden from view with a placeholder.
-        entry_screen (str): The Ren'Py screen to display an open entry.
+        entry_screen: The Ren'Py screen to display an open entry.
 
     Attributes:
         all_entries (list): All entries, regardless of status.
@@ -56,12 +56,12 @@ class Encyclopaedia(EventEmitter, store.object):
     operators = {'<=': operator.le, '>=': operator.ge}
 
     def __init__(self,
-                 sorting_mode=0,  # type: (int)
-                 show_locked_buttons=False,  # type: (bool)
-                 show_locked_entry=False,  # type: (bool)
-                 entry_screen="encyclopaedia_entry",  # type: (str)
-                 tint_locked_image=True,  # type: (bool)
-                 ):
+                 sorting_mode: int = 0,
+                 show_locked_buttons: bool = False,
+                 show_locked_entry: bool = False,
+                 entry_screen: str = "encyclopaedia_entry",
+                 tint_locked_image: bool = True,
+                 ) -> None:
 
         self.sorting_mode = sorting_mode
         self.default_sorting_mode = sorting_mode
@@ -71,9 +71,9 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.tint_locked_image = tint_locked_image
 
-        self.all_entries = []  # type: (List)
-        self.unlocked_entries = []  # type: (List)
-        self.filtered_entries = []  # type: (List)
+        self.all_entries = []  # type: (list[EncEntry])
+        self.unlocked_entries = []  # type: (list[EncEntry])
+        self.filtered_entries = []  # type: (list[EncEntry])
 
         self.filtering = False
 
@@ -91,7 +91,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.labels = Labels(self)
 
-        self.subjects = []  # type: (List)
+        self.subjects: list[str] = []
 
         self.active = None
         self._current_entries = self.all_entries
@@ -102,11 +102,11 @@ class Encyclopaedia(EventEmitter, store.object):
             "entry_unlocked": [],  # Run whenever a child entry is unlocked.
         }
 
-    def __str__(self):  # type: () -> str
+    def __str__(self) -> str:
         return "Encyclopaedia: {} entries total".format(self._size_all)
 
     @property
-    def current_entries(self):  # type: () -> List[EncEntry]
+    def current_entries(self):  # type: () -> list[EncEntry]
         """Depending on which viewing options are set,
         returns a list of entries.
         """
@@ -120,11 +120,11 @@ class Encyclopaedia(EventEmitter, store.object):
         return current_entries
 
     @current_entries.setter
-    def current_entries(self, item):  # type: (List) -> None
+    def current_entries(self, item):  # type: (list) -> None
         self._current_entries = item
 
     @property
-    def percentage_unlocked(self):  # type: () -> float
+    def percentage_unlocked(self) -> float:
         """Gets the percentage of the Encyclopaedia that's unlocked.
 
         Returns:
@@ -147,7 +147,7 @@ class Encyclopaedia(EventEmitter, store.object):
         return percentage
 
     @property
-    def number_of_visible_entries(self):  # type: () -> int
+    def number_of_visible_entries(self) -> int:
         """Whatever the maximum size of the entry list should be,
         based on if locked entries should be shown or not.
         """
@@ -155,7 +155,7 @@ class Encyclopaedia(EventEmitter, store.object):
             return self._size_all
         return self._size_unlocked
 
-    def set_global_locked_name(self, placeholder):  # type: (str) -> None
+    def set_global_locked_name(self, placeholder: str) -> None:
         """Sets all the locked names for all entries to the same string.
 
         Args:
@@ -175,7 +175,7 @@ class Encyclopaedia(EventEmitter, store.object):
                 (tint_amount[0], tint_amount[1], tint_amount[2])
             )
 
-    def sort_entries(self, entries, sorting=0, reverse=False):
+    def sort_entries(self, entries, sorting: int = 0, reverse=False) -> None:
         """Sort entry lists by whatever the current sorting mode is.
 
         Args:
@@ -197,13 +197,13 @@ class Encyclopaedia(EventEmitter, store.object):
             if self.locked_at_bottom:
                 push_locked_to_bottom(entries)
 
-    def check_position(self, op, position, wall):
+    def check_position(self, op: str, position: int, wall: int) -> bool:
         """Determines if the Prev/Next Actions should be active or not.
 
         Args:
-            op (str): The operator to use
-            position (int): The position of the entry
-            wall (int): The limit to check against
+            op: The operator to use
+            position: The position of the entry
+            wall: The limit to check against
 
         Returns:
             bool

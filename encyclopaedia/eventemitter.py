@@ -1,5 +1,5 @@
 class EventEmitter:
-    def on(self, ev_name):
+    def on(self, ev_name: str):
         """Decorator to register a new callback function to an event."""
         def wrapper(callback):
             self.callbacks[ev_name] = self.callbacks.get(ev_name, [])
@@ -7,7 +7,7 @@ class EventEmitter:
 
         return wrapper
 
-    def emit(self, ev_name):  # type: (str) -> None
+    def emit(self, ev_name: str) -> None:
         """Emit an event, triggered every callback registered to it."""
         for callback in self.callbacks[ev_name]:
             callback(self)

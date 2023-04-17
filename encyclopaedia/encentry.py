@@ -1,4 +1,5 @@
 from operator import itemgetter
+from typing import Optional
 
 from renpy import store
 from renpy.game import persistent
@@ -54,21 +55,20 @@ class EncEntry(EventEmitter, store.object):
     """
     def __init__(self,
                  parent=None,
-                 number=None,  # type:  Optional[int]
-                 name="",  # type: Optional[str]
-                 text="",  # type: Optional[str]
-                 subject="",  # type: Optional[str]
-                 viewed=False,  # type: Optional[bool]
-                 viewed_persistent=False,  # type: Optional[bool]
-                 locked=False,  # type: Optional[bool]
-                 locked_persistent=False,  # type: Optional[bool]
-                 image=None,  # type: Optional[str]
-                 locked_name="???",  # type: Optional[str]
-                 locked_text="???",  # type: Optional[str]
-                 locked_image=None,  # type: Optional[str]
+                 number: Optional[int] = None,
+                 name: Optional[str] = "",
+                 text: Optional[str] = "",
+                 subject: Optional[str] = "",
+                 viewed: Optional[bool] = False,
+                 viewed_persistent: Optional[bool] = False,
+                 locked: Optional[bool] = False,
+                 locked_persistent: Optional[bool] = False,
+                 image: Optional[str] = None,
+                 locked_name: Optional[str] = "???",
+                 locked_text: Optional[str] = "???",
+                 locked_image: Optional[str] = None,
                  locked_image_tint=(0.0, 0.0, 0.0)
-                 ):
-        # type: (...) -> None
+                 ) -> None:
 
         self.tint_locked_image = False
         # Place the entry into the assigned Encyclopaedia or EncEntry.
@@ -132,18 +132,18 @@ class EncEntry(EventEmitter, store.object):
         if self.viewed_persistent:
             self._viewed = getattr(persistent, self._name + "_viewed")
 
-    def __str__(self):  # type: () -> str
+    def __str__(self) -> str:
         return "EncEntry: {}".format(self.label)
 
     @property
-    def locked(self):  # type: () -> bool
+    def locked(self) -> bool:
         """Determine if the entry's data can be viewed or not.
             Changing this variable will modify the entry's locked status.
         """
         return self._locked
 
     @locked.setter
-    def locked(self, new_value):  # type: (bool) -> None
+    def locked(self, new_value: bool) -> None:
         if self.locked_persistent:
             setattr(persistent, self._name + "_locked", new_value)
 
@@ -159,21 +159,21 @@ class EncEntry(EventEmitter, store.object):
             self.emit("unlocked")
 
     @property
-    def viewed(self):  # type: () -> bool
+    def viewed(self) -> bool:
         """Determines if the entry has been viewed or not.
             Changing this variable will modify the entry's viewed status.
         """
         return self._viewed
 
     @viewed.setter
-    def viewed(self, new_value):  # type: (bool) -> None
+    def viewed(self, new_value: bool) -> None:
         if self.viewed_persistent:
             setattr(persistent, self._name + "_viewed", new_value)
 
         self._viewed = new_value
 
     @property
-    def label(self):  # type: () -> str
+    def label(self) -> str:
         """The number and name of the entry, in the format of 'number: name'
         """
         return "{:02}: {}".format(self.number, self.name)
@@ -186,7 +186,7 @@ class EncEntry(EventEmitter, store.object):
         return self.sub_entry_list[self._current_page][1]
 
     @current_page.setter
-    def current_page(self, val):  # type: (int) -> None
+    def current_page(self, val: int) -> None:
         self._current_page = val - 1
 
     def __get_entry_data(self, data, locked_data):  # type: (Any, Any) -> Any
@@ -202,34 +202,34 @@ class EncEntry(EventEmitter, store.object):
         return data
 
     @property
-    def name(self):  # type: () -> str
+    def name(self) -> str:
         """The name for the entry. Return placeholder when entry is locked."""
         return self.__get_entry_data(self._name, self.locked_name)
 
     @name.setter
-    def name(self, val):  # type: (str) -> None
+    def name(self, val: str) -> None:
         self._name = val
 
         self.viewed = False
 
     @property
-    def text(self):  # type: () -> list[str]
+    def text(self) -> list[str]:
         """The text for the entry. Return placeholder when entry is locked."""
         return self.__get_entry_data(self._text, self.locked_text)
 
     @text.setter
-    def text(self, val):  # type: (str) -> None
+    def text(self, val: str) -> None:
         self._text = val
 
         self.viewed = False
 
     @property
-    def image(self):  # type: () -> str
+    def image(self) -> str:
         """The image for the entry. Return placeholder when entry is locked."""
         return self.__get_entry_data(self._image, self.locked_image)
 
     @image.setter
-    def image(self, val):  # type: (str) -> None
+    def image(self, val: str) -> None:
         self.has_image = True
         self._image = val
 
@@ -276,7 +276,7 @@ class EncEntry(EventEmitter, store.object):
         return False
 
     @property
-    def word_count(self):
+    def word_count(self) -> int:
         """Get the word count for the EncEntry's text.
 
         Returns:

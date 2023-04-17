@@ -159,7 +159,7 @@ class ChangePageAction(ChangeAction):
 
 
 class SortEncyclopaedia(EncyclopaediaAction):
-    """Sorts the entries based on encyclopaedia.sorting_mode.
+    """Sort the entries based on encyclopaedia.sorting_mode.
 
     Args:
         encyclopaedia: The Encyclopaedia instance to use.
@@ -204,8 +204,7 @@ def _build_subject_filter(enc: 'Encyclopaedia', subject: str) -> None:
 
 
 class FilterBySubject(EncyclopaediaAction):
-    """Create a filter for entries, based on the given subject.
-    """
+    """Create a filter for entries, based on the given subject."""
     def __init__(self, encyclopaedia: 'Encyclopaedia', subject: str):
         super(FilterBySubject, self).__init__(encyclopaedia)
 
@@ -224,8 +223,7 @@ class FilterBySubject(EncyclopaediaAction):
 
 
 class ClearFilter(EncyclopaediaAction):
-    """Stop filtering an Encyclopaedia.
-    """
+    """Stop filtering an Encyclopaedia."""
     def __call__(self) -> None:
         self.enc.filtering = False
         renpy.restart_interaction()
@@ -242,8 +240,7 @@ class ResetSubPageAction(EncyclopaediaAction):
 
 
 class ToggleShowLockedButtonsAction(EncyclopaediaAction):
-    """Toggles if locked Entries will be visible in the list of Entries.
-    """
+    """Toggle if locked Entries will be visible in the list of Entries."""
     def __call__(self) -> None:
         self.enc.show_locked_buttons = not self.enc.show_locked_buttons
 
@@ -266,8 +263,7 @@ class ToggleShowLockedButtonsAction(EncyclopaediaAction):
 
 
 class ToggleShowLockedEntryAction(EncyclopaediaAction):
-    """Toggles if locked Entries can be viewed.
-    """
+    """Toggle if locked Entries can be viewed."""
     def __call__(self) -> None:
         self.enc.show_locked_entry = not self.enc.show_locked_entry
         renpy.restart_interaction()

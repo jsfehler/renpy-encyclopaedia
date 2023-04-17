@@ -1,11 +1,14 @@
 from operator import itemgetter
-from typing import Optional
+from typing import Any, Optional, Union, TYPE_CHECKING
 
 from renpy import store
 from renpy.game import persistent
 
 from .utils import enc_tint, string_to_list
 from .eventemitter import EventEmitter
+
+if TYPE_CHECKING:
+    from .encyclopaedia import Encyclopaedia
 
 
 class EncEntry(EventEmitter, store.object):
@@ -54,14 +57,14 @@ class EncEntry(EventEmitter, store.object):
         has_sub_entry (bool): If an entry has any sub-entries.
     """
     def __init__(self,
-                 parent=None,
+                 parent: Optional[Union['Encyclopaedia', 'EncEntry']] = None,
                  number: Optional[int] = None,
-                 name: Optional[str] = "",
+                 name: str = "",
                  text: Optional[str] = "",
                  subject: Optional[str] = "",
-                 viewed: Optional[bool] = False,
+                 viewed: bool = False,
                  viewed_persistent: Optional[bool] = False,
-                 locked: Optional[bool] = False,
+                 locked: bool = False,
                  locked_persistent: Optional[bool] = False,
                  image: Optional[str] = None,
                  locked_name: Optional[str] = "???",
@@ -75,7 +78,7 @@ class EncEntry(EventEmitter, store.object):
 
         # self.parent is set to None so that add_entry doesn't think
         # this EncEntry is already inside an Encyclopaedia.
-        self.parent = None
+        self.parent: Optional[Union['Encyclopaedia', 'EncEntry']] = None
         self.number = number
 
         self.locked_name = locked_name
@@ -112,16 +115,16 @@ class EncEntry(EventEmitter, store.object):
 
         self.pages = 1
 
-        # List: The sub-entries and their position.
-        #   The parent EncEntry must be the first in the sub-entry list.
-        self.sub_entry_list = [[1, self]]
+        # The sub-entries and their position.
+        # The parent EncEntry must be the first in the sub-entry list.
+        self.sub_entry_list: list[list[Any]] = [[1, self]]
 
         self.has_sub_entry = False
 
         # Property: Set with Integer, get returns the page.
         self._current_page = 0
 
-        self.callbacks = {
+        self.callbacks: dict[str, list] = {
             "viewed": [],  # Run when this entry is viewed for the first time.
             "unlocked": [],  # Run when this entry is unlocked.
             "entry_unlocked": [],  # Run whenever a child entry is unlocked.
@@ -179,7 +182,7 @@ class EncEntry(EventEmitter, store.object):
         return "{:02}: {}".format(self.number, self.name)
 
     @property
-    def current_page(self):  # type: () -> EncEntry
+    def current_page(self) -> 'EncEntry':
         """Get the sub-page that's currently viewing viewed.
             Setting this attribute should be done using an integer.
         """
@@ -189,7 +192,7 @@ class EncEntry(EventEmitter, store.object):
     def current_page(self, val: int) -> None:
         self._current_page = val - 1
 
-    def __get_entry_data(self, data, locked_data):  # type: (Any, Any) -> Any
+    def __get_entry_data(self, data: Any, locked_data: Any) -> Any:
         """Used by self.name, self.text, and self.image to control if
         the locked placeholder or actual entry data should be returned.
 
@@ -218,7 +221,7 @@ class EncEntry(EventEmitter, store.object):
         return self.__get_entry_data(self._text, self.locked_text)
 
     @text.setter
-    def text(self, val: str) -> None:
+    def text(self, val: list[str]) -> None:
         self._text = val
 
         self.viewed = False
@@ -235,7 +238,7 @@ class EncEntry(EventEmitter, store.object):
 
         self.viewed = False
 
-    def add_entry(self, entry):  # type: (EncEntry) -> bool
+    def add_entry(self, entry: 'EncEntry') -> bool:
         """Adds multiple pages to the entry in the form of sub-entries.
 
         Args:

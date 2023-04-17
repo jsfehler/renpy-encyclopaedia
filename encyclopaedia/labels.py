@@ -1,4 +1,9 @@
+from typing import TYPE_CHECKING
+
 from renpy import store
+
+if TYPE_CHECKING:
+    from .encyclopaedia import Encyclopaedia
 
 
 class Labels(store.object):
@@ -20,7 +25,7 @@ class Labels(store.object):
         unread_entry_label (str): Default for the tag next to unread entries
         locked_entry_label (str): Default for a "Locked Entry" button
     """
-    def __init__(self, encyclopaedia):  # type: (Encyclopaedia) -> None
+    def __init__(self, encyclopaedia: 'Encyclopaedia') -> None:
         self.encyclopaedia = encyclopaedia
 
         self.percentage_label = '%'

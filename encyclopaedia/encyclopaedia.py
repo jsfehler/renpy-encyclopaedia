@@ -1,6 +1,7 @@
 from math import floor
 import operator
 from operator import attrgetter
+from typing import Optional, TYPE_CHECKING
 
 from renpy import store
 
@@ -8,6 +9,9 @@ from .actions import *  # NOQA: F403
 from .labels import Labels
 from .entry_sorting import push_locked_to_bottom
 from .eventemitter import EventEmitter
+
+if TYPE_CHECKING:
+    from .encentry import EncEntry
 
 
 class Encyclopaedia(EventEmitter, store.object):
@@ -71,9 +75,9 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.tint_locked_image = tint_locked_image
 
-        self.all_entries = []  # type: (list[EncEntry])
-        self.unlocked_entries = []  # type: (list[EncEntry])
-        self.filtered_entries = []  # type: (list[EncEntry])
+        self.all_entries: list['EncEntry'] = []
+        self.unlocked_entries: list['EncEntry'] = []
+        self.filtered_entries: list['EncEntry'] = []
 
         self.filtering = False
 
@@ -93,7 +97,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.subjects: list[str] = []
 
-        self.active = None
+        self.active: Optional['EncEntry'] = None
         self._current_entries = self.all_entries
 
         self.locked_at_bottom = True
@@ -106,7 +110,7 @@ class Encyclopaedia(EventEmitter, store.object):
         return "Encyclopaedia: {} entries total".format(self._size_all)
 
     @property
-    def current_entries(self):  # type: () -> list[EncEntry]
+    def current_entries(self) -> list['EncEntry']:
         """Depending on which viewing options are set,
         returns a list of entries.
         """
@@ -175,13 +179,18 @@ class Encyclopaedia(EventEmitter, store.object):
                 (tint_amount[0], tint_amount[1], tint_amount[2])
             )
 
-    def sort_entries(self, entries, sorting: int = 0, reverse=False) -> None:
+    def sort_entries(
+        self,
+        entries: list,
+        sorting: int = 0,
+        reverse: bool = False,
+    ) -> None:
         """Sort entry lists by whatever the current sorting mode is.
 
         Args:
-            entries (list): The entry list to sort
-            sorting (int): The sorting mode to use
-            reverse (bool): If the sorting should be done in reverse or not
+            entries: The entry list to sort
+            sorting: The sorting mode to use
+            reverse: If the sorting should be done in reverse or not
         """
         if sorting == self.SORT_NUMBER:
             entries.sort(key=attrgetter('number'))

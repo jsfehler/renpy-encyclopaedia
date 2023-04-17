@@ -42,8 +42,8 @@ class Encyclopaedia(EventEmitter, store.object):
         labels (Labels): The current label controller.
         subjects (list): Collection of every subject.
         active (EncEntry): The currently open entry.
-        locked_at_bottom (bool): If locked entries should appear at the bottom
-            of the entry list or not.
+        locked_at_bottom: True if locked entries should appear at
+            the bottom of the entry list or not.
     """
     # Constants for the different types of sorting available.
     SORT_NUMBER = 0
@@ -100,7 +100,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self.active: Optional['EncEntry'] = None
         self._current_entries = self.all_entries
 
-        self.locked_at_bottom = True
+        self.locked_at_bottom: bool = True
 
         self.callbacks = {
             "entry_unlocked": [],  # Run whenever a child entry is unlocked.
@@ -124,7 +124,7 @@ class Encyclopaedia(EventEmitter, store.object):
         return current_entries
 
     @current_entries.setter
-    def current_entries(self, item):  # type: (list) -> None
+    def current_entries(self, item: list['EncEntry']) -> None:
         self._current_entries = item
 
     @property
@@ -163,16 +163,16 @@ class Encyclopaedia(EventEmitter, store.object):
         """Sets all the locked names for all entries to the same string.
 
         Args:
-            placeholder (str): Text to use for every locked name
+            placeholder: Text to use for every locked name
         """
         for item in self.all_entries:
             item.locked_name = placeholder
 
-    def set_global_locked_image_tint(self, tint_amount):
+    def set_global_locked_image_tint(self, tint_amount: tuple[int, int, int]):
         """Sets all the locked images for all entries to use the same tint.
 
         Args:
-            tint_amount (tuple): An RGB value, ie:(R, G, B)
+            tint_amount: An RGB value, ie: (R, G, B)
         """
         for item in self.all_entries:
             item[1].tint_locked_image(
@@ -221,11 +221,11 @@ class Encyclopaedia(EventEmitter, store.object):
             return True
         return False
 
-    def add_entry_to_unlocked_entries(self, entry):
+    def add_entry_to_unlocked_entries(self, entry: 'EncEntry'):
         """Add an entry to the list of unlocked entries.
 
         Args:
-            entry (EncEntry): The Entry to add to the unlocked entries list.
+            entry: The Entry to add to the unlocked entries list.
         """
 
         self.unlocked_entries.append(entry)
@@ -241,14 +241,14 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self._size_unlocked = len(self.unlocked_entries)
 
-    def add_entry(self, entry):
+    def add_entry(self, entry: 'EncEntry'):
         """Adds an entry to the Encyclopaedia's internal lists and sorts it.
 
         Attempts to create duplicates are softly ignored.
         subjects list is updated when a new entry is added.
 
         Args:
-            entry (EncEntry): The Entry to add to the Encyclopaedia
+            entry: The Entry to add to the Encyclopaedia
         """
         if entry.parent is not None and entry.parent != self:
             raise ValueError(
@@ -302,7 +302,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self.subjects.sort()
 
     @property
-    def word_count(self):
+    def word_count(self) -> int:
         """Get the total word count for the Encyclopaedia.
 
         Returns:
@@ -385,7 +385,7 @@ class Encyclopaedia(EventEmitter, store.object):
             block=block
         )
 
-    def Sort(self, sorting_mode=None):  # NOQA: F405
+    def Sort(self, sorting_mode: Optional[int] = None):  # NOQA: F405
         """Wrapper around an Action. Use with a renpy button.
 
         Args:
@@ -400,7 +400,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
         return SortEncyclopaedia(self, sorting_mode)  # NOQA: F405
 
-    def SetEntry(self, given_entry):
+    def SetEntry(self, given_entry: 'EncEntry'):
         """Wrapper around an Action. Use with a renpy button.
 
         Returns:
@@ -432,7 +432,7 @@ class Encyclopaedia(EventEmitter, store.object):
         """
         return ToggleShowLockedEntryAction(self)  # NOQA: F405
 
-    def FilterBySubject(self, subject):
+    def FilterBySubject(self, subject: str):
         """Wrapper around an Action. Use with a renpy button.
 
         Returns:

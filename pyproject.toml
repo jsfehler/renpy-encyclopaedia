@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "renpy-encyclopaedia"
+version = "2.6.0"
+authors = [
+  { name="jsfehler" },
+]
+description = "A Ren'Py plugin to create an Encyclopaedia/Glossary/Bestiary or similar system."
+readme = "README.rst"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/jsfehler/renpy-encyclopaedia"
+"Bug Tracker" = "https://github.com/jsfehler/renpy-encyclopaedia/issues"

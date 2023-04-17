@@ -239,7 +239,7 @@ class EncEntry(EventEmitter, store.object):
         self.viewed = False
 
     def add_entry(self, entry: 'EncEntry') -> bool:
-        """Adds multiple pages to the entry in the form of sub-entries.
+        """Add multiple pages to the entry in the form of sub-entries.
 
         Args:
             entry: The entry to add as a sub-entry.

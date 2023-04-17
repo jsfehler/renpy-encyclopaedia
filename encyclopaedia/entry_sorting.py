@@ -1,8 +1,12 @@
 from operator import attrgetter
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .encentry import EncEntry
 
 
-def push_locked_to_bottom(seq):
-    """Moves all the locked entries in a list of entries to
+def push_locked_to_bottom(seq: list['EncEntry']) -> list['EncEntry']:
+    """Move all the locked entries in a list of entries to
     the bottom of the list.
 
     Args:

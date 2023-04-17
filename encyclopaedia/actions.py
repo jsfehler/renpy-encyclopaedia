@@ -2,6 +2,12 @@ import renpy.exports as renpy
 from renpy.store import DictEquality
 from renpy.ui import Action
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .encyclopaedia import Encyclopaedia
+    from .encentry import EncEntry
+
 
 class EncyclopaediaAction(Action, DictEquality):
     """Base Action that requires an Encyclopaedia as an argument.
@@ -9,9 +15,9 @@ class EncyclopaediaAction(Action, DictEquality):
     Should only be used for class inheritance.
 
     Args:
-        encyclopaedia (Encyclopaedia): The Encyclopaedia instance to use.
+        encyclopaedia: The Encyclopaedia instance to use.
     """
-    def __init__(self, encyclopaedia):  # type: (Encyclopaedia) -> None
+    def __init__(self, encyclopaedia: 'Encyclopaedia') -> None:
         self.enc = encyclopaedia
 
 
@@ -22,10 +28,10 @@ class SetEntryAction(EncyclopaediaAction):
     Used for opening entries directly with a button.
 
     Args:
-        encyclopaedia (Encyclopaedia): The Encyclopaedia instance to use.
-        entry (EncEntry): The entry to be made active.
+        encyclopaedia: The Encyclopaedia instance to use.
+        entry: The entry to be made active.
     """
-    def __init__(self, encyclopaedia, entry):
+    def __init__(self, encyclopaedia: 'Encyclopaedia', entry: 'EncEntry'):
         super(SetEntryAction, self).__init__(encyclopaedia)
 
         self.entry = entry
@@ -61,11 +67,11 @@ class ChangeAction(EncyclopaediaAction):
     """Base Action that swaps an open entry/page for the previous or next one.
 
     Args:
-        encyclopaedia (Encyclopaedia): The Encyclopaedia instance to use.
-        direction (bool): The direction to go in. 0 for back, 1 for forward.
-        block (bool): True if at the first or last entry
+        encyclopaedia: The Encyclopaedia instance to use.
+        direction: The direction to go in. 0 for back, 1 for forward.
+        block: True if at the first or last entry
     """
-    def __init__(self, encyclopaedia, direction, block):
+    def __init__(self, encyclopaedia: 'Encyclopaedia', direction: bool, block: bool):
         super(ChangeAction, self).__init__(encyclopaedia)
 
         # Determines if it's going to the previous or next entry.
@@ -91,7 +97,7 @@ class ChangeEntryAction(ChangeAction):
     Used by Encyclopaedia's PreviousEntry() and NextEntry() functions.
     """
 
-    def get_entry(self):  # type: () -> EncEntry
+    def get_entry(self) -> 'EncEntry':
         """Get the entry at the given index.
 
         If NOT showing locked entries, the next entry we want to see is
@@ -156,10 +162,10 @@ class SortEncyclopaedia(EncyclopaediaAction):
     """Sorts the entries based on encyclopaedia.sorting_mode.
 
     Args:
-        encyclopaedia (Encyclopaedia): The Encyclopaedia instance to use.
-        sorting_mode (bool): The sorting mode to sort by.
+        encyclopaedia: The Encyclopaedia instance to use.
+        sorting_mode: The sorting mode to sort by.
     """
-    def __init__(self, encyclopaedia, sorting_mode=0):
+    def __init__(self, encyclopaedia: 'Encyclopaedia', sorting_mode: int = 0):
         super(SortEncyclopaedia, self).__init__(encyclopaedia)
 
         self.sorting_mode = sorting_mode
@@ -182,12 +188,12 @@ class SortEncyclopaedia(EncyclopaediaAction):
         return self.enc.sorting_mode == self.sorting_mode
 
 
-def _build_subject_filter(enc, subject: str) -> None:
+def _build_subject_filter(enc: 'Encyclopaedia', subject: str) -> None:
     """Build an encyclopaedia's filtered_entries based on the subject given.
 
     Args:
-        enc (Encyclopaedia): The encyclopaedia to filter.
-        subject (str): The subject for the filter.
+        enc: The encyclopaedia to filter.
+        subject: The subject for the filter.
     """
     if enc.show_locked_buttons is False:
         entries = enc.unlocked_entries
@@ -200,7 +206,7 @@ def _build_subject_filter(enc, subject: str) -> None:
 class FilterBySubject(EncyclopaediaAction):
     """Create a filter for entries, based on the given subject.
     """
-    def __init__(self, encyclopaedia, subject):
+    def __init__(self, encyclopaedia: 'Encyclopaedia', subject: str):
         super(FilterBySubject, self).__init__(encyclopaedia)
 
         self.subject = subject
@@ -238,7 +244,7 @@ class ResetSubPageAction(EncyclopaediaAction):
 class ToggleShowLockedButtonsAction(EncyclopaediaAction):
     """Toggles if locked Entries will be visible in the list of Entries.
     """
-    def __call__(self):
+    def __call__(self) -> None:
         self.enc.show_locked_buttons = not self.enc.show_locked_buttons
 
         # Ensure the filtering isn't broken by hiding buttons.

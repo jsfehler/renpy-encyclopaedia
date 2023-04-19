@@ -1,0 +1,5 @@
+ignore = ["F405","F821"]
+line-length = 99
+
+[mccabe]
+max-complexity = 8

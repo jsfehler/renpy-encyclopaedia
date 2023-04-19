@@ -264,7 +264,7 @@ class EncEntry(EventEmitter, store.object):
 
         entry.parent = self
 
-        if not [entry.number, entry] in self.sub_entry_list:
+        if [entry.number, entry] not in self.sub_entry_list:
             if entry.locked is False:
                 self.sub_entry_list.append([entry.number, entry])
                 self.sub_entry_list = sorted(

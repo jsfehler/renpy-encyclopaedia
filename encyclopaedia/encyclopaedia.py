@@ -1,7 +1,7 @@
 from math import floor
 import operator
 from operator import attrgetter
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, Union, TYPE_CHECKING
 
 from renpy import store
 
@@ -27,21 +27,21 @@ class Encyclopaedia(EventEmitter, store.object):
         entry_screen: The Ren'Py screen to display an open entry.
 
     Attributes:
-        all_entries (list): All entries, regardless of status.
-        unlocked_entries (list): Only unlocked entries.
-        filtered_entries (list): Entries that match a subject filter.
-        filtering (bool|str): The subject that's being used as a filter.
-        size_all (int): Length of self.all_entries.
-        size_unlocked (int): Length of self.unlocked_entries.
-        reverse_sorting (bool): Should sorting occur in reverse or not.
-        nest_alphabetical_sort (bool): Should alphabetical sorting display
+        all_entries: All entries, regardless of status.
+        unlocked_entries: Only unlocked entries.
+        filtered_entries: Entries that match a subject filter.
+        filtering: The subject that's being used as a filter.
+        size_all: Length of self.all_entries.
+        size_unlocked: Length of self.unlocked_entries.
+        reverse_sorting: Should sorting occur in reverse or not.
+        nest_alphabetical_sort: Should alphabetical sorting display
             each letter as a subject.
-        current_position (int): Index for the current entry open.
-        sub_current_position (int): Index for the current sub-entry open.
+        current_position: Index for the current entry open.
+        sub_current_position: Index for the current sub-entry open.
             Starts at 1.
-        labels (Labels): The current label controller.
-        subjects (list): Collection of every subject.
-        active (EncEntry): The currently open entry.
+        labels: The current label controller.
+        subjects: Collection of every subject.
+        active: The currently open entry.
         locked_at_bottom: True if locked entries should appear at
             the bottom of the entry list or not.
     """
@@ -79,21 +79,21 @@ class Encyclopaedia(EventEmitter, store.object):
         self.unlocked_entries: list['EncEntry'] = []
         self.filtered_entries: list['EncEntry'] = []
 
-        self.filtering = False
+        self.filtering: Union[bool, str] = False
 
-        self._size_all = 0
-        self._size_unlocked = 0
+        self._size_all: int = 0
+        self._size_unlocked: int = 0
 
-        self.reverse_sorting = False
+        self.reverse_sorting: bool = False
         if sorting_mode == self.SORT_REVERSE_ALPHABETICAL:
             self.reverse_sorting = True
 
-        self.nest_alphabetical_sort = True
+        self.nest_alphabetical_sort: bool = True
 
-        self.current_position = 0
-        self.sub_current_position = 1
+        self.current_position: int = 0
+        self.sub_current_position: int = 1
 
-        self.labels = Labels(self)
+        self.labels: Labels = Labels(self)
 
         self.subjects: list[str] = []
 

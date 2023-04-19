@@ -158,6 +158,9 @@ class PreviousPage(EncyclopaediaAction):
         Return:
             bool: True if the button should be alive, else False.
         """
+        if not self.enc.active:
+            return False
+
         return not (self.enc.active._current_page - 1) <= 1
 
 
@@ -182,6 +185,9 @@ class NextPage(EncyclopaediaAction):
         Return:
             bool: True if the button should be alive, else False.
         """
+        if not self.enc.active:
+            return False
+
         return not (self.enc.active._current_page + 1) >= self.enc.active.pages
 
 

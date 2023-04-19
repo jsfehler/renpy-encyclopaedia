@@ -71,7 +71,7 @@ class ChangeAction(EncyclopaediaAction):
         direction: The direction to go in. 0 for back, 1 for forward.
         block: True if at the first or last entry
     """
-    def __init__(self, encyclopaedia: 'Encyclopaedia', direction: bool, block: bool):
+    def __init__(self, encyclopaedia: 'Encyclopaedia', direction: int, block: bool):
         super(ChangeAction, self).__init__(encyclopaedia)
 
         # Determines if it's going to the previous or next entry.

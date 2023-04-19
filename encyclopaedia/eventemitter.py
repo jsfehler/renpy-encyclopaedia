@@ -1,4 +1,7 @@
 class EventEmitter:
+    def __init__(self) -> None:
+        self.callbacks: dict[str, list] = {}
+
     def on(self, ev_name: str):
         """Decorator to register a new callback function to an event."""
         def wrapper(callback):

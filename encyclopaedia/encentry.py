@@ -60,7 +60,7 @@ class EncEntry(EventEmitter, store.object):
                  parent: Optional[Union['Encyclopaedia', 'EncEntry']] = None,
                  number: Optional[int] = None,
                  name: str = "",
-                 text: str = "",
+                 text: Union[str, list] = "",
                  subject: str = "",
                  viewed: bool = False,
                  viewed_persistent: Optional[bool] = False,

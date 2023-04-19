@@ -136,7 +136,10 @@ class EncEntry(EventEmitter, store.object):
             self._viewed = getattr(persistent, self._name + "_viewed")
 
     def __str__(self) -> str:
-        return "EncEntry: {}".format(self.label)
+        return self.label
+
+    def __repr__(self) -> str:
+        return f"EncEntry: {self.label}"
 
     @property
     def locked(self) -> bool:

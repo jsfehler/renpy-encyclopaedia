@@ -272,7 +272,7 @@ class ToggleShowLockedButtonsAction(EncyclopaediaAction):
         self.enc.show_locked_buttons = not self.enc.show_locked_buttons
 
         # Ensure the filtering isn't broken by hiding buttons.
-        if self.enc.filtering:
+        if isinstance(self.enc.filtering, str):
             _build_subject_filter(self.enc, self.enc.filtering)
 
         # Ensure the sorting isn't broken by hiding buttons.

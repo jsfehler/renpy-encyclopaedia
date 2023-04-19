@@ -355,17 +355,7 @@ class Encyclopaedia(EventEmitter, store.object):
         Returns:
             Screen Action
         """
-        block = self.check_position(
-            '<=',
-            position=self.sub_current_position,
-            wall=1
-        )
-
-        return ChangePageAction(  # NOQA: F405
-            encyclopaedia=self,
-            direction=self.DIRECTION_BACKWARD,
-            block=block
-        )
+        return PreviousPage(encyclopaedia=self)  # NOQA: F405
 
     def NextPage(self):
         """Wrapper around an Action. Use with a renpy button.
@@ -373,17 +363,7 @@ class Encyclopaedia(EventEmitter, store.object):
         Returns:
             Screen Action
         """
-        block = self.check_position(
-            '>=',
-            position=self.sub_current_position,
-            wall=self.active.pages
-        )
-
-        return ChangePageAction(  # NOQA: F405
-            encyclopaedia=self,
-            direction=self.DIRECTION_FORWARD,
-            block=block
-        )
+        return NextPage(encyclopaedia=self)  # NOQA: F405
 
     def Sort(self, sorting_mode: Optional[int] = None):  # NOQA: F405
         """Wrapper around an Action. Use with a renpy button.

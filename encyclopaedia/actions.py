@@ -137,25 +137,52 @@ class ChangeEntryAction(ChangeAction):
             renpy.restart_interaction()
 
 
-class ChangePageAction(ChangeAction):
+class PreviousPage(EncyclopaediaAction):
     """Change the current sub-entry being viewed.
 
     Used for switching from one page to another.
-
-    Used by an Encyclopaedia's PreviousPage() and NextPage() functions.
     """
     def __call__(self):
-        if self.block is False:
-            # The Encyclopaedia's page display changes.
-            self.enc.sub_current_position += self.direction
+        if not self.enc.active:
+            raise AttributeError('Cannot change page when no entry is set.')
 
-            # The EncEntry's current page changes to match.
-            self.enc.active.current_page = self.enc.sub_current_position
+        result = self.enc.active.previous_page()
 
-            if self.enc.active.current_page.viewed is False:
-                self.enc.active.current_page.viewed = True
-
+        if result:
+            self.enc.sub_current_position -= 1
             renpy.restart_interaction()
+
+    def get_sensitive(self) -> bool:
+        """Determine if the button should be alive or not.
+
+        Return:
+            bool: True if the button should be alive, else False.
+        """
+        return not (self.enc.active._current_page - 1) <= 1
+
+
+class NextPage(EncyclopaediaAction):
+    """Change the current sub-entry being viewed.
+
+    Used for switching from one page to another.
+    """
+    def __call__(self):
+        if not self.enc.active:
+            raise AttributeError('Cannot change page when no entry is set.')
+
+        result = self.enc.active.next_page()
+
+        if result:
+            self.enc.sub_current_position += 1
+            renpy.restart_interaction()
+
+    def get_sensitive(self) -> bool:
+        """Determine if the button should be alive or not.
+
+        Return:
+            bool: True if the button should be alive, else False.
+        """
+        return not (self.enc.active._current_page + 1) >= self.enc.active.pages
 
 
 class SortEncyclopaedia(EncyclopaediaAction):
@@ -235,7 +262,7 @@ class ResetSubPageAction(EncyclopaediaAction):
     def __call__(self):
         self.enc.sub_current_position = 1
         if self.enc.active is not None:
-            self.enc.active.current_page = 1
+            self.enc.active.current_page = 0
         renpy.restart_interaction()
 
 

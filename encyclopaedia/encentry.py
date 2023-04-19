@@ -190,7 +190,7 @@ class EncEntry(EventEmitter, store.object):
 
     @current_page.setter
     def current_page(self, val: int) -> None:
-        self._current_page = val - 1
+        self._current_page = val
 
     def __get_entry_data(self, data: Any, locked_data: Any) -> Any:
         """Used by self.name, self.text, and self.image to control if
@@ -277,6 +277,34 @@ class EncEntry(EventEmitter, store.object):
 
                 return True
         return False
+
+    def _change_page(self, direction: int) -> bool:
+        """Change the current sub-entry page."""
+
+        new_page_number = self._current_page + direction
+
+        # Don't allow moving beyond bounds.
+        if new_page_number < 1:
+            return False
+
+        elif new_page_number > self.pages:
+            return False
+
+        self.current_page = new_page_number
+
+        # Update viewed state
+        if self.current_page.viewed is False:
+            self.current_page.viewed = True
+
+        return True
+
+    def previous_page(self) -> bool:
+        """Set the previous sub-entry page as the current page."""
+        return self._change_page(-1)
+
+    def next_page(self) -> bool:
+        """Set the next sub-entry page as the current page."""
+        return self._change_page(1)
 
     @property
     def word_count(self) -> int:

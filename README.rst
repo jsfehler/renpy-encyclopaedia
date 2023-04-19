@@ -28,7 +28,7 @@ Requirements: `tox`
 Running the unit tests
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The unit tests can be run in any of the follow envs: py27, py36, py37
+The unit tests can be run in any of the follow envs: py39
 
 
 .. code-block:: console
@@ -40,7 +40,7 @@ Running the code linter
 
 .. code-block:: console
 
-    tox -e flake8
+    tox -e lint
 
 
 Building the distribution file

@@ -252,15 +252,13 @@ class Encyclopaedia(EventEmitter, store.object):
         """
         if entry.parent is not None and entry.parent != self:
             raise ValueError(
-                "{} is already inside another Encyclopaedia".format(entry),
+                f"{entry} is already inside another Encyclopaedia",
             )
 
         # When a new entry has a number, ensure it's not already used.
         if entry.number is not None:
             if any(i for i in self.all_entries if i.number == entry.number):
-                raise ValueError(
-                    "{} is already taken.".format(entry.number)
-                )
+                raise ValueError(f"{entry.number} is already taken.")
 
         elif entry.number is None:
             if self._size_all > 0:

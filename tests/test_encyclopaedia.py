@@ -404,7 +404,26 @@ def test_word_count_locked():
             parent=enc,
             name="Test Name",
             text=["Test Text"],
-            locked=True
+            locked=True,
         )
 
     assert 10 == enc.word_count
+
+
+def test_add_entry_already_in_page():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+    )
+
+    ee = EncEntry(
+        parent=e,
+        name="Test Page",
+        text=["Test Text"],
+    )
+
+    with pytest.raises(ValueError):
+        enc.add_entry(ee)

@@ -111,8 +111,11 @@ class Encyclopaedia(EventEmitter, store.object):
 
     @property
     def current_entries(self) -> list['EncEntry']:
-        """Depending on which viewing options are set,
-        returns a list of entries.
+        """Get all the entries which should be visible to the user.
+
+        Return:
+            List of EncEntries. If filtering, only entries that match the
+            filter are returned.
         """
         if self.filtering:
             current_entries = self.filtered_entries
@@ -134,7 +137,7 @@ class Encyclopaedia(EventEmitter, store.object):
         If show locked entries, pull from all_entries.
         Else, pull from unlocked_entries.
 
-        Returns:
+        Return:
             EncEntry
         """
         if self.show_locked_entry:
@@ -146,9 +149,9 @@ class Encyclopaedia(EventEmitter, store.object):
 
     @property
     def percentage_unlocked(self) -> float:
-        """Gets the percentage of the Encyclopaedia that's unlocked.
+        """Get the percentage of the Encyclopaedia that's unlocked.
 
-        Returns:
+        Return:
             float: Percentage of the Encyclopaedia that's unlocked
 
         Raises:
@@ -177,7 +180,7 @@ class Encyclopaedia(EventEmitter, store.object):
         return self._size_unlocked
 
     def set_global_locked_name(self, placeholder: str) -> None:
-        """Sets all the locked names for all entries to the same string.
+        """Set all the locked names for all entries to the same string.
 
         Args:
             placeholder: Text to use for every locked name
@@ -186,7 +189,7 @@ class Encyclopaedia(EventEmitter, store.object):
             item.locked_name = placeholder
 
     def set_global_locked_image_tint(self, tint_amount: tuple[int, int, int]):
-        """Sets all the locked images for all entries to use the same tint.
+        """Set all the locked images for all entries to use the same tint.
 
         Args:
             tint_amount: An RGB value, ie: (R, G, B)
@@ -224,7 +227,7 @@ class Encyclopaedia(EventEmitter, store.object):
                 push_locked_to_bottom(entries)
 
     def check_position(self, op: str, position: int, wall: int) -> bool:
-        """Determines if the Prev/Next Actions should be active or not.
+        """Determine if the Prev/Next Actions should be active or not.
 
         Args:
             op: The operator to use
@@ -259,7 +262,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self._size_unlocked = len(self.unlocked_entries)
 
     def add_entry(self, entry: 'EncEntry'):
-        """Adds an entry to the Encyclopaedia's internal lists and sorts it.
+        """Add an entry to the Encyclopaedia's internal lists and sorts it.
 
         Attempts to create duplicates are softly ignored.
         subjects list is updated when a new entry is added.

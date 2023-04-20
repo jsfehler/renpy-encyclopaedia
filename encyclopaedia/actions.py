@@ -221,21 +221,6 @@ class SortEncyclopaedia(EncyclopaediaAction):
         return self.enc.sorting_mode == self.sorting_mode
 
 
-def _build_subject_filter(enc: 'Encyclopaedia', subject: str) -> None:
-    """Build an encyclopaedia's filtered_entries based on the subject given.
-
-    Args:
-        enc: The encyclopaedia to filter.
-        subject: The subject for the filter.
-    """
-    if enc.show_locked_buttons is False:
-        entries = enc.unlocked_entries
-    else:
-        entries = enc.all_entries
-
-    enc.filtered_entries = [i for i in entries if i.subject == subject]
-
-
 class FilterBySubject(EncyclopaediaAction):
     """Create a filter for entries, based on the given subject."""
     def __init__(self, encyclopaedia: 'Encyclopaedia', subject: str):
@@ -246,7 +231,7 @@ class FilterBySubject(EncyclopaediaAction):
     def __call__(self):
         self.enc.filtering = self.subject
 
-        _build_subject_filter(self.enc, self.subject)
+        self.enc._build_subject_filter(self.subject)
 
         renpy.restart_interaction()
 
@@ -279,7 +264,7 @@ class ToggleShowLockedButtonsAction(EncyclopaediaAction):
 
         # Ensure the filtering isn't broken by hiding buttons.
         if isinstance(self.enc.filtering, str):
-            _build_subject_filter(self.enc, self.enc.filtering)
+            self.enc._build_subject_filter(self.enc.filtering)
 
         # Ensure the sorting isn't broken by hiding buttons.
         reverse = False

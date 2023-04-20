@@ -313,6 +313,19 @@ class Encyclopaedia(EventEmitter, store.object):
             count += entry.word_count
         return count
 
+    def _build_subject_filter(self, subject: str) -> None:
+        """Build an encyclopaedia's filtered_entries based on subject.
+
+        Args:
+            subject: The subject for the filter.
+        """
+        if self.show_locked_buttons is False:
+            entries = self.unlocked_entries
+        else:
+            entries = self.all_entries
+
+        self.filtered_entries = [i for i in entries if i.subject == subject]
+
     def PreviousEntry(self):
         """Wrapper around an Action. Use with a renpy button.
 

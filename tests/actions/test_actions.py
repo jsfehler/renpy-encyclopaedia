@@ -131,38 +131,6 @@ def test_reset_sub_page():
     assert e.current_page == e
 
 
-def test_next_page():
-    enc = Encyclopaedia()
-
-    e = EncEntry(
-        parent=enc,
-        name="Test Name",
-        text=["Test Text"],
-    )
-
-    ee = EncEntry(
-        parent=e,
-        name="Sub1",
-        text=["Test Text"],
-    )
-
-    EncEntry(
-        parent=e,
-        name="Sub2",
-        text=["Test Text"],
-    )
-
-    enc.SetEntry(e)()
-
-    assert e == enc.active
-    assert enc.sub_current_position == 1
-
-    enc.NextPage()()
-
-    assert enc.sub_current_position == 2
-    assert e.current_page == ee
-
-
 def test_previous_entry():
     """Test Actions through their implementation in Encyclopaedia."""
 

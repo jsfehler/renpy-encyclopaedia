@@ -287,7 +287,7 @@ class EncEntry(EventEmitter, store.object):
         new_page_number = self._current_page + direction
 
         # Don't allow moving beyond bounds.
-        if new_page_number < 1:
+        if new_page_number < 0:
             return False
 
         elif new_page_number > self.pages:

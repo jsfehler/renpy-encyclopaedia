@@ -128,6 +128,23 @@ class Encyclopaedia(EventEmitter, store.object):
         self._current_entries = item
 
     @property
+    def current_entry(self) -> 'EncEntry':
+        """Get the entry at current_position.
+
+        If show locked entries, pull from all_entries.
+        Else, pull from unlocked_entries.
+
+        Returns:
+            EncEntry
+        """
+        if self.show_locked_entry:
+            entry = self.enc.all_entries[self.current_position]
+        else:
+            entry = self.enc.unlocked_entries[self.current_position]
+
+        return entry
+
+    @property
     def percentage_unlocked(self) -> float:
         """Gets the percentage of the Encyclopaedia that's unlocked.
 

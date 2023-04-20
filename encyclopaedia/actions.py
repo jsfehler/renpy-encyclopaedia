@@ -63,16 +63,21 @@ class SetEntryAction(EncyclopaediaAction):
         renpy.restart_interaction()
 
 
-class ChangeAction(EncyclopaediaAction):
-    """Base Action that swaps an open entry/page for the previous or next one.
+class ChangeEntryAction(EncyclopaediaAction):
+    """Change the current entry being viewed.
+
+    Used for switching from one entry to another.
+
+    Used by Encyclopaedia's PreviousEntry() and NextEntry() functions.
 
     Args:
         encyclopaedia: The Encyclopaedia instance to use.
         direction: The direction to go in. 0 for back, 1 for forward.
         block: True if at the first or last entry
+
     """
     def __init__(self, encyclopaedia: 'Encyclopaedia', direction: int, block: bool):
-        super(ChangeAction, self).__init__(encyclopaedia)
+        super().__init__(encyclopaedia)
 
         # Determines if it's going to the previous or next entry.
         self.direction = direction
@@ -80,47 +85,13 @@ class ChangeAction(EncyclopaediaAction):
         # If the button is active or not.
         self.block = block
 
-    def get_sensitive(self) -> bool:
-        """Determines if the button should be alive or not.
-
-        Returns:
-            bool: True if the button should be alive, else False.
-        """
-        return not self.block
-
-
-class ChangeEntryAction(ChangeAction):
-    """Change the current entry being viewed.
-
-    Used for switching from one entry to another.
-
-    Used by Encyclopaedia's PreviousEntry() and NextEntry() functions.
-    """
-
-    def get_entry(self) -> 'EncEntry':
-        """Get the entry at the given index.
-
-        If NOT showing locked entries, the next entry we want to see is
-        the next entry in unlocked_entries.
-        Else, the next entry we want is the next entry in all_entries.
-
-        Returns:
-            EncEntry
-        """
-        if self.enc.show_locked_entry is False:
-            entry = self.enc.unlocked_entries[self.enc.current_position]
-        else:
-            entry = self.enc.all_entries[self.enc.current_position]
-
-        return entry
-
     def __call__(self):
         if self.block is False:
             # Update the current position.
             self.enc.current_position += self.direction
 
             # Update the active entry.
-            self.enc.active = self.get_entry()
+            self.enc.active = self.enc.current_entry
 
             if self.enc.active.locked is False:
                 # Run the callback, if provided.
@@ -135,6 +106,14 @@ class ChangeEntryAction(ChangeAction):
             self.enc.active.current_page = self.enc.sub_current_position
 
             renpy.restart_interaction()
+
+    def get_sensitive(self) -> bool:
+        """Determines if the button should be alive or not.
+
+        Returns:
+            bool: True if the button should be alive, else False.
+        """
+        return not self.block
 
 
 class PreviousPage(EncyclopaediaAction):

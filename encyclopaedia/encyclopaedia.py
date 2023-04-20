@@ -138,9 +138,9 @@ class Encyclopaedia(EventEmitter, store.object):
             EncEntry
         """
         if self.show_locked_entry:
-            entry = self.enc.all_entries[self.current_position]
+            entry = self.all_entries[self.current_position]
         else:
-            entry = self.enc.unlocked_entries[self.current_position]
+            entry = self.unlocked_entries[self.current_position]
 
         return entry
 

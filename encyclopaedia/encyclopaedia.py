@@ -81,9 +81,6 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.filtering: Union[bool, str] = False
 
-        self._size_all: int = 0
-        self._size_unlocked: int = 0
-
         self.reverse_sorting: bool = False
         if sorting_mode == self.SORT_REVERSE_ALPHABETICAL:
             self.reverse_sorting = True
@@ -107,7 +104,7 @@ class Encyclopaedia(EventEmitter, store.object):
         }
 
     def __str__(self) -> str:
-        return "Encyclopaedia: {} entries total".format(self._size_all)
+        return "Encyclopaedia: {} entries total".format(len(self.all_entries))
 
     @property
     def current_entries(self) -> list['EncEntry']:
@@ -157,8 +154,8 @@ class Encyclopaedia(EventEmitter, store.object):
         Raises:
             ZeroDivisionError: If the Encyclopaedia is empty
         """
-        float_size = float(self._size_unlocked)
-        float_size_all = float(self._size_all)
+        float_size = len(self.unlocked_entries)
+        float_size_all = len(self.all_entries)
 
         try:
             amount_unlocked = float_size / float_size_all
@@ -176,8 +173,8 @@ class Encyclopaedia(EventEmitter, store.object):
         based on if locked entries should be shown or not.
         """
         if self.show_locked_entry:
-            return self._size_all
-        return self._size_unlocked
+            return len(self.all_entries)
+        return len(self.unlocked_entries)
 
     def set_global_locked_name(self, placeholder: str) -> None:
         """Set all the locked names for all entries to the same string.
@@ -259,8 +256,6 @@ class Encyclopaedia(EventEmitter, store.object):
             reverse=self.reverse_sorting
         )
 
-        self._size_unlocked = len(self.unlocked_entries)
-
     def add_entry(self, entry: 'EncEntry'):
         """Add an entry to the Encyclopaedia's internal lists and sorts it.
 
@@ -281,7 +276,7 @@ class Encyclopaedia(EventEmitter, store.object):
                 raise ValueError(f"{entry.number} is already taken.")
 
         elif entry.number is None:
-            if self._size_all > 0:
+            if len(self.all_entries) > 0:
                 # All possible numbers
                 all_numbers = range(self.all_entries[-1].number + 1)[1:]
                 used_numbers = [item.number for item in self.all_entries]
@@ -292,7 +287,7 @@ class Encyclopaedia(EventEmitter, store.object):
                     entry.number = min(free_numbers)
                 else:
                     # Else the entry is the last one.
-                    entry.number = self._size_all + 1
+                    entry.number = len(self.all_entries) + 1
             else:
                 # If there's no entries in the Encyclopaedia yet.
                 entry.number = 1
@@ -309,8 +304,6 @@ class Encyclopaedia(EventEmitter, store.object):
             sorting=self.sorting_mode,
             reverse=self.reverse_sorting
         )
-
-        self._size_all = len(self.all_entries)
 
         if entry.locked is False:
             self.add_entry_to_unlocked_entries(entry)

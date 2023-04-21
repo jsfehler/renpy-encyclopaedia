@@ -31,8 +31,8 @@ class SetEntryAction(EncyclopaediaAction):
         encyclopaedia: The Encyclopaedia instance to use.
         entry: The entry to be made active.
     """
-    def __init__(self, encyclopaedia: 'Encyclopaedia', entry: 'EncEntry'):
-        super(SetEntryAction, self).__init__(encyclopaedia)
+    def __init__(self, encyclopaedia: 'Encyclopaedia', entry: 'EncEntry') -> None:
+        super().__init__(encyclopaedia)
 
         self.entry = entry
 
@@ -60,7 +60,7 @@ class SetEntryAction(EncyclopaediaAction):
 
         self.enc.current_position = target_position
 
-    def __call__(self):
+    def __call__(self) -> None:
         self.set_entry()
 
         # Show the entry screen associated with the encyclopaedia.
@@ -81,7 +81,7 @@ class ChangeEntryAction(EncyclopaediaAction):
         block: True if at the first or last entry
 
     """
-    def __init__(self, encyclopaedia: 'Encyclopaedia', direction: int, block: bool):
+    def __init__(self, encyclopaedia: 'Encyclopaedia', direction: int, block: bool) -> None:
         super().__init__(encyclopaedia)
 
         # Determines if it's going to the previous or next entry.
@@ -90,7 +90,7 @@ class ChangeEntryAction(EncyclopaediaAction):
         # If the button is active or not.
         self.block = block
 
-    def __call__(self):
+    def __call__(self) -> None:
         if self.block is False:
             # Update the current position.
             self.enc.current_position += self.direction
@@ -126,7 +126,7 @@ class PreviousPage(EncyclopaediaAction):
 
     Used for switching from one page to another.
     """
-    def __call__(self):
+    def __call__(self) -> None:
         if not self.enc.active:
             raise AttributeError('Cannot change page when no entry is set.')
 
@@ -153,7 +153,7 @@ class NextPage(EncyclopaediaAction):
 
     Used for switching from one page to another.
     """
-    def __call__(self):
+    def __call__(self) -> None:
         if not self.enc.active:
             raise AttributeError('Cannot change page when no entry is set.')
 
@@ -182,8 +182,8 @@ class SortEncyclopaedia(EncyclopaediaAction):
         encyclopaedia: The Encyclopaedia instance to use.
         sorting_mode: The sorting mode to sort by.
     """
-    def __init__(self, encyclopaedia: 'Encyclopaedia', sorting_mode: int = 0):
-        super(SortEncyclopaedia, self).__init__(encyclopaedia)
+    def __init__(self, encyclopaedia: 'Encyclopaedia', sorting_mode: int = 0) -> None:
+        super().__init__(encyclopaedia)
 
         self.sorting_mode = sorting_mode
 
@@ -191,7 +191,7 @@ class SortEncyclopaedia(EncyclopaediaAction):
         if sorting_mode == self.enc.SORT_REVERSE_ALPHABETICAL:
             self.reverse = True
 
-    def __call__(self):
+    def __call__(self) -> None:
         self.enc.sort_entries(
             entries=self.enc.current_entries,
             sorting=self.sorting_mode,
@@ -201,14 +201,14 @@ class SortEncyclopaedia(EncyclopaediaAction):
         self.enc.sorting_mode = self.sorting_mode
         renpy.restart_interaction()
 
-    def get_selected(self):
+    def get_selected(self) -> bool:
         return self.enc.sorting_mode == self.sorting_mode
 
 
 class FilterBySubject(EncyclopaediaAction):
     """Create a filter for entries, based on the given subject."""
-    def __init__(self, encyclopaedia: 'Encyclopaedia', subject: str):
-        super(FilterBySubject, self).__init__(encyclopaedia)
+    def __init__(self, encyclopaedia: 'Encyclopaedia', subject: str) -> None:
+        super().__init__(encyclopaedia)
 
         self.subject = subject
 
@@ -234,7 +234,7 @@ class ClearFilter(EncyclopaediaAction):
 class ResetSubPageAction(EncyclopaediaAction):
     """Resets the sub-page count to 1. Used when closing the entry screen.
     """
-    def __call__(self):
+    def __call__(self) -> None:
         self.enc.sub_current_position = 1
         if self.enc.active is not None:
             self.enc.active.current_page = 0

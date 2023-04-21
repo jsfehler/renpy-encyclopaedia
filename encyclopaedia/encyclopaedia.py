@@ -198,7 +198,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
     def sort_entries(
         self,
-        entries: list,
+        entries: list['EncEntry'],
         sorting: int = 0,
         reverse: bool = False,
     ) -> None:

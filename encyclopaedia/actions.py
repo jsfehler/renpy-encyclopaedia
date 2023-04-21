@@ -36,12 +36,17 @@ class SetEntryAction(EncyclopaediaAction):
 
         self.entry = entry
 
-    def set_entry(self) -> None:
+    def _get_entry_index(self) -> int:
         # Find the position of the entry
-        if self.enc.show_locked_entry is False:
-            target_position = self.enc.unlocked_entries.index(self.entry)
-        else:
+        if self.enc.show_locked_entry:
             target_position = self.enc.all_entries.index(self.entry)
+        else:
+            target_position = self.enc.unlocked_entries.index(self.entry)
+
+        return target_position
+
+    def set_entry(self) -> None:
+        target_position = self._get_entry_index()
 
         # The active entry is set to whichever list position was found.
         self.enc.active = self.entry

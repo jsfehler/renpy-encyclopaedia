@@ -4,7 +4,7 @@ from renpy.display import im
 from renpy.python import RevertableList
 
 
-def enc_tint(image, tint_amount: tuple[int, int, int]):
+def enc_tint(image, tint_amount: tuple[float, float, float]):
     """Tint an image.
 
     If the EncEntry has an image but no locked image, tint the image

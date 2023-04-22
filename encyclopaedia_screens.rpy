@@ -25,10 +25,7 @@ screen entry_button(enc, entry):
                 text enc.labels.unread_entry_label
 
         else:
-            if enc.show_locked_entry:
-                textbutton enc.labels.locked_entry_label action enc.SetEntry(entry) style "encyclopaedia_entry_button"
-            else:
-                textbutton enc.labels.locked_entry_label style "encyclopaedia_entry_button"
+            textbutton enc.labels.locked_entry_label action enc.SetEntry(entry) style "encyclopaedia_entry_button"
 
     elif enc.show_locked_buttons is False:
         textbutton entry.name action enc.SetEntry(entry) style "encyclopaedia_entry_button"

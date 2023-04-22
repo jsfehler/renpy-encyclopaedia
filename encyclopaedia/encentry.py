@@ -12,42 +12,29 @@ if TYPE_CHECKING:
 
 
 class EncEntry(EventEmitter, store.object):
-    """Stores an Entry's content.
-    EncEntry instances should be added to an Encyclopaedia.
+    """Store an Entry's content.
+
+    EncEntry instances should be added to an Encyclopaedia or another EncEntry.
 
     Args:
-        parent (Encyclopaedia, EncEntry)
-        number (int) -
-            The entry's number.
+        parent - The parent container for the EncEntry.
+        number - The entry's number.
             If this is not set then it will be given a number automatically.
-        name (str) -
-            The name that will be displayed for the entry's button and labels.
-        text (str, list) -
-            The text that will be displayed when the entry is viewed.
-        subject (str) -
-            The subject to associate the entry with.
+        name - The name that will be displayed for the entry's button and labels.
+        text - The text that will be displayed when the entry is viewed.
+        subject - The subject to associate the entry with.
             Used for sorting and filtering.
-        viewed (bool) -
-            Determines if the entry has been seen or not.
-            This should only be set if the Encyclopaedia is
-            save-game independent.
-        viewed_persistent(bool) -
-            Determines if the Entry's viewed status uses persistent data.
-        locked (bool) -
-            Determines if the entry can be viewed or not. Defaults to False.
-        locked_persistent(bool) -
-            Determines if the Entry's locked status uses persistent data.
-        image (str) -
-            The image displayed with the Entry text. Default is None.
-        locked_name (str) -
-            Placeholder text for the name. Shown when the entry is locked.
-        locked_text (str) -
-            Placeholder text for the text. Shown when the entry is locked.
-        locked_image (str) -
-            Placeholder text for the image. Shown when the entry is locked.
-        locked_image_tint (tuple) -
-            If no specific locked image is provided,
-            a tinted version of the image will be used.
+        viewed - Set the viewed status of the EncEntry. Default is False.
+            This should only be used if the Encyclopaedia is save-game independent.
+        viewed_persistent - Use persistent data for recording the EncEntry's viewed status.
+        locked - Set the locked status of the EncEntry. Default is False.
+        locked_persistent - Use persistent data for recording the EncEntry's locked status.
+        image - The image displayed with the Entry text. Default is None.
+        locked_name - Placeholder text for the name. Shown when the entry is locked.
+        locked_text - Placeholder text for the text. Shown when the entry is locked.
+        locked_image  - Placeholder text for the image. Shown when the entry is locked.
+        locked_image_tint  -
+            If no specific locked image is provided, a tinted version of the image will be used.
             The amount of tinting can be set with RGB values in a tuple.
 
     Attributes:
@@ -70,7 +57,7 @@ class EncEntry(EventEmitter, store.object):
                  locked_name: str = "???",
                  locked_text: str = "???",
                  locked_image: Optional[str] = None,
-                 locked_image_tint=(0.0, 0.0, 0.0)
+                 locked_image_tint: tuple[float, float, float] = (0.0, 0.0, 0.0)
                  ) -> None:
 
         self.tint_locked_image = False

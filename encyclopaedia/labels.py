@@ -23,7 +23,6 @@ class Labels(store.object):
         sort_unread_label (str): Label for Unread sorting
 
         unread_entry_label (str): Default for the tag next to unread entries
-        locked_entry_label (str): Default for a "Locked Entry" button
     """
     def __init__(self, encyclopaedia: 'Encyclopaedia') -> None:
         self.encyclopaedia = encyclopaedia
@@ -39,7 +38,6 @@ class Labels(store.object):
         self.sort_unread_label = "Unread"
 
         self.unread_entry_label = "New!"
-        self.locked_entry_label = "???"
 
     @property
     def percentage_unlocked(self) -> str:

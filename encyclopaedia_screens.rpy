@@ -17,21 +17,10 @@
 #        entry (EncEntry): The entry to associate with the button.
 ################################################################################
 screen entry_button(enc, entry):
-    if enc.show_locked_buttons:
-        if entry.locked is False:
-            textbutton entry.name action enc.SetEntry(entry) style "encyclopaedia_entry_button"
+    textbutton entry.name action enc.SetEntry(entry) style "encyclopaedia_entry_button"
 
-            if not entry.viewed:
-                text enc.labels.unread_entry_label
-
-        else:
-            textbutton enc.labels.locked_entry_label action enc.SetEntry(entry) style "encyclopaedia_entry_button"
-
-    elif enc.show_locked_buttons is False:
-        textbutton entry.name action enc.SetEntry(entry) style "encyclopaedia_entry_button"
-
-        if not entry.viewed:
-            text enc.labels.unread_entry_label
+    if (entry.locked is False) and (not entry.viewed):
+        text enc.labels.unread_entry_label
 
 
 ################################################################################

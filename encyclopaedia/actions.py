@@ -67,6 +67,18 @@ class SetEntryAction(EncyclopaediaAction):
         renpy.show_screen(self.enc.entry_screen, self.enc)
         renpy.restart_interaction()
 
+    def get_sensitive(self) -> bool:
+        """Check if the button this Action is attached to should be active or not.
+
+        Return:
+            True if locked entries can be displayed or the EncEntry is not
+            locked, else False.
+        """
+        if self.enc.show_locked_entry or (not self.entry.locked):
+            return True
+        else:
+            return False
+
 
 class ChangeEntryAction(EncyclopaediaAction):
     """Change the current entry being viewed.

@@ -104,7 +104,7 @@ class EncEntry(EventEmitter, store.object):
 
         # The sub-entries and their position.
         # The parent EncEntry must be the first in the sub-entry list.
-        self.sub_entry_list: list[list[Any]] = [[1, self]]
+        self.sub_entry_list: list[list['EncEntry']] = [[1, self]]
 
         self.has_sub_entry = False
 

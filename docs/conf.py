@@ -102,12 +102,14 @@ html_theme = 'sphinx_immaterial'
 # documentation.
 #
 html_theme_options = {
-    "github_user": "jsfehler",
-    "github_repo": "renpy-encyclopaedia",
-    "github_button": True,
-    "github_banner": True,
-
-
+    "repo_url": "https://github.com/jsfehler/renpy-encyclopaedia",
+    "repo_name": "renpy-encyclopaedia",
+    "repo_type": "github",
+    "icon": {
+        "repo": "fontawesome/brands/git",
+        "edit": "material/file-edit-outline",
+    },
+    "font": False,,
 }
 
 html_theme_options['extra_nav_links'] = {

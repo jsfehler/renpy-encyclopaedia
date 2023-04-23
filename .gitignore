@@ -4,3 +4,7 @@
 *.pyc
 *.idea
 .pytest_cache
+
+# Don't VC output files
+dist
+docsgame

@@ -109,7 +109,7 @@ html_theme_options = {
         "repo": "fontawesome/brands/git",
         "edit": "material/file-edit-outline",
     },
-    "font": False,,
+    "font": False,
 }
 
 html_theme_options['extra_nav_links'] = {

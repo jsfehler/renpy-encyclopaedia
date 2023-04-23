@@ -77,7 +77,7 @@ screen encyclopaedia_list(enc):
     tag menu
     modal True
 
-    window:
+    frame:
         style_prefix "encyclopaedia"
 
         vbox:
@@ -132,7 +132,7 @@ screen encyclopaedia_list(enc):
                     style_prefix "encyclopaedia"
                     xfill True
                     bottom_margin 10
-                    yalign 0.95
+                    yalign 1.0
 
                     vbox:
                         # Buttons to sort entries.
@@ -160,7 +160,7 @@ screen encyclopaedia_entry(enc):
     tag menu
     modal True
 
-    window:
+    frame:
         style_prefix "encyclopaedia"
 
         vbox:
@@ -183,10 +183,14 @@ screen encyclopaedia_entry(enc):
                     textbutton "Next Entry" xalign .98 action enc.NextEntry() style "encyclopaedia_button"
 
             hbox:
+                spacing 10
                 # If the entry or sub-entry has an image
                 if enc.active.current_page.has_image:
                     frame:
                         style_prefix "encyclopaedia_image"
+
+                        xsize 0.5
+                        ysize 734
 
                         viewport:
                             scrollbars None
@@ -195,50 +199,26 @@ screen encyclopaedia_entry(enc):
                             edgescroll (1.0, 1.0)
                             add enc.active.current_page.image
 
-                    frame:
-                        style_prefix "encyclopaedia"
-                        id "entry_window"
-                        xfill True
-                        yfill True
-                        xmaximum half_screen_width
-                        ymaximum half_screen_height
-                        viewport:
-                            scrollbars "vertical"
-                            mousewheel True
-                            draggable True
-                            xfill True
-                            yfill True
-                            vbox:
-                                spacing 15
-                                # Display the current entry's text
-                                for item in enc.active.current_page.text:
-                                    text item style "encyclopaedia_entry_text"
+                frame:
+                    style_prefix "encyclopaedia"
+                    id "entry_window"
+                    yfill False
+                    ysize 734
+                    viewport:
+                        scrollbars "vertical"
+                        mousewheel True
+                        draggable True
+                        vbox:
+                            spacing 0
+                            # Display the current entry's text
+                            for item in enc.active.current_page.text:
+                                text "[item]" style "encyclopaedia_entry_text"
 
-                # If there's no image
-                else:
-                    frame:
-                        style_prefix "encyclopaedia"
-                        id "entry_window"
-                        xfill True
-                        yfill True
-                        xmaximum config.screen_width
-                        ymaximum half_screen_height
-                        viewport:
-                            scrollbars "vertical"
-                            mousewheel True
-                            draggable True
-                            xfill True
-                            yfill True
-                            vbox:
-                                spacing 15
-                                # Display the current entry's text
-                                for item in enc.active.current_page.text:
-                                    text item style "encyclopaedia_entry_text"
 
             frame:
                 style_prefix "encyclopaedia"
                 xfill True
-                yfill False
+                #yfill True
 
                 if enc.active.has_sub_entry:
                     hbox:
@@ -257,34 +237,21 @@ screen encyclopaedia_entry(enc):
                     ypadding 14
                     text " "
 
-        frame:
-            style_prefix "encyclopaedia"
-            xfill True
-
-            yalign .98
-            hbox:
+            frame:
+                style_prefix "encyclopaedia"
                 xfill True
-                # Flavour text that displays the current sorting mode
-                text "Sorting Mode: {}".format(enc.labels.sorting_mode)
-                textbutton "Close Entry" id "close_entry_button" xalign .98 clicked [enc.ResetSubPage(), Show("encyclopaedia_list", None, enc)] style "encyclopaedia_button"
+
+                hbox:
+                    xfill True
+                    # Flavour text that displays the current sorting mode
+                    text "Sorting Mode: {}".format(enc.labels.sorting_mode)
+                    textbutton "Close Entry" id "close_entry_button" xalign .98 clicked [enc.ResetSubPage(), Show("encyclopaedia_list", None, enc)] style "encyclopaedia_button"
 
 
 ########################
 # Encyclopaedia Styles
 ########################
-style encyclopaedia_window is default:
-    background color_dark_grey
-    xsize config.screen_width
-    ysize config.screen_height
-    xfill True
-    yfill True
-
-style encyclopaedia_frame is default:
-    background color_light_brown
-    size 16
-    padding (8, 8)
-    xmargin 8
-    top_margin 8
+style encyclopaedia_frame is frame
 
 style encyclopaedia_image_frame is encyclopaedia_frame:
     yfill True
@@ -292,24 +259,13 @@ style encyclopaedia_image_frame is encyclopaedia_frame:
     xmaximum half_screen_width
     ymaximum half_screen_height
 
-style encyclopaedia_scrollbar is scrollbar:
-    base_bar Frame(Solid(color_dark_orange), gui.scrollbar_borders, tile=gui.scrollbar_tile)
-    thumb Frame(Solid(color_bright_orange), gui.scrollbar_borders, tile=gui.scrollbar_tile)
+style encyclopaedia_scrollbar is scrollbar
 
-style encyclopaedia_vscrollbar is vscrollbar:
-    base_bar Frame(Solid(color_dark_orange), gui.scrollbar_borders, tile=gui.scrollbar_tile)
-    thumb Frame(Solid(color_bright_orange), gui.scrollbar_borders, tile=gui.scrollbar_tile)
+style encyclopaedia_vscrollbar is vscrollbar
 
-style encyclopaedia_button:
-    background color_beige
-    hover_background color_bright_orange
-    selected_background color_bright_orange
-    insensitive_background color_dark_red
+style encyclopaedia_button is button
 
-style encyclopaedia_button_text:
-    color color_yellow
-    idle_color color_purple
-    insensitive_color color_dark_purple
+style encyclopaedia_button_text is button_text
 
 style encyclopaedia_entry_button is encyclopaedia_button:
     xfill False
@@ -330,17 +286,3 @@ init -1500:
 
         half_screen_width = config.screen_width / 2
         half_screen_height = config.screen_height / 2
-
-        # Encyclopaedia Colours
-        color_bright_orange = "#FFA552"
-        color_dark_orange = "#521300"
-        color_dark_red = "#8B1E3F"
-
-        color_dark_grey = "#333333"
-        color_light_brown = "#6C5A49"
-        color_beige = "#AA8F66"
-
-        color_dark_purple = "#1C0221"
-        color_purple = "#483C46"
-
-        color_yellow = "#FF0"

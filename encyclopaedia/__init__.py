@@ -1,5 +1,8 @@
-from . import actions  # NOQA
-from . import encentry  # NOQA
-from . import encyclopaedia  # NOQA
-from . import entry_sorting  # NOQA
-from . import labels  # NOQA
+from encyclopaedia.encentry import EncEntry
+from encyclopaedia.encyclopaedia import Encyclopaedia
+
+
+__all__ = [
+    'Encyclopaedia',
+    'EncEntry',
+]

@@ -1,4 +1,4 @@
-.. automodule:: encyclopaedia.encyclopaedia
+.. automodule:: encyclopaedia
     :members:
 
     .. toctree::

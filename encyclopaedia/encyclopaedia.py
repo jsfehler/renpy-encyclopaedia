@@ -103,8 +103,11 @@ class Encyclopaedia(EventEmitter, store.object):
             "entry_unlocked": [],  # Run whenever a child entry is unlocked.
         }
 
+    def __repr__(self) -> str:
+        return f"<Encyclopaedia: {len(self.all_entries)} entries>"
+
     def __str__(self) -> str:
-        return "Encyclopaedia: {} entries total".format(len(self.all_entries))
+        return f"<Encyclopaedia: {len(self.all_entries)} entries>"
 
     @property
     def current_entries(self) -> list['EncEntry']:

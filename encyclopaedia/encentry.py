@@ -18,19 +18,24 @@ class EncEntry(EventEmitter, store.object):
 
     Args:
         parent: The parent container for the EncEntry.
-        number: The entry's number. If this is not set then it will be given a number automatically.
-        name: The name that will be displayed for the entry's button and labels.
+        number: The entry's number.
+            If this is not set then it will be given a number automatically.
+        name: Title, normally used for buttons and headings.
         text: The text that will be displayed when the entry is viewed.
-        subject: The subject to associate the entry with. Used for sorting and filtering.
-        viewed: Set the viewed status of the EncEntry. Default is False. This should only be used if the Encyclopaedia is save-game independent.
-        viewed_persistent: Use persistent data for recording the EncEntry's viewed status.
+        subject: The subject to associate the entry with.
+            Used for sorting and filtering.
+        viewed: Set the viewed status of the EncEntry. Default is False.
+            Only use if the Encyclopaedia is save-game independent.
+        viewed_persistent: Use persistent data for recording viewed status.
         locked: Set the locked status of the EncEntry. Default is False.
-        locked_persistent: Use persistent data for recording the EncEntry's locked status.
+        locked_persistent: Use persistent data for recording locked status.
         image: The image displayed with the Entry text. Default is None.
         locked_name: Placeholder text for the name. Shown when the entry is locked.
         locked_text: Placeholder text for the text. Shown when the entry is locked.
-        locked_image: Placeholder text for the image. Shown when the entry is locked.
-        locked_image_tint: If no specific locked image is provided, a tinted version of the image will be used. The amount of tinting can be set with RGB values in a tuple.
+        locked_image: Placeholder image for the image. Shown when the entry is locked.
+        locked_image_tint: If no specific locked image is provided,
+            a tinted version of the image will be used.
+            The amount of tinting can be set with RGB values in a tuple.
 
     Attributes:
         has_image (bool): True if an image was provided, else False.

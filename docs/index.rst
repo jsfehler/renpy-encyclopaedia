@@ -34,3 +34,10 @@
     :hidden:
 
     development.rst
+
+
+.. toctree::
+  :caption: API
+  :hidden:
+
+  api/encyclopaedia.rst

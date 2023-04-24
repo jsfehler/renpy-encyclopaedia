@@ -52,5 +52,6 @@ For filing bugs or feature requests, please use the `GitHub issue tracker <https
 
 .. toctree::
     :caption: Development
+    :hidden:
 
     development.rst

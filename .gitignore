@@ -3,8 +3,14 @@
 .tox
 *.pyc
 *.idea
-.pytest_cache
+.pytest_cache/
 
 # Don't VC output files
 dist
 docsgame
+
+# mypy
+.mypy_cache/
+
+# ruff
+.ruff_cache/

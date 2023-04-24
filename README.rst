@@ -14,12 +14,6 @@ Simplifies creating an encyclopaedia, bestiary, glossary, or similar system.
 
 Compatible Ren'Py Version: 6.99.12.3 and higher
 
-
-Documentation
--------------
-Documentation is available at http://renpy-encyclopaedia.readthedocs.io/en/latest/index.html.
-
-
 Features
 --------
 - Sort entries by Number, Alphabetically, Reverse Alphabetically, by Subject, or by Unread status.
@@ -29,6 +23,11 @@ Features
 - Locked entries can be displayed with customizable placeholders or outright hidden.
 - Entry Unlocks can be tied to individual save games or universal (using Ren'py persistent data).
 - Default visual template is provided, but can be completely customized or replaced using `Ren'py Screen Language <https://www.renpy.org/doc/html/screens.html>`_.
+
+
+Documentation
+-------------
+Documentation is available at http://renpy-encyclopaedia.readthedocs.io/en/latest/index.html.
 
 
 Contributing

@@ -35,6 +35,7 @@ For filing bugs or feature requests, please use the `GitHub issue tracker <https
 .. toctree::
    :caption: User Guide
    :hidden:
+ 
    user_guide/getting-started
    user_guide/accessing
    user_guide/writing-text

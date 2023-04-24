@@ -31,20 +31,26 @@ Contributing
 For filing bugs or feature requests, please use the `GitHub issue tracker <https://github.com/jsfehler/renpy-encyclopaedia/issues>`_
 
 .. toctree::
-   :caption: User Guide
-   :hidden:
+    :caption: User Guide
+    :hidden:
 
-   user_guide/getting-started
-   user_guide/accessing
-   user_guide/writing-text
-   user_guide/locking-and-unlocking
-   user_guide/sub-pages
-   user_guide/placeholders
-   user_guide/manual-numbering
-   user_guide/actions
-   user_guide/customizing-screens
-   user_guide/translations
-   user_guide/sorting
-   user_guide/filtering
-   user_guide/callbacks
-   user_guide/templates
+    user_guide/getting-started
+    user_guide/accessing
+    user_guide/writing-text
+    user_guide/locking-and-unlocking
+    user_guide/sub-pages
+    user_guide/placeholders
+    user_guide/manual-numbering
+    user_guide/actions
+    user_guide/customizing-screens
+    user_guide/translations
+    user_guide/sorting
+    user_guide/filtering
+    user_guide/callbacks
+    user_guide/templates
+
+
+.. toctree::
+    :caption: Development
+
+    development.rst

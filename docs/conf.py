@@ -116,15 +116,20 @@ html_theme_options = {
     "features": [
         "navigation.expand",
         "navigation.sections",
+        "navigation.top",
+        "navigation.tracking",
+        "search.share",
         "toc.follow",
         "toc.sticky",
+        "content.tabs.link",
+        "announce.dismiss",
     ],
     "palette": [
         {
             "media": "(prefers-color-scheme: light)",
             "scheme": "default",
             "primary": "cyan",
-            "accent": "pink",
+            "accent": "indigo",
             "toggle": {
                 "icon": "material/lightbulb-outline",
                 "name": "Switch to dark mode",
@@ -134,7 +139,7 @@ html_theme_options = {
             "media": "(prefers-color-scheme: dark)",
             "scheme": "slate",
             "primary": "pink",
-            "accent": "cyan",
+            "accent": "light-green",
             "toggle": {
                 "icon": "material/lightbulb",
                 "name": "Switch to light mode",

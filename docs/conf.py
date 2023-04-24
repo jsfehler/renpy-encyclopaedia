@@ -128,7 +128,7 @@ html_theme_options = {
         {
             "media": "(prefers-color-scheme: light)",
             "scheme": "default",
-            "primary": "deep-purple",
+            "primary": "pink",
             "accent": "cyan",
             "toggle": {
                 "icon": "material/lightbulb-outline",
@@ -138,7 +138,7 @@ html_theme_options = {
         {
             "media": "(prefers-color-scheme: dark)",
             "scheme": "slate",
-            "primary": "pink",
+            "primary": "cyan",
             "accent": "deep-orange",
             "toggle": {
                 "icon": "material/lightbulb",

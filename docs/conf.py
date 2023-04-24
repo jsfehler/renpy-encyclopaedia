@@ -113,6 +113,35 @@ html_theme_options = {
         "edit": "material/file-edit-outline",
     },
     "font": False,
+    "features": [
+        "navigation.expand",
+        "navigation.sections",
+        "toc.follow",
+        "toc.sticky",
+    ],
+    "palette": [
+        {
+            "media": "(prefers-color-scheme: light)",
+            "scheme": "default",
+            "primary": "cyan",
+            "accent": "pink",
+            "toggle": {
+                "icon": "material/lightbulb-outline",
+                "name": "Switch to dark mode",
+            },
+        },
+        {
+            "media": "(prefers-color-scheme: dark)",
+            "scheme": "slate",
+            "primary": "pink",
+            "accent": "cyan",
+            "toggle": {
+                "icon": "material/lightbulb",
+                "name": "Switch to light mode",
+            },
+        },
+    ],
+
 }
 
 html_theme_options['extra_nav_links'] = {

@@ -24,8 +24,6 @@ Features
 
 Documentation
 -------------
-The :ref:`Documentation <documentation>` section has installation instructions and tutorials.
-
 The :ref:`Module Index <modindex>` has in-depth information on the Encyclopaedia's classes and functions.
 
 Contributing
@@ -35,7 +33,7 @@ For filing bugs or feature requests, please use the `GitHub issue tracker <https
 .. toctree::
    :caption: User Guide
    :hidden:
- 
+
    user_guide/getting-started
    user_guide/accessing
    user_guide/writing-text

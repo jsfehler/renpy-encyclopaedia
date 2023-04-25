@@ -13,20 +13,20 @@
     :caption: User Guide
     :hidden:
 
-    user_guide/getting-started
-    user_guide/accessing
-    user_guide/writing-text
-    user_guide/locking-and-unlocking
-    user_guide/sub-pages
-    user_guide/placeholders
-    user_guide/manual-numbering
-    user_guide/actions
-    user_guide/customizing-screens
-    user_guide/translations
-    user_guide/sorting
-    user_guide/filtering
-    user_guide/callbacks
-    user_guide/templates
+    user_guide/01-getting-started
+    user_guide/02-accessing
+    user_guide/03-writing-text
+    user_guide/04-locking-and-unlocking
+    user_guide/05-sub-pages
+    user_guide/06-placeholders
+    user_guide/07-manual-numbering
+    user_guide/08-actions
+    user_guide/09-customizing-screens
+    user_guide/10-translations
+    user_guide/11-sorting
+    user_guide/12-filtering
+    user_guide/13-callbacks
+    user_guide/14-templates
 
 
 .. toctree::

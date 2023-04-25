@@ -18,15 +18,6 @@ init python:
         return input_str
 
 
-    def get_html_files() -> list:
-        html_files = []
-        for path in renpy.list_files():
-            if path.startswith('docs/user_guide'):
-                html_files.append(path)
-
-        return html_files
-
-
 init 1 python:
     from bs4 import BeautifulSoup
 
@@ -36,10 +27,10 @@ init 1 python:
     # Create EncEntry dynamically from user guide.
     enc_enc = Encyclopaedia()
 
-    html_files = get_html_files()
+    html_files = get_file_paths('docs/user_guide')
 
     img_mapper = {
-        # 'docs/user_guide/getting-started.html': 'images/getting-started.png',
+        'docs/user_guide/getting-started.html': 'images/getting-started.png',
     }
 
     for html in html_files:

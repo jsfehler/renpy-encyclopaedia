@@ -46,11 +46,41 @@ init python:
 
 
     def check_code(element):
+        """pygments is used to highlight the content of code blocks."""
         text = str(element.text)
-        # Highlight code blocks
         return highlight(
             text, PythonLexer(), RenpyFormatter(style='github-dark'),
         )
+
+
+    def check_p(element):
+        # In a paragraph, we don't want a separate line per sentence.
+        # Instead, join all the strings inside the paragraph.
+        p_str = ''
+
+        for el in element.contents:
+            if not el.name:
+                p_str += str(el.string)
+            else:
+                # Parse tags inside the paragraph.
+                p_str += ''.join(iter_block(el))
+
+        # Remove carriage return
+        clean_p_str = p_str.replace('\r\n', ' ').replace('\r', ' ')
+
+        return clean_p_str
+
+
+    def check_li(element):
+        p_str = '    - '  # List padding
+
+        for el in element.contents:
+            if not el.name:
+                p_str += str(el.string)
+            else:
+                p_str += ''.join(iter_block(el))
+
+        return p_str
 
 
 init 1 python:
@@ -74,8 +104,8 @@ init 1 python:
         inner_text: list[str] = []
 
         for elem in element:
-            #if elem.name:
-            inner_text = [*inner_text, *iter_block(elem)]
+            if elem.name:
+                inner_text = [*inner_text, *iter_block(elem)]
 
         return inner_text
 
@@ -91,28 +121,10 @@ init 1 python:
             text = [*text, *iter_blocks(element)]
 
         elif element.name in ['li']:
-            element_str = '\n'
-
-            p_str = '    - '  # List padding
-            for ee in element.contents:
-                if not ee.name:
-                    p_str += str(ee.string)
-                else:
-                    p_str += ''.join(iter_block(ee))
-
-            text.append(p_str)
+            text.append(check_li(element))
 
         elif element.name == 'p':
-            element_str = '\n'
-
-            p_str = ''
-            for ee in element.contents:
-                if not ee.name:
-                    p_str += str(ee.string)
-                else:
-                    p_str += ''.join(iter_block(ee))
-
-            text.append(p_str)
+            text.append(check_p(element))
 
         # Handle code blocks
         elif element.name == 'pre':

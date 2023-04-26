@@ -7,7 +7,7 @@
 
 # Don't VC output files
 dist
-docsgame
+docsgame_dist
 
 # mypy
 .mypy_cache/

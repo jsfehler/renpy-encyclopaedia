@@ -3,6 +3,26 @@ init python:
     from pygments.lexers import PythonLexer
 
 
+    def check_main(element):
+        text = ''
+        return text
+
+
+    def check_section(element):
+        text = ''
+        return text
+
+
+    def check_ol(element):
+        text = ''
+        return text
+
+
+    def check_ul(element):
+        text = ''
+        return text
+
+
     def check_a(element):
         text = str(element.string)
         return f"{{a={element['href']}}}{text}{{/a}}"
@@ -14,15 +34,15 @@ init python:
 
 
     def check_h1(element):
-        return '{size=+14}' + str(element.string) + '{/size}' + '\n' + '\n'
+        return '{size=+14}' + str(element.string) + '{/size}'
 
 
     def check_h2(element):
-        return '{size=+8}' + str(element.string) + '{/size}' + '\n'
+        return '{size=+8}' + str(element.string) + '{/size}'
 
 
     def check_h3(element):
-        return '{size=+4}' + str(element.string) + '{/size}' + '\n'
+        return '{size=+4}' + str(element.string) + '{/size}'
 
 
     def check_code(element):
@@ -37,37 +57,38 @@ init 1 python:
     from bs4 import BeautifulSoup
 
 
+    elem_funcs = {
+        'main': check_main,
+        'section': check_section,
+        'ol': check_ol,
+        'ul': check_ul,
+        'h1': check_h1,
+        'h2': check_h2,
+        'h3': check_h3,
+        'a': check_a,
+        'cite': check_cite,
+    }
+
+
+    def iter_blocks(element):
+        inner_text: list[str] = []
+
+        for elem in element:
+            #if elem.name:
+            inner_text = [*inner_text, *iter_block(elem)]
+
+        return inner_text
+
+
     def iter_block(element, inside_code_block: bool = False):  # -> list[str]:
         text = []
         element_str = ''
 
-        elem_funcs = {
-            'h1': check_h1,
-            'h2': check_h2,
-            'h3': check_h3,
-            'a': check_a,
-            'cite': check_cite
-        }
-
-        if element.name in ['main', 'section']:
-            for ee in element:
-                if ee.name:
-                    text = [*text, *iter_block(ee)]
-
-        elif elem_funcs.get(element.name):
+        if element.name in ['main', 'section', 'ol', 'ul']:
             element_str = elem_funcs[element.name](element)
+            text.append(element_str)
 
-        elif element.name in ['ol', 'ul']:
-            element_str = '\n'
-
-            p_str = ''
-            for ee in element.contents:
-                if not ee.name:
-                    p_str += str(ee.string)
-                else:
-                    p_str += ''.join(iter_block(ee))
-
-            text.append(p_str)
+            text = [*text, *iter_blocks(element)]
 
         elif element.name in ['li']:
             element_str = '\n'
@@ -96,16 +117,23 @@ init 1 python:
         # Handle code blocks
         elif element.name == 'pre':
             element_str = ''
+            text.append(element_str)
 
+            inner_text = ''
             for sub_elem in element.contents:
                 if sub_elem.name == 'code':
-                    element_str += check_code(sub_elem)
+                    inner_text += check_code(sub_elem)
+
+            text.append(element_str + inner_text)
+
+        elif elem_funcs.get(element.name):
+            element_str = elem_funcs[element.name](element)
+            text.append(element_str)
 
         else:
             # Default for other blocks
             element_str = str(element.string)
-
-        text.append(element_str)
+            text.append(element_str)
 
         return text
 

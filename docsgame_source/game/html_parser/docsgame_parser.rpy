@@ -140,6 +140,23 @@ init 1 python:
         )
 
 
+    develop_path = 'docs/development.html'
+    with renpy.open_file(develop_path) as f:
+        soup = BeautifulSoup(f.read(), 'html.parser').html.body
+
+    text = []
+
+    for element in soup:
+        if element.name:
+            text = [*text, *iter_block(element)]
+
+    EncEntry(
+        enc_enc,
+        name=f"{soup.h1.string}",
+        text=text,
+        subject="Development",
+    )
+
 screen encyclopaedia_button():
     textbutton "Encyclopaedia" action ShowMenu('encyclopaedia_list', enc_enc)
 

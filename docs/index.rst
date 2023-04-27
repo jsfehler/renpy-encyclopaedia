@@ -65,7 +65,8 @@
 
 
 .. toctree::
-  :caption: API
+  :caption: API Documentation
   :hidden:
+  :maxdepth: 4
 
-  api/encyclopaedia.rst
+  encyclopaedia.rst

@@ -1,7 +1,11 @@
-Customizing Screens
-===================
+Screens
+=======
 
-The following screens are provided in the framework and are found inside encyclopaedia_screens.rpy:
+The framework includes default `screens <https://www.renpy.org/doc/html/screens.html>`_ you can use to display the Encyclopaedia's data.
+
+They can be skinned, customized, or only used as a reference. It all depends on the needs of your game.
+
+The screens are located in `encyclopaedia_screens.rpy`.
 
 - encyclopaedia_list
 

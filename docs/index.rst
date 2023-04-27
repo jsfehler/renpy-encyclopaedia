@@ -10,24 +10,52 @@
 .. include:: ../README.rst
 
 .. toctree::
-    :caption: User Guide
+    :maxdepth: 2
+    :caption: Getting Started
     :hidden:
+    :glob:
 
-    user_guide/01-getting-started
-    user_guide/02-accessing
-    user_guide/03-writing-text
-    user_guide/04-locking-and-unlocking
-    user_guide/05-sub-pages
-    user_guide/06-placeholders
-    user_guide/07-manual-numbering
-    user_guide/08-actions
-    user_guide/09-customizing-screens
-    user_guide/10-translations
-    user_guide/11-sorting
-    user_guide/12-filtering
-    user_guide/13-callbacks
-    user_guide/14-templates
+    user_guide/01-getting-started/*
 
+.. toctree::
+    :maxdepth: 2
+    :caption: Scope
+    :hidden:
+    :glob:
+
+    user_guide/02-scope/*
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Interface
+    :hidden:
+    :glob:
+
+    user_guide/03-interface/*
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Encyclopaedia Features
+    :hidden:
+    :glob:
+
+    user_guide/04-encyclopaedia-features/*
+
+.. toctree::
+    :maxdepth: 2
+    :caption: EncEntry Features
+    :hidden:
+    :glob:
+
+    user_guide/05-encentry-features/*
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Actions
+    :hidden:
+    :glob:
+
+    user_guide/06-actions/*
 
 .. toctree::
     :caption: Development

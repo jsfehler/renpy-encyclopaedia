@@ -1,5 +1,5 @@
 Writing Text
-============
+~~~~~~~~~~~~
 
 When creating an entry, you can use either a single string or a list of strings.
 If a single string is given it will simply be placed inside a list as the first and only item.

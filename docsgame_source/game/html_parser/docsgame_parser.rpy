@@ -158,7 +158,14 @@ init 1 python:
         'docs/user_guide/01-getting-started.html': 'images/getting-started.png',
     }
 
+    from pathlib import Path
+    import string
+
     for html in html_files:
+        html_path = Path(html)
+
+        subject = string.capwords(html_path.parts[2].replace('-',' '))
+
         img_to_use = img_mapper.get(html)
 
         with renpy.open_file(html) as f:
@@ -174,7 +181,8 @@ init 1 python:
             enc_enc,
             name=f"{soup.h1.string}",
             text=text,
-            subject="User Guide",
+            #subject="User Guide",
+            subject=subject,
             #image=Transform('images/getting-started.png', zoom=0.5),
             image=img_to_use,
         )

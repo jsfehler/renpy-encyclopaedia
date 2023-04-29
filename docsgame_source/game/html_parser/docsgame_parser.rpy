@@ -138,6 +138,9 @@ init 1 python:
             element_str = elem_funcs[element.name](element)
             text.append(element_str)
 
+        elif element.name == 'blockquote':
+            text = [*text, *iter_blocks(element)]
+
         else:
             # Default for other blocks
             element_str = str(element.string)

@@ -203,7 +203,7 @@ screen encyclopaedia_entry(enc):
                             add enc.active.current_page.image
 
                 frame:
-                    style_prefix "encyclopaedia"
+                    style_prefix "encyclopaedia_entry_content_frame"
                     id "entry_window"
                     yfill False
                     xalign 1.0
@@ -263,6 +263,10 @@ style encyclopaedia_entry_frame is encyclopaedia_frame:
 
     xsize 0.68
     ysize 670
+
+style encyclopaedia_entry_content_frame is encyclopaedia_frame:
+    left_padding 10
+    right_padding 10
 
 style encyclopaedia_image_frame is encyclopaedia_frame:
     xsize 0.4

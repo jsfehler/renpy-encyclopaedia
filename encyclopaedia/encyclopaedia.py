@@ -1,7 +1,7 @@
 from math import floor
 import operator
 from operator import attrgetter
-from typing import Optional, Union, TYPE_CHECKING
+from typing import Callable, Optional, Union, TYPE_CHECKING
 
 from renpy import store
 
@@ -99,7 +99,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.locked_at_bottom: bool = True
 
-        self.callbacks = {
+        self.callbacks: dict[str, list[Callable[['Encyclopaedia'], None]]] = {
             "entry_unlocked": [],  # Run whenever a child entry is unlocked.
         }
 

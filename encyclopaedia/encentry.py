@@ -1,5 +1,5 @@
 from operator import itemgetter
-from typing import Any, Optional, Union, TYPE_CHECKING
+from typing import Any, Callable, Optional, Union, TYPE_CHECKING
 
 from renpy import store
 from renpy.game import persistent
@@ -111,7 +111,7 @@ class EncEntry(EventEmitter, store.object):
         # Property: Set with Integer, get returns the page.
         self._current_page = 0
 
-        self.callbacks: dict[str, list] = {
+        self.callbacks: dict[str, list[Callable[['EncEntry'], None]]] = {
             "viewed": [],  # Run when this entry is viewed for the first time.
             "unlocked": [],  # Run when this entry is unlocked.
             "entry_unlocked": [],  # Run whenever a child entry is unlocked.

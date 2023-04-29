@@ -155,7 +155,7 @@ init 1 python:
     html_files = get_file_paths('docs/user_guide')
 
     img_mapper = {
-        'docs/user_guide/01-getting-started.html': 'images/getting-started.png',
+        'docs/user_guide/01-getting-started/01-install.html': 'images/getting-started.png',
     }
 
     from pathlib import Path

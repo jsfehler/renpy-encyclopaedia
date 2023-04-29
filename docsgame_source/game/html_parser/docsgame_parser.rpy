@@ -97,6 +97,8 @@ init 1 python:
         'h3': check_h3,
         'a': check_a,
         'cite': check_cite,
+        'li': check_li,
+        'p': check_p,
     }
 
 
@@ -119,12 +121,6 @@ init 1 python:
             text.append(element_str)
 
             text = [*text, *iter_blocks(element)]
-
-        elif element.name in ['li']:
-            text.append(check_li(element))
-
-        elif element.name == 'p':
-            text.append(check_p(element))
 
         # Handle code blocks
         elif element.name == 'pre':

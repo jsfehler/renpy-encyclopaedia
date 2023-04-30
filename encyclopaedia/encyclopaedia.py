@@ -388,7 +388,7 @@ class Encyclopaedia(EventEmitter, store.object):
         """
         return NextPage(encyclopaedia=self)  # NOQA: F405
 
-    def Sort(self, sorting_mode: Optional[int] = None):  # NOQA: F405
+    def Sort(self, sorting_mode: SortMode):  # NOQA: F405
         """Wrapper around an Action. Use with a renpy button.
 
         Args:
@@ -398,9 +398,6 @@ class Encyclopaedia(EventEmitter, store.object):
         Returns:
             Screen Action
         """
-        if sorting_mode is None:
-            sorting_mode = self.sorting_mode
-
         return SortEncyclopaedia(self, sorting_mode)  # NOQA: F405
 
     def SetEntry(self, given_entry: 'EncEntry'):

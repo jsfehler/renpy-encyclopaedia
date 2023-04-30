@@ -41,10 +41,9 @@ jobs:
         run: tox run -e lint;
 
       - name: Run unit tests
-        run: tox run -e ${{matrix.PY_VER}};
+        run: tox run -e tests;
 
       - name: "Upload coverage"
         uses: coverallsapp/github-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ matrix.PY_VER == 'py39' }}

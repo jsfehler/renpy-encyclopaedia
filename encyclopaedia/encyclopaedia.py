@@ -64,7 +64,6 @@ class Encyclopaedia(EventEmitter, store.object):
                  show_locked_buttons: bool = False,
                  show_locked_entry: bool = False,
                  entry_screen: str = "encyclopaedia_entry",
-                 tint_locked_image: bool = True,
                  ) -> None:
 
         self.sorting_mode = sorting_mode
@@ -72,8 +71,6 @@ class Encyclopaedia(EventEmitter, store.object):
         self.show_locked_buttons = show_locked_buttons
         self.show_locked_entry = show_locked_entry
         self.entry_screen = entry_screen
-
-        self.tint_locked_image = tint_locked_image
 
         self.all_entries: list['EncEntry'] = []
         self.unlocked_entries: list['EncEntry'] = []
@@ -187,17 +184,6 @@ class Encyclopaedia(EventEmitter, store.object):
         """
         for item in self.all_entries:
             item.locked_name = placeholder
-
-    def set_global_locked_image_tint(self, tint_amount: tuple[int, int, int]):
-        """Set all the locked images for all entries to use the same tint.
-
-        Args:
-            tint_amount: An RGB value, ie: (R, G, B)
-        """
-        for item in self.all_entries:
-            item[1].tint_locked_image(
-                (tint_amount[0], tint_amount[1], tint_amount[2])
-            )
 
     def sort_entries(
         self,

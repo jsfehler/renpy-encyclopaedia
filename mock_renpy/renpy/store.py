@@ -2,4 +2,9 @@ class object(object):
     pass
 
 
-DictEquality = object
+class DictEquality(object):
+    pass
+
+
+class TintMatrix:
+    pass

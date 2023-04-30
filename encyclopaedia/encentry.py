@@ -2,9 +2,12 @@ from operator import itemgetter
 from typing import Any, Callable, Optional, Union, TYPE_CHECKING
 
 from renpy import store
+from renpy.color import Color
+from renpy.display.transform import Transform
 from renpy.game import persistent
+from renpy.store import TintMatrix
 
-from .utils import enc_tint, string_to_list
+from .utils import string_to_list
 from .eventemitter import EventEmitter
 
 if TYPE_CHECKING:
@@ -38,7 +41,7 @@ class EncEntry(EventEmitter, store.object):
             The amount of tinting can be set with RGB values in a tuple.
 
     Attributes:
-        has_image (bool): True if an image was provided, else False.
+        has_image: True if an image was provided, else False.
         pages (int): Number of pages this entry contains.
 
         has_sub_entry (bool): If an entry has any sub-entries.
@@ -60,7 +63,6 @@ class EncEntry(EventEmitter, store.object):
                  locked_image_tint: tuple[float, float, float] = (0.0, 0.0, 0.0)
                  ) -> None:
 
-        self.tint_locked_image = False
         # Place the entry into the assigned Encyclopaedia or EncEntry.
 
         # self.parent is set to None so that add_entry doesn't think
@@ -85,20 +87,16 @@ class EncEntry(EventEmitter, store.object):
 
         if parent is not None:
             parent.add_entry(self)
-            self.tint_locked_image = parent.tint_locked_image
 
-        self.has_image = False
+        self.has_image: bool = False
         if image is not None:
             self.has_image = True
 
             # If there's an image, but no locked image is specified,
             # tint the image and use it as the locked image.
-            if locked_image is None and self.tint_locked_image:
-                # Tuple is used to set the numbers that tint_locked_image()
-                # uses to change the colour of a locked image
-                self.locked_image = enc_tint(
-                    self._image, locked_image_tint
-                )
+            if locked_image is None:
+                c = Color(rgb=locked_image_tint)
+                self.locked_image = Transform(image, matrixcolor=TintMatrix(c))
 
         self.pages = 1
 

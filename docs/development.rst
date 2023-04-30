@@ -1,37 +1,48 @@
 Development
 ===========
 
-Requirements: `tox`
+Requirements:
 
-`Tox <https://tox.readthedocs.io/en/latest/>`_ is used for managing the test environments.
+    - Python 3.9
+    - `Tox <https://tox.readthedocs.io/en/latest/>`_
 
-Running the unit tests
-----------------------
 
-The unit tests can be run in any of the follow envs: py39
+Run the unit tests
+------------------
 
 .. code-block:: console
 
-    tox -e {env}
+    tox -e tests
 
-Running the code linter
------------------------
+
+Run the code linter
+-------------------
 
 .. code-block:: console
 
     tox -e lint
 
 
-Building the distribution file
-------------------------------
+Build the distribution file
+---------------------------
 
 .. code-block:: console
 
     tox -e build
 
 
-Building the documentation game
---------------------------------
+Build the documentation
+-----------------------
+
+Create a static copy of the documentation in HTML format.
+
+.. code-block:: console
+
+    tox -e build_docs_html
+
+
+Build the documentation game
+----------------------------
 
 .. code-block:: console
 

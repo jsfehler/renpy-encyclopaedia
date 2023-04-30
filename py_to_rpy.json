@@ -6,12 +6,12 @@
     "from renpy import store",
     "from renpy.store import DictEquality",
     "from .actions import *",
+    "from .constants import SortMode",
     "from .encentry import EncEntry",
     "from .encyclopaedia import Encyclopaedia",
     "from .eventemitter import EventEmitter",
     "from .labels import Labels",
     "from .entry_sorting import push_locked_to_bottom",
-    "from .utils import enc_tint",
     "from typing import TYPE_CHECKING",
     "if TYPE_CHECKING:"
   ],

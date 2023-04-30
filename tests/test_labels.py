@@ -2,6 +2,7 @@ import pytest
 
 from encyclopaedia.encyclopaedia import Encyclopaedia
 from encyclopaedia.encentry import EncEntry
+from encyclopaedia import constants
 
 
 def test_percentage_unlocked_label():
@@ -71,14 +72,14 @@ def test_sorting_mode_label():
 
     assert "Number" == enc.labels.sorting_mode
 
-    enc.Sort(Encyclopaedia.SORT_ALPHABETICAL)()
+    enc.Sort(constants.SortMode.ALPHABETICAL)()
     assert "A to Z" == enc.labels.sorting_mode
 
-    enc.Sort(Encyclopaedia.SORT_REVERSE_ALPHABETICAL)()
+    enc.Sort(constants.SortMode.REVERSE_ALPHABETICAL)()
     assert "Z to A" == enc.labels.sorting_mode
 
-    enc.Sort(Encyclopaedia.SORT_SUBJECT)()
+    enc.Sort(constants.SortMode.SUBJECT)()
     assert "Subject" == enc.labels.sorting_mode
 
-    enc.Sort(Encyclopaedia.SORT_UNREAD)()
+    enc.Sort(constants.SortMode.UNREAD)()
     assert "Unread" == enc.labels.sorting_mode

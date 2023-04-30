@@ -1,5 +1,7 @@
 from typing import TYPE_CHECKING
 
+from .constants import SortMode
+
 from renpy import store
 
 if TYPE_CHECKING:
@@ -83,11 +85,11 @@ class Labels(store.object):
         enc = self.encyclopaedia
 
         sorting_strings = {
-            enc.SORT_NUMBER: self.sort_number_label,
-            enc.SORT_ALPHABETICAL: self.sort_alphabetical_label,
-            enc.SORT_REVERSE_ALPHABETICAL: self.sort_reverse_alphabetical_label,  # NOQA: E501
-            enc.SORT_SUBJECT: self.sort_subject_label,
-            enc.SORT_UNREAD: self.sort_unread_label
+            SortMode.NUMBER: self.sort_number_label,
+            SortMode.ALPHABETICAL: self.sort_alphabetical_label,
+            SortMode.REVERSE_ALPHABETICAL: self.sort_reverse_alphabetical_label,  # NOQA: E501
+            SortMode.SUBJECT: self.sort_subject_label,
+            SortMode.UNREAD: self.sort_unread_label
         }
 
         return sorting_strings[enc.sorting_mode]

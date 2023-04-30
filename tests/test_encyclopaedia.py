@@ -2,6 +2,7 @@ import pytest
 
 from encyclopaedia.encyclopaedia import Encyclopaedia
 from encyclopaedia.encentry import EncEntry
+from encyclopaedia import constants
 
 
 def test_setting_entry_number():
@@ -110,7 +111,7 @@ def test_clear_filtering():
 
 
 def test_reverse_alphabetical_sorting():
-    enc = Encyclopaedia(sorting_mode=Encyclopaedia.SORT_REVERSE_ALPHABETICAL)
+    enc = Encyclopaedia(sorting_mode=constants.SortMode.REVERSE_ALPHABETICAL)
 
     apple = EncEntry(
         parent=enc,

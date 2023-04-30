@@ -25,17 +25,17 @@ This can be changed when creating a new Encyclopaedia with the `sorting_mode` ar
 .. code-block:: python
 
     your_new_encyclopaedia = Encyclopaedia(
-        sorting_mode=Encyclopaedia.SORT_ALPHABETICAL
+        sorting_mode=SortMode.ALPHABETICAL,
     )
 
 The following parameters are valid:
 
-    - Encyclopaedia.SORT_NUMBER
+    - SortMode.NUMBER
 
-    - Encyclopaedia.SORT_ALPHABETICAL
+    - SortMode.ALPHABETICAL
 
-    - Encyclopaedia.SORT_REVERSE_ALPHABETICAL
+    - SortMode.REVERSE_ALPHABETICAL
 
-    - Encyclopaedia.SORT_SUBJECT
+    - SortMode.SUBJECT
 
-    - Encyclopaedia.SORT_UNREAD
+    - SortMode.UNREAD

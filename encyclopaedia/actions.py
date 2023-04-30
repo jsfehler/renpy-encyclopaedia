@@ -1,3 +1,5 @@
+from .constants import SortMode
+
 import renpy.exports as renpy
 from renpy.store import DictEquality
 from renpy.ui import Action
@@ -194,19 +196,23 @@ class SortEncyclopaedia(EncyclopaediaAction):
         encyclopaedia: The Encyclopaedia instance to use.
         sorting_mode: The sorting mode to sort by.
     """
-    def __init__(self, encyclopaedia: 'Encyclopaedia', sorting_mode: int = 0) -> None:
+    def __init__(
+        self,
+        encyclopaedia: 'Encyclopaedia',
+        sorting_mode: SortMode,
+    ) -> None:
         super().__init__(encyclopaedia)
 
         self.sorting_mode = sorting_mode
 
         self.reverse = False
-        if sorting_mode == self.enc.SORT_REVERSE_ALPHABETICAL:
+        if self.sorting_mode == SortMode.REVERSE_ALPHABETICAL:
             self.reverse = True
 
     def __call__(self) -> None:
         self.enc.sort_entries(
             entries=self.enc.current_entries,
-            sorting=self.sorting_mode,
+            sorting=int(self.sorting_mode.value),
             reverse=self.reverse
         )
 
@@ -264,12 +270,12 @@ class ToggleShowLockedButtonsAction(EncyclopaediaAction):
 
         # Ensure the sorting isn't broken by hiding buttons.
         reverse = False
-        if self.enc.sorting_mode == self.enc.SORT_REVERSE_ALPHABETICAL:
+        if self.enc.sorting_mode == SortMode.REVERSE_ALPHABETICAL:
             reverse = True
 
         self.enc.sort_entries(
             entries=self.enc.current_entries,
-            sorting=self.enc.sorting_mode,
+            sorting=int(self.enc.sorting_mode.value),
             reverse=reverse,
         )
 

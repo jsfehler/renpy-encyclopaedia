@@ -14,6 +14,7 @@ from .actions import (
 from .labels import Labels
 from .entry_sorting import push_locked_to_bottom
 from .eventemitter import EventEmitter
+from .constants import SortMode
 
 if TYPE_CHECKING:
     from .encentry import EncEntry
@@ -50,12 +51,6 @@ class Encyclopaedia(EventEmitter, store.object):
         locked_at_bottom: True if locked entries should appear at
             the bottom of the entry list or not.
     """
-    # Constants for the different types of sorting available.
-    SORT_NUMBER = 0
-    SORT_ALPHABETICAL = 1
-    SORT_REVERSE_ALPHABETICAL = 2
-    SORT_SUBJECT = 3
-    SORT_UNREAD = 4
 
     # Constants for the direction when scrolling through EncEntry.
     DIRECTION_FORWARD = 1
@@ -71,8 +66,9 @@ class Encyclopaedia(EventEmitter, store.object):
                  entry_screen: str = "encyclopaedia_entry",
                  ) -> None:
 
-        self.sorting_mode = sorting_mode
-        self.default_sorting_mode = sorting_mode
+        self.sorting_mode = SortMode(sorting_mode)
+        self.default_sorting_mode = self.sorting_mode
+
         self.show_locked_buttons = show_locked_buttons
         self.show_locked_entry = show_locked_entry
         self.entry_screen = entry_screen
@@ -84,7 +80,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self.filtering: Union[bool, str] = False
 
         self.reverse_sorting: bool = False
-        if sorting_mode == self.SORT_REVERSE_ALPHABETICAL:
+        if self.sorting_mode == SortMode.REVERSE_ALPHABETICAL:
             self.reverse_sorting = True
 
         self.nest_alphabetical_sort: bool = True
@@ -199,19 +195,21 @@ class Encyclopaedia(EventEmitter, store.object):
         """Sort entry lists by whatever the current sorting mode is.
 
         Args:
-            entries: The entry list to sort
+            entries: The EncEntry list to sort
             sorting: The sorting mode to use
             reverse: If the sorting should be done in reverse or not
         """
-        if sorting == self.SORT_NUMBER:
+        sorting_mode = SortMode(sorting)
+
+        if sorting_mode == SortMode.NUMBER:
             entries.sort(key=attrgetter('number'))
         else:
             entries.sort(reverse=reverse, key=attrgetter('name'))
 
-            if sorting == self.SORT_UNREAD:
+            if sorting_mode == SortMode.UNREAD:
                 entries.sort(key=attrgetter('viewed'))
 
-            elif sorting == self.SORT_SUBJECT:
+            elif sorting_mode == SortMode.SUBJECT:
                 entries.sort(key=attrgetter('subject'))
 
             if self.locked_at_bottom:
@@ -246,7 +244,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.sort_entries(
             entries=self.unlocked_entries,
-            sorting=self.sorting_mode,
+            sorting=int(self.sorting_mode.value),
             reverse=self.reverse_sorting
         )
 
@@ -302,7 +300,7 @@ class Encyclopaedia(EventEmitter, store.object):
         # Ensure correct sorting of entry lists.
         self.sort_entries(
             entries=self.all_entries,
-            sorting=self.sorting_mode,
+            sorting=int(self.sorting_mode.value),
             reverse=self.reverse_sorting
         )
 

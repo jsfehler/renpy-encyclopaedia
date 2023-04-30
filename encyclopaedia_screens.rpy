@@ -35,7 +35,7 @@ screen entry_button(enc, entry):
 screen vertical_list(enc):
     # The list used is chosen based on if we want to show locked entries on
     #   the entry select screen or not.
-    if enc.sorting_mode == enc.SORT_SUBJECT:
+    if enc.sorting_mode == SortMode.SUBJECT:
         # Split entries by subject
         for key, group in groupby(enc.current_entries, attrgetter("subject")):
            text key style "encyclopaedia_list_subject_header" # The subject heading
@@ -43,7 +43,7 @@ screen vertical_list(enc):
                hbox:
                    use entry_button(enc, entry)
 
-    elif enc.sorting_mode == enc.SORT_NUMBER:
+    elif enc.sorting_mode == SortMode.NUMBER:
         for entry in enc.current_entries:
             hbox:
                 spacing 10
@@ -116,11 +116,11 @@ screen encyclopaedia_list(enc):
                     hbox:
                         xfill False
                         # Buttons to sort entries.
-                        textbutton "- [enc.labels.sort_number_label] -" action enc.Sort(sorting_mode=enc.SORT_NUMBER) style_suffix "sort_by_button"
-                        textbutton "- [enc.labels.sort_alphabetical_label] -" action enc.Sort(sorting_mode=enc.SORT_ALPHABETICAL) style_suffix "sort_by_button"
-                        textbutton "- [enc.labels.sort_reverse_alphabetical_label] -" action enc.Sort(sorting_mode=enc.SORT_REVERSE_ALPHABETICAL) style_suffix "sort_by_button"
-                        textbutton "- [enc.labels.sort_subject_label] -" action enc.Sort(sorting_mode=enc.SORT_SUBJECT) style_suffix "sort_by_button"
-                        textbutton "- [enc.labels.sort_unread_label] -" action enc.Sort(sorting_mode=enc.SORT_UNREAD) style_suffix "sort_by_button"
+                        textbutton "- [enc.labels.sort_number_label] -" action enc.Sort(sorting_mode=SortMode.NUMBER) style_suffix "sort_by_button"
+                        textbutton "- [enc.labels.sort_alphabetical_label] -" action enc.Sort(sorting_mode=SortMode.ALPHABETICAL) style_suffix "sort_by_button"
+                        textbutton "- [enc.labels.sort_reverse_alphabetical_label] -" action enc.Sort(sorting_mode=SortMode.REVERSE_ALPHABETICAL) style_suffix "sort_by_button"
+                        textbutton "- [enc.labels.sort_subject_label] -" action enc.Sort(sorting_mode=SortMode.SUBJECT) style_suffix "sort_by_button"
+                        textbutton "- [enc.labels.sort_unread_label] -" action enc.Sort(sorting_mode=SortMode.UNREAD) style_suffix "sort_by_button"
 
             vbox:
                 xmaximum 600

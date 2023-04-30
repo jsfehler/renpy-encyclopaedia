@@ -58,7 +58,7 @@ Takes a valid sorting mode as an argument.
 
 .. code-block:: python
 
-    textbutton "Sort By Unread" action my_encyclopaedia.Sort(Encyclopaedia.SORT_UNREAD)
+    textbutton "Sort By Unread" action my_encyclopaedia.Sort(SortMode.UNREAD)
 
 SetEntry
 --------

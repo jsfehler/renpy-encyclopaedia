@@ -1,11 +1,16 @@
 from math import floor
 import operator
 from operator import attrgetter
-from typing import Callable, Optional, Union, TYPE_CHECKING
+from typing import cast, Callable, Optional, Union, TYPE_CHECKING
 
 from renpy import store
 
 from .actions import *  # NOQA: F403
+from .actions import (
+    ClearFilter,
+    NextPage,
+    PreviousPage,
+)
 from .labels import Labels
 from .entry_sorting import push_locked_to_bottom
 from .eventemitter import EventEmitter
@@ -227,7 +232,7 @@ class Encyclopaedia(EventEmitter, store.object):
             return True
         return False
 
-    def add_entry_to_unlocked_entries(self, entry: 'EncEntry'):
+    def add_entry_to_unlocked_entries(self, entry: 'EncEntry') -> None:
         """Add an entry to the list of unlocked entries.
 
         Args:
@@ -245,7 +250,28 @@ class Encyclopaedia(EventEmitter, store.object):
             reverse=self.reverse_sorting
         )
 
-    def add_entry(self, entry: 'EncEntry'):
+    def _find_closest_free_number(self) -> int:
+        """Find the closest unused EncEntry number."""
+        if len(self.all_entries) > 0:
+            # Get all possible numbers
+            last_number = cast(int, self.all_entries[-1].number)
+
+            all_numbers = range(last_number + 1)[1:]
+            used_numbers = [item.number for item in self.all_entries]
+            free_numbers = set(all_numbers) - set(used_numbers)
+
+            # If there are unused numbers.
+            if len(free_numbers) > 0:
+                return min(free_numbers)
+            # Else add a new number.
+            else:
+                return len(self.all_entries) + 1
+
+        # Catch the first EncEntry to be entered.
+        else:
+            return 1
+
+    def add_entry(self, entry: 'EncEntry') -> None:
         """Add an entry to the Encyclopaedia's internal lists and sorts it.
 
         Attempts to create duplicates are softly ignored.
@@ -265,21 +291,7 @@ class Encyclopaedia(EventEmitter, store.object):
                 raise ValueError(f"{entry.number} is already taken.")
 
         elif entry.number is None:
-            if len(self.all_entries) > 0:
-                # All possible numbers
-                all_numbers = range(self.all_entries[-1].number + 1)[1:]
-                used_numbers = [item.number for item in self.all_entries]
-                free_numbers = set(all_numbers) - set(used_numbers)
-
-                if len(free_numbers) > 0:
-                    # If there are unused numbers.
-                    entry.number = min(free_numbers)
-                else:
-                    # Else the entry is the last one.
-                    entry.number = len(self.all_entries) + 1
-            else:
-                # If there's no entries in the Encyclopaedia yet.
-                entry.number = 1
+            entry.number = self._find_closest_free_number()
 
         self.all_entries.append(entry)
         entry.parent = self
@@ -362,7 +374,7 @@ class Encyclopaedia(EventEmitter, store.object):
             block=block
         )
 
-    def PreviousPage(self):
+    def PreviousPage(self) -> PreviousPage:
         """Wrapper around an Action. Use with a renpy button.
 
         Returns:
@@ -370,7 +382,7 @@ class Encyclopaedia(EventEmitter, store.object):
         """
         return PreviousPage(encyclopaedia=self)  # NOQA: F405
 
-    def NextPage(self):
+    def NextPage(self) -> NextPage:
         """Wrapper around an Action. Use with a renpy button.
 
         Returns:
@@ -433,7 +445,7 @@ class Encyclopaedia(EventEmitter, store.object):
         """
         return FilterBySubject(self, subject)  # NOQA: F405
 
-    def ClearFilter(self):
+    def ClearFilter(self) -> ClearFilter:
         """Wrapper around an Action. Use with a renpy button.
 
         Returns:

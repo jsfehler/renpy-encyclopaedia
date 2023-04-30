@@ -18,6 +18,6 @@ def string_to_list(given_text: Union[str, list[str]]) -> list[str]:
     """
     # If the text is already in a list, just return it.
     if type(given_text) in (RevertableList, list):
-        return cast(list, given_text)
+        return cast(list[str], given_text)
 
     return [cast(str, given_text)]

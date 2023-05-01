@@ -1,4 +1,4 @@
-from operator import itemgetter
+from operator import attrgetter
 from typing import Any, Callable, Optional, Union, TYPE_CHECKING
 
 from renpy import store
@@ -100,9 +100,9 @@ class EncEntry(EventEmitter, store.object):
 
         self.pages = 1
 
-        # The sub-entries and their position.
+        # sub-entries
         # The parent EncEntry must be the first in the sub-entry list.
-        self.sub_entry_list: list[list['EncEntry']] = [[1, self]]
+        self.entries: list['EncEntry'] = [self]
 
         self.has_sub_entry = False
 
@@ -174,7 +174,7 @@ class EncEntry(EventEmitter, store.object):
         """Get the sub-page that's currently viewing viewed.
             Setting this attribute should be done using an integer.
         """
-        return self.sub_entry_list[self._current_page][1]
+        return self.entries[self._current_page]
 
     @current_page.setter
     def current_page(self, val: int) -> None:
@@ -242,7 +242,7 @@ class EncEntry(EventEmitter, store.object):
 
         # When a new entry has a number, ensure it's not already used.
         if entry.number is not None:
-            if any(i for i in self.sub_entry_list if i[1].number == entry.number):
+            if any(i for i in self.entries if i.number == entry.number):
                 raise ValueError(
                     "{} is already taken.".format(entry.number)
                 )
@@ -252,16 +252,17 @@ class EncEntry(EventEmitter, store.object):
 
         entry.parent = self
 
-        if [entry.number, entry] not in self.sub_entry_list:
+        if entry not in self.entries:
             if entry.locked is False:
-                self.sub_entry_list.append([entry.number, entry])
-                self.sub_entry_list = sorted(
-                    self.sub_entry_list,
-                    key=itemgetter(0)
+                self.entries.append(entry)
+                # Sort by number.
+                self.entries = sorted(
+                    self.entries,
+                    key=attrgetter('number'),
                 )
                 self.has_sub_entry = True
 
-                self.pages = len(self.sub_entry_list)
+                self.pages = len(self.entries)
 
                 return True
         return False

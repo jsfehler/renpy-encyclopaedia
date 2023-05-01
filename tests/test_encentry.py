@@ -58,7 +58,7 @@ def test_add_subpage():
         locked=False
     )
 
-    assert [[1, e], [2, ee]] == e.sub_entry_list
+    assert [e, ee] == e.entries
 
 
 def test_unlock_subpage():

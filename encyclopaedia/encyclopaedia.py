@@ -6,11 +6,7 @@ from typing import cast, Callable, Optional, Union, TYPE_CHECKING
 from renpy import store
 
 from .actions import *  # NOQA: F403
-from .actions import (
-    ClearFilter,
-    NextPage,
-    PreviousPage,
-)
+from .actions import ClearFilter, NextPage, PreviousPage
 from .labels import Labels
 from .entry_sorting import push_locked_to_bottom
 from .eventemitter import EventEmitter

@@ -82,8 +82,6 @@ screen encyclopaedia_list(enc):
         yfill True
 
         vbox:
-            spacing 10
-
             frame:
                 style_prefix "encyclopaedia"
                 xfill True
@@ -104,6 +102,8 @@ screen encyclopaedia_list(enc):
                 xfill True
 
                 vbox:
+                    spacing 2
+
                     text _("Filters:") style "encyclopaedia_header_text"
                     hbox:
                         xfill True
@@ -112,47 +112,55 @@ screen encyclopaedia_list(enc):
                         for subject in enc.subjects:
                             textbutton subject action enc.FilterBySubject(subject) style "encyclopaedia_subject_filters_button"
 
-                    text _("Sort by:") style "encyclopaedia_header_text"
                     hbox:
-                        xfill False
-                        # Buttons to sort entries.
-                        textbutton "- [enc.labels.sort_number_label] -" action enc.Sort(sorting_mode=SortMode.NUMBER) style_suffix "sort_by_button"
-                        textbutton "- [enc.labels.sort_alphabetical_label] -" action enc.Sort(sorting_mode=SortMode.ALPHABETICAL) style_suffix "sort_by_button"
-                        textbutton "- [enc.labels.sort_reverse_alphabetical_label] -" action enc.Sort(sorting_mode=SortMode.REVERSE_ALPHABETICAL) style_suffix "sort_by_button"
-                        textbutton "- [enc.labels.sort_subject_label] -" action enc.Sort(sorting_mode=SortMode.SUBJECT) style_suffix "sort_by_button"
-                        textbutton "- [enc.labels.sort_unread_label] -" action enc.Sort(sorting_mode=SortMode.UNREAD) style_suffix "sort_by_button"
+                        text _("Sort By") style "encyclopaedia_header_text"
+                        hbox:
+                            xfill False
+                            # Buttons to sort entries.
+                            textbutton "| [enc.labels.sort_number_label]" action enc.Sort(sorting_mode=SortMode.NUMBER) style_suffix "sort_by_button"
+                            textbutton "| [enc.labels.sort_alphabetical_label]" action enc.Sort(sorting_mode=SortMode.ALPHABETICAL) style_suffix "sort_by_button"
+                            textbutton "| [enc.labels.sort_reverse_alphabetical_label]" action enc.Sort(sorting_mode=SortMode.REVERSE_ALPHABETICAL) style_suffix "sort_by_button"
+                            textbutton "| [enc.labels.sort_subject_label]" action enc.Sort(sorting_mode=SortMode.SUBJECT) style_suffix "sort_by_button"
+                            textbutton "| [enc.labels.sort_unread_label] |" action enc.Sort(sorting_mode=SortMode.UNREAD) style_suffix "sort_by_button"
 
             vbox:
-                xmaximum 600
+                xmaximum 0.40
 
                 hbox:
                     frame:
                         style_prefix "encyclopaedia"
-                        ymaximum 680
-                        bottom_margin 10
+                        ymaximum 1.0
 
                         viewport:
                             scrollbars "vertical"
                             mousewheel True
                             draggable True
+
+                            ymaximum 0.80
+
                             vbox:
-                                xfill True
+                                spacing 0
                                 use vertical_list(enc) id "vertical list"
 
                 frame:
                     style_prefix "encyclopaedia"
-                    bottom_margin 10
-                    yalign 1.0
+                    xfill True
+                    yminimum 0.20
 
-                    vbox:
+                    side "c r":
 
-                        hbox:
-                            # Buttons to show different styles of hiding locked data.
-                            textbutton "Show/Hide Locked Buttons" action enc.ToggleShowLockedButtons() style_suffix "sort_by_button"
-                            textbutton "Show/Hide Locked Entry" action enc.ToggleShowLockedEntry() style_suffix "sort_by_button"
+                        vbox:
+                            yfill True
 
-                        hbox:
-                            textbutton "Return"  action [Hide("encyclopaedia_list"), Return()]
+                            hbox:
+                                # Buttons to show different styles of hiding locked data.
+                                textbutton "View Locked Buttons" action enc.ToggleShowLockedButtons() style_suffix "sort_by_button"
+                                textbutton "View Locked Entry" action enc.ToggleShowLockedEntry() style_suffix "sort_by_button"
+
+                            hbox:
+                                textbutton "Return"  action [Hide("encyclopaedia_list"), Return()]
+
+                        null width 16
 
 
 ################################################################################
@@ -169,8 +177,6 @@ screen encyclopaedia_entry(enc):
         style_prefix "encyclopaedia_entry"
 
         vbox:
-            spacing 10
-
             frame:
                 style_prefix "encyclopaedia"
                 xalign 1.0
@@ -189,7 +195,7 @@ screen encyclopaedia_entry(enc):
                     textbutton "Next Entry" xalign .98 action enc.NextEntry() style "encyclopaedia_change_entry_button"
 
             hbox:
-                spacing 10
+                spacing 8
                 # If the entry or sub-entry has an image
                 if enc.active.current_page.has_image:
                     frame:
@@ -203,10 +209,8 @@ screen encyclopaedia_entry(enc):
                             add enc.active.current_page.image
 
                 frame:
-                    style_prefix "encyclopaedia_entry_content_frame"
+                    style_prefix "encyclopaedia_entry_content"
                     id "entry_window"
-                    yfill False
-                    xalign 1.0
 
                     viewport:
                         scrollbars "vertical"
@@ -255,27 +259,42 @@ screen encyclopaedia_entry(enc):
 ########################
 # Encyclopaedia Styles
 ########################
-style encyclopaedia_frame is frame
+style encyclopaedia_vbox is vbox:
+    spacing 6
+
+style encyclopaedia_frame is frame:
+    padding (6, 6, 6, 6)
 
 style encyclopaedia_entry_frame is encyclopaedia_frame:
     xalign 1.0
-    yalign 0.65
+    yalign 1.0
 
-    xsize 0.68
-    ysize 670
+    xsize 0.58
+
+    padding (8, 8, 8, 8)
+    margin (0, 0, 6, 6)
+
+style encyclopaedia_entry_vbox is vbox:
+    spacing 8
 
 style encyclopaedia_entry_content_frame is encyclopaedia_frame:
-    left_padding 10
-    right_padding 10
+    left_padding 8
+    right_padding 8
+
+    xalign 1.0
+
+    ymaximum 0.65
 
 style encyclopaedia_image_frame is encyclopaedia_frame:
     xsize 0.4
-    ysize 1.0
+    ymaximum 0.65
+
     xalign 1.0
 
 style encyclopaedia_header_text:
     yalign 0.5
-    size 24
+
+    size 20
 
 style encyclopaedia_scrollbar is scrollbar
 
@@ -338,6 +357,3 @@ init -1500:
     python:
         from itertools import groupby
         from operator import attrgetter
-
-        half_screen_width = config.screen_width / 2
-        half_screen_height = config.screen_height / 2

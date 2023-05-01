@@ -121,7 +121,7 @@ class ChangeEntryAction(EncyclopaediaAction):
 
             # When changing an entry, the current sub-entry page number is
             # set back to 1.
-            self.enc.sub_current_position = 1
+            self.enc.sub_current_position = 0
             self.enc.active.current_page = self.enc.sub_current_position
 
             renpy.restart_interaction()

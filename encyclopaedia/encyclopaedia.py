@@ -6,7 +6,7 @@ from typing import cast, Callable, Optional, Union, TYPE_CHECKING
 from renpy import store
 
 from .actions import *  # NOQA: F403
-from .actions import ClearFilter, NextPage, PreviousPage
+from .actions import ClearFilter, NextEntry, PreviousEntry, NextPage, PreviousPage
 from .labels import Labels
 from .entry_sorting import push_locked_to_bottom
 from .eventemitter import EventEmitter
@@ -332,54 +332,79 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.filtered_entries = [i for i in entries if i.subject == subject]
 
-    def PreviousEntry(self):
-        """Wrapper around an Action. Use with a renpy button.
+    def _change_entry(self, direction: int) -> bool:
+        """Change the current active EncEntry."""
+        # Boundary check
+        if self.current_position < 0:
+            return False
 
-        Returns:
+        elif self.current_position >= self.number_of_visible_entries - 1:
+            return False
+
+        # Update the current position.
+        self.current_position += direction
+
+        # Update the active entry.
+        self.active = self.current_entry
+
+        if self.active.locked is False:
+            # Run the callback, if provided.
+            self.active.emit("viewed")
+
+            # Mark the entry as viewed.
+            self.active.viewed = True
+
+        # When changing an entry, the current sub-entry page number is
+        # set back to 1.
+        self.sub_current_position = 0
+        self.active.current_page = self.sub_current_position
+
+        return True
+
+    def previous_entry(self) -> bool:
+        """Set the previous entry as the current entry."""
+        return self._change_entry(-1)
+
+    def next_entry(self) -> bool:
+        """Set the next entry as the current entry."""
+        return self._change_entry(1)
+
+    def PreviousEntry(self) -> PreviousEntry:
+        """Wrapper around the Action of the same name.
+
+        Use with a renpy button.
+
+        Return:
             Screen Action
         """
-        block = self.check_position(
-            '<=',
-            position=self.current_position,
-            wall=0
-        )
+        return PreviousEntry(self)  # NOQA: F405
 
-        return ChangeEntryAction(  # NOQA: F405
-            encyclopaedia=self,
-            direction=self.DIRECTION_BACKWARD,
-            block=block
-        )
+    def NextEntry(self) -> NextEntry:
+        """Wrapper around the Action of the same name.
 
-    def NextEntry(self):
-        """Wrapper around an Action. Use with a renpy button.
+        Use with a renpy button.
 
-        Returns:
+        Return:
             Screen Action
         """
-        block = self.check_position(
-            '>=',
-            position=self.current_position,
-            wall=self.number_of_visible_entries - 1
-        )
-
-        return ChangeEntryAction(  # NOQA: F405
-            encyclopaedia=self,
-            direction=self.DIRECTION_FORWARD,
-            block=block
-        )
+        return NextEntry(self)  # NOQA: F405
 
     def PreviousPage(self) -> PreviousPage:
-        """Wrapper around an Action. Use with a renpy button.
+        """Wrapper around the Action of the same name.
 
-        Returns:
+        Use with a renpy button.
+
+        Return:
             Screen Action
         """
         return PreviousPage(encyclopaedia=self)  # NOQA: F405
 
     def NextPage(self) -> NextPage:
-        """Wrapper around an Action. Use with a renpy button.
+        """Wrapper around the Action of the same name.
 
-        Returns:
+        Use with a renpy button.
+
+        Return:
             Screen Action
         """
         return NextPage(encyclopaedia=self)  # NOQA: F405

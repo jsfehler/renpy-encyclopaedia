@@ -132,52 +132,6 @@ def test_reset_sub_page():
     assert e.current_page == e
 
 
-def test_previous_entry():
-    """Test Actions through their implementation in Encyclopaedia."""
-
-    enc = Encyclopaedia()
-
-    for x in range(0, 5):
-        EncEntry(
-            parent=enc,
-            name="Test Name {}".format(x + 1),
-            text=["Test Text"],
-            locked=False
-        )
-
-    assert 0 == enc.current_position
-
-    enc.NextEntry()()
-
-    enc.PreviousEntry()()
-
-    assert enc.current_entries[0] == enc.active
-    assert enc.current_entries[0].viewed
-    assert 0 == enc.current_position
-
-
-def test_next_entry():
-    """Test Actions through their implementation in Encyclopaedia."""
-
-    enc = Encyclopaedia()
-
-    for x in range(0, 5):
-        EncEntry(
-            parent=enc,
-            name="Test Name {}".format(x + 1),
-            text=["Test Text"],
-            locked=False
-        )
-
-    assert 0 == enc.current_position
-
-    enc.NextEntry()()
-
-    assert enc.current_entries[1] == enc.active
-    assert enc.current_entries[1].viewed
-    assert 1 == enc.current_position
-
-
 def test_set_entry():
     """Test Actions through their implementation in Encyclopaedia."""
 

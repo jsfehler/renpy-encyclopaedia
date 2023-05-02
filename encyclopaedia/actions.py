@@ -82,67 +82,64 @@ class SetEntryAction(EncyclopaediaAction):
             return False
 
 
-class ChangeEntryAction(EncyclopaediaAction):
+class PreviousEntry(EncyclopaediaAction):
     """Change the current entry being viewed.
 
-    Used for switching from one entry to another.
-
-    Used by Encyclopaedia's PreviousEntry() and NextEntry() functions.
+    Used to switch from one entry to another.
 
     Args:
         encyclopaedia: The Encyclopaedia instance to use.
-        direction: The direction to go in. 0 for back, 1 for forward.
-        block: True if at the first or last entry
-
     """
-    def __init__(self, encyclopaedia: 'Encyclopaedia', direction: int, block: bool) -> None:
-        super().__init__(encyclopaedia)
-
-        # Determines if it's going to the previous or next entry.
-        self.direction = direction
-
-        # If the button is active or not.
-        self.block = block
-
     def __call__(self) -> None:
-        if self.block is False:
-            # Update the current position.
-            self.enc.current_position += self.direction
-
-            # Update the active entry.
-            self.enc.active = self.enc.current_entry
-
-            if self.enc.active.locked is False:
-                # Run the callback, if provided.
-                self.enc.active.emit("viewed")
-
-                # Mark the entry as viewed.
-                self.enc.active.viewed = True
-
-            # When changing an entry, the current sub-entry page number is
-            # set back to 1.
-            self.enc.sub_current_position = 0
-            self.enc.active.current_page = self.enc.sub_current_position
-
+        result = self.enc.previous_entry()
+        if result:
             renpy.restart_interaction()
 
     def get_sensitive(self) -> bool:
-        """Determines if the button should be alive or not.
+        """Determine if the button should be alive or not.
 
-        Returns:
-            bool: True if the button should be alive, else False.
+        Return:
+            True if the button should be alive, else False.
         """
-        return not self.block
+        if not self.enc.active:
+            return False
+
+        return not (self.enc.current_position) <= 0
+
+
+class NextEntry(EncyclopaediaAction):
+    """Change the current entry being viewed.
+
+    Used to switch from one entry to another.
+
+    Args:
+        encyclopaedia: The Encyclopaedia instance to use.
+    """
+    def __call__(self) -> None:
+        result = self.enc.next_entry()
+        if result:
+            renpy.restart_interaction()
+
+    def get_sensitive(self) -> bool:
+        """Determine if the button should be alive or not.
+
+        Return:
+            True if the button should be alive, else False.
+        """
+        if not self.enc.active:
+            return False
+
+        return not (self.enc.current_position) >= (self.enc.number_of_visible_entries - 1)
 
 
 class PreviousPage(EncyclopaediaAction):
     """Change the current sub-entry being viewed.
 
-    Used for switching from one page to another.
+    Used to switch from one page to another.
     """
     def __call__(self) -> None:
         if not self.enc.active:
-            raise AttributeError('Cannot change page when no entry is set.')
+            raise AttributeError('Cannot change entry when no entry is set.')
 
         result = self.enc.active.previous_page()
 
@@ -165,11 +162,11 @@ class PreviousPage(EncyclopaediaAction):
 class NextPage(EncyclopaediaAction):
     """Change the current sub-entry being viewed.
 
-    Used for switching from one page to another.
+    Used to switch from one page to another.
     """
     def __call__(self) -> None:
         if not self.enc.active:
-            raise AttributeError('Cannot change page when no entry is set.')
+            raise AttributeError('Cannot change entry when no entry is set.')
 
         result = self.enc.active.next_page()
 

@@ -358,7 +358,7 @@ class Encyclopaedia(EventEmitter, store.object):
         Return:
             Screen Action
         """
-        return PreviousEntry(self)  # NOQA: F405
+        return PreviousEntry(self)
 
     def NextEntry(self) -> NextEntry:
         """Wrapper around the Action of the same name.
@@ -368,7 +368,7 @@ class Encyclopaedia(EventEmitter, store.object):
         Return:
             Screen Action
         """
-        return NextEntry(self)  # NOQA: F405
+        return NextEntry(self)
 
     def PreviousPage(self) -> PreviousPage:
         """Wrapper around the Action of the same name.
@@ -378,7 +378,7 @@ class Encyclopaedia(EventEmitter, store.object):
         Return:
             Screen Action
         """
-        return PreviousPage(encyclopaedia=self)  # NOQA: F405
+        return PreviousPage(encyclopaedia=self)
 
     def NextPage(self) -> NextPage:
         """Wrapper around the Action of the same name.
@@ -388,64 +388,78 @@ class Encyclopaedia(EventEmitter, store.object):
         Return:
             Screen Action
         """
-        return NextPage(encyclopaedia=self)  # NOQA: F405
+        return NextPage(encyclopaedia=self)
 
     def Sort(self, sorting_mode: SortMode):  # NOQA: F405
-        """Wrapper around an Action. Use with a renpy button.
+        """Wrapper around the Action of the same name.
+
+        Use with a renpy button.
 
         Args:
             sorting_mode: The type of sorting to use.
                 If None specified, use the current sorting.
 
-        Returns:
+        Return:
             Screen Action
         """
         return SortEncyclopaedia(self, sorting_mode)  # NOQA: F405
 
     def SetEntry(self, given_entry: 'EncEntry'):
-        """Wrapper around an Action. Use with a renpy button.
+        """Wrapper around the Action of the same name.
 
-        Returns:
+        Use with a renpy button.
+
+        Return:
             Screen Action
         """
         return SetEntryAction(self, given_entry)  # NOQA: F405
 
     def ResetSubPage(self):
-        """Wrapper around an Action. Use with a renpy button.
+        """Wrapper around the Action of the same name.
 
-        Returns:
+        Use with a renpy button.
+
+        Return:
             Screen Action
         """
         return ResetSubPageAction(self)  # NOQA: F405
 
     def ToggleShowLockedButtons(self):
-        """Wrapper around an Action. Use with a renpy button.
+        """Wrapper around the Action of the same name.
 
-        Returns:
+        Use with a renpy button.
+
+        Return:
             Screen Action
         """
         return ToggleShowLockedButtonsAction(self)  # NOQA: F405
 
     def ToggleShowLockedEntry(self):
-        """Wrapper around an Action. Use with a renpy button.
+        """Wrapper around the Action of the same name.
 
-        Returns:
+        Use with a renpy button.
+
+        Return:
             Screen Action
         """
         return ToggleShowLockedEntryAction(self)  # NOQA: F405
 
     def FilterBySubject(self, subject: str):
-        """Wrapper around an Action. Use with a renpy button.
+        """Wrapper around the Action of the same name.
 
-        Returns:
+        Use with a renpy button.
+
+        Return:
             Screen Action
         """
         return FilterBySubject(self, subject)  # NOQA: F405
 
     def ClearFilter(self) -> ClearFilter:
-        """Wrapper around an Action. Use with a renpy button.
+        """Wrapper around the Action of the same name.
 
-        Returns:
+        Use with a renpy button.
+
+        Return:
             Screen Action
         """
-        return ClearFilter(self)  # NOQA: F405
+        return ClearFilter(self)

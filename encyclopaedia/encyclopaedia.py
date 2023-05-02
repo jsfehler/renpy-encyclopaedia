@@ -5,7 +5,7 @@ from typing import cast, Callable, Optional, Union, TYPE_CHECKING
 from renpy import store
 
 from .actions import *  # NOQA: F403
-from .actions import ClearFilter, NextEntry, PreviousEntry, NextPage, PreviousPage
+from .actions import ClearFilter, FilterBySubject, NextEntry, PreviousEntry, NextPage, PreviousPage
 from .labels import Labels
 from .entry_sorting import push_locked_to_bottom
 from .eventemitter import EventEmitter
@@ -440,7 +440,7 @@ class Encyclopaedia(EventEmitter, store.object):
         """
         return ToggleShowLockedEntryAction(self)  # NOQA: F405
 
-    def FilterBySubject(self, subject: str):
+    def FilterBySubject(self, subject: str) -> FilterBySubject:
         """Wrapper around the Action of the same name.
 
         Use with a renpy button.
@@ -448,7 +448,7 @@ class Encyclopaedia(EventEmitter, store.object):
         Return:
             Screen Action
         """
-        return FilterBySubject(self, subject)  # NOQA: F405
+        return FilterBySubject(self, subject)
 
     def ClearFilter(self) -> ClearFilter:
         """Wrapper around the Action of the same name.

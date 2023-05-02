@@ -9,6 +9,7 @@ from renpy.store import TintMatrix
 
 from .utils import string_to_list
 from .eventemitter import EventEmitter
+from .constants import Direction
 
 if TYPE_CHECKING:
     from .encyclopaedia import Encyclopaedia
@@ -267,10 +268,10 @@ class EncEntry(EventEmitter, store.object):
                 return True
         return False
 
-    def _change_page(self, direction: int) -> bool:
+    def _change_page(self, direction: Direction) -> bool:
         """Change the current sub-entry page."""
 
-        new_page_number = self._current_page + direction
+        new_page_number = self._current_page + direction.value
 
         # Don't allow moving beyond bounds.
         if new_page_number < 0:
@@ -289,11 +290,11 @@ class EncEntry(EventEmitter, store.object):
 
     def previous_page(self) -> bool:
         """Set the previous sub-entry page as the current page."""
-        return self._change_page(-1)
+        return self._change_page(Direction.BACKWARD)
 
     def next_page(self) -> bool:
         """Set the next sub-entry page as the current page."""
-        return self._change_page(1)
+        return self._change_page(Direction.FORWARD)
 
     @property
     def word_count(self) -> int:

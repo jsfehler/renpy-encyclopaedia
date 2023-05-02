@@ -9,7 +9,7 @@ from .actions import ClearFilter, NextEntry, PreviousEntry, NextPage, PreviousPa
 from .labels import Labels
 from .entry_sorting import push_locked_to_bottom
 from .eventemitter import EventEmitter
-from .constants import SortMode
+from .constants import Direction, SortMode
 
 if TYPE_CHECKING:
     from .encentry import EncEntry
@@ -46,10 +46,6 @@ class Encyclopaedia(EventEmitter, store.object):
         locked_at_bottom: True if locked entries should appear at
             the bottom of the entry list or not.
     """
-
-    # Constants for the direction when scrolling through EncEntry.
-    DIRECTION_FORWARD = 1
-    DIRECTION_BACKWARD = -1
 
     def __init__(self,
                  sorting_mode: int = 0,
@@ -313,7 +309,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.filtered_entries = [i for i in entries if i.subject == subject]
 
-    def _change_entry(self, direction: int) -> bool:
+    def _change_entry(self, direction: Direction) -> bool:
         """Change the current active EncEntry."""
         # Boundary check
         if self.current_position < 0:
@@ -323,7 +319,7 @@ class Encyclopaedia(EventEmitter, store.object):
             return False
 
         # Update the current position.
-        self.current_position += direction
+        self.current_position += direction.value
 
         # Update the active entry.
         self.active = self.current_entry
@@ -344,11 +340,11 @@ class Encyclopaedia(EventEmitter, store.object):
 
     def previous_entry(self) -> bool:
         """Set the previous entry as the current entry."""
-        return self._change_entry(-1)
+        return self._change_entry(Direction.BACKWARD)
 
     def next_entry(self) -> bool:
         """Set the next entry as the current entry."""
-        return self._change_entry(1)
+        return self._change_entry(Direction.FORWARD)
 
     def PreviousEntry(self) -> PreviousEntry:
         """Wrapper around the Action of the same name.

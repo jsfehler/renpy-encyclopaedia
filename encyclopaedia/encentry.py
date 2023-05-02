@@ -185,7 +185,7 @@ class EncEntry(EventEmitter, store.object):
         """Used by self.name, self.text, and self.image to control if
         the locked placeholder or actual entry data should be returned.
 
-        Returns:
+        Return:
             If True or None, return the data requested,
             otherwise the placeholder for the data
         """
@@ -233,8 +233,8 @@ class EncEntry(EventEmitter, store.object):
         Args:
             entry: The entry to add as a sub-entry.
 
-        Returns:
-            bool: True if anything was added, else False
+        Return:
+            True if anything was added, else False
         """
         if entry.parent is not None and entry.parent != self:
             raise ValueError(
@@ -300,8 +300,8 @@ class EncEntry(EventEmitter, store.object):
     def word_count(self) -> int:
         """Get the word count for the EncEntry's text.
 
-        Returns:
-            int
+        Return:
+            The number of words in the EncEntry.
         """
         count = 0
         for item in self._text:

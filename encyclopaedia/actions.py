@@ -247,8 +247,7 @@ class ClearFilter(EncyclopaediaAction):
 
 
 class ResetSubPageAction(EncyclopaediaAction):
-    """Resets the sub-page count to 1. Used when closing the entry screen.
-    """
+    """Reset the sub-page count to 1. Used when closing the entry screen."""
     def __call__(self) -> None:
         self.enc.sub_current_position = 1
         if self.enc.active is not None:

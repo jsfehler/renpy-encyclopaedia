@@ -288,8 +288,8 @@ class Encyclopaedia(EventEmitter, store.object):
     def word_count(self) -> int:
         """Get the total word count for the Encyclopaedia.
 
-        Returns:
-            int
+        Return:
+            The number of words in every EncEntry in the Encyclopaedia.
         """
         count = 0
         for entry in self.all_entries:

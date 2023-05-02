@@ -1,5 +1,4 @@
 from math import floor
-import operator
 from operator import attrgetter
 from typing import cast, Callable, Optional, Union, TYPE_CHECKING
 
@@ -51,9 +50,6 @@ class Encyclopaedia(EventEmitter, store.object):
     # Constants for the direction when scrolling through EncEntry.
     DIRECTION_FORWARD = 1
     DIRECTION_BACKWARD = -1
-
-    # Used by check_position().
-    operators = {'<=': operator.le, '>=': operator.ge}
 
     def __init__(self,
                  sorting_mode: int = 0,
@@ -210,21 +206,6 @@ class Encyclopaedia(EventEmitter, store.object):
 
             if self.locked_at_bottom:
                 push_locked_to_bottom(entries)
-
-    def check_position(self, op: str, position: int, wall: int) -> bool:
-        """Determine if the Prev/Next Actions should be active or not.
-
-        Args:
-            op: The operator to use
-            position: The position of the entry
-            wall: The limit to check against
-
-        Returns:
-            bool
-        """
-        if self.operators[op](position, wall):
-            return True
-        return False
 
     def add_entry_to_unlocked_entries(self, entry: 'EncEntry') -> None:
         """Add an entry to the list of unlocked entries.

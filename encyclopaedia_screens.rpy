@@ -80,6 +80,7 @@ screen encyclopaedia_list(enc):
     frame:
         style_prefix "encyclopaedia"
         yfill True
+        xsize 0.5
 
         vbox:
             frame:
@@ -104,8 +105,9 @@ screen encyclopaedia_list(enc):
                 vbox:
                     spacing 2
 
-                    text _("Filters:") style "encyclopaedia_header_text"
+                    text _("Filters") style "encyclopaedia_header_text"
                     hbox:
+                        box_wrap True
                         xfill True
                         # Buttons to filter the entries that are displayed
                         textbutton "All" action enc.ClearFilter() style "encyclopaedia_subject_filters_button"
@@ -124,8 +126,6 @@ screen encyclopaedia_list(enc):
                             textbutton "| [enc.labels.sort_unread_label] |" action enc.Sort(sorting_mode=SortMode.UNREAD) style_suffix "sort_by_button"
 
             vbox:
-                xmaximum 0.40
-
                 hbox:
                     frame:
                         style_prefix "encyclopaedia"
@@ -269,10 +269,10 @@ style encyclopaedia_entry_frame is encyclopaedia_frame:
     xalign 1.0
     yalign 1.0
 
-    xsize 0.58
+    xsize 0.5
+    ysize 1.0
 
     padding (8, 8, 8, 8)
-    margin (0, 0, 6, 6)
 
 style encyclopaedia_entry_vbox is vbox:
     spacing 8
@@ -283,11 +283,11 @@ style encyclopaedia_entry_content_frame is encyclopaedia_frame:
 
     xalign 1.0
 
-    ymaximum 0.65
+    ymaximum 0.82
 
 style encyclopaedia_image_frame is encyclopaedia_frame:
     xsize 0.4
-    ymaximum 0.65
+    ymaximum 0.82
 
     xalign 1.0
 

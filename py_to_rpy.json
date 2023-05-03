@@ -7,7 +7,7 @@
     "from renpy.store import DictEquality",
     "from .actions import *",
     "from .actions ",
-    "from .constants import SortMode",
+    "from .constants ",
     "from .encentry import EncEntry",
     "from .encyclopaedia import Encyclopaedia",
     "from .eventemitter import EventEmitter",

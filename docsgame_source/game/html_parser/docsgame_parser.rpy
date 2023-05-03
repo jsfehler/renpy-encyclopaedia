@@ -154,7 +154,7 @@ init 1 python:
     html_files = get_file_paths('docs/user_guide')
 
     img_mapper = {
-        'docs/user_guide/01-getting-started/01-install.html': 'images/getting-started.png',
+        'docs/user_guide/01-getting-started/01-install.html': Transform('images/getting-started.png', zoom=0.5),
     }
 
     from pathlib import Path
@@ -180,9 +180,7 @@ init 1 python:
             enc_enc,
             name=f"{soup.h1.string}",
             text=text,
-            #subject="User Guide",
             subject=subject,
-            #image=Transform('images/getting-started.png', zoom=0.5),
             image=img_to_use,
         )
 

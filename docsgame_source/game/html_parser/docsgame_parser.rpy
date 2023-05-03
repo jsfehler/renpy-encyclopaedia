@@ -203,10 +203,3 @@ init 1 python:
         text=text,
         subject="Development",
     )
-
-screen encyclopaedia_button():
-    textbutton "Encyclopaedia" action ShowMenu('encyclopaedia_list', enc_enc)
-
-
-init:
-    $ config.overlay_screens.append('encyclopaedia_button')

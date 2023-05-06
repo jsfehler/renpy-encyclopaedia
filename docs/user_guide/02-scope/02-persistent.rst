@@ -1,8 +1,13 @@
 Persistent Data
 ===============
 
-If your Encyclopaedia is global, you must set the `viewed_persistent` and `locked_persistent`
-arguments to True to be able to save the entry's status.
+If your Encyclopaedia is global, the state of each EncEntry can be saved using
+Ren'Py's persistent data system.
+
+You must set the `viewed_persistent` and `locked_persistent` arguments to True
+to be able to save the entry's status.
+
+Example:
 
 .. code-block:: python
 

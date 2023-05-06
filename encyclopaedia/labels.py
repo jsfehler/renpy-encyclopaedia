@@ -44,9 +44,9 @@ class Labels(store.object):
     @property
     def percentage_unlocked(self) -> str:
         """Percentage representation of the amount of the encyclopaedia
-        that's unlocked. ie: '50%'.
+        that's unlocked. i.e.: '50%'.
 
-        Returns:
+        Return:
             str
         """
         percentage_unlocked = int(self.encyclopaedia.percentage_unlocked)
@@ -56,7 +56,7 @@ class Labels(store.object):
     def entry_current_page(self) -> str:
         """The sub-page of an entry that is being viewed.
 
-        Returns:
+        Return:
             str
         """
         try:
@@ -79,7 +79,7 @@ class Labels(store.object):
     def sorting_mode(self) -> str:
         """Label for the encyclopaedia's current sorting mode.
 
-        Returns:
+        Return:
             str
         """
         enc = self.encyclopaedia

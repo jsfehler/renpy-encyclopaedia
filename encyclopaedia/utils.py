@@ -13,7 +13,7 @@ def string_to_list(given_text: Union[str, list[str]]) -> list[str]:
     Args:
         given_text
 
-    Returns:
+    Return:
         list[str]
     """
     # If the text is already in a list, just return it.

@@ -12,8 +12,8 @@ def push_locked_to_bottom(seq: list['EncEntry']) -> list['EncEntry']:
     Args:
         seq: The sequence of EncEntry to sort.
 
-    Returns:
-        list: Sorted version of the given sequence
+    Return:
+        Sorted version of the given sequence
     """
     new_list = sorted(seq, reverse=True, key=attrgetter('locked'))
 

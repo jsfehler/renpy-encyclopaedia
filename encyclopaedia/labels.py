@@ -60,7 +60,7 @@ class Labels(store.object):
             str
         """
         try:
-            total_pages = self.encyclopaedia.active.pages
+            total_pages = self.encyclopaedia.active.pages  # type: ignore
         except AttributeError:
             raise AttributeError(
                 "Cannot display Entry's current page when no entry is open."

@@ -142,12 +142,14 @@ class EncEntry(EventEmitter, store.object):
         self._locked = new_value
 
         if self._locked is False:
-            if isinstance(self.parent, EncEntry):
-                self.parent.add_entry(self)
-            else:
-                self.parent.add_entry_to_unlocked_entries(self)
+            if self.parent is not None:
+                if isinstance(self.parent, EncEntry):
+                    self.parent.add_entry(self)
+                else:
+                    self.parent.add_entry_to_unlocked_entries(self)
 
-            self.parent.emit("entry_unlocked")
+                self.parent.emit("entry_unlocked")
+
             self.emit("unlocked")
 
     @property

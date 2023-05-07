@@ -1,11 +1,17 @@
 Development
 ===========
 
-Requirements:
+Although Ren'py Encyclopaedia is designed as a plugin for Ren'Py, it's
+written almost entirely in Python. Consequently, it uses the Python
+ecosystem for development and testing.
 
-    - Python 3.9
-    - `Tox <https://tox.readthedocs.io/en/latest/>`_
+Python version `3.9` must be installed to build and test the plugin. The
+following python libraries must be installed as well:
 
+  - `Tox <https://tox.readthedocs.io/en/latest/>`_
+
+Setting up python on your machine and installing dependencies are beyond the
+scope of the plugin's documentation.
 
 Run the unit tests
 ------------------

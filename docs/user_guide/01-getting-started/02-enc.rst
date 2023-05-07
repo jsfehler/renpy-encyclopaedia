@@ -13,7 +13,7 @@ After deciding what type of Encyclopaedia you want, now you need to create one w
 
 This is the top-level container for all your entries.
 
-.. code-block:: python
+.. code-block:: renpy
 
     init python:
         your_new_encyclopaedia = Encyclopaedia()
@@ -31,7 +31,7 @@ The minimum arguments to create an EncEntry are:
 
 - text: The text for the entry. Can be a string or list of strings.
 
-.. code-block:: python
+.. code-block:: renpy
 
     init python:
         your_new_encyclopaedia = Encyclopaedia()

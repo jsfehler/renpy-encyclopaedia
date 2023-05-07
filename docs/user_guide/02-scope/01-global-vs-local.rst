@@ -18,7 +18,7 @@ A global Encyclopaedia must be created inside an `init python <https://www.renpy
 
 Example:
 
-.. code-block:: python
+.. code-block:: renpy
 
     init python:
         your_new_encyclopaedia = Encyclopaedia()
@@ -34,7 +34,7 @@ A local Encyclopaedia must be created inside a `python <https://www.renpy.org/do
 
 Example:
 
-.. code-block:: python
+.. code-block:: renpy
 
     label start:
         python:

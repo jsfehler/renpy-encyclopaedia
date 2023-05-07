@@ -12,7 +12,7 @@ screen navigation():
 
             textbutton _("Start") action Start()
 
-            textbutton _("Encyclopaedia") action ShowMenu('encyclopaedia_list', enc_enc)
+            textbutton _("Ren'Py Encyclopaedia Documentation") action ShowMenu('encyclopaedia_list', enc_enc)
 
         else:
 

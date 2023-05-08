@@ -156,7 +156,7 @@ class PreviousPage(EncyclopaediaAction):
         if not self.enc.active:
             return False
 
-        return not (self.enc.active._current_page - 1) <= 0
+        return not (self.enc.active._current_page - 1) < 0
 
 
 class NextPage(EncyclopaediaAction):

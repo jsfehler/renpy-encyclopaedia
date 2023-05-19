@@ -29,14 +29,6 @@ Run the code linter
     tox -e lint
 
 
-Build the distribution file
----------------------------
-
-.. code-block:: console
-
-    tox -e build
-
-
 Build the documentation
 -----------------------
 

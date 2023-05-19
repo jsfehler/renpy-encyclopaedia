@@ -2,4 +2,4 @@ Installation
 ============
 
 1. Download the latest release at: https://github.com/jsfehler/renpy-encyclopaedia/releases
-2. Place `enc.rpy` and `encyclopaedia_screens.rpy` into your project's `game` directory.
+2. Place the `encyclopaedia` folder into your project's `game` directory.

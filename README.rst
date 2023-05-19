@@ -10,9 +10,7 @@ Encyclopaedia Framework for Ren'Py
 
 A plugin for the `Ren'py Visual Novel engine <https://www.renpy.org/>`_
 
-Simplifies creating an encyclopaedia, bestiary, glossary, or similar system.
-
-Compatible Ren'Py Version: 6.99.12.3 and higher
+Use it to create an encyclopaedia, bestiary, glossary, codex or similar system.
 
 Features
 --------
@@ -27,9 +25,10 @@ Features
 
 Documentation
 -------------
-Documentation is available at http://renpy-encyclopaedia.readthedocs.io/en/latest/index.html.
+Documentation is available at http://renpy-encyclopaedia.readthedocs.io/en/latest/index.html
 
 
 Contributing
 ------------
-For filing bugs or feature requests, please use the `GitHub issue tracker <https://github.com/jsfehler/renpy-encyclopaedia/issues>`_
+For filing bugs or feature requests, please use the
+`GitHub issue tracker <https://github.com/jsfehler/renpy-encyclopaedia/issues>`_

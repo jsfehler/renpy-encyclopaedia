@@ -1,3 +1,6 @@
+"""renpy
+init python:
+"""
 from enum import Enum
 
 

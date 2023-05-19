@@ -1,7 +1,7 @@
 import pytest
 
-from encyclopaedia.encyclopaedia import Encyclopaedia
-from encyclopaedia.encentry import EncEntry
+from encyclopaedia import Encyclopaedia
+from encyclopaedia import EncEntry
 
 
 def test_previous_page():

@@ -1,4 +1,4 @@
-from .constants import SortMode
+from .constants_ren import SortMode
 
 import renpy.exports as renpy
 from renpy.store import DictEquality
@@ -7,8 +7,11 @@ from renpy.ui import Action
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from .encyclopaedia import Encyclopaedia
-    from .encentry import EncEntry
+    from .encyclopaedia_ren import Encyclopaedia
+    from .encentry_ren import EncEntry
+"""renpy
+init python:
+"""
 
 
 class EncyclopaediaAction(Action, DictEquality):

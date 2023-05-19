@@ -1,5 +1,5 @@
-from encyclopaedia.encyclopaedia import Encyclopaedia
-from encyclopaedia.encentry import EncEntry
+from encyclopaedia import Encyclopaedia
+from encyclopaedia import EncEntry
 
 from renpy.game import persistent
 

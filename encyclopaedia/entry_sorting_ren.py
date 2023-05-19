@@ -1,8 +1,11 @@
+"""renpy
+init python:
+"""
 from operator import attrgetter
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from .encentry import EncEntry
+    from .encentry_ren import EncEntry
 
 
 def push_locked_to_bottom(seq: list['EncEntry']) -> list['EncEntry']:

@@ -1,6 +1,6 @@
-from encyclopaedia.encyclopaedia import Encyclopaedia
-from encyclopaedia.encentry import EncEntry
-from encyclopaedia import constants
+from encyclopaedia import Encyclopaedia
+from encyclopaedia import EncEntry
+from encyclopaedia import constants_ren
 
 
 def test_viewed_callback_set_entry():
@@ -212,7 +212,7 @@ def test_toggle_show_locked_buttons():
 def test_toggle_show_locked_buttons_reverse_sorting():
     """Ensure reverse sorting isn't broken when toggling show_locked_buttons."""
 
-    enc = Encyclopaedia(sorting_mode=constants.SortMode.REVERSE_ALPHABETICAL)
+    enc = Encyclopaedia(sorting_mode=constants_ren.SortMode.REVERSE_ALPHABETICAL)
 
     entry_names = ["Apple", "Carrot", "Deer", "Eel", "Fajita"]
 
@@ -274,6 +274,6 @@ def test_sort_encyclopaeda():
             locked=False
         )
 
-    enc.Sort(sorting_mode=constants.SortMode.SUBJECT)()
+    enc.Sort(sorting_mode=constants_ren.SortMode.SUBJECT)()
 
-    assert constants.SortMode.SUBJECT == enc.sorting_mode
+    assert constants_ren.SortMode.SUBJECT == enc.sorting_mode

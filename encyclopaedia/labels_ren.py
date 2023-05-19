@@ -1,11 +1,15 @@
 from typing import TYPE_CHECKING
 
-from .constants import SortMode
+from .constants_ren import SortMode
 
 from renpy import store
 
 if TYPE_CHECKING:
-    from .encyclopaedia import Encyclopaedia
+    from .encyclopaedia_ren import Encyclopaedia
+
+"""renpy
+init python:
+"""
 
 
 class Labels(store.object):

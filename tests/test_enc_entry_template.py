@@ -1,6 +1,6 @@
-from encyclopaedia.encyclopaedia import Encyclopaedia
-from encyclopaedia.encentry import EncEntry
-from encyclopaedia.encentry_template import EncEntryTemplate
+from encyclopaedia import Encyclopaedia
+from encyclopaedia import EncEntry
+from encyclopaedia import EncEntryTemplate
 
 import pytest
 

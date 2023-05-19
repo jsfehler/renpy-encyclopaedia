@@ -3,8 +3,12 @@ from typing import TYPE_CHECKING
 from renpy import store
 
 if TYPE_CHECKING:
-    from .encyclopaedia import Encyclopaedia
-    from .encentry import EncEntry
+    from .encyclopaedia_ren import Encyclopaedia
+    from .encentry_ren import EncEntry
+
+"""renpy
+init python:
+"""
 
 
 def set_encentry_from_text_anchor(value: str) -> None:

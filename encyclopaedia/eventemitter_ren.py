@@ -1,3 +1,6 @@
+"""renpy
+init -85 python:
+"""
 from typing import Callable
 
 

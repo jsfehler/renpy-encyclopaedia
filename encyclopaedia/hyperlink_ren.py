@@ -7,7 +7,7 @@ if TYPE_CHECKING:
     from .encentry_ren import EncEntry
 
 """renpy
-init python:
+init -85 python:
 """
 
 

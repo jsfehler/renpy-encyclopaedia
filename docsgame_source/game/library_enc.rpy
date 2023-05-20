@@ -15,13 +15,30 @@ label setup_enc:
 
         about_library = LibraryEntry(
             name=_('Library'),
-            text="It appears to be a library.",
+            text=(
+                "You find yourself sitting on a comfortable armchair."
+                "Around you, rows of books."
+                "You are in what appears to be a library, somehow."
+            ),
         )
 
         about_library_2 = EncEntry(
             parent=about_library,
             name=_("Library"),
-            text="You are in a library.",
+            text=(
+                "As far as you can see, long, elegant curved columns rise "
+                "several meters upwards."
+                "They bend at a slight angle and become arches along the ceiling."
+            ),
+            locked=True,
+        )
+
+        about_library_3 = EncEntry(
+            parent=about_library,
+            name=_("Library"),
+            text=(
+                "You attempt to look down a row of books, but become dizzy from the effort."
+            ),
             locked=True,
         )
 

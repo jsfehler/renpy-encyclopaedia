@@ -51,4 +51,11 @@ label questions:
 
             $ about_library_2.locked = False
 
+        "How big is this place?" if about_library_2.viewed:
+            l "Infinite, technically speaking."
+            l "It's not something you can perceive."
+            l "However I assure you, becoming lost is impossible."
+
+            $ about_library_3.locked = False
+
     jump questions

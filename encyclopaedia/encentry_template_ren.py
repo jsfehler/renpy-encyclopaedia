@@ -5,5 +5,5 @@ init python:
 from functools import partial  # NOQA E402
 
 
-def EncEntryTemplate(**kwargs):
+def EncEntryTemplate(**kwargs) -> partial[EncEntry]:
     return partial(EncEntry, **kwargs)

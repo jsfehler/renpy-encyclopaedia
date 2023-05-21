@@ -95,7 +95,7 @@ screen encyclopaedia_list(enc):
                 style_prefix "encyclopaedia"
                 xfill True
 
-                text "Welcome to the Demo Encyclopaedia"
+                text enc.name
 
             frame:
                 style_prefix "encyclopaedia"

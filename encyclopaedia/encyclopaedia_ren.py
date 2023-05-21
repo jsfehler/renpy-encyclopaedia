@@ -5,6 +5,7 @@ from renpy import store
 from .actions_ren import *  # NOQA: F403
 from .actions_ren import (
     ClearFilter,
+    CloseActiveEntry,
     FilterBySubject,
     NextEntry,
     PreviousEntry,
@@ -421,6 +422,16 @@ class Encyclopaedia(EventEmitter, store.object):
             Screen Action
         """
         return SetEntryAction(self, given_entry)  # NOQA: F405
+
+    def CloseActiveEntry(self) -> CloseActiveEntry:
+        """Wrapper around the Action of the same name.
+
+        Use with a renpy button.
+
+        Return:
+            Screen Action
+        """
+        return CloseActiveEntry(self)
 
     def ResetSubPage(self):
         """Wrapper around the Action of the same name.

@@ -8,7 +8,9 @@ screen enc_button():
 label setup_enc:
 
     python:
-        library_enc = Encyclopaedia()
+        library_enc = Encyclopaedia(
+            name="Wanderer in the Library",
+        )
 
         # Use EncEntryTemplate to set reasonable defaults and reduce duplication
         LibraryEntry = EncEntryTemplate(parent=library_enc, locked=True)

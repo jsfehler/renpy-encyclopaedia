@@ -149,7 +149,7 @@ init 1 python:
         return text
 
     # Create EncEntry dynamically from user guide.
-    enc_enc = Encyclopaedia()
+    enc_enc = Encyclopaedia(name="Ren'Py Encyclopaedia Documentation")
 
     html_files = get_file_paths('docs/user_guide')
 

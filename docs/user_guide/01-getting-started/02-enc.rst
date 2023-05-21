@@ -6,20 +6,19 @@ Fundamentally, an Encyclopaedia is built using two python classes:
     - `Encyclopaedia()`: The top level container.
     - `EncEntry()`: A container for a single encyclopaedia entry.
 
-Encyclopaedia()
----------------
+The Encyclopaedia object
+------------------------
 
-After deciding what type of Encyclopaedia you want, now you need to create one with the Encyclopaedia object.
-
-This is the top-level container for all your entries.
+`Encyclopaedia()` manages, among other things, the sorting and filtering of
+all your entries.
 
 .. code-block:: renpy
 
     init python:
         your_new_encyclopaedia = Encyclopaedia()
 
-EncEntry
---------
+The EncEntry object
+-------------------
 
 Once you have an Encyclopaedia, EncEntry objects need to be created.
 These are where the information for each entry goes.

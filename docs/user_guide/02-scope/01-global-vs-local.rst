@@ -2,8 +2,8 @@ Global Scope vs Local Scope
 ===========================
 
 Generally, you'll want your Encyclopaedia to retain state.
-State in this context refers to the viewed and locked status of an EncEntry
-in an Encyclopaedia. Your Encyclopaedia can be configured to retain state
+State in this context refers to the viewed and locked status of an EncEntry.
+Your Encyclopaedia can be configured to retain state
 independent of saved games (globally) or retain state inside a saved game (locally).
 
 Global Encyclopaedia

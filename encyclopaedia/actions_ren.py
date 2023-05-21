@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .encyclopaedia_ren import Encyclopaedia
     from .encentry_ren import EncEntry
+
 """renpy
 init python:
 """
@@ -69,7 +70,7 @@ class SetEntryAction(EncyclopaediaAction):
         self.set_entry()
 
         # Show the entry screen associated with the encyclopaedia.
-        renpy.show_screen(self.enc.entry_screen, self.enc)
+        renpy.show_screen(self.enc.entry_screen, enc=self.enc)
         renpy.restart_interaction()
 
     def get_sensitive(self) -> bool:
@@ -83,6 +84,17 @@ class SetEntryAction(EncyclopaediaAction):
             return True
         else:
             return False
+
+
+class CloseActiveEntry(EncyclopaediaAction):
+    """Close the active EncEntry.
+
+    Normally used by the entry screen.
+    """
+    def __call__(self) -> None:
+        self.enc.active = None
+        self.enc.ResetSubPage()()
+        renpy.hide_screen(self.enc.entry_screen)
 
 
 class PreviousEntry(EncyclopaediaAction):

@@ -77,6 +77,14 @@ screen encyclopaedia_list(enc):
     tag menu
     modal True
 
+    # Active entries get shown automatically.
+    # Ugly, but due to how ShowMenu() works, we need to put this on the screen,
+    # not in an Action.
+    # Generally, this is used by hyperlinks to jump directly to an EncEntry.
+    on "show" action [
+        If(enc.active, enc.SetEntry(enc.active)),
+    ]
+
     frame:
         style_prefix "encyclopaedia"
         yfill True
@@ -158,7 +166,7 @@ screen encyclopaedia_list(enc):
                                 textbutton "View Locked Entry" action enc.ToggleShowLockedEntry() style_suffix "sort_by_button"
 
                             hbox:
-                                textbutton "Return"  action [Hide("encyclopaedia_list"), Return()]
+                                textbutton "Return"  action [enc.CloseActiveEntry(), Return()]
 
                         null width 16
 
@@ -253,7 +261,7 @@ screen encyclopaedia_entry(enc):
                     xfill True
                     # Flavour text that displays the current sorting mode
                     text "Sorting Mode: [enc.labels.sorting_mode]" xalign .02 size 18 yalign 0.5
-                    textbutton "Close Entry" id "close_entry_button" xalign .98 clicked [enc.ResetSubPage(), Hide("encyclopaedia_entry"), Show("encyclopaedia_list", None, enc)] style "encyclopaedia_close_button"
+                    textbutton "Close Entry" id "close_entry_button" xalign .98 clicked enc.CloseActiveEntry() style "encyclopaedia_close_button"
 
 
 ########################

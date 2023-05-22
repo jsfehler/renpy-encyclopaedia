@@ -146,9 +146,8 @@ class EncEntry(EventEmitter, store.object):
         if self.locked_persistent:
             setattr(persistent, self._name + "_locked", new_value)
 
-        self._locked = new_value
-
-        if self._locked is False:
+        # Only run if the entry was locked
+        if (self._locked is True) and (new_value is False):
             if self.parent is not None:
                 if isinstance(self.parent, EncEntry):
                     self.parent.add_entry(self)
@@ -158,6 +157,8 @@ class EncEntry(EventEmitter, store.object):
                 self.parent.emit("entry_unlocked")
 
             self.emit("unlocked")
+
+        self._locked = new_value
 
     @property
     def viewed(self) -> bool:

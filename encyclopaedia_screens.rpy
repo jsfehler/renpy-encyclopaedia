@@ -118,7 +118,7 @@ screen encyclopaedia_list(enc):
                         box_wrap True
                         xfill True
                         # Buttons to filter the entries that are displayed
-                        textbutton "All" action enc.ClearFilter() style "encyclopaedia_subject_filters_button"
+                        textbutton _("All") action enc.ClearFilter() style "encyclopaedia_subject_filters_button"
                         for subject in enc.subjects:
                             textbutton subject action enc.FilterBySubject(subject) style "encyclopaedia_subject_filters_button"
 
@@ -166,7 +166,7 @@ screen encyclopaedia_list(enc):
                                 textbutton "View Locked Entry" action enc.ToggleShowLockedEntry() style_suffix "sort_by_button"
 
                             hbox:
-                                textbutton "Return"  action [enc.CloseActiveEntry(), Return()]
+                                textbutton _("Return")  action [enc.CloseActiveEntry(), Return()]
 
                         null width 16
 
@@ -199,8 +199,8 @@ screen encyclopaedia_entry(enc):
                 hbox:
                     xfill True
                     # Previous / Next is relative to the sorting mode
-                    textbutton "Previous Entry" xalign .02 action enc.PreviousEntry() style "encyclopaedia_change_entry_button"
-                    textbutton "Next Entry" xalign .98 action enc.NextEntry() style "encyclopaedia_change_entry_button"
+                    textbutton _("Previous Entry") xalign .02 action enc.PreviousEntry() style "encyclopaedia_change_entry_button"
+                    textbutton _("Next Entry") xalign .98 action enc.NextEntry() style "encyclopaedia_change_entry_button"
 
             vbox:
                 spacing 8
@@ -246,12 +246,12 @@ screen encyclopaedia_entry(enc):
                         xfill True
 
                         # If there's a sub-entry, add Prev/Next Page buttons
-                        textbutton "Previous Page" xalign .02 action enc.PreviousPage() style "encyclopaedia_change_entry_button"
+                        textbutton _("Previous Page") xalign .02 action enc.PreviousPage() style "encyclopaedia_change_entry_button"
 
                         # Flavour text to indicate which sub-page out of the total is being viewed
                         text enc.labels.entry_current_page size 18 yalign 0.5
 
-                        textbutton "Next Page" xalign .98 action enc.NextPage() style "encyclopaedia_change_entry_button"
+                        textbutton _("Next Page") xalign .98 action enc.NextPage() style "encyclopaedia_change_entry_button"
 
                 else:
                     xpadding 10
@@ -266,7 +266,7 @@ screen encyclopaedia_entry(enc):
                     xfill True
                     # Flavour text that displays the current sorting mode
                     text "Sorting Mode: [enc.labels.sorting_mode]" xalign .02 size 18 yalign 0.5
-                    textbutton "Close Entry" id "close_entry_button" xalign .98 clicked enc.CloseActiveEntry() style "encyclopaedia_close_button"
+                    textbutton _("Close Entry") id "close_entry_button" xalign .98 clicked enc.CloseActiveEntry() style "encyclopaedia_close_button"
 
 
 ########################

@@ -202,7 +202,7 @@ screen encyclopaedia_entry(enc):
                     textbutton "Previous Entry" xalign .02 action enc.PreviousEntry() style "encyclopaedia_change_entry_button"
                     textbutton "Next Entry" xalign .98 action enc.NextEntry() style "encyclopaedia_change_entry_button"
 
-            hbox:
+            vbox:
                 spacing 8
                 # If the entry or sub-entry has an image
                 if enc.active.current_page.has_image:
@@ -219,6 +219,11 @@ screen encyclopaedia_entry(enc):
                 frame:
                     style_prefix "encyclopaedia_entry_content"
                     id "entry_window"
+
+                    if enc.active.current_page.has_image:
+                        ymaximum 0.68
+                    else:
+                        ymaximum 0.845
 
                     viewport:
                         scrollbars "vertical"
@@ -250,7 +255,7 @@ screen encyclopaedia_entry(enc):
 
                 else:
                     xpadding 10
-                    ypadding 14
+                    ypadding 10
                     text " " size 18 yalign 0.5
 
             frame:
@@ -280,24 +285,21 @@ style encyclopaedia_entry_frame is encyclopaedia_frame:
     xsize 0.5
     ysize 1.0
 
-    padding (8, 8, 8, 8)
+    padding (6, 6, 6, 6)
 
 style encyclopaedia_entry_vbox is vbox:
-    spacing 8
+    spacing 6
 
 style encyclopaedia_entry_content_frame is encyclopaedia_frame:
-    left_padding 8
-    right_padding 8
+    left_padding 6
+    right_padding 6
 
     xalign 1.0
-
-    ymaximum 0.82
 
 style encyclopaedia_image_frame is encyclopaedia_frame:
-    xsize 0.4
-    ymaximum 0.82
-
+    xsize 1.0
     xalign 1.0
+    ymaximum 0.5
 
 style encyclopaedia_header_text:
     yalign 0.5

@@ -22,6 +22,7 @@ label setup_enc:
                 "Around you, rows of books."
                 "You are in what appears to be a library, somehow."
             ),
+            image=Transform('images/getting-started.png', zoom=0.5),
         )
 
         about_library_2 = EncEntry(

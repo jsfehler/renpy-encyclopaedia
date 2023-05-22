@@ -153,10 +153,6 @@ init 1 python:
 
     html_files = get_file_paths('docs/user_guide')
 
-    img_mapper = {
-        'docs/user_guide/01-getting-started/01-install.html': Transform('images/getting-started.png', zoom=0.5),
-    }
-
     from pathlib import Path
     import string
 
@@ -164,8 +160,6 @@ init 1 python:
         html_path = Path(html)
 
         subject = string.capwords(html_path.parts[2].replace('-',' '))
-
-        img_to_use = img_mapper.get(html)
 
         with renpy.open_file(html) as f:
             soup = BeautifulSoup(f.read(), 'html.parser').html.body
@@ -181,7 +175,6 @@ init 1 python:
             name=f"{soup.h1.string}",
             text=text,
             subject=subject,
-            image=img_to_use,
         )
 
 

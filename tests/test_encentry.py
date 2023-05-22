@@ -82,6 +82,7 @@ def test_unlock_subpage():
     ee.locked = False
     assert ee.locked is False
 
+    assert ee in e.entries
 
 def test_label():
     enc = Encyclopaedia()

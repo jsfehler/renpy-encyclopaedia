@@ -58,7 +58,7 @@ def test_add_subpage():
         locked=False
     )
 
-    assert [e, ee] == e.entries
+    assert [e, ee] == e.pages
 
 
 def test_unlock_subpage():
@@ -82,7 +82,7 @@ def test_unlock_subpage():
     ee.locked = False
     assert ee.locked is False
 
-    assert ee in e.entries
+    assert ee in e.pages
 
 def test_label():
     enc = Encyclopaedia()

@@ -241,7 +241,7 @@ screen encyclopaedia_entry(enc):
                 xalign 1.0
                 xfill True
 
-                if enc.active.has_sub_entry:
+                if enc.active.has_pages:
                     hbox:
                         xfill True
 

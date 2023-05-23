@@ -198,7 +198,7 @@ class NextPage(EncyclopaediaAction):
         if not self.enc.active:
             return False
 
-        return not (self.enc.active._current_page + 1) >= self.enc.active.pages
+        return not (self.enc.active._current_page + 1) >= len(self.enc.active.unlocked_pages)
 
 
 class SortEncyclopaedia(EncyclopaediaAction):

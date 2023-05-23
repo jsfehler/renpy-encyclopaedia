@@ -50,9 +50,8 @@ class EncEntry(EventEmitter, store.object):
 
     Attributes:
         has_image: True if an image was provided, else False.
-        pages (int): Number of pages this entry contains.
-
-        has_sub_entry (bool): If an entry has any sub-entries.
+        pages: List of all the pages this entry contains.
+        has_pages: If an entry has any sub-entries.
     """
     def __init__(self,
                  parent: Optional[Union['Encyclopaedia', 'EncEntry']] = None,
@@ -106,13 +105,15 @@ class EncEntry(EventEmitter, store.object):
                 c = Color(rgb=locked_image_tint)
                 self.locked_image = Transform(image, matrixcolor=TintMatrix(c))
 
-        self.pages = 1
+        # Setup pages
 
-        # sub-entries
-        # The parent EncEntry must be the first in the sub-entry list.
-        self.entries: list['EncEntry'] = [self]
+        # The current instance must be the first in the sub-entry list.
+        self.pages: list['EncEntry'] = [self]
 
-        self.has_sub_entry = False
+        # Cache unlocked pages
+        self.unlocked_pages: list['EncEntry'] = [self]
+
+        self.has_pages = False
 
         # Property: Set with Integer, get returns the page.
         self._current_page = 0
@@ -151,11 +152,7 @@ class EncEntry(EventEmitter, store.object):
             self._locked = new_value
 
             if self.parent is not None:
-                if isinstance(self.parent, EncEntry):
-                    self.parent.add_entry(self)
-                else:
-                    self.parent.add_entry_to_unlocked_entries(self)
-
+                self.parent.add_entry_to_unlocked_entries(self)
                 self.parent.emit("entry_unlocked")
 
             self.emit("unlocked")
@@ -183,9 +180,10 @@ class EncEntry(EventEmitter, store.object):
     @property
     def current_page(self) -> 'EncEntry':
         """Get the sub-page that's currently viewing viewed.
-            Setting this attribute should be done using an integer.
+
+        Setting this attribute should be done using an integer.
         """
-        return self.entries[self._current_page]
+        return self.unlocked_pages[self._current_page]
 
     @current_page.setter
     def current_page(self, val: int) -> None:
@@ -244,39 +242,61 @@ class EncEntry(EventEmitter, store.object):
             entry: The entry to add as a sub-entry.
 
         Return:
-            True if anything was added, else False
+            True if anything was added, else False.
+
+        Raise:
+            AttributeError: If the entry is already the page of another entry.
+            ValueError: If the entry has a number that is already taken.
         """
         if entry.parent is not None and entry.parent != self:
-            raise ValueError(
-                "{} is already a sub-page of another EncEntry".format(entry),
+            raise AttributeError(
+                f"{entry} is already a page of {self.parent}",
             )
 
         # When a new entry has a number, ensure it's not already used.
         if entry.number is not None:
-            if any(i for i in self.entries if i.number == entry.number):
+            if any(i for i in self.pages if i.number == entry.number):
                 raise ValueError(
-                    "{} is already taken.".format(entry.number)
+                    f"{entry.number} is already taken."
                 )
 
         elif entry.number is None:
-            entry.number = self.pages + 1
+            entry.number = len(self.pages) + 1
 
         entry.parent = self
 
-        if entry not in self.entries:
+        if entry not in self.pages:
             if entry.locked is False:
-                self.entries.append(entry)
-                # Sort by number.
-                self.entries = sorted(
-                    self.entries,
-                    key=attrgetter('number'),
-                )
-                self.has_sub_entry = True
+                self.add_entry_to_unlocked_entries(entry)
 
-                self.pages = len(self.entries)
+            self.pages.append(entry)
+            # Sort by number.
+            self.pages = sorted(
+                self.pages,
+                key=attrgetter('number'),
+            )
+            self.has_pages = True
 
-                return True
+            return True
+
         return False
+
+    def add_entry_to_unlocked_entries(self, entry: 'EncEntry') -> None:
+        """Add an entry to the list of unlocked entries.
+
+        Args:
+            entry: The Entry to add to the unlocked entries list.
+        """
+
+        self.unlocked_pages.append(entry)
+
+        # Remove duplicates
+        self.unlocked_pages = list(set(self.unlocked_pages))
+
+        self.unlocked_pages = sorted(
+            self.unlocked_pages,
+            key=attrgetter('number'),
+        )
 
     def _change_page(self, direction: Direction) -> bool:
         """Change the current sub-entry page."""
@@ -287,7 +307,7 @@ class EncEntry(EventEmitter, store.object):
         if new_page_number < 0:
             return False
 
-        elif new_page_number > self.pages:
+        elif new_page_number > len(self.pages):
             return False
 
         self.current_page = new_page_number

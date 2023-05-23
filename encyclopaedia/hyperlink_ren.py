@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from renpy import store
 from renpy.store import ShowMenu
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from .encyclopaedia_ren import Encyclopaedia
     from .encentry_ren import EncEntry
 

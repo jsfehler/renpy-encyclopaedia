@@ -10,7 +10,7 @@ from .utils_ren import string_to_list
 from .eventemitter_ren import EventEmitter
 from .constants_ren import Direction
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from .encyclopaedia_ren import Encyclopaedia
 
 

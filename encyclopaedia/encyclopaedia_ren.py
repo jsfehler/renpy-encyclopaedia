@@ -21,7 +21,7 @@ from .entry_sorting_ren import push_locked_to_bottom
 from .eventemitter_ren import EventEmitter
 from .constants_ren import Direction, SortMode
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from .encentry_ren import EncEntry
 
 """renpy

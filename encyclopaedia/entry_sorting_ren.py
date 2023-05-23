@@ -4,7 +4,7 @@ init python:
 from operator import attrgetter
 from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from .encentry_ren import EncEntry
 
 

@@ -6,7 +6,7 @@ from renpy.ui import Action
 
 from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from .encyclopaedia_ren import Encyclopaedia
     from .encentry_ren import EncEntry
 

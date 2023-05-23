@@ -4,7 +4,7 @@ from .constants_ren import SortMode
 
 from renpy import store
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from .encyclopaedia_ren import Encyclopaedia
 
 """renpy

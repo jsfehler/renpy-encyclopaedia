@@ -1,9 +1,8 @@
 from encyclopaedia import Encyclopaedia
 from encyclopaedia import EncEntry
-from encyclopaedia import constants_ren
 
 
-def test_close_active_entry():
+def test_close_active_entry_active_cleared():
     enc = Encyclopaedia()
 
     e = EncEntry(

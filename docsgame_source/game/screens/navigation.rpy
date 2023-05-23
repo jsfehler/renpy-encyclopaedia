@@ -10,9 +10,9 @@ screen navigation():
 
         if main_menu:
 
-            textbutton _("Start") action Start()
+            textbutton _("Start Game") action Start()
 
-            textbutton _("Ren'Py Encyclopaedia Documentation") action ShowMenu('encyclopaedia_list', enc_enc)
+            textbutton _("Documentation") action ShowMenu('encyclopaedia_list', enc_enc)
 
         else:
 

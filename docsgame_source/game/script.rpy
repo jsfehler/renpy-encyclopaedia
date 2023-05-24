@@ -44,6 +44,8 @@ label questions:
         "Who are you?":
             l "A Librarian."
 
+            $ l_name = _("Librarian")
+
             $ about_librarian.locked = False
 
         "Are we in a library?":
@@ -51,7 +53,7 @@ label questions:
 
             $ about_library_2.locked = False
 
-        "How big is this place?" if about_library_2.viewed:
+        "How big is this place?" if not about_library_2.locked:
             l "Infinite, technically speaking."
             l "It's not something you can perceive."
             l "However I assure you, becoming lost is impossible."

@@ -6,4 +6,14 @@ from functools import partial  # NOQA E402
 
 
 def EncEntryTemplate(**kwargs) -> partial[EncEntry]:
+    """A template generator for EncEntry.
+
+    Any valid argument for EncEntry can be used in EncEntryTemplate.
+
+    Example:
+
+        Fruit = EncEntryTemplate(subject='Fruit', locked=True)
+
+        apple = Fruit(name='Apple')
+    """
     return partial(EncEntry, **kwargs)

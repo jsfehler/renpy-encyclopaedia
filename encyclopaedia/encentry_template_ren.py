@@ -12,8 +12,7 @@ def EncEntryTemplate(**kwargs) -> partial[EncEntry]:
 
     Example:
 
-        Fruit = EncEntryTemplate(subject='Fruit', locked=True)
-
-        apple = Fruit(name='Apple')
+        >>> Fruit = EncEntryTemplate(subject='Fruit', locked=True)
+        >>> apple = Fruit(name='Apple')
     """
     return partial(EncEntry, **kwargs)

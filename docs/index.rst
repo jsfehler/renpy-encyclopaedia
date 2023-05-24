@@ -65,8 +65,10 @@
 
 
 .. toctree::
+  :maxdepth: 2
   :caption: API Documentation
   :hidden:
-  :maxdepth: 4
 
-  encyclopaedia.rst
+  api/encyclopaedia.rst
+  api/encentry.rst
+  api/encentrytemplate.rst

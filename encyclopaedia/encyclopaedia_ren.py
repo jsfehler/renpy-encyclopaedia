@@ -331,11 +331,13 @@ class Encyclopaedia(EventEmitter, store.object):
 
     def _change_entry(self, direction: Direction) -> bool:
         """Change the current active EncEntry."""
+        test_position = self.current_position + direction.value
+
         # Boundary check
-        if self.current_position < 0:
+        if test_position < 0:
             return False
 
-        elif self.current_position >= self.number_of_visible_entries - 1:
+        elif test_position >= self.number_of_visible_entries:
             return False
 
         # Update the current position.

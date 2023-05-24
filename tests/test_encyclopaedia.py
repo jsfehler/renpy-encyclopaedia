@@ -428,3 +428,38 @@ def test_add_entry_already_in_page():
 
     with pytest.raises(ValueError):
         enc.add_entry(ee)
+
+
+def test_change_entry_boundary_forward():
+    enc = Encyclopaedia()
+
+    EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+    )
+
+    EncEntry(
+        parent=enc,
+        name="Test Name 2",
+        text=["Test Text"],
+    )
+
+    result = enc._change_entry(constants_ren.Direction.FORWARD)
+    assert result
+
+    result = enc._change_entry(constants_ren.Direction.FORWARD)
+    assert not result
+
+
+def test_change_entry_boundary_back():
+    enc = Encyclopaedia()
+
+    EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+    )
+
+    result = enc._change_entry(constants_ren.Direction.BACKWARD)
+    assert not result

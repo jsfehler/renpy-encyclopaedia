@@ -1,14 +1,17 @@
-# Changelog
-All notable changes to this project will be documented in this file.
+Changelog
+=========
 
-## [3.0.0] - 2023-05-23
+[3.0.0] - 2023-05-23
+--------------------
 
-## Added
+Added
+~~~~~
 - Support for hyperlinking to entries.
 - CloseActiveEntry action. This will safely close the entry screen.
 - Encyclopaedia.name attribute added.
 
-## Changed
+Changed
+~~~~~~~
 - Minimum Ren'Py version bumped up to 8.1.0
 - MatrixColor is used for locked image tint instead of im
 - Encyclopaedia.set_global_locked_image_tint() method removed. Use EncEntryTemplate instead.
@@ -19,5 +22,6 @@ All notable changes to this project will be documented in this file.
 - _ren.py format used to simplify dist process
 - User Guide rewritten
 
-## Fixed
+Fixed
+~~~~~
 - Actions now inherit from DictEquality

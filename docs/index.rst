@@ -62,7 +62,7 @@
     :hidden:
 
     development.rst
-
+    changelog.rst
 
 .. toctree::
   :maxdepth: 2

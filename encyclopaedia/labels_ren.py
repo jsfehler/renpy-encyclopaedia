@@ -62,7 +62,7 @@ class Labels(store.object):
             str
         """
         percentage_unlocked = int(self.encyclopaedia.percentage_unlocked)
-        return "{}{}".format(percentage_unlocked, self.percentage_label)
+        return f"{percentage_unlocked}{self.percentage_label}"
 
     @property
     def entry_current_page(self) -> str:

@@ -185,15 +185,6 @@ class Encyclopaedia(EventEmitter, store.object):
             return len(self.all_entries)
         return len(self.unlocked_entries)
 
-    def set_global_locked_name(self, placeholder: str) -> None:
-        """Set all the locked names for all entries to the same string.
-
-        Args:
-            placeholder: Text to use for every locked name
-        """
-        for item in self.all_entries:
-            item.locked_name = placeholder
-
     def sort_entries(
         self,
         entries: list['EncEntry'],

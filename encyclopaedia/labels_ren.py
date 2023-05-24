@@ -45,6 +45,14 @@ class Labels(store.object):
 
         self.unread_entry_label = "New!"
 
+        self.sorting_strings = {
+            SortMode.NUMBER: self.sort_number_label,
+            SortMode.ALPHABETICAL: self.sort_alphabetical_label,
+            SortMode.REVERSE_ALPHABETICAL: self.sort_reverse_alphabetical_label,  # NOQA: E501
+            SortMode.SUBJECT: self.sort_subject_label,
+            SortMode.UNREAD: self.sort_unread_label
+        }
+
     @property
     def percentage_unlocked(self) -> str:
         """Percentage representation of the amount of the encyclopaedia
@@ -88,12 +96,4 @@ class Labels(store.object):
         """
         enc = self.encyclopaedia
 
-        sorting_strings = {
-            SortMode.NUMBER: self.sort_number_label,
-            SortMode.ALPHABETICAL: self.sort_alphabetical_label,
-            SortMode.REVERSE_ALPHABETICAL: self.sort_reverse_alphabetical_label,  # NOQA: E501
-            SortMode.SUBJECT: self.sort_subject_label,
-            SortMode.UNREAD: self.sort_unread_label
-        }
-
-        return sorting_strings[enc.sorting_mode]
+        return self.sorting_strings[enc.sorting_mode]

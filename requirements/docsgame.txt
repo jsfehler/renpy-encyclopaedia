@@ -1,2 +1,3 @@
 docutils
 pygments
+-e ./renpy_pygments

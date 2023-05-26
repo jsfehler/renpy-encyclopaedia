@@ -27,8 +27,6 @@ import renpy
 
 sys.path.insert(0, os.path.abspath('../'))
 
-sys.path.insert(0, os.path.abspath('../docs/extensions'))
-
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -47,7 +45,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.napoleon',
     'sphinx_immaterial',
-    'renpydoc',
+    'renpy_pygments',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

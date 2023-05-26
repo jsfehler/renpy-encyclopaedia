@@ -1,2 +1,3 @@
 sphinx
 sphinx-immaterial
+-e ./renpy_pygments

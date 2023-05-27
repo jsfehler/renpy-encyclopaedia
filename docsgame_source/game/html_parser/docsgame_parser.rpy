@@ -39,11 +39,11 @@ init python:
 
 
     def check_h2(element):
-        return '{size=+8}' + str(element.string) + '{/size}'
+        return '{size=+4}' + str(element.string) + '{/size}'
 
 
     def check_h3(element):
-        return '{size=+4}' + str(element.string) + '{/size}'
+        return '{size=+2}' + str(element.string) + '{/size}'
 
 
     def check_py_code(element):
@@ -72,7 +72,8 @@ init python:
                 p_str += str(el.string)
             else:
                 # Parse tags inside the paragraph.
-                p_str += ''.join(iter_block(el))
+                found_tags, found_text = iter_block(el)
+                p_str += ''.join(found_text)
 
         # Remove carriage return
         clean_p_str = p_str.replace('\r\n', ' ').replace('\r', ' ')
@@ -87,7 +88,8 @@ init python:
             if not el.name:
                 p_str += str(el.string)
             else:
-                p_str += ''.join(iter_block(el))
+                found_tags, found_text = iter_block(el)
+                p_str += ''.join(found_text)
 
         return p_str
 
@@ -112,24 +114,35 @@ init 1 python:
 
 
     def iter_blocks(element):
+        inner_tags: list[str] = []
         inner_text: list[str] = []
 
         for elem in element:
             if elem.name:
-                inner_text = [*inner_text, *iter_block(elem)]
+                tags, text = iter_block(elem)
 
-        return inner_text
+                inner_tags = [*inner_tags, *tags]
+                inner_text = [*inner_text, *text]
+
+        return inner_tags, inner_text
 
 
     def iter_block(element, inside_code_block: bool = False):  # -> list[str]:
-        text = []
+        tags: list[str] = []
+        text: list[str] = []
+
         element_str = ''
 
         if element.name in ['main', 'section', 'ol', 'ul']:
             element_str = elem_funcs[element.name](element)
+
+            tags.append(element.name)
             text.append(element_str)
 
-            text = [*text, *iter_blocks(element)]
+            found_tags, found_text = iter_blocks(element)
+
+            tags = [*tags, *found_tags]
+            text = [*text, *found_text]
 
         # Handle code blocks
         elif element.name == 'pre':
@@ -142,6 +155,8 @@ init 1 python:
             }
 
             element_str = ''
+
+            tags.append('pre')
             text.append(element_str)
 
             inner_text = ''
@@ -149,21 +164,29 @@ init 1 python:
                 if sub_elem.name == 'code':
                     inner_text += check_funcs[check_func](sub_elem)
 
+            tags.append('code')
             text.append(element_str + inner_text)
 
         elif elem_funcs.get(element.name):
             element_str = elem_funcs[element.name](element)
+
+            tags.append(element.name)
             text.append(element_str)
 
         elif element.name == 'blockquote':
-            text = [*text, *iter_blocks(element)]
+            found_tags, found_text = iter_blocks(element)
+
+            tags = [*tags, *found_tags]
+            text = [*text, *found_text]
 
         else:
             # Default for other blocks
             element_str = str(element.string)
+
+            tags.append(element.name)
             text.append(element_str)
 
-        return text
+        return tags, text
 
     # Create EncEntry dynamically from user guide.
     enc_enc = Encyclopaedia(name="Ren'Py Encyclopaedia Documentation")
@@ -181,18 +204,24 @@ init 1 python:
         with renpy.open_file(html) as f:
             soup = BeautifulSoup(f.read(), 'html.parser').html.body
 
+        tags = []
         text = []
 
         for element in soup:
             if element.name:
-                text = [*text, *iter_block(element)]
+                found_tags, found_text = iter_block(element)
 
-        EncEntry(
+                tags = [*tags, *found_tags]
+                text = [*text, *found_text]
+
+        entry = EncEntry(
             enc_enc,
             name=f"{soup.h1.string}",
             text=text,
             subject=subject,
         )
+
+        entry.tags = tags
 
 
     develop_path = 'docs/development.html'
@@ -203,11 +232,16 @@ init 1 python:
 
     for element in soup:
         if element.name:
-            text = [*text, *iter_block(element)]
+            found_tags, found_text = iter_block(element)
 
-    EncEntry(
+            tags = [*tags, *found_tags]
+            text = [*text, *found_text]
+
+    dev_entry = EncEntry(
         enc_enc,
         name=f"{soup.h1.string}",
         text=text,
         subject="Development",
     )
+
+    dev_entry.tags = tags

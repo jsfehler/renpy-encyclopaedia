@@ -1,6 +1,7 @@
 init python:
     from pygments import highlight
     from pygments.lexers import PythonLexer
+    from renpylexer.lexer import RenPyLexer
 
 
     def check_main(element):
@@ -45,11 +46,19 @@ init python:
         return '{size=+4}' + str(element.string) + '{/size}'
 
 
-    def check_code(element):
+    def check_py_code(element):
         """pygments is used to highlight the content of code blocks."""
         text = str(element.text)
         return highlight(
             text, PythonLexer(), RenpyFormatter(style='github-dark'),
+        )
+
+
+    def check_renpy_code(element):
+        """pygments is used to highlight the content of code blocks."""
+        text = str(element.text)
+        return highlight(
+            text, RenPyLexer(), RenpyFormatter(style='github-dark'),
         )
 
 
@@ -124,13 +133,21 @@ init 1 python:
 
         # Handle code blocks
         elif element.name == 'pre':
+            check_func = element.attrs['class'][1]
+
+            check_funcs = {
+                'python': check_py_code,
+                'renpy': check_renpy_code,
+                'console': check_py_code,
+            }
+
             element_str = ''
             text.append(element_str)
 
             inner_text = ''
             for sub_elem in element.contents:
                 if sub_elem.name == 'code':
-                    inner_text += check_code(sub_elem)
+                    inner_text += check_funcs[check_func](sub_elem)
 
             text.append(element_str + inner_text)
 

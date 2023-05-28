@@ -340,7 +340,7 @@ style unread_entry_notice_text:
     yalign 0.5
 
 style encyclopaedia_entry_text is default:
-    size 18
+    size 16
 
 style encyclopaedia_list_subject_header:
     size 24

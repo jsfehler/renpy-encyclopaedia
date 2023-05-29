@@ -144,31 +144,32 @@ screen encyclopaedia_list(enc):
                             mousewheel True
                             draggable True
 
-                            ymaximum 0.80
+                            ymaximum 0.785
 
                             vbox:
                                 spacing 0
                                 use vertical_list(enc) id "vertical list"
 
-                frame:
-                    style_prefix "encyclopaedia"
-                    xfill True
-                    yminimum 0.20
+                vbox:
+                    yfill True
 
-                    side "c r":
+                    frame:
+                        style_prefix "encyclopaedia"
 
-                        vbox:
-                            yfill True
+                        xfill True
 
-                            hbox:
-                                # Buttons to show different styles of hiding locked data.
-                                textbutton "View Locked Buttons" action enc.ToggleShowLockedButtons() style_suffix "sort_by_button"
-                                textbutton "View Locked Entry" action enc.ToggleShowLockedEntry() style_suffix "sort_by_button"
+                        hbox:
+                            # Buttons to show different styles of hiding locked data.
+                            textbutton "View Locked Buttons" action enc.ToggleShowLockedButtons() style_suffix "sort_by_button"
+                            textbutton "View Locked Entry" action enc.ToggleShowLockedEntry() style_suffix "sort_by_button"
 
-                            hbox:
-                                textbutton _("Return")  action [enc.CloseActiveEntry(), Return()]
+                    frame:
+                        style_prefix "encyclopaedia"
 
-                        null width 16
+                        xfill True
+
+                        hbox:
+                            textbutton _("Return") action [enc.CloseActiveEntry(), Return()] style "encyclopaedia_close_button"
 
 
 ################################################################################

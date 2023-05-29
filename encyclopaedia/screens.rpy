@@ -173,7 +173,7 @@ screen encyclopaedia_list(enc):
 
 ################################################################################
 #    Encyclopaedia Entry:
-#    Screen that's used to display an individual entry.
+#    Screen that's used to display an individual EncEntry.
 #
 #    Args:
 #        enc (Encyclopaedia): The encyclopaedia to use on this screen.
@@ -185,35 +185,38 @@ screen encyclopaedia_entry(enc):
         style_prefix "encyclopaedia_entry"
 
         vbox:
+            # Flavour text to indicate which entry we're currently on.
             frame:
-                style_prefix "encyclopaedia"
-                xalign 1.0
-                xfill True
-                # Flavour text to indicate which entry we're currently on
+                style_suffix "label_frame"
+
                 text enc.active.label
 
+            # Buttons to swap between pages.
             frame:
-                style_prefix "encyclopaedia"
+                style_suffix "change_entry_frame"
                 id "entry_nav"
-                xalign 1.0
-                hbox:
-                    xfill True
-                    # Previous / Next is relative to the sorting mode
-                    textbutton _("Previous Entry") xalign .02 action enc.PreviousEntry() style "encyclopaedia_change_entry_button"
-                    textbutton _("Next Entry") xalign .98 action enc.NextEntry() style "encyclopaedia_change_entry_button"
 
+                hbox:
+                    style_suffix "change_entry_hbox"
+
+                    # Previous / Next is relative to the sorting mode
+                    textbutton _("Previous Entry") xalign .02 action enc.PreviousEntry() style_suffix "change_entry_button"
+                    textbutton _("Next Entry") xalign .98 action enc.NextEntry() style_suffix "change_entry_button"
+
+            # Entry text
             vbox:
                 spacing 8
-                # If the entry or sub-entry has an image
+                # If the entry has an image
                 if enc.active.current_page.has_image:
                     frame:
-                        style_prefix "encyclopaedia_image"
+                        style_prefix "encyclopaedia_entry_image"
 
                         viewport:
                             scrollbars None
                             draggable True
                             mousewheel True
                             edgescroll (1.0, 1.0)
+
                             add enc.active.current_page.image
 
                 frame:
@@ -221,37 +224,36 @@ screen encyclopaedia_entry(enc):
                     id "entry_window"
 
                     if enc.active.current_page.has_image:
-                        ymaximum 0.68
+                        ymaximum 0.685
                     else:
-                        ymaximum 0.845
+                        ymaximum 0.846
 
                     viewport:
                         scrollbars "vertical"
                         mousewheel True
                         draggable True
                         vbox:
-                            spacing 0
+                            spacing 8
                             # Display the current entry's text
                             for item in enc.active.current_page.text:
                                 text "[item]" style "encyclopaedia_entry_text"
-
 
             frame:
                 style_prefix "encyclopaedia"
                 xalign 1.0
                 xfill True
 
+                # If the entry has pages, add Prev/Next Page buttons
                 if enc.active.has_pages:
                     hbox:
-                        xfill True
+                        style "encyclopaedia_entry_change_entry_hbox"
 
-                        # If there's a sub-entry, add Prev/Next Page buttons
-                        textbutton _("Previous Page") xalign .02 action enc.PreviousPage() style "encyclopaedia_change_entry_button"
+                        textbutton _("Previous Page") xalign .02 action enc.PreviousPage() style "encyclopaedia_entry_change_entry_button"
 
-                        # Flavour text to indicate which sub-page out of the total is being viewed
+                        # Flavour text to indicate which page out of the total is being viewed
                         text enc.labels.entry_current_page size 18 yalign 0.5
 
-                        textbutton _("Next Page") xalign .98 action enc.NextPage() style "encyclopaedia_change_entry_button"
+                        textbutton _("Next Page") xalign .98 action enc.NextPage() style "encyclopaedia_entry_change_entry_button"
 
                 else:
                     xpadding 10
@@ -269,37 +271,14 @@ screen encyclopaedia_entry(enc):
                     textbutton _("Close Entry") id "close_entry_button" xalign .98 clicked enc.CloseActiveEntry() style "encyclopaedia_close_button"
 
 
-########################
+######################
 # Encyclopaedia Styles
-########################
+######################
 style encyclopaedia_vbox is vbox:
     spacing 6
 
 style encyclopaedia_frame is frame:
     padding (6, 6, 6, 6)
-
-style encyclopaedia_entry_frame is encyclopaedia_frame:
-    xalign 1.0
-    yalign 1.0
-
-    xsize 0.5
-    ysize 1.0
-
-    padding (6, 6, 6, 6)
-
-style encyclopaedia_entry_vbox is vbox:
-    spacing 6
-
-style encyclopaedia_entry_content_frame is encyclopaedia_frame:
-    left_padding 6
-    right_padding 6
-
-    xalign 1.0
-
-style encyclopaedia_image_frame is encyclopaedia_frame:
-    xsize 1.0
-    xalign 1.0
-    ymaximum 0.5
 
 style encyclopaedia_header_text:
     yalign 0.5
@@ -313,10 +292,6 @@ style encyclopaedia_vscrollbar is vscrollbar
 style encyclopaedia_button is button
 
 style encyclopaedia_button_text is button_text
-
-style encyclopaedia_change_entry_button is button
-style encyclopaedia_change_entry_button_text is button_text:
-    size 18
 
 style encyclopaedia_entry_button is encyclopaedia_button:
     xfill False
@@ -360,9 +335,47 @@ style encyclopaedia_close_button is encyclopaedia_button
 style encyclopaedia_close_button_text is encyclopaedia_button_text:
     size 18
 
-############################
+# Styles for encyclopaedia_entry screen
+style encyclopaedia_entry_frame is encyclopaedia_frame:
+    xalign 1.0
+    yalign 1.0
+
+    xsize 0.5
+    ysize 1.0
+
+    padding (6, 6, 6, 6)
+
+style encyclopaedia_entry_vbox is vbox:
+    spacing 6
+
+style encyclopaedia_entry_label_frame is encyclopaedia_frame:
+    xalign 1.0
+    xfill True
+
+style encyclopaedia_entry_change_entry_frame is encyclopaedia_frame:
+    xalign 1.0
+
+style encyclopaedia_entry_content_frame is encyclopaedia_frame:
+    left_padding 6
+    right_padding 6
+
+    xalign 1.0
+
+style encyclopaedia_entry_image_frame is encyclopaedia_frame:
+    xsize 1.0
+    xalign 1.0
+    ymaximum 0.5
+
+style encyclopaedia_entry_change_entry_hbox is hbox:
+    xfill True
+
+style encyclopaedia_entry_change_entry_button is button
+style encyclopaedia_entry_change_entry_button_text is button_text:
+    size 18
+
+##########################
 # Encyclopaedia Misc Setup
-############################
+##########################
 init -1500:
     python:
         from itertools import groupby

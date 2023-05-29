@@ -4,46 +4,88 @@ init python:
     from renpylexer.lexer import RenPyLexer
 
 
+    elem_funcs = {}
+
+    def elem(name: str):
+        """Register tags via a decorator."""
+        def decorator(func):
+            elem_funcs[name] = func
+
+            def wrapper(*args, **kwargs):
+                elem_content = func(*args, **kwargs)
+                return elem_content
+
+            return wrapper
+
+        return decorator
+
+
+    @elem('aside')
+    def check_aside(element):
+        text = ''
+        return element.name, text
+
+
+    @elem('blockquote')
+    def check_blockquote(element):
+        text = ''
+        return element.name, text
+
+    @elem('main')
     def check_main(element):
         text = ''
-        return text
+        return element.name, text
 
 
+    @elem('section')
     def check_section(element):
         text = ''
-        return text
+        return element.name, text
 
 
+    @elem('ol')
     def check_ol(element):
         text = ''
-        return text
+        return element.name, text
 
 
+    @elem('ul')
     def check_ul(element):
         text = ''
-        return text
+        return element.name, text
 
 
+    @elem('a')
     def check_a(element):
         text = str(element.string)
-        return f"{{a={element['href']}}}{text}{{/a}}"
+        return element.name, f"{{a={element['href']}}}{text}{{/a}}"
 
 
+    @elem('cite')
     def check_cite(element):
         text = str(element.string)
-        return f"{{i}}{text}{{/i}}"
+        return element.name, f"{{i}}{text}{{/i}}"
 
 
+    @elem('span')
+    def check_span(element):
+        text = str(element.string)
+        return element.name, f"{{i}}{text}{{/i}}"
+
+
+    @elem('h1')
     def check_h1(element):
-        return '{size=+14}' + str(element.string) + '{/size}'
+        return element.name, '{size=+14}' + str(element.string) + '{/size}'
 
 
+    @elem('h2')
     def check_h2(element):
-        return '{size=+4}' + str(element.string) + '{/size}'
+        return element.name, '{size=+4}' + str(element.string) + '{/size}'
 
 
+    @elem('h3')
     def check_h3(element):
-        return '{size=+2}' + str(element.string) + '{/size}'
+        return element.name, '{size=+2}' + str(element.string) + '{/size}'
 
 
     def check_py_code(element):
@@ -62,6 +104,7 @@ init python:
         )
 
 
+    @elem('p')
     def check_p(element):
         # In a paragraph, we don't want a separate line per sentence.
         # Instead, join all the strings inside the paragraph.
@@ -78,9 +121,10 @@ init python:
         # Remove carriage return
         clean_p_str = p_str.replace('\r\n', ' ').replace('\r', ' ')
 
-        return clean_p_str
+        return element.name, clean_p_str
 
 
+    @elem('li')
     def check_li(element):
         p_str = '    - '  # List padding
 
@@ -91,26 +135,11 @@ init python:
                 found_tags, found_text = iter_block(el)
                 p_str += ''.join(found_text)
 
-        return p_str
+        return element.name, p_str
 
 
 init 1 python:
     from bs4 import BeautifulSoup
-
-
-    elem_funcs = {
-        'main': check_main,
-        'section': check_section,
-        'ol': check_ol,
-        'ul': check_ul,
-        'h1': check_h1,
-        'h2': check_h2,
-        'h3': check_h3,
-        'a': check_a,
-        'cite': check_cite,
-        'li': check_li,
-        'p': check_p,
-    }
 
 
     def iter_blocks(element):
@@ -133,19 +162,8 @@ init 1 python:
 
         element_str = ''
 
-        if element.name in ['main', 'section', 'ol', 'ul']:
-            element_str = elem_funcs[element.name](element)
-
-            tags.append(element.name)
-            text.append(element_str)
-
-            found_tags, found_text = iter_blocks(element)
-
-            tags = [*tags, *found_tags]
-            text = [*text, *found_text]
-
         # Handle code blocks
-        elif element.name == 'pre':
+        if element.name == 'pre':
             check_func = element.attrs['class'][1]
 
             check_funcs = {
@@ -167,17 +185,21 @@ init 1 python:
             tags.append('code')
             text.append(element_str + inner_text)
 
-        elif elem_funcs.get(element.name):
-            element_str = elem_funcs[element.name](element)
+        elif element.name in ['li', 'p']:
+            element_tag, element_str = elem_funcs[element.name](element)
 
-            tags.append(element.name)
-            text.append(element_str)
-
-        elif element.name == 'blockquote':
             found_tags, found_text = iter_blocks(element)
 
-            tags = [*tags, *found_tags]
-            text = [*text, *found_text]
+            tags = [*tags, element_tag]
+            text = [*text, element_str]
+
+        elif elem_funcs.get(element.name):
+            element_tag, element_str = elem_funcs[element.name](element)
+
+            found_tags, found_text = iter_blocks(element)
+
+            tags = [*tags, element_tag, *found_tags]
+            text = [*text, element_str, *found_text]
 
         else:
             # Default for other blocks
@@ -228,6 +250,7 @@ init 1 python:
     with renpy.open_file(develop_path) as f:
         soup = BeautifulSoup(f.read(), 'html.parser').html.body
 
+    tags = []
     text = []
 
     for element in soup:

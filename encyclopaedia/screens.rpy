@@ -113,14 +113,13 @@ screen encyclopaedia_list(enc):
                 vbox:
                     spacing 2
 
-                    text _("Filters") style "encyclopaedia_header_text"
                     hbox:
-                        box_wrap True
-                        xfill True
-                        # Buttons to filter the entries that are displayed
-                        textbutton _("All") action enc.ClearFilter() style "encyclopaedia_subject_filters_button"
-                        for subject in enc.subjects:
-                            textbutton subject action enc.FilterBySubject(subject) style "encyclopaedia_subject_filters_button"
+                        spacing 8
+
+                        text _("Filter") style "encyclopaedia_header_text"
+
+                        use dropdown(focus_name="diff_drop"):
+                            text enc.filtering or _("---") style "encyclopaedia_subject_filters_button_text"
 
                     hbox:
                         text _("Sort By") style "encyclopaedia_header_text"
@@ -144,7 +143,7 @@ screen encyclopaedia_list(enc):
                             mousewheel True
                             draggable True
 
-                            ymaximum 0.785
+                            ymaximum 0.815
 
                             vbox:
                                 spacing 0
@@ -170,6 +169,18 @@ screen encyclopaedia_list(enc):
 
                         hbox:
                             textbutton _("Return") action [enc.CloseActiveEntry(), Return()] style "encyclopaedia_close_button"
+
+    use dropdown_options("diff_drop"):
+        textbutton _("---"):
+            action [enc.ClearFilter(), ClearFocus("diff_drop")]
+            style "encyclopaedia_subject_filters_button"
+            xminimum 300
+
+        for subject in enc.subjects:
+            textbutton subject:
+                action [enc.FilterBySubject(subject), ClearFocus("diff_drop")]
+                style "encyclopaedia_subject_filters_button"
+                xminimum 300
 
 
 ################################################################################
@@ -270,6 +281,41 @@ screen encyclopaedia_entry(enc):
                     # Flavour text that displays the current sorting mode
                     text "Sorting Mode: [enc.labels.sorting_mode]" xalign .02 size 18 yalign 0.5
                     textbutton _("Close Entry") id "close_entry_button" xalign .98 clicked enc.CloseActiveEntry() style "encyclopaedia_close_button"
+
+
+###
+# The select box for a dropdown.
+###
+screen dropdown(focus_name):
+    frame:
+        xminimum 300
+        button:
+            xminimum 300
+
+            transclude
+
+            action CaptureFocus(focus_name)
+
+###
+# The options frame for a dropdown.
+###
+screen dropdown_options(focus_name):
+    if GetFocusRect(focus_name):
+        dismiss action ClearFocus(focus_name)
+
+        nearrect:
+            focus focus_name
+
+            frame:
+                modal True
+
+                xminimum 300
+                padding (6, 6, 6, 6)
+                margin (-6, 6, 0, 0)
+
+                has vbox
+
+                transclude
 
 
 ######################

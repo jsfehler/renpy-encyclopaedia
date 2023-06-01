@@ -174,13 +174,11 @@ screen encyclopaedia_list(enc):
         textbutton _("---"):
             action [enc.ClearFilter(), ClearFocus("diff_drop")]
             style "encyclopaedia_subject_filters_button"
-            xminimum 300
 
         for subject in enc.subjects:
             textbutton subject:
                 action [enc.FilterBySubject(subject), ClearFocus("diff_drop")]
                 style "encyclopaedia_subject_filters_button"
-                xminimum 300
 
 
 ################################################################################
@@ -288,13 +286,24 @@ screen encyclopaedia_entry(enc):
 ###
 screen dropdown(focus_name):
     frame:
-        xminimum 300
         button:
-            xminimum 300
-
-            transclude
+            padding (0, 0, 0, 0)
 
             action CaptureFocus(focus_name)
+
+            hbox:
+                xfill True
+
+                frame:
+                    background None
+                    xsize 0.9
+                    transclude
+
+                frame:
+                    background None
+                    xfill True
+                    text "▼" style "dropdown_arrow"
+
 
 ###
 # The options frame for a dropdown.
@@ -309,7 +318,6 @@ screen dropdown_options(focus_name):
             frame:
                 modal True
 
-                xminimum 300
                 padding (6, 6, 6, 6)
                 margin (-6, 6, 0, 0)
 
@@ -321,6 +329,10 @@ screen dropdown_options(focus_name):
 ######################
 # Encyclopaedia Styles
 ######################
+style dropdown_arrow is button_text:
+    size 18
+    xalign 1.0
+
 style encyclopaedia_vbox is vbox:
     spacing 6
 

@@ -56,8 +56,6 @@ class Encyclopaedia(EventEmitter, store.object):
         nest_alphabetical_sort: Should alphabetical sorting display
             each letter as a subject.
         current_position: Index for the current entry open.
-        sub_current_position: Index for the current sub-entry open.
-            Starts at 1.
         labels: The current label controller.
         subjects: Collection of every subject.
         active: The currently open entry.
@@ -94,7 +92,6 @@ class Encyclopaedia(EventEmitter, store.object):
         self.nest_alphabetical_sort: bool = True
 
         self.current_position: int = 0
-        self.sub_current_position: int = 1
 
         self.labels: Labels = Labels(self)
 
@@ -344,10 +341,8 @@ class Encyclopaedia(EventEmitter, store.object):
             # Mark the entry as viewed.
             self.active.viewed = True
 
-        # When changing an entry, the current sub-entry page number is
-        # set back to 1.
-        self.sub_current_position = 0
-        self.active.current_page = self.sub_current_position
+        # When changing an entry, the current entry page number is reset.
+        self.active._unlocked_page_index = 0
 
         return True
 

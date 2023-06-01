@@ -28,13 +28,13 @@ def test_previous_page():
     enc.SetEntry(e)()
 
     assert e == enc.active
-    assert enc.sub_current_position == 1
+    assert enc.active._unlocked_page_index == 0
 
     enc.NextPage()()
     enc.PreviousPage()()
 
     assert e == e.current_page
-    assert enc.sub_current_position == 1
+    assert enc.active._unlocked_page_index == 0
 
 
 def test_previous_page_no_active():

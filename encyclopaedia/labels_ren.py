@@ -71,18 +71,18 @@ class Labels(store.object):
         Return:
             str
         """
-        try:
-            total_pages = len(self.encyclopaedia.active.unlocked_pages)  # type: ignore
-        except AttributeError:
+        active = self.encyclopaedia.active
+
+        if not active:
             raise AttributeError(
                 "Cannot display Entry's current page when no entry is open."
             )
 
         label = "{0} {1} {2} {3}".format(
             self.page_label,
-            self.encyclopaedia.sub_current_position,
+            active.current_page.number,
             self.page_separator_label,
-            total_pages
+            len(active.pages),
         )
 
         return label

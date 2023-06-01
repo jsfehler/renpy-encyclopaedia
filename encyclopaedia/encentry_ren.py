@@ -115,8 +115,8 @@ class EncEntry(EventEmitter, store.object):
 
         self.has_pages = False
 
-        # Property: Set with Integer, get returns the page.
-        self._current_page = 0
+        # Relative to the unlocked pages, cache the position of the active page.
+        self._unlocked_page_index = 0
 
         self.callbacks: dict[str, list[Callable[['EncEntry'], None]]] = {
             "viewed": [],  # Run when this entry is viewed for the first time.
@@ -183,11 +183,7 @@ class EncEntry(EventEmitter, store.object):
 
         Setting this attribute should be done using an integer.
         """
-        return self.unlocked_pages[self._current_page]
-
-    @current_page.setter
-    def current_page(self, val: int) -> None:
-        self._current_page = val
+        return self.unlocked_pages[self._unlocked_page_index]
 
     def __get_entry_data(self, data: Any, locked_data: Any) -> Any:
         """Used by self.name, self.text, and self.image to control if
@@ -301,7 +297,7 @@ class EncEntry(EventEmitter, store.object):
     def _change_page(self, direction: Direction) -> bool:
         """Change the current sub-entry page."""
 
-        new_page_number = self._current_page + direction.value
+        new_page_number = self._unlocked_page_index + direction.value
 
         # Don't allow moving beyond bounds.
         if new_page_number < 0:
@@ -310,7 +306,7 @@ class EncEntry(EventEmitter, store.object):
         elif new_page_number > len(self.pages):
             return False
 
-        self.current_page = new_page_number
+        self._unlocked_page_index = new_page_number
 
         # Update viewed state
         if self.current_page.viewed is False:

@@ -159,7 +159,6 @@ class PreviousPage(EncyclopaediaAction):
         result = self.enc.active.previous_page()
 
         if result:
-            self.enc.sub_current_position -= 1
             renpy.restart_interaction()
 
     def get_sensitive(self) -> bool:
@@ -171,7 +170,7 @@ class PreviousPage(EncyclopaediaAction):
         if not self.enc.active:
             return False
 
-        return not (self.enc.active._current_page - 1) < 0
+        return not (self.enc.active._unlocked_page_index - 1) < 0
 
 
 class NextPage(EncyclopaediaAction):
@@ -186,7 +185,6 @@ class NextPage(EncyclopaediaAction):
         result = self.enc.active.next_page()
 
         if result:
-            self.enc.sub_current_position += 1
             renpy.restart_interaction()
 
     def get_sensitive(self) -> bool:
@@ -198,7 +196,9 @@ class NextPage(EncyclopaediaAction):
         if not self.enc.active:
             return False
 
-        return not (self.enc.active._current_page + 1) >= len(self.enc.active.unlocked_pages)
+        active = self.enc.active
+
+        return not (active._unlocked_page_index + 1) >= len(active.unlocked_pages)
 
 
 class SortEncyclopaedia(EncyclopaediaAction):
@@ -264,9 +264,8 @@ class ClearFilter(EncyclopaediaAction):
 class ResetSubPageAction(EncyclopaediaAction):
     """Reset the sub-page count to 1. Used when closing the entry screen."""
     def __call__(self) -> None:
-        self.enc.sub_current_position = 1
         if self.enc.active is not None:
-            self.enc.active.current_page = 0
+            self.enc.active._unlocked_page_index = 0
         renpy.restart_interaction()
 
 

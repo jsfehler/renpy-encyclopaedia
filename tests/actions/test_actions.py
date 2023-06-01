@@ -118,17 +118,17 @@ def test_reset_sub_page():
     enc.SetEntry(e)()
 
     assert e == enc.active
-    assert enc.sub_current_position == 1
+    assert enc.active._unlocked_page_index == 0
 
     enc.NextPage()()
     enc.NextPage()()
 
-    assert enc.sub_current_position == 3
+    assert enc.active._unlocked_page_index == 2
     assert e.current_page == eee
 
     enc.ResetSubPage()()
 
-    assert enc.sub_current_position == 1
+    assert enc.active._unlocked_page_index == 0
     assert e.current_page == e
 
 

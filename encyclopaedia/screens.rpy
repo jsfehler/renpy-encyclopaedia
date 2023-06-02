@@ -143,32 +143,19 @@ screen encyclopaedia_list(enc):
                             mousewheel True
                             draggable True
 
-                            ymaximum 0.815
+                            ymaximum 0.908
 
                             vbox:
                                 spacing 0
                                 use vertical_list(enc) id "vertical list"
 
-                vbox:
-                    yfill True
+                frame:
+                    style_prefix "encyclopaedia"
 
-                    frame:
-                        style_prefix "encyclopaedia"
+                    xfill True
 
-                        xfill True
-
-                        hbox:
-                            # Buttons to show different styles of hiding locked data.
-                            textbutton "View Locked Buttons" action enc.ToggleShowLockedButtons() style_suffix "sort_by_button"
-                            textbutton "View Locked Entry" action enc.ToggleShowLockedEntry() style_suffix "sort_by_button"
-
-                    frame:
-                        style_prefix "encyclopaedia"
-
-                        xfill True
-
-                        hbox:
-                            textbutton _("Return") action [enc.CloseActiveEntry(), Return()] style "encyclopaedia_close_button"
+                    hbox:
+                        textbutton _("Return") action [enc.CloseActiveEntry(), Return()] style "encyclopaedia_close_button"
 
     use dropdown_options("diff_drop"):
         textbutton _("---"):

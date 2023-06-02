@@ -5,7 +5,6 @@ In order to work with `Screens and Screen Language <https://www.renpy.org/doc/ht
 an Encyclopaedia has a collection of custom `Screen Actions <https://www.renpy.org/doc/html/screen_actions.html>`_
 available.
 
-
 PreviousEntry
 -------------
 
@@ -26,7 +25,6 @@ If the currently active EncEntry is the last one, this action will do nothing.
 
     textbutton "Next Entry" action my_encyclopaedia.NextEntry()
 
-
 PreviousPage
 ------------
 
@@ -37,7 +35,6 @@ If the currently active Sub-Page is the first one, this action will do nothing.
 
     textbutton "Previous Page" action my_encyclopaedia.PreviousPage()
 
-
 NextPage
 --------
 
@@ -47,7 +44,6 @@ If the currently active Sub-Page is the last one, this action will do nothing.
 .. code-block:: renpy
 
     textbutton "Next Page" action my_encyclopaedia.NextPage()
-
 
 Sort
 ----
@@ -69,33 +65,24 @@ Set an EncEntry as the active entry, then opens the Encyclopaedia's Entry Screen
 
     textbutton "Open an Entry" action my_encyclopaedia.SetEntry(my_enc_entry)
 
+CloseActiveEntry
+----------------
+
+Safely close the active EncEntry. This Action ensures all steps are taken to
+close the entry.
+
+.. code-block:: renpy
+
+    textbutton "Close Entry" action my_encyclopaedia.CloseActiveEntry()
+
 ResetSubPage
 ------------
 
-Sets the currently active EncEntry's Sub-Page to the first page.
+Set the currently active EncEntry's Sub-Page to the first page.
 
 .. code-block:: renpy
 
     textbutton "Return to First Page" action my_encyclopaedia.ResetSubPage()
-
-
-ToggleShowLockedButtons
------------------------
-
-Toggles if locked Entries will be visible in the list of Entries.
-
-.. code-block:: renpy
-
-    textbutton "Show Locked Buttons" action my_encyclopaedia.ToggleShowLockedButtons()
-
-ToggleShowLockedEntry
----------------------
-
-Toggles if locked Entries can be viewed.
-
-.. code-block:: renpy
-
-    textbutton "Show Locked Entries" action my_encyclopaedia.ToggleShowLockedEntry()
 
 FilterBySubject
 ---------------
@@ -114,3 +101,25 @@ If a filter is active, this will clear it.
 .. code-block:: renpy
 
     textbutton "Clear Filter" action my_encyclopaedia.ClearFilter()
+
+ToggleShowLockedButtons
+-----------------------
+
+Toggle if locked Entries will be visible in the list of Entries.
+
+This action is generally used for testing and debugging.
+
+.. code-block:: renpy
+
+    textbutton "Show Locked Buttons" action my_encyclopaedia.ToggleShowLockedButtons()
+
+ToggleShowLockedEntry
+---------------------
+
+Toggle if locked Entries can be viewed on the Entry screen.
+
+This action is generally used for testing and debugging.
+
+.. code-block:: renpy
+
+    textbutton "Show Locked Entries" action my_encyclopaedia.ToggleShowLockedEntry()

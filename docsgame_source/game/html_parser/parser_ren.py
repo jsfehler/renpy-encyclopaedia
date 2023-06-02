@@ -155,7 +155,7 @@ def iter_blocks(element):
     return inner_tags, inner_text
 
 
-def iter_block(element, inside_code_block: bool = False):  # -> list[str]:
+def iter_block(element):  # -> list[str]:
     tags: list[str] = []
     text: list[str] = []
 

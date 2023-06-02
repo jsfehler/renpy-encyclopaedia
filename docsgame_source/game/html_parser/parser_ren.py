@@ -1,8 +1,6 @@
 """renpy
 init -19 python:
 """
-import bs4
-
 from pygments import highlight
 from pygments.lexers import PythonLexer
 

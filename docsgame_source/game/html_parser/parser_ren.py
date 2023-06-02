@@ -187,8 +187,6 @@ def iter_block(element):  # -> list[str]:
     elif element.name in ['li', 'p']:
         element_tag, element_str = elem_funcs[element.name](element)
 
-        found_tags, found_text = iter_blocks(element)
-
         tags = [*tags, element_tag]
         text = [*text, element_str]
 

@@ -23,72 +23,82 @@ def elem(name: str):
     return decorator
 
 
+class Element:
+    def __init__(self, name: str, style: str, text: str = '') -> None:
+        self.name = name
+        self.style = style
+        self.text = text
+
+        self.children = []
+
+    def __eq__(self, other):
+        if (self.name == other.name) and (self.text == other.text):
+            return True
+        return False
+
+
 @elem('aside')
 def check_aside(element):
-    text = ''
-    return element.name, text
+    return Element(element.name, 'default', '')
 
 
 @elem('blockquote')
 def check_blockquote(element):
-    text = ''
-    return element.name, text
+    return Element(element.name, 'default', '')
 
 @elem('main')
 def check_main(element):
-    text = ''
-    return element.name, text
+    return Element(element.name, 'default', '')
 
 
 @elem('section')
 def check_section(element):
-    text = ''
-    return element.name, text
+    return Element(element.name, 'default', '')
 
 
 @elem('ol')
 def check_ol(element):
-    text = ''
-    return element.name, text
+    return Element(element.name, 'default', '')
 
 
 @elem('ul')
 def check_ul(element):
-    text = ''
-    return element.name, text
+    return Element(element.name, 'html_ul', '')
 
 
 @elem('a')
 def check_a(element):
     text = str(element.string)
-    return element.name, f"{{a={element['href']}}}{text}{{/a}}"
+    return Element(element.name, 'default', f"{{a={element['href']}}}{text}{{/a}}")
 
 
 @elem('cite')
 def check_cite(element):
     text = str(element.string)
-    return element.name, f"{{i}}{text}{{/i}}"
+    return Element(element.name, 'html_cite', f"{{i}}{text}{{/i}}")
 
 
 @elem('span')
 def check_span(element):
     text = str(element.string)
-    return element.name, f"{{i}}{text}{{/i}}"
+    return Element(element.name, 'html_span', f"{{i}}{text}{{/i}}")
 
 
 @elem('h1')
 def check_h1(element):
-    return element.name, '{size=+14}' + str(element.string) + '{/size}'
-
+    text = str(element.string)
+    return Element(element.name, 'html_h1', text)
 
 @elem('h2')
 def check_h2(element):
-    return element.name, '{size=+4}' + str(element.string) + '{/size}'
+    text = str(element.string)
+    return Element(element.name, 'html_h2', text)
 
 
 @elem('h3')
 def check_h3(element):
-    return element.name, '{size=+2}' + str(element.string) + '{/size}'
+    text = str(element.string)
+    return Element(element.name, 'html_h3', text)
 
 
 def check_py_code(element):
@@ -118,13 +128,13 @@ def check_p(element):
             p_str += str(el.string)
         else:
             # Parse tags inside the paragraph.
-            found_tags, found_text = iter_block(el)
-            p_str += ''.join(found_text)
+            found_elements = iter_block(el)
+            p_str += ''.join([e.text for e in found_elements])
 
     # Remove carriage return
     clean_p_str = p_str.replace('\r\n', ' ').replace('\r', ' ')
 
-    return element.name, clean_p_str
+    return Element(element.name, 'html_p', clean_p_str)
 
 
 @elem('li')
@@ -135,29 +145,26 @@ def check_li(element):
         if not el.name:
             p_str += str(el.string)
         else:
-            found_tags, found_text = iter_block(el)
-            p_str += ''.join(found_text)
+            found_elements = iter_block(el)
+            p_str += ''.join([e.text for e in found_elements])
 
-    return element.name, p_str
+    return Element(element.name, 'html_li', p_str)
 
 
 def iter_blocks(element):
-    inner_tags: list[str] = []
-    inner_text: list[str] = []
+    inner_elements: list = []
 
     for elem in element:
         if elem.name:
-            tags, text = iter_block(elem)
+            e_elements = iter_block(elem)
 
-            inner_tags = [*inner_tags, *tags]
-            inner_text = [*inner_text, *text]
+            inner_elements = [*inner_elements, *e_elements]
 
-    return inner_tags, inner_text
+    return inner_elements
 
 
 def iter_block(element):  # -> list[str]:
-    tags: list[str] = []
-    text: list[str] = []
+    e_elements: list = []
 
     element_str = ''
 
@@ -173,36 +180,45 @@ def iter_block(element):  # -> list[str]:
 
         element_str = ''
 
-        tags.append('pre')
-        text.append(element_str)
+        e_elements.append(Element(element.name, 'default', element_str))
 
         inner_text = ''
         for sub_elem in element.contents:
             if sub_elem.name == 'code':
                 inner_text += check_funcs[check_func](sub_elem)
 
-        tags.append('code')
-        text.append(element_str + inner_text)
+        e_elements.append(Element('code', 'default', element_str + inner_text))
 
     elif element.name in ['li', 'p']:
-        element_tag, element_str = elem_funcs[element.name](element)
+        element_class = elem_funcs[element.name](element)
 
-        tags = [*tags, element_tag]
-        text = [*text, element_str]
+        # Record children
+        elements_x = []
+        for elem in element.children:
+            elements_x = [*elements_x, *iter_block(elem)]
+
+        element_class.children = elements_x
+
+        e_elements = [*e_elements, element_class]
 
     elif elem_funcs.get(element.name):
-        element_tag, element_str = elem_funcs[element.name](element)
+        element_class = elem_funcs[element.name](element)
 
-        found_tags, found_text = iter_blocks(element)
+        found_elements = iter_blocks(element)
 
-        tags = [*tags, element_tag, *found_tags]
-        text = [*text, element_str, *found_text]
+        # Record children
+        elements_x = []
+        for elem in element.children:
+            elements_x = [*elements_x, *iter_block(elem)]
+
+        element_class.children = elements_x
+
+        e_elements = [*e_elements, element_class, *found_elements]
 
     else:
         # Default for other blocks
         element_str = str(element.string)
 
-        tags.append(element.name)
-        text.append(element_str)
+        e_elements.append(Element(element.name, 'default', element_str))
 
-    return tags, text
+    return e_elements

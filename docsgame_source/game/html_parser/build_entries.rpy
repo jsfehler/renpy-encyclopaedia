@@ -2,7 +2,10 @@ init 1 python:
     from bs4 import BeautifulSoup
 
     # Create EncEntry dynamically from user guide.
-    enc_enc = Encyclopaedia(name="Ren'Py Encyclopaedia Documentation")
+    enc_enc = Encyclopaedia(
+        name="Ren'Py Encyclopaedia Documentation",
+        entry_screen='docs_entry',
+    )
 
     html_files = get_file_paths('docs/user_guide')
 
@@ -17,45 +20,41 @@ init 1 python:
         with renpy.open_file(html) as f:
             soup = BeautifulSoup(f.read(), 'html.parser').html.body
 
-        tags = []
-        text = []
+        elements = []
 
         for element in soup:
             if element.name:
-                found_tags, found_text = iter_block(element)
+                found_elements = iter_block(element)
 
-                tags = [*tags, *found_tags]
-                text = [*text, *found_text]
+                elements = [*elements, *found_elements]
 
         entry = EncEntry(
             enc_enc,
             name=f"{soup.h1.string}",
-            text=text,
+            text='',
             subject=subject,
         )
 
-        entry.tags = tags
-
+        entry.elements = elements
 
     develop_path = 'docs/development.html'
     with renpy.open_file(develop_path) as f:
         soup = BeautifulSoup(f.read(), 'html.parser').html.body
 
-    tags = []
-    text = []
+
+    elements = []
 
     for element in soup:
         if element.name:
-            found_tags, found_text = iter_block(element)
+            found_elements = iter_block(element)
 
-            tags = [*tags, *found_tags]
-            text = [*text, *found_text]
+            elements = [*elements, *found_elements]
 
     dev_entry = EncEntry(
         enc_enc,
         name=f"{soup.h1.string}",
-        text=text,
+        text='',
         subject="Development",
     )
 
-    dev_entry.tags = tags
+    dev_entry.elements = elements

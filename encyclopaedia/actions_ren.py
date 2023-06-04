@@ -107,6 +107,7 @@ class PreviousEntry(EncyclopaediaAction):
     """
     def __call__(self) -> None:
         result = self.enc.previous_entry()
+
         if result:
             renpy.restart_interaction()
 
@@ -132,6 +133,7 @@ class NextEntry(EncyclopaediaAction):
     """
     def __call__(self) -> None:
         result = self.enc.next_entry()
+
         if result:
             renpy.restart_interaction()
 
@@ -153,10 +155,12 @@ class PreviousPage(EncyclopaediaAction):
     Used to switch from one page to another.
     """
     def __call__(self) -> None:
-        if not self.enc.active:
+        active = self.enc.active
+
+        if not active:
             raise AttributeError('Cannot change entry when no entry is set.')
 
-        result = self.enc.active.previous_page()
+        result = active.previous_page()
 
         if result:
             renpy.restart_interaction()
@@ -167,10 +171,12 @@ class PreviousPage(EncyclopaediaAction):
         Return:
             bool: True if the button should be alive, else False.
         """
-        if not self.enc.active:
+        active = self.enc.active
+
+        if not active:
             return False
 
-        return not (self.enc.active._unlocked_page_index - 1) < 0
+        return not (active._unlocked_page_index - 1) < 0
 
 
 class NextPage(EncyclopaediaAction):
@@ -179,10 +185,12 @@ class NextPage(EncyclopaediaAction):
     Used to switch from one page to another.
     """
     def __call__(self) -> None:
-        if not self.enc.active:
+        active = self.enc.active
+
+        if not active:
             raise AttributeError('Cannot change entry when no entry is set.')
 
-        result = self.enc.active.next_page()
+        result = active.next_page()
 
         if result:
             renpy.restart_interaction()
@@ -193,10 +201,10 @@ class NextPage(EncyclopaediaAction):
         Return:
             bool: True if the button should be alive, else False.
         """
-        if not self.enc.active:
-            return False
-
         active = self.enc.active
+
+        if not active:
+            return False
 
         return not (active._unlocked_page_index + 1) >= len(active.unlocked_pages)
 

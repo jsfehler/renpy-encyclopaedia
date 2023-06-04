@@ -20,7 +20,7 @@ screen entry_button(enc, entry):
     textbutton entry.name action enc.SetEntry(entry) style "encyclopaedia_entry_button"
 
     if (entry.locked is False) and (not entry.viewed):
-        text enc.labels.unread_entry_label style "unread_entry_notice_text"
+        text _("New!") style "unread_entry_notice_text"
 
 
 ################################################################################
@@ -104,7 +104,7 @@ screen encyclopaedia_list(enc):
                 hbox:
                     xfill True
                     # Percentage unlocked display
-                    text "[enc.labels.percentage_unlocked] Complete" style "encyclopaedia_header_text"
+                    text _("[enc.percentage_unlocked] % Complete") style "encyclopaedia_header_text"
 
             frame:
                 style_prefix "encyclopaedia"
@@ -126,11 +126,11 @@ screen encyclopaedia_list(enc):
                         hbox:
                             xfill False
                             # Buttons to sort entries.
-                            textbutton "| [enc.labels.sort_number_label]" action enc.Sort(sorting_mode=SortMode.NUMBER) style_suffix "sort_by_button"
-                            textbutton "| [enc.labels.sort_alphabetical_label]" action enc.Sort(sorting_mode=SortMode.ALPHABETICAL) style_suffix "sort_by_button"
-                            textbutton "| [enc.labels.sort_reverse_alphabetical_label]" action enc.Sort(sorting_mode=SortMode.REVERSE_ALPHABETICAL) style_suffix "sort_by_button"
-                            textbutton "| [enc.labels.sort_subject_label]" action enc.Sort(sorting_mode=SortMode.SUBJECT) style_suffix "sort_by_button"
-                            textbutton "| [enc.labels.sort_unread_label] |" action enc.Sort(sorting_mode=SortMode.UNREAD) style_suffix "sort_by_button"
+                            textbutton "| " + encyclopaedia.sort_by_number action [SetField(encyclopaedia, "current_sorting_mode", encyclopaedia.sort_by_number), enc.Sort(sorting_mode=SortMode.NUMBER)] style_suffix "sort_by_button"
+                            textbutton "| " + encyclopaedia.sort_by_alphabetical action [SetField(encyclopaedia, "current_sorting_mode", encyclopaedia.sort_by_alphabetical), enc.Sort(sorting_mode=SortMode.ALPHABETICAL)] style_suffix "sort_by_button"
+                            textbutton "| " + encyclopaedia.sort_by_reverse_alphabetical action [SetField(encyclopaedia, "current_sorting_mode", encyclopaedia.sort_by_reverse_alphabetical), enc.Sort(sorting_mode=SortMode.REVERSE_ALPHABETICAL)] style_suffix "sort_by_button"
+                            textbutton "| " + encyclopaedia.sort_by_subject action [SetField(encyclopaedia, "current_sorting_mode", encyclopaedia.sort_by_subject), enc.Sort(sorting_mode=SortMode.SUBJECT)] style_suffix "sort_by_button"
+                            textbutton "| " + encyclopaedia.sort_by_unread + " |" action [SetField(encyclopaedia, "current_sorting_mode", encyclopaedia.sort_by_unread), enc.Sort(sorting_mode=SortMode.UNREAD)] style_suffix "sort_by_button"
 
             vbox:
                 hbox:
@@ -248,7 +248,8 @@ screen encyclopaedia_entry(enc):
                         textbutton _("Previous Page") xalign .02 action enc.PreviousPage() style "encyclopaedia_entry_change_entry_button"
 
                         # Flavour text to indicate which page out of the total is being viewed
-                        text enc.labels.entry_current_page size 18 yalign 0.5
+                        $ total_pages = len(enc.active.pages)
+                        text _("Page [enc.active.current_page.number] / [total_pages]") style "encyclopaedia_entry_page_label"
 
                         textbutton _("Next Page") xalign .98 action enc.NextPage() style "encyclopaedia_entry_change_entry_button"
 
@@ -264,7 +265,7 @@ screen encyclopaedia_entry(enc):
                 hbox:
                     xfill True
                     # Flavour text that displays the current sorting mode
-                    text "Sorting Mode: [enc.labels.sorting_mode]" xalign .02 size 18 yalign 0.5
+                    text _("Sorting Mode: [encyclopaedia.curent_sorting_mode]") xalign .02 size 18 yalign 0.5
                     textbutton _("Close Entry") id "close_entry_button" xalign .98 clicked enc.CloseActiveEntry() style "encyclopaedia_close_button"
 
 
@@ -418,6 +419,10 @@ style encyclopaedia_entry_change_entry_hbox is hbox:
 style encyclopaedia_entry_change_entry_button is button
 style encyclopaedia_entry_change_entry_button_text is button_text:
     size 18
+
+style encyclopaedia_entry_page_label:
+    size 18
+    yalign 0.5
 
 ##########################
 # Encyclopaedia Misc Setup

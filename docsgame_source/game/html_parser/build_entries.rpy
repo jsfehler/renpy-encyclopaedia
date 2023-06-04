@@ -5,6 +5,7 @@ init 1 python:
     enc_enc = Encyclopaedia(
         name="Ren'Py Encyclopaedia Documentation",
         entry_screen='docs_entry',
+        sorting_mode=1,
     )
 
     html_files = get_file_paths('docs/user_guide')

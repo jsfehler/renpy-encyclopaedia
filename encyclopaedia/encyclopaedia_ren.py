@@ -16,7 +16,6 @@ from .actions_ren import (
     ToggleShowLockedButtonsAction,
     ToggleShowLockedEntryAction,
 )
-from .labels_ren import Labels
 from .entry_sorting_ren import push_locked_to_bottom
 from .eventemitter_ren import EventEmitter
 from .constants_ren import Direction, SortMode
@@ -56,7 +55,6 @@ class Encyclopaedia(EventEmitter, store.object):
         nest_alphabetical_sort: Should alphabetical sorting display
             each letter as a subject.
         current_position: Index for the current entry open.
-        labels: The current label controller.
         subjects: Collection of every subject.
         active: The currently open entry.
         locked_at_bottom: True if locked entries should appear at
@@ -92,8 +90,6 @@ class Encyclopaedia(EventEmitter, store.object):
         self.nest_alphabetical_sort: bool = True
 
         self.current_position: int = 0
-
-        self.labels: Labels = Labels(self)
 
         self.subjects: list[str] = []
 

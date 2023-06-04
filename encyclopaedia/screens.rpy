@@ -126,11 +126,11 @@ screen encyclopaedia_list(enc):
                         hbox:
                             xfill False
                             # Buttons to sort entries.
-                            textbutton "| " + encyclopaedia.sort_by_number action [SetField(encyclopaedia, "current_sorting_mode", encyclopaedia.sort_by_number), enc.Sort(sorting_mode=SortMode.NUMBER)] style_suffix "sort_by_button"
-                            textbutton "| " + encyclopaedia.sort_by_alphabetical action [SetField(encyclopaedia, "current_sorting_mode", encyclopaedia.sort_by_alphabetical), enc.Sort(sorting_mode=SortMode.ALPHABETICAL)] style_suffix "sort_by_button"
-                            textbutton "| " + encyclopaedia.sort_by_reverse_alphabetical action [SetField(encyclopaedia, "current_sorting_mode", encyclopaedia.sort_by_reverse_alphabetical), enc.Sort(sorting_mode=SortMode.REVERSE_ALPHABETICAL)] style_suffix "sort_by_button"
-                            textbutton "| " + encyclopaedia.sort_by_subject action [SetField(encyclopaedia, "current_sorting_mode", encyclopaedia.sort_by_subject), enc.Sort(sorting_mode=SortMode.SUBJECT)] style_suffix "sort_by_button"
-                            textbutton "| " + encyclopaedia.sort_by_unread + " |" action [SetField(encyclopaedia, "current_sorting_mode", encyclopaedia.sort_by_unread), enc.Sort(sorting_mode=SortMode.UNREAD)] style_suffix "sort_by_button"
+                            textbutton "| " + encyclopaedia.sort_by_number action enc.Sort(sorting_mode=SortMode.NUMBER) style_suffix "sort_by_button"
+                            textbutton "| " + encyclopaedia.sort_by_alphabetical action enc.Sort(sorting_mode=SortMode.ALPHABETICAL) style_suffix "sort_by_button"
+                            textbutton "| " + encyclopaedia.sort_by_reverse_alphabetical action enc.Sort(sorting_mode=SortMode.REVERSE_ALPHABETICAL) style_suffix "sort_by_button"
+                            textbutton "| " + encyclopaedia.sort_by_subject action enc.Sort(sorting_mode=SortMode.SUBJECT) style_suffix "sort_by_button"
+                            textbutton "| " + encyclopaedia.sort_by_unread + " |" action enc.Sort(sorting_mode=SortMode.UNREAD) style_suffix "sort_by_button"
 
             vbox:
                 hbox:
@@ -265,7 +265,6 @@ screen encyclopaedia_entry(enc):
                 hbox:
                     xfill True
                     # Flavour text that displays the current sorting mode
-                    text _("Sorting Mode: [encyclopaedia.curent_sorting_mode]") xalign .02 size 18 yalign 0.5
                     textbutton _("Close Entry") id "close_entry_button" xalign .98 clicked enc.CloseActiveEntry() style "encyclopaedia_close_button"
 
 

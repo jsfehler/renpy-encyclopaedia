@@ -122,7 +122,6 @@ screen docs_entry(enc):
                 hbox:
                     xfill True
                     # Flavour text that displays the current sorting mode
-                    text _("Sorting Mode: [encyclopaedia.current_sorting_mode]") xalign .02 size 18 yalign 0.5
                     textbutton _("Close Entry") id "close_entry_button" xalign .98 clicked enc.CloseActiveEntry() style "encyclopaedia_close_button"
 
 

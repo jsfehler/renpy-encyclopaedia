@@ -11,6 +11,7 @@ label setup_enc:
     python:
         library_enc = Encyclopaedia(
             name="Wanderer in the Library",
+            show_locked_buttons=True,
         )
 
         # Use EncEntryTemplate to set reasonable defaults and reduce duplication
@@ -18,6 +19,7 @@ label setup_enc:
 
         about_library = LibraryEntry(
             name=_('Library'),
+            subject=_('Locations'),
             text=(
                 "You find yourself sitting on a comfortable armchair."
                 "Around you, rows of books."
@@ -29,6 +31,7 @@ label setup_enc:
         about_library_2 = EncEntry(
             parent=about_library,
             name=_("Library"),
+            subject=_('Locations'),
             text=(
                 "As far as you can see, long, elegant curved columns rise "
                 "several meters upwards."
@@ -40,6 +43,7 @@ label setup_enc:
         about_library_3 = EncEntry(
             parent=about_library,
             name=_("Library"),
+            subject=_('Locations'),
             text=(
                 "You attempt to look down a row of books, but become dizzy from the effort."
             ),
@@ -48,7 +52,9 @@ label setup_enc:
 
         about_librarian = LibraryEntry(
             name=_('Librarian'),
+            subject=_('People'),
             text="It appears to be a librarian.",
+            locked=True,
         )
 
     return

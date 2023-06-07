@@ -1,3 +1,4 @@
+# Overlay screen with a button that takes the player to an Encyclopaedia.
 screen enc_button():
     imagebutton:
         idle "images/enc_icon.png"
@@ -6,6 +7,20 @@ screen enc_button():
         xalign 0.05
         yalign 0.05
 
+
+# Shown as part of a callback when an entry is unlocked.
+screen notify_entry_unlocked():
+    text _("New Entry Unlocked") xalign 0.98 yalign 0.02
+
+    timer 2.0 action Hide('notify_entry_unlocked')
+
+
+init python:
+    def notify_entry_unlocked(source):
+        """This function is called when an entry is unlocked."""
+        renpy.show_screen('notify_entry_unlocked')
+
+
 label setup_enc:
 
     python:
@@ -13,6 +28,9 @@ label setup_enc:
             name="Wanderer in the Library",
             show_locked_buttons=True,
         )
+
+        # Register a callback function.
+        library_enc.on('entry_unlocked')(notify_entry_unlocked)
 
         # Use EncEntryTemplate to set reasonable defaults and reduce duplication
         LibraryEntry = EncEntryTemplate(parent=library_enc, locked=True)

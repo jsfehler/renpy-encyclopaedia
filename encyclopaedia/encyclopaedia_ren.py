@@ -70,7 +70,6 @@ class Encyclopaedia(EventEmitter, store.object):
                  ) -> None:
 
         self.sorting_mode = SortMode(sorting_mode)
-        self.default_sorting_mode = self.sorting_mode
 
         self.show_locked_buttons = show_locked_buttons
         self.show_locked_entry = show_locked_entry

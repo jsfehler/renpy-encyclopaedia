@@ -269,7 +269,7 @@ class ClearFilter(EncyclopaediaAction):
         renpy.restart_interaction()
 
 
-class ResetSubPageAction(EncyclopaediaAction):
+class ResetSubPage(EncyclopaediaAction):
     """Reset the sub-page count to 1. Used when closing the entry screen."""
     def __call__(self) -> None:
         if self.enc.active is not None:

@@ -27,7 +27,7 @@ class EncyclopaediaAction(Action, DictEquality):
         self.enc = encyclopaedia
 
 
-class SetEntryAction(EncyclopaediaAction):
+class SetEntry(EncyclopaediaAction):
     """Set an Encyclopaedia entry as the active entry,
     then opens the Encyclopaedia's Entry Screen
 

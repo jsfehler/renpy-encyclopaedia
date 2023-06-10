@@ -11,7 +11,7 @@ from .actions_ren import (
     NextPage,
     PreviousPage,
     SortEncyclopaedia,
-    SetEntryAction,
+    SetEntry,
     ResetSubPageAction,
     ToggleShowLockedButtonsAction,
     ToggleShowLockedEntryAction,
@@ -405,7 +405,7 @@ class Encyclopaedia(EventEmitter, store.object):
         """
         return SortEncyclopaedia(self, sorting_mode)
 
-    def SetEntry(self, given_entry: 'EncEntry') -> SetEntryAction:
+    def SetEntry(self, given_entry: 'EncEntry') -> SetEntry:
         """Wrapper around the Action of the same name.
 
         Use with a renpy button.
@@ -413,7 +413,7 @@ class Encyclopaedia(EventEmitter, store.object):
         Return:
             Screen Action
         """
-        return SetEntryAction(self, given_entry)
+        return SetEntry(self, given_entry)
 
     def CloseActiveEntry(self) -> CloseActiveEntry:
         """Wrapper around the Action of the same name.

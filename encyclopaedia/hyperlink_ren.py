@@ -29,4 +29,4 @@ def set_encentry_from_text_anchor(value: str) -> None:
     enc.active = entry
 
     # Open the Encyclopaedia, the screen will open the active entry for us.
-    ShowMenu('encyclopaedia_list', enc=enc)()
+    ShowMenu(enc.list_screen, enc=enc)()

@@ -12,7 +12,7 @@ screen navigation():
 
             textbutton _("Start Game") action Start()
 
-            textbutton _("Documentation") action ShowMenu('encyclopaedia_list', enc_enc)
+            textbutton _("Documentation") action ShowMenu(enc_enc.list_screen, enc_enc)
 
         else:
 

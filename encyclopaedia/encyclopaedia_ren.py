@@ -41,6 +41,7 @@ class Encyclopaedia(EventEmitter, store.object):
             placeholder label on the listing screen.
         show_locked_entry: If True, locked entries can be viewed, but
             the data is hidden from view with a placeholder.
+        list_screen: The Ren'Py screen to display the list of entries.
         entry_screen: The Ren'Py screen to display an open entry.
         name: A optional name for the Encyclopaedia.
 
@@ -65,14 +66,15 @@ class Encyclopaedia(EventEmitter, store.object):
                  sorting_mode: int = 0,
                  show_locked_buttons: bool = False,
                  show_locked_entry: bool = False,
-                 entry_screen: str = "encyclopaedia_entry",
+                 list_screen: str = 'encyclopaedia_list',
+                 entry_screen: str = 'encyclopaedia_entry',
                  name: str = '',
                  ) -> None:
 
         self.sorting_mode = SortMode(sorting_mode)
-
         self.show_locked_buttons = show_locked_buttons
         self.show_locked_entry = show_locked_entry
+        self.list_screen = list_screen
         self.entry_screen = entry_screen
         self.name = name
 

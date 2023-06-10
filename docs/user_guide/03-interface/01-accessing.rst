@@ -1,16 +1,25 @@
 Accessing the Encyclopaedia
 ===========================
 
-Just creating an Encyclopaedia isn't enough. You must give players a way to view it.
+By default, an Encyclopaedia uses a screen called `encyclopaedia_list` to
+display its contents.
 
-Opening the Encyclopaedia
--------------------------
+Anything in Ren'Py that is used to open screens can be used to open this screen.
 
-While the specifics of opening the Encyclopaedia will depend on your game, most likely you'll need to add a button somewhere.
-This can be on the main menu, in-game, or wherever is appropriate for your game.
+Generally, the `Action <https://www.renpy.org/doc/html/screen_actions.html>`_
+you want to use is
+`ShowMenu() <https://www.renpy.org/doc/html/screen_actions.html#ShowMenu>`_ with 2 arguments.
+The first argument must be the name of the screen and the second an `Encyclopaedia` instance.
 
-If you use the default screens, the `Action <https://www.renpy.org/doc/html/screen_actions.html>`_
-you want to use for the button is `ShowMenu() <https://www.renpy.org/doc/html/screen_actions.html#ShowMenu>`_ with 2 arguments.
-The first must be the name of the screen, and the second an `Encyclopaedia` object.
+An Encyclopaedia stores the name of the screen it uses in a variable called `list_screen`.
+Using this variable is recommended to ensure you always open the correct screen.
 
-The default screen used is called "encyclopaedia_list".
+.. code-block:: renpy
+
+    my_encyclopaedia = Encyclopaedia()
+
+    ShowMenu(my_encyclopaedia.list_screen, my_encyclopaedia)
+
+
+See the Hyperlinks section for a way to open an Encyclopaedia directly from in-game dialogue.
+See the Screens section for more information on how an Encyclopaedia displays its content.

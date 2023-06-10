@@ -3,7 +3,7 @@ screen enc_button():
     imagebutton:
         idle "images/enc_icon.png"
         hover Transform("images/enc_icon.png", matrixcolor=InvertMatrix(1.0))
-        action ShowMenu("encyclopaedia_list", enc=library_enc)
+        action ShowMenu(library_enc.list_screen, enc=library_enc)
         xalign 0.05
         yalign 0.05
 

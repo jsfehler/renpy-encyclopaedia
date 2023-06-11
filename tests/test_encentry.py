@@ -97,6 +97,16 @@ def test_label():
     assert "01: Test Name" == e.label
 
 
+def test_label_no_number():
+    e = EncEntry(
+        name="Test Name",
+        text=["Test Text"],
+        locked=False,
+    )
+
+    assert "None: Test Name" == e.label
+
+
 def test_name():
     enc = Encyclopaedia()
 

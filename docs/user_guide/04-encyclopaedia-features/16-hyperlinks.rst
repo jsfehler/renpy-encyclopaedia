@@ -9,11 +9,11 @@ Example:
 .. code-block:: renpy
 
     init python:
-      my_enc = Encyclopaedia(...)
+        enc_enc = Encyclopaedia(...)
 
-      my_entry = EncEntry(...)
+        dev_entry = EncEntry(...)
 
 
     label start:
 
-        e "Lorem ipsum {a=set_entry:my_enc->entry_one}dolor sit{/a} amet"
+        e "Want to learn how to build this {a=set_entry:enc_enc->dev_entry}documentation{/a} from source?"

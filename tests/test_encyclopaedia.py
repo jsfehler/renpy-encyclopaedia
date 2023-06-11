@@ -337,6 +337,36 @@ def test_current_entries_show_all():
     assert expected_list == enc.current_entries
 
 
+def test_current_entry(add_dummy_entries):
+    enc = Encyclopaedia()
+
+    add_dummy_entries(enc, 4, locked=True)
+
+    EncEntry(
+        parent=enc,
+        name="Dummy Name 5",
+        text=["Dummy Text"],
+        locked=False,
+    )
+
+    assert str(enc.current_entry) == "05: Dummy Name 5"
+
+
+def test_current_entry_show_locked_entry(add_dummy_entries):
+    enc = Encyclopaedia(show_locked_entry=True)
+
+    add_dummy_entries(enc, 4, locked=True)
+
+    EncEntry(
+        parent=enc,
+        name="Dummy Name 5",
+        text=["Dummy Text"],
+        locked=False,
+    )
+
+    assert str(enc.current_entry) == "01: ???"
+
+
 def test_percentage_unlocked():
     """Base unit test for the
     Encyclopaedia.percentage_unlocked property.

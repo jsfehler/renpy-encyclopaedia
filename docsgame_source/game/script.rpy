@@ -1,6 +1,9 @@
 default l_name = '???'
 define l = Character('l_name', dynamic=True, who_color='#008080')
 
+image bg library = 'images/library.png'
+image bg garden = 'images/garden.png'
+
 
 label start:
 
@@ -23,6 +26,7 @@ label start:
 
     l "Here, I'll make this place comprehensible to you."
 
+    show bg library
     with fade
 
     l "That should do it."
@@ -59,5 +63,17 @@ label questions:
             l "However I assure you, becoming lost is impossible."
 
             $ about_library_3.locked = False
+
+        "Getting lost is impossible?" if not about_library_3.locked:
+            l "Simply focus on returning to this place."
+            l "You will find your way back."
+            l "Likewise, focus on anything else to find your way there."
+
+            $ about_garden.locked = False
+
+        "How do I get out?" if not about_library_3.locked:
+            l "The way you came in, I would assume."
+
+            $ about_library_2.locked = False
 
     jump questions

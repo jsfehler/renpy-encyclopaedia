@@ -5,7 +5,7 @@ from encyclopaedia import EncEntry
 from encyclopaedia import constants_ren
 
 
-def test_setting_entry_number():
+def test_setting_entry_number(add_dummy_entries):
     """
     When some entries have a pre-determined number,
     And some do not,
@@ -21,14 +21,9 @@ def test_setting_entry_number():
         text=["Test Text"],
     )
 
-    for x in range(0, 5):
-        e = EncEntry(
-            parent=enc,
-            name="Test Name {}".format(x + 1),
-            text=["Test Text"],
-        )
+    entries = add_dummy_entries(enc, 5)
 
-    assert 6 == e.number
+    assert 6 == entries[-1].number
 
 
 def test_filtering():
@@ -192,7 +187,7 @@ def test_duplicate_entry_numbers():
     assert message == str(e.value)
 
 
-def test_set_entry_show_locked_buttons():
+def test_set_entry_show_locked_buttons(add_dummy_entries):
     """Given an Encyclopaedia with 10 unlocked entries and 5 locked entries,
     And show_locked_buttons is true,
     When I set the 10th unlocked entry to be the active entry,
@@ -202,31 +197,14 @@ def test_set_entry_show_locked_buttons():
     """
     enc = Encyclopaedia(show_locked_buttons=True, show_locked_entry=False)
 
-    for x in range(0, 5):
-        EncEntry(
-            parent=enc,
-            name="Test Name {}".format(x + 1),
-            text=["Test Text"],
-            locked=False
-        )
+    add_dummy_entries(enc, 5)
 
-    for x in range(5, 10):
-        EncEntry(
-            parent=enc,
-            name="Test Name {}".format(x + 1),
-            text=["Test Text"],
-            locked=True
-        )
+    add_dummy_entries(enc, 5, locked=True)
 
-    for x in range(10, 15):
-        e = EncEntry(
-            parent=enc,
-            name="Test Name {}".format(x + 1),
-            text=["Test Text"],
-            locked=False
-        )
+    entries = add_dummy_entries(enc, 5)
 
     # Use the last unlocked Entry created for the test.
+    e = entries[-1]
     enc.SetEntry(e)()
 
     assert e == enc.active
@@ -234,7 +212,7 @@ def test_set_entry_show_locked_buttons():
     assert 9 == enc.current_position
 
 
-def test_set_entry_show_locked_entry():
+def test_set_entry_show_locked_entry(add_dummy_entries):
     """Given an Encyclopaedia with 10 unlocked entries and 5 locked entries,
     And show_locked_entry is true,
     When I set the 10th unlocked entry to be the active entry,
@@ -244,31 +222,14 @@ def test_set_entry_show_locked_entry():
     """
     enc = Encyclopaedia(show_locked_buttons=False, show_locked_entry=True)
 
-    for x in range(0, 5):
-        EncEntry(
-            parent=enc,
-            name="Test Name {}".format(x + 1),
-            text=["Test Text"],
-            locked=False
-        )
+    add_dummy_entries(enc, 5)
 
-    for x in range(5, 10):
-        EncEntry(
-            parent=enc,
-            name="Test Name {}".format(x + 1),
-            text=["Test Text"],
-            locked=True
-        )
+    add_dummy_entries(enc, 5, locked=True)
 
-    for x in range(10, 15):
-        e = EncEntry(
-            parent=enc,
-            name="Test Name {}".format(x + 1),
-            text=["Test Text"],
-            locked=False
-        )
+    entries = add_dummy_entries(enc, 5)
 
     # Use the last unlocked Entry created for the test.
+    e = entries[-1]
     enc.SetEntry(e)()
 
     assert e == enc.active
@@ -276,7 +237,7 @@ def test_set_entry_show_locked_entry():
     assert 14 == enc.current_position
 
 
-def test_current_entries_show_unlocked():
+def test_current_entries_show_unlocked(add_dummy_entries):
     """With filtering off and show_locked_buttons set to False,
     Encyclopaedia.current_entries property should return
     Encyclopaedia.unlocked_entries.
@@ -284,29 +245,14 @@ def test_current_entries_show_unlocked():
 
     enc = Encyclopaedia()
 
-    expected_list = []
+    expected_list = add_dummy_entries(enc, 5)
 
-    for x in range(5):
-        e = EncEntry(
-            parent=enc,
-            name="Test Name",
-            text=["Test Text"],
-            locked=False
-        )
-        expected_list.append(e)
-
-    for x in range(5):
-        EncEntry(
-            parent=enc,
-            name="Test Name",
-            text=["Test Text"],
-            locked=True
-        )
+    add_dummy_entries(enc, 5, locked=True)
 
     assert expected_list == enc.current_entries
 
 
-def test_current_entries_show_all():
+def test_current_entries_show_all(add_dummy_entries):
     """With filtering off and show_locked_buttons set to True,
     Encyclopaedia.current_entries property should return
     Encyclopaedia.all_entries.
@@ -314,16 +260,7 @@ def test_current_entries_show_all():
 
     enc = Encyclopaedia(show_locked_buttons=True)
 
-    expected_list = []
-
-    for x in range(5):
-        e = EncEntry(
-            parent=enc,
-            name="Test Name",
-            text=["Test Text"],
-            locked=False
-        )
-        expected_list.append(e)
+    expected_list = add_dummy_entries(enc, 5)
 
     for x in range(5):
         e = EncEntry(
@@ -367,28 +304,16 @@ def test_current_entry_show_locked_entry(add_dummy_entries):
     assert str(enc.current_entry) == "01: ???"
 
 
-def test_percentage_unlocked():
+def test_percentage_unlocked(add_dummy_entries):
     """Base unit test for the
     Encyclopaedia.percentage_unlocked property.
     """
 
     enc = Encyclopaedia()
 
-    for x in range(5):
-        EncEntry(
-            parent=enc,
-            name="Test Name",
-            text=["Test Text"],
-            locked=False
-        )
+    add_dummy_entries(enc, 5)
 
-    for x in range(5):
-        EncEntry(
-            parent=enc,
-            name="Test Name",
-            text=["Test Text"],
-            locked=True
-        )
+    add_dummy_entries(enc, 5, locked=True)
 
     assert 50.00 == enc.percentage_unlocked
 
@@ -407,36 +332,25 @@ def test_percentage_unlocked_empty():
     assert message == str(e.value)
 
 
-def test_word_count():
+def test_word_count(add_dummy_entries):
     """When checking the word count of an Encyclopaedia,
     Then the number returned is correct.
     """
     enc = Encyclopaedia()
 
-    for x in range(5):
-        EncEntry(
-            parent=enc,
-            name="Test Name",
-            text=["Test Text"],
-        )
+    add_dummy_entries(enc, 5)
 
     assert 10 == enc.word_count
 
 
-def test_word_count_locked():
+def test_word_count_locked(add_dummy_entries):
     """When checking the word count of an Encyclopaedia,
     And entries are locked,
     Then the number returned is correct.
     """
     enc = Encyclopaedia()
 
-    for x in range(5):
-        EncEntry(
-            parent=enc,
-            name="Test Name",
-            text=["Test Text"],
-            locked=True,
-        )
+    add_dummy_entries(enc, 5, locked=True)
 
     assert 10 == enc.word_count
 

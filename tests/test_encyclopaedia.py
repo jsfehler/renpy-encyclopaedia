@@ -463,3 +463,19 @@ def test_change_entry_boundary_back():
 
     result = enc._change_entry(constants_ren.Direction.BACKWARD)
     assert not result
+
+
+def test_repr():
+    enc = Encyclopaedia(name="Dummy Enc Name")
+
+    EncEntry(parent=enc, name="Dummy EncEntry", text="Dummy Text")
+
+    assert repr(enc) == "Encyclopaedia(name=Dummy Enc Name, length=1)"
+
+
+def test_str():
+    enc = Encyclopaedia(name="Dummy Enc Name")
+
+    EncEntry(parent=enc, name="Dummy EncEntry", text="Dummy Text")
+
+    assert str(enc) == "Encyclopaedia: Dummy Enc Name"

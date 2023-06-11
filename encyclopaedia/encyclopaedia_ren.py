@@ -104,10 +104,10 @@ class Encyclopaedia(EventEmitter, store.object):
         }
 
     def __repr__(self) -> str:
-        return f"<Encyclopaedia: {len(self.all_entries)} entries>"
+        return f"Encyclopaedia(name={self.name}, length={len(self.all_entries)})"
 
     def __str__(self) -> str:
-        return f"<Encyclopaedia: {len(self.all_entries)} entries>"
+        return f"Encyclopaedia: {self.name}"
 
     @property
     def current_entries(self) -> list['EncEntry']:

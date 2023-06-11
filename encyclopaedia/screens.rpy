@@ -111,7 +111,7 @@ screen encyclopaedia_list(enc):
                 xfill True
 
                 vbox:
-                    spacing 2
+                    spacing 6
 
                     hbox:
                         spacing 8
@@ -124,7 +124,7 @@ screen encyclopaedia_list(enc):
                     vbox:
                         text _("Sorting") style "encyclopaedia_sorting_label_text"
                         hbox:
-                            xfill False
+                            xfill True
                             # Buttons to sort entries.
                             textbutton "⇕ " + encyclopaedia.sort_by_number action enc.Sort(sorting_mode=SortMode.NUMBER) style_suffix "sort_by_button"
                             textbutton "⇕ " + encyclopaedia.sort_by_alphabetical action enc.Sort(sorting_mode=SortMode.ALPHABETICAL) style_suffix "sort_by_button"

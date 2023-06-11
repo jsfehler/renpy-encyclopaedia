@@ -121,8 +121,8 @@ screen encyclopaedia_list(enc):
                         use dropdown(focus_name="diff_drop"):
                             text enc.filtering or _("---") style "encyclopaedia_subject_filters_button_text"
 
-                    hbox:
-                        text _("Sort By") style "encyclopaedia_header_text"
+                    vbox:
+                        text _("Sorting") style "encyclopaedia_sorting_label_text"
                         hbox:
                             xfill False
                             # Buttons to sort entries.
@@ -330,6 +330,11 @@ style encyclopaedia_header_text:
     yalign 0.5
 
     size 20
+
+style encyclopaedia_sorting_label_text:
+    xalign 0.5
+    yalign 0.5
+    size 14
 
 style encyclopaedia_scrollbar is scrollbar
 

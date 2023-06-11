@@ -175,7 +175,7 @@ class EncEntry(EventEmitter, store.object):
     def label(self) -> str:
         """The number and name of the entry, in the format of 'number: name'
         """
-        return "{:02}: {}".format(self.number, self.name)
+        return f"{self.number}: {self.name}"
 
     @property
     def current_page(self) -> 'EncEntry':

@@ -20,7 +20,7 @@ def add_dummy_entries():
                 parent=enc,
                 name=f"Dummy Name {str(x)}",
                 text=["Dummy Text"],
-                locked=True,
+                locked=locked,
             )
             rv.append(entry)
 

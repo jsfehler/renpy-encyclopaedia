@@ -265,3 +265,11 @@ def test_word_count():
     )
 
     assert 6 == about_zeus.word_count
+
+
+def test_repr():
+    enc = Encyclopaedia(name="Dummy Enc Name")
+
+    e = EncEntry(parent=enc, name="Dummy EncEntry", text="Dummy Text")
+
+    assert repr(e) == "EncEntry(number=1, name=Dummy EncEntry)"

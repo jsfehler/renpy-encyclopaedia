@@ -130,7 +130,7 @@ class EncEntry(EventEmitter, store.object):
             self._viewed = getattr(persistent, self._name + "_viewed")
 
     def __repr__(self) -> str:
-        return f"<EncEntry: {self.label}>"
+        return f"EncEntry(number={self.number}, name={self.name})"
 
     def __str__(self) -> str:
         return self.label

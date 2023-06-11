@@ -64,6 +64,15 @@ class SetEntry(EncyclopaediaAction):
             # Mark the entry as viewed.
             self.enc.active.viewed = True
 
+        # When sorting by Unread, setting an entry marks is as read.
+        # Thus we have to resort the entries to ensure they appear in the
+        # correct order.
+        if self.enc.sorting_mode.value == 4:
+            self.enc.sort_entries(
+                entries=self.enc.current_entries,
+                sorting=self.enc.sorting_mode.value,
+            )
+
         self.enc.current_position = target_position
 
     def __call__(self) -> None:

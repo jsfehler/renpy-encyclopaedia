@@ -127,14 +127,14 @@ class Encyclopaedia(EventEmitter, store.object):
             List of EncEntries. If filtering, only entries that match the
             filter are returned.
         """
-        if self.filtering:
-            current_entries = self.filtered_entries
-        elif self.show_locked_buttons:
-            current_entries = self.all_entries
-        else:
-            current_entries = self.unlocked_entries
+        rv = self.unlocked_entries
 
-        return current_entries
+        if self.filtering:
+            rv = self.filtered_entries
+        elif self.show_locked_buttons:
+            rv = self.all_entries
+
+        return rv
 
     @property
     def current_entry(self) -> 'EncEntry':

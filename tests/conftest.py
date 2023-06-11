@@ -2,11 +2,11 @@ import sys
 
 import pytest
 
-from encyclopaedia import EncEntry
-
 from mock_renpy import renpy
 
 sys.modules['renpy'] = renpy
+
+from encyclopaedia import EncEntry  # NOQA
 
 
 @pytest.fixture
@@ -23,5 +23,7 @@ def add_dummy_entries():
                 locked=True,
             )
             rv.append(entry)
+
+        return rv
 
     return func

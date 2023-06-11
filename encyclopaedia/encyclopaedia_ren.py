@@ -126,10 +126,6 @@ class Encyclopaedia(EventEmitter, store.object):
 
         return current_entries
 
-    @current_entries.setter
-    def current_entries(self, item: list['EncEntry']) -> None:
-        self._current_entries = item
-
     @property
     def current_entry(self) -> 'EncEntry':
         """Get the entry at current_position.

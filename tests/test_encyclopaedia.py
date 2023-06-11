@@ -423,3 +423,23 @@ def test_str():
     EncEntry(parent=enc, name="Dummy EncEntry", text="Dummy Text")
 
     assert str(enc) == "Encyclopaedia: Dummy Enc Name"
+
+
+def test_number_of_visible_entries(add_dummy_entries):
+    enc = Encyclopaedia(name="Dummy Enc Name")
+
+    add_dummy_entries(enc, 5)
+
+    add_dummy_entries(enc, 7, locked=True)
+
+    assert enc.number_of_visible_entries == 5
+
+
+def test_number_of_visible_entries_show_locked_entry(add_dummy_entries):
+    enc = Encyclopaedia(name="Dummy Enc Name", show_locked_entry=True)
+
+    add_dummy_entries(enc, 5)
+
+    add_dummy_entries(enc, 7, locked=True)
+
+    assert enc.number_of_visible_entries == 12

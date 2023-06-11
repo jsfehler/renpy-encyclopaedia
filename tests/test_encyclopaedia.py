@@ -26,6 +26,80 @@ def test_setting_entry_number(add_dummy_entries):
     assert 6 == entries[-1].number
 
 
+def test_build_subject_filter():
+    enc = Encyclopaedia()
+
+    apple = EncEntry(
+        parent=enc,
+        name="Apple",
+        text=["Test Text"],
+        subject="Fruits"
+    )
+
+    banana = EncEntry(
+        parent=enc,
+        name="Banana",
+        text=["Test Text"],
+        subject="Fruits"
+    )
+
+    EncEntry(
+        parent=enc,
+        name="Cantaloupe",
+        text=["Test Text"],
+        subject="Fruits",
+        locked=True,
+    )
+
+    EncEntry(
+        parent=enc,
+        name="Cucumber",
+        text=["Test Text"],
+        subject="Vegetables"
+    )
+
+    enc._build_subject_filter("Fruits")
+
+    assert [apple, banana] == enc.filtered_entries
+
+
+def test_build_subject_filter_show_locked_buttons():
+    enc = Encyclopaedia(show_locked_buttons=True)
+
+    apple = EncEntry(
+        parent=enc,
+        name="Apple",
+        text=["Test Text"],
+        subject="Fruits"
+    )
+
+    banana = EncEntry(
+        parent=enc,
+        name="Banana",
+        text=["Test Text"],
+        subject="Fruits"
+    )
+
+    cantaloupe = EncEntry(
+        parent=enc,
+        name="Cantaloupe",
+        text=["Test Text"],
+        subject="Fruits",
+        locked=True,
+    )
+
+    EncEntry(
+        parent=enc,
+        name="Cucumber",
+        text=["Test Text"],
+        subject="Vegetables"
+    )
+
+    enc._build_subject_filter("Fruits")
+
+    assert [apple, banana, cantaloupe] == enc.filtered_entries
+
+
 def test_filtering():
     enc = Encyclopaedia()
 

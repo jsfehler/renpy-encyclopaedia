@@ -146,7 +146,7 @@ class NextEntry(EncyclopaediaAction):
         if not self.enc.active:
             return False
 
-        return not (self.enc.current_position) >= (self.enc.number_of_visible_entries - 1)
+        return not (self.enc.current_position) >= (len(self.enc) - 1)
 
 
 class PreviousPage(EncyclopaediaAction):

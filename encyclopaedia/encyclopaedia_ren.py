@@ -109,6 +109,16 @@ class Encyclopaedia(EventEmitter, store.object):
     def __str__(self) -> str:
         return f"Encyclopaedia: {self.name}"
 
+    def __len__(self) -> int:
+        """Whatever the maximum size of the entry list should be,
+        based on if locked entries should be shown or not.
+        """
+        rv = len(self.unlocked_entries)
+        if self.show_locked_entry:
+            rv = len(self.all_entries)
+
+        return rv
+
     @property
     def current_entries(self) -> list['EncEntry']:
         """Get all the entries which should be visible to the user.
@@ -136,10 +146,9 @@ class Encyclopaedia(EventEmitter, store.object):
         Return:
             EncEntry
         """
+        entry = self.unlocked_entries[self.current_position]
         if self.show_locked_entry:
             entry = self.all_entries[self.current_position]
-        else:
-            entry = self.unlocked_entries[self.current_position]
 
         return entry
 
@@ -165,15 +174,6 @@ class Encyclopaedia(EventEmitter, store.object):
 
         percentage = floor(amount_unlocked * 100)
         return percentage
-
-    @property
-    def number_of_visible_entries(self) -> int:
-        """Whatever the maximum size of the entry list should be,
-        based on if locked entries should be shown or not.
-        """
-        if self.show_locked_entry:
-            return len(self.all_entries)
-        return len(self.unlocked_entries)
 
     def sort_entries(
         self,
@@ -318,7 +318,7 @@ class Encyclopaedia(EventEmitter, store.object):
         if test_position < 0:
             return False
 
-        elif test_position >= self.number_of_visible_entries:
+        if test_position >= len(self):
             return False
 
         # Update the current position.

@@ -431,7 +431,7 @@ style encyclopaedia_entry_page_label:
 ##########################
 # Encyclopaedia Misc Setup
 ##########################
-init -1500:
+init -85:
     python:
         from itertools import groupby
         from operator import attrgetter

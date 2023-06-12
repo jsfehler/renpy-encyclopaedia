@@ -1,6 +1,25 @@
 Installation
 ============
 
+Using Pip
+---------
+
+As of version `3.0` the renpy-encyclopaedia project can be installed using pip.
+
+.. warning::
+  Although it uses many parts of the Python ecosystem,
+  renpy-encyclopaedia is not a stand-alone package and will not work outside
+  of a Ren'Py project.
+
+From the console, navigate into your project's directory and run the following command:
+
+.. code-block:: console
+
+    pip install --no-compile --target game git+https://github.com/jsfehler/renpy-encyclopaedia.git@3.0#egg=renpy-encyclopaedia
+
+Manual
+------
+
 1. Download the latest release at: https://github.com/jsfehler/renpy-encyclopaedia/releases
 2. Place the `encyclopaedia` folder into your project's `game` directory.
 

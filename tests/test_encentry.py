@@ -1,3 +1,5 @@
+import pytest
+
 from encyclopaedia import Encyclopaedia
 from encyclopaedia import EncEntry
 
@@ -283,3 +285,22 @@ def test_repr():
     e = EncEntry(parent=enc, name="Dummy EncEntry", text="Dummy Text")
 
     assert repr(e) == "EncEntry(number=1, name=Dummy EncEntry)"
+
+
+def test_add_entry_already_in_page():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+    )
+
+    ee = EncEntry(
+        parent=enc,
+        name="Test Page",
+        text=["Test Text"],
+    )
+
+    with pytest.raises(ValueError):
+        e.add_entry(ee)

@@ -247,7 +247,7 @@ class EncEntry(EventEmitter, store.object):
             ValueError: If the entry has a number that is already taken.
         """
         if entry.parent is not None and entry.parent != self:
-            raise AttributeError(
+            raise ValueError(
                 f"{entry} is already a page of {self.parent}",
             )
 

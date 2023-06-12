@@ -62,6 +62,7 @@
     :hidden:
 
     development.rst
+    docsgame.rst
     changelog.rst
 
 .. toctree::

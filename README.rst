@@ -25,7 +25,7 @@ Features
 
 Documentation
 -------------
-Documentation is available at http://renpy-encyclopaedia.readthedocs.io/en/latest/index.html
+Documentation is available at https://renpy-encyclopaedia.readthedocs.io/
 
 
 Contributing

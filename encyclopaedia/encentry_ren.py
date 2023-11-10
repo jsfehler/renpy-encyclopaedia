@@ -91,6 +91,10 @@ class EncEntry(EventEmitter, store.object):
         self.locked_persistent = locked_persistent
         if self.locked_persistent:
             self._locked = getattr(persistent, self._name + "_locked")
+            # The first time a persistent var is fetched it will be None.
+            if self._locked is None:
+                self._locked = locked
+                setattr(persistent, self._name + "_locked", locked)
 
         if parent is not None:
             parent.add_entry(self)

@@ -188,80 +188,94 @@ def test_image_add():
     assert e.viewed is False
 
 
-def test_locked_persistent_get():
+def test_locked_persistent_first_get(add_dummy_entries):
+    """When locked status is controlled by a persistent variable
+    Then the persistent variable is set to the value of the locked attribute
+    And the EncEntry's locked variable is set to the value of the locked attribute
+    """
+    enc = Encyclopaedia()
+
+    result = add_dummy_entries(
+        enc=enc,
+        amount=1,
+        locked=False,
+        locked_persistent=True,
+    )
+
+    assert result[0].locked is False
+    assert persistent.Zeus_0_locked is False
+
+
+def test_locked_persistent_get(add_dummy_entries):
     """When locked status is controlled by a persistent variable
     Then the EncEntry's locked attribute should be linked to a persistent
     variable.
     """
     enc = Encyclopaedia()
 
-    about_zeus = EncEntry(
-        parent=enc,
-        name="Zeus",
-        text=["Test Text"],
+    result = add_dummy_entries(
+        enc=enc,
+        amount=1,
         locked=True,
         locked_persistent=True,
     )
 
-    assert about_zeus.locked == persistent.Zeus_locked
+    assert result[0].locked == persistent.Zeus_0_locked
 
 
-def test_locked_persistent_set():
+def test_locked_persistent_set(add_dummy_entries):
     """When locked status is controlled by a persistent variable
     Then the EncEntry's locked attribute should be linked to a persistent
     variable.
     """
     enc = Encyclopaedia()
 
-    about_zeus = EncEntry(
-        parent=enc,
-        name="Zeus",
-        text=["Test Text"],
+    result = add_dummy_entries(
+        enc=enc,
+        amount=1,
         locked=True,
         locked_persistent=True,
     )
 
-    about_zeus.locked = False
+    result[0].locked = False
 
-    assert persistent.Zeus_locked is False
-    assert about_zeus.locked == persistent.Zeus_locked
+    assert persistent.Zeus_0_locked is False
+    assert result[0].locked == persistent.Zeus_0_locked
 
 
-def test_viewed_persistent_get():
+def test_viewed_persistent_get(add_dummy_entries):
     """When viewed status is controlled by a persistent variable
     Then the EncEntry's viewed attribute should be linked to a persistent
     variable.
     """
     enc = Encyclopaedia()
 
-    about_zeus = EncEntry(
-        parent=enc,
-        name="Zeus",
-        text=["Test Text"],
+    result = add_dummy_entries(
+        enc=enc,
+        amount=1,
         viewed_persistent=True,
     )
 
-    assert about_zeus.viewed == persistent.Zeus_viewed
+    assert result[0].viewed == persistent.Zeus_0_viewed
 
 
-def test_viewed_persistent_set():
+def test_viewed_persistent_set(add_dummy_entries):
     """When locked status is controlled by a persistent variable
     Then the EncEntry's locked attribute should be linked to a persistent
     variable.
     """
     enc = Encyclopaedia()
 
-    about_zeus = EncEntry(
-        parent=enc,
-        name="Zeus",
-        text=["Test Text"],
+    result = add_dummy_entries(
+        enc=enc,
+        amount=1,
         viewed_persistent=True,
     )
 
-    about_zeus.viewed = True
+    result[0].viewed = True
 
-    assert persistent.Zeus_viewed is True
-    assert about_zeus.viewed == persistent.Zeus_viewed
+    assert persistent.Zeus_0_viewed is True
+    assert result[0].viewed == persistent.Zeus_0_viewed
 
 
 def test_word_count():

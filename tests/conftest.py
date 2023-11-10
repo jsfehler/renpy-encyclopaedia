@@ -7,28 +7,38 @@ from mock_renpy import renpy
 
 sys.modules['renpy'] = renpy
 
+from renpy.game import persistent, MockPersistent  # NOQA
+
 from encyclopaedia import Encyclopaedia, EncEntry  # NOQA
 
 
 @pytest.fixture
 def add_dummy_entries() -> Callable[['Encyclopaedia', int, bool], list['EncEntry']]:
     """Quickly fill an Encyclopaedia up."""
-    def func(
+    def _factory(
         enc: 'Encyclopaedia',
         amount: int,
-        locked: bool = False,
+        *args,
+        **kwargs,
     ) -> list['EncEntry']:
         rv = []
 
         for x in range(amount):
             entry = EncEntry(
                 parent=enc,
-                name=f"Dummy Name {str(x)}",
+                name=f"Zeus_{str(x)}",
                 text=["Dummy Text"],
-                locked=locked,
+                *args,
+                **kwargs,
             )
             rv.append(entry)
 
         return rv
 
-    return func
+    return _factory
+
+
+@pytest.fixture(autouse=True)
+def cleanup():
+    """Reset persistent."""
+    renpy.game.persistent = MockPersistent()

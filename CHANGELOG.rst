@@ -1,6 +1,15 @@
 Changelog
 =========
 
+[3.0.1] - 2023-11-12
+--------------------
+
+Fixed
+~~~~~
+
+- Crash while sorting when using locked_persistent.
+
+
 [3.0.0] - 2023-06-13
 --------------------
 

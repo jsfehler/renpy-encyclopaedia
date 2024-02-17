@@ -5,9 +5,11 @@ build-backend = "hatchling.build"
 [tool.hatch.build]
 include = ["encyclopaedia/**"]
 
+[tool.hatch.version]
+path = "encyclopaedia/version.py"
+
 [project]
 name = "renpy-encyclopaedia"
-version = "3.0.1"
 authors = [
   { name="jsfehler" },
 ]
@@ -19,6 +21,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dynamic = ["version"]
 
 [project.urls]
 "Homepage" = "https://github.com/jsfehler/renpy-encyclopaedia"

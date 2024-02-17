@@ -1,5 +1,5 @@
 """renpy
-init python:
+init -85 python:
 """
 from enum import Enum
 

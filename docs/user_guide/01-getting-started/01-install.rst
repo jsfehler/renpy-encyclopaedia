@@ -15,7 +15,7 @@ From the console, navigate into your project's directory and run the following c
 
 .. code-block:: console
 
-    pip install --no-compile --target game git+https://github.com/jsfehler/renpy-encyclopaedia.git@3.0.1#egg=renpy-encyclopaedia
+    pip install --no-compile --target game git+https://github.com/jsfehler/renpy-encyclopaedia.git@3.0.2#egg=renpy-encyclopaedia
 
 The target directory can be anywhere inside `game/`. Ren'Py is able to detect any valid code inside your project.
 

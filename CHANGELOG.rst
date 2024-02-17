@@ -1,6 +1,14 @@
 Changelog
 =========
 
+[3.0.2] - 2024-02-17
+--------------------
+
+Fixed
+~~~~~
+
+- Crash when Constants used by Actions and Encyclopaedia init after them.
+
 [3.0.1] - 2023-11-12
 --------------------
 

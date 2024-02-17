@@ -228,7 +228,7 @@ def test_toggle_show_locked_buttons_reverse_sorting():
 
     entry_names = ["Apple", "Carrot", "Deer", "Eel", "Fajita"]
 
-    for _ in range(5):
+    for x in range(5):
         EncEntry(
             parent=enc,
             name=entry_names[x],

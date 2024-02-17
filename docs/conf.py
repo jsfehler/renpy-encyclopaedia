@@ -109,7 +109,6 @@ html_theme = 'sphinx_immaterial'
 html_theme_options = {
     "repo_url": "https://github.com/jsfehler/renpy-encyclopaedia",
     "repo_name": "renpy-encyclopaedia",
-    "repo_type": "github",
     "icon": {
         "repo": "fontawesome/brands/git",
         "edit": "material/file-edit-outline",
@@ -130,8 +129,8 @@ html_theme_options = {
         {
             "media": "(prefers-color-scheme: light)",
             "scheme": "default",
-            "primary": "pink",
-            "accent": "cyan",
+            "primary": "teal",
+            "accent": "deep-orange",
             "toggle": {
                 "icon": "material/lightbulb-outline",
                 "name": "Switch to dark mode",
@@ -140,8 +139,8 @@ html_theme_options = {
         {
             "media": "(prefers-color-scheme: dark)",
             "scheme": "slate",
-            "primary": "cyan",
-            "accent": "deep-orange",
+            "primary": "green",
+            "accent": "amber",
             "toggle": {
                 "icon": "material/lightbulb",
                 "name": "Switch to light mode",

@@ -1,7 +1,7 @@
 """renpy
 init python:
 """
-from typing import cast, Union  # NOQA E402
+from typing import cast, Union
 
 from renpy.python import RevertableList
 

@@ -242,7 +242,7 @@ class SortEncyclopaedia(EncyclopaediaAction):
         self.enc.sort_entries(
             entries=self.enc.current_entries,
             sorting=int(self.sorting_mode.value),
-            reverse=self.reverse
+            reverse=self.reverse,
         )
 
         self.enc.sorting_mode = self.sorting_mode

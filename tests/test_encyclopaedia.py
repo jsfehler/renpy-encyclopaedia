@@ -33,14 +33,14 @@ def test_build_subject_filter():
         parent=enc,
         name="Apple",
         text=["Test Text"],
-        subject="Fruits"
+        subject="Fruits",
     )
 
     banana = EncEntry(
         parent=enc,
         name="Banana",
         text=["Test Text"],
-        subject="Fruits"
+        subject="Fruits",
     )
 
     EncEntry(
@@ -55,7 +55,7 @@ def test_build_subject_filter():
         parent=enc,
         name="Cucumber",
         text=["Test Text"],
-        subject="Vegetables"
+        subject="Vegetables",
     )
 
     enc._build_subject_filter("Fruits")
@@ -70,14 +70,14 @@ def test_build_subject_filter_show_locked_buttons():
         parent=enc,
         name="Apple",
         text=["Test Text"],
-        subject="Fruits"
+        subject="Fruits",
     )
 
     banana = EncEntry(
         parent=enc,
         name="Banana",
         text=["Test Text"],
-        subject="Fruits"
+        subject="Fruits",
     )
 
     cantaloupe = EncEntry(
@@ -92,7 +92,7 @@ def test_build_subject_filter_show_locked_buttons():
         parent=enc,
         name="Cucumber",
         text=["Test Text"],
-        subject="Vegetables"
+        subject="Vegetables",
     )
 
     enc._build_subject_filter("Fruits")
@@ -107,28 +107,28 @@ def test_filtering():
         parent=enc,
         name="Apple",
         text=["Test Text"],
-        subject="Fruits"
+        subject="Fruits",
     )
 
     banana = EncEntry(
         parent=enc,
         name="Banana",
         text=["Test Text"],
-        subject="Fruits"
+        subject="Fruits",
     )
 
     cantaloupe = EncEntry(
         parent=enc,
         name="Cantaloupe",
         text=["Test Text"],
-        subject="Fruits"
+        subject="Fruits",
     )
 
     EncEntry(
         parent=enc,
         name="Cucumber",
         text=["Test Text"],
-        subject="Vegetables"
+        subject="Vegetables",
     )
 
     enc.FilterBySubject("Fruits")()
@@ -144,28 +144,28 @@ def test_clear_filtering():
         parent=enc,
         name="Apple",
         text=["Test Text"],
-        subject="Fruits"
+        subject="Fruits",
     )
 
     banana = EncEntry(
         parent=enc,
         name="Banana",
         text=["Test Text"],
-        subject="Fruits"
+        subject="Fruits",
     )
 
     cantaloupe = EncEntry(
         parent=enc,
         name="Cantaloupe",
         text=["Test Text"],
-        subject="Fruits"
+        subject="Fruits",
     )
 
     cucumber = EncEntry(
         parent=enc,
         name="Cucumber",
         text=["Test Text"],
-        subject="Vegetables"
+        subject="Vegetables",
     )
 
     enc.FilterBySubject("Fruits")()
@@ -238,14 +238,14 @@ def test_duplicate_entry_numbers():
         parent=enc,
         name="Test Name",
         text=["Test Text"],
-        locked=False
+        locked=False,
     )
 
     EncEntry(
         parent=enc,
         name="Test Name",
         text=["Test Text"],
-        locked=False
+        locked=False,
     )
 
     with pytest.raises(ValueError) as e:
@@ -254,7 +254,7 @@ def test_duplicate_entry_numbers():
             number=1,
             name="Test Name",
             text=["Test Text"],
-            locked=False
+            locked=False,
         )
 
     message = '1 is already taken.'
@@ -336,12 +336,12 @@ def test_current_entries_show_all(add_dummy_entries):
 
     expected_list = add_dummy_entries(enc, 5)
 
-    for x in range(5):
+    for _ in range(5):
         e = EncEntry(
             parent=enc,
             name="Test Name",
             text=["Test Text"],
-            locked=True
+            locked=True,
         )
         expected_list.append(e)
 

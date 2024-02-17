@@ -9,7 +9,7 @@ def test_viewed_callback_set_entry():
     e = EncEntry(
         parent=enc,
         name="Test Name",
-        text=["Test Text"]
+        text=["Test Text"],
     )
 
     global i
@@ -33,13 +33,13 @@ def test_viewed_callback_change_entry():
     e = EncEntry(
         parent=enc,
         name="Test Name",
-        text=["Test Text"]
+        text=["Test Text"],
     )
 
     e2 = EncEntry(
         parent=enc,
         name="Test Name",
-        text=["Test Text"]
+        text=["Test Text"],
     )
 
     global i
@@ -66,7 +66,7 @@ def test_viewed_callback_multiple():
     e = EncEntry(
         parent=enc,
         name="Test Name",
-        text=["Test Text"]
+        text=["Test Text"],
     )
 
     global i
@@ -179,22 +179,22 @@ def test_filter_by_subject():
 
     expected_entries = []
 
-    for x in range(5):
+    for _ in range(5):
         e = EncEntry(
             parent=enc,
             name="Test Name",
             text=["Test Text"],
-            subject="Robots"
+            subject="Robots",
         )
 
         expected_entries.append(e)
 
-    for x in range(5):
+    for _ in range(5):
         EncEntry(
             parent=enc,
             name="Test Name",
             text=["Test Text"],
-            subject="Humans"
+            subject="Humans",
         )
 
     enc.FilterBySubject("Robots")()
@@ -208,12 +208,12 @@ def test_toggle_show_locked_buttons():
 
     enc = Encyclopaedia()
 
-    for x in range(5):
+    for _ in range(5):
         EncEntry(
             parent=enc,
             name="Test Name",
             text=["Test Text"],
-            locked=False
+            locked=False,
         )
 
     enc.ToggleShowLockedButtons()()
@@ -228,19 +228,19 @@ def test_toggle_show_locked_buttons_reverse_sorting():
 
     entry_names = ["Apple", "Carrot", "Deer", "Eel", "Fajita"]
 
-    for x in range(5):
+    for _ in range(5):
         EncEntry(
             parent=enc,
             name=entry_names[x],
             text=["Test Text"],
-            locked=False
+            locked=False,
         )
 
     locked_entry = EncEntry(
         parent=enc,
         name="Banana",
         text=["Test Text"],
-        locked=True
+        locked=True,
     )
 
     # Locked entry should be the first entry, due to reverse sorting
@@ -260,12 +260,12 @@ def test_toggle_show_locked_entry():
 
     enc = Encyclopaedia()
 
-    for x in range(5):
+    for _ in range(5):
         EncEntry(
             parent=enc,
             name="Test Name",
             text=["Test Text"],
-            locked=False
+            locked=False,
         )
 
     enc.ToggleShowLockedEntry()()
@@ -278,12 +278,12 @@ def test_sort_encyclopaeda():
 
     enc = Encyclopaedia()
 
-    for x in range(5):
+    for _ in range(5):
         EncEntry(
             parent=enc,
             name="Test Name",
             text=["Test Text"],
-            locked=False
+            locked=False,
         )
 
     enc.Sort(sorting_mode=constants_ren.SortMode.SUBJECT)()

@@ -1,5 +1,31 @@
-ignore = ["F405","F821"]
+exclude = ["docs"]
 line-length = 99
 
-[mccabe]
+[lint.mccabe]
 max-complexity = 8
+
+[lint.per-file-ignores]
+"**/tests/*" = ["S101","B018"]
+"**/encyclopaedia/encyclopaedia_ren.py" = ["N802"]
+
+[lint]
+select = [
+"A",
+"B",
+"BLE",
+"C4",
+"COM",
+"C90",
+"E",
+"F",
+"N",
+"PTH",
+"RUF",
+"S",
+"SLOT",
+"T20",
+"TRY",
+"W",
+]
+
+ignore = ["B026","F405","F821","RUF010","TRY003"]

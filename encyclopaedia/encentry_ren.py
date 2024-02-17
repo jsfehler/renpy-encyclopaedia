@@ -67,7 +67,7 @@ class EncEntry(EventEmitter, store.object):
                  locked_name: str = "???",
                  locked_text: str = "???",
                  locked_image: Optional[str] = None,
-                 locked_image_tint: tuple[float, float, float] = (0.0, 0.0, 0.0)
+                 locked_image_tint: tuple[float, float, float] = (0.0, 0.0, 0.0),
                  ) -> None:
 
         # Place the entry into the assigned Encyclopaedia or EncEntry.
@@ -259,7 +259,7 @@ class EncEntry(EventEmitter, store.object):
         if entry.number is not None:
             if any(i for i in self.pages if i.number == entry.number):
                 raise ValueError(
-                    f"{entry.number} is already taken."
+                    f"{entry.number} is already taken.",
                 )
 
         elif entry.number is None:

@@ -12,7 +12,7 @@ def test_next_entry():
             parent=enc,
             name="Test Name {}".format(x + 1),
             text=["Test Text"],
-            locked=False
+            locked=False,
         )
 
     assert 0 == enc.current_position

@@ -14,7 +14,7 @@ def test_image():
         name="Test Name",
         text=["Test Text"],
         image="placeholder",
-        locked_image="placeholder"
+        locked_image="placeholder",
     )
 
     assert "placeholder" == e.image
@@ -50,14 +50,14 @@ def test_add_subpage():
         parent=enc,
         name="Test Name",
         text=["Test Text"],
-        locked=False
+        locked=False,
     )
 
     ee = EncEntry(
         parent=e,
         name="A Sub-Page",
         text=["Test Text"],
-        locked=False
+        locked=False,
     )
 
     assert [e, ee] == e.pages

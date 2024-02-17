@@ -167,10 +167,10 @@ class Encyclopaedia(EventEmitter, store.object):
 
         try:
             amount_unlocked = float_size / float_size_all
-        except ZeroDivisionError:
+        except ZeroDivisionError as err:
             raise ZeroDivisionError(
-                'Cannot calculate percentage unlocked of empty Encyclopaedia'
-            )
+                'Cannot calculate percentage unlocked of empty Encyclopaedia',
+            ) from err
 
         percentage = floor(amount_unlocked * 100)
         return percentage
@@ -219,7 +219,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self.sort_entries(
             entries=self.unlocked_entries,
             sorting=int(self.sorting_mode.value),
-            reverse=self.reverse_sorting
+            reverse=self.reverse_sorting,
         )
 
     def _find_closest_free_number(self) -> int:
@@ -275,7 +275,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self.sort_entries(
             entries=self.all_entries,
             sorting=int(self.sorting_mode.value),
-            reverse=self.reverse_sorting
+            reverse=self.reverse_sorting,
         )
 
         if entry.locked is False:

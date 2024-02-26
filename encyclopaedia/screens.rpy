@@ -1,33 +1,39 @@
 ################################################################################
-#    Entry Button:
-#    Sub-screen to determine what sort of button to show for any given entry in a list of entries.
-#    Used by the vertical_list sub-screen.
+#  entry_button:
+#    Component screen for a button that sets an Entry in an Encyclopaedia to
+#    be the active one.
 #
-#    Determining which button to show for the entry is based on the following factors:
-#       - Should locked buttons be displayed?
-#           - If yes, the button to show depends on:
-#               - If the entry is unlocked, add a button with the correct label and link
-#               - If the entry is locked, then:
-#                   - If locked entries should be accessible, add a button with the correct label and link.
-#                   - If locked entries should not be accessible, add a disabled button
-#           - If no, simply add a button with the correct label and link, knowing only unlocked entries are being fed in
+#    This screen is used by the vertical_list screen.
 #
 #    Args:
 #        enc (Encyclopaedia): The encyclopaedia to use on this screen.
 #        entry (EncEntry): The entry to associate with the button.
 ################################################################################
 screen entry_button(enc, entry):
-    textbutton entry.name action enc.SetEntry(entry) style "encyclopaedia_entry_button"
+    button:
+        style "encyclopaedia_list_button"
 
-    if (entry.locked is False) and (not entry.viewed):
-        text _("New!") style "unread_entry_notice_text"
+        action enc.SetEntry(entry)
+
+        hbox:
+            spacing 10
+            text entry.name style "encyclopaedia_list_button_text"
+            # If an entry is not locked and not viewed, display an indication
+            # for the user.
+            if (entry.locked is False) and (not entry.viewed):
+                text _("New!") style "unread_entry_notice_text"
 
 
 ################################################################################
-#    Vertical List:
-#    Sub-screen that displays a vertical list of entry buttons.
-#    The way entry buttons are displayed depends on the Encyclopaedia's sorting mode.
-#    Used by the encyclopaedia_list screen.
+#  vertical_list:
+#    Screen to display a vertical list of entry_button components.
+#
+#    The way buttons are displayed depends:
+#    - On the Encyclopaedia's sorting mode,
+#    - If buttons for locked entries should be shown
+#    - If locked entries should be viewable with placeholder data.
+#
+#    This screen is used by the encyclopaedia_list screen.
 #
 #    Args:
 #        enc (Encyclopaedia): The encyclopaedia to use on this screen.
@@ -40,8 +46,7 @@ screen vertical_list(enc):
         for key, group in groupby(enc.current_entries, attrgetter("subject")):
            text key style "encyclopaedia_list_subject_header" # The subject heading
            for entry in group:
-               hbox:
-                   use entry_button(enc, entry)
+               use entry_button(enc, entry)
 
     elif enc.sorting_mode == SortMode.NUMBER:
         for entry in enc.current_entries:
@@ -57,13 +62,11 @@ screen vertical_list(enc):
             for key, group in groupby(enc.current_entries, key=lambda x: x.name[0]):
                 text key style "encyclopaedia_list_letter_text"  # The letter heading
                 for entry in group:
-                    hbox:
-                        use entry_button(enc, entry)
+                    use entry_button(enc, entry)
 
         else:
             for entry in enc.current_entries:
-                hbox:
-                    use entry_button(enc, entry)
+                use entry_button(enc, entry)
 
 
 ################################################################################
@@ -344,11 +347,22 @@ style encyclopaedia_button is button
 
 style encyclopaedia_button_text is button_text
 
-style encyclopaedia_entry_button is encyclopaedia_button:
-    xfill False
+style encyclopaedia_list_button is encyclopaedia_button:
+    background Solid("#000")
+    hover_background Solid(gui.hover_color)
+    selected_background Solid(gui.accent_color)
+    selected_hover_background Solid(gui.hover_color)
+    xsize 1.0
+    yalign 0.5
+    padding (6, 0, 0, 0)
 
-style encyclopaedia_entry_button_text is encyclopaedia_button_text:
+style encyclopaedia_list_button_text is encyclopaedia_button_text:
     size 18
+    xalign 0.5
+    color gui.accent_color
+    hover_color "#000"
+    selected_color "#000"
+    insensitive_color "#3D3D3D"
 
 style encyclopaedia_list_letter_text:
     size 24

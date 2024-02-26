@@ -94,6 +94,9 @@ class SetEntry(EncyclopaediaAction):
         else:
             return False
 
+    def get_selected(self) -> bool:
+        return self.entry == self.enc.active
+
 
 class CloseActiveEntry(EncyclopaediaAction):
     """Close the active EncEntry.

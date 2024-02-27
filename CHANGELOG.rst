@@ -1,6 +1,23 @@
 Changelog
 =========
 
+[3.1.0] - 2024-02-26
+--------------------
+
+Changed
+~~~~~~~
+
+- SetEntry Action now set selected status on buttons that use it.
+
+- The design of the vertical list of Entries has been tweaked to use a solid
+  background.
+
+Fixed
+~~~~~
+
+- When multiple EncEntries had pages, their order was not tracked correctly.
+  This is fixed in the Encyclopaedia and on the screens.
+
 [3.0.2] - 2024-02-17
 --------------------
 

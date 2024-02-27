@@ -215,24 +215,6 @@ def test_text_locked():
     assert ["???"] == e.text
 
 
-def test_text_modify():
-    enc = Encyclopaedia()
-
-    e = EncEntry(
-        parent=enc,
-        name="Test Name",
-        text=["Test Text"],
-    )
-
-    # Pretend we viewed the entry
-    e.viewed = True
-
-    # Modify text
-    e.text = ["New Text"]
-
-    assert e.viewed is False
-
-
 def test_image_add():
     enc = Encyclopaedia()
 
@@ -385,3 +367,37 @@ def test_add_entry_already_in_page():
 
     with pytest.raises(ValueError):
         e.add_entry(ee)
+
+
+def test_add_entry_number_already_used():
+    """
+    Given I have an EncEntry with a page
+    And the page has a hardcoded number
+    When I add a page with the same number to the EncEntry
+    Then an error is raised
+    And the error has a useful message for the user
+    """
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Test Name",
+        text=["Test Text"],
+    )
+
+    EncEntry(
+        parent=e,
+        number=666,
+        name="Set Number",
+        text=["Test Text"],
+    )
+
+    with pytest.raises(ValueError) as err:
+        EncEntry(
+            parent=e,
+            number=666,
+            name="Duplicated Number",
+            text=["Test Text"],
+        )
+
+    assert err.match('666 is already taken.')

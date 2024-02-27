@@ -27,7 +27,6 @@ init python:
 
 
 label setup_enc:
-
     python:
         library_enc = Encyclopaedia(
             name="Wanderer in the Library",
@@ -43,11 +42,10 @@ label setup_enc:
         about_library = LibraryEntry(
             name=_('Library'),
             subject=_('Locations'),
-            text=(
-                "You find yourself sitting on a comfortable armchair. "
-                "Around you, rows of books. "
-                "You are in what appears to be a library, somehow."
-            ),
+            text="""You find yourself sitting on a blue leather armchair.
+You sink into the comfort of the seat and look around. Surrounding you are countless rows of books.
+
+You are, somehow, sitting in what appears to be a small section of a massive library.""",
             image=Transform('images/library.png', zoom=0.5),
         )
 
@@ -93,6 +91,20 @@ label setup_enc:
                     "Natural light bathes your face. "
                     "You step through and find yourself in an elegant garden. "
                 )
+            ],
+            image=Transform('images/garden.png', zoom=0.5),
+        )
+
+        about_garden_2 = EncEntry(
+            parent=about_garden,
+            name=_('Garden'),
+            subject=_('Locations'),
+            text=[
+                "There is a peculiar calm to this garden.",
+                (
+                    "Rays of light shine through the canopy of trees, but you cannot quite make out the sky. "
+                    "Paths are laid out in white stone, twisting around small ponds and leading towards a stone gazebo."
+                ),
             ],
             image=Transform('images/garden.png', zoom=0.5),
         )

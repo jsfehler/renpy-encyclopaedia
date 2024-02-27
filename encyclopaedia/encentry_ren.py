@@ -75,7 +75,10 @@ class EncEntry(EventEmitter, store.object):
         # self.parent is set to None so that add_entry doesn't think
         # this EncEntry is already inside an Encyclopaedia.
         self.parent: Optional[Union['Encyclopaedia', 'EncEntry']] = None
+
+        # number is used by the Encyclopaedia, page_number by EncEntry.
         self.number = number
+        self.page_number: int = 1
 
         self.locked_name = locked_name
         self.locked_text = string_to_list(locked_text)
@@ -264,6 +267,8 @@ class EncEntry(EventEmitter, store.object):
 
         elif entry.number is None:
             entry.number = len(self.pages) + 1
+            # Child Entries always have matching number and page_number
+            entry.page_number = entry.number
 
         entry.parent = self
 
@@ -275,7 +280,7 @@ class EncEntry(EventEmitter, store.object):
             # Sort by number.
             self.pages = sorted(
                 self.pages,
-                key=attrgetter('number'),
+                key=attrgetter('page_number'),
             )
             self.has_pages = True
 
@@ -297,7 +302,7 @@ class EncEntry(EventEmitter, store.object):
 
         self.unlocked_pages = sorted(
             self.unlocked_pages,
-            key=attrgetter('number'),
+            key=attrgetter('page_number'),
         )
 
     def _change_page(self, direction: Direction) -> bool:

@@ -43,7 +43,11 @@ def test_unlock_entry():
     assert e in enc.unlocked_entries
 
 
-def test_add_subpage():
+def test_add_page():
+    """
+    When an EncEntry has another EncEntry as a parent
+    Then it becomes a page of the parent EncEntry.
+    """
     enc = Encyclopaedia()
 
     e = EncEntry(
@@ -61,6 +65,69 @@ def test_add_subpage():
     )
 
     assert [e, ee] == e.pages
+
+
+def test_add_page_correct_number():
+    """
+    When an Encyclopaedia has multiple EncEntry
+    And each EncEntry has multiple pages
+    And there are multiple EncEntry in the Encyclopaedia
+    Then the page number of each page in the EncEntry is tracked correctly
+    """
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="E1",
+        text=["Test Text"],
+        locked=False,
+    )
+
+    ee = EncEntry(
+        parent=e,
+        name="E2",
+        text=["Test Text"],
+        locked=False,
+    )
+
+    eee = EncEntry(
+        parent=e,
+        name="E3",
+        text=["Test Text"],
+        locked=False,
+    )
+
+    f = EncEntry(
+        parent=enc,
+        name="F1",
+        text=["Test Text"],
+        locked=False,
+    )
+
+    ff = EncEntry(
+        parent=f,
+        name="F2",
+        text=["Test Text"],
+        locked=False,
+    )
+
+    fff = EncEntry(
+        parent=f,
+        name="F3",
+        text=["Test Text"],
+        locked=False,
+    )
+
+    assert e.number == 1
+    assert f.number == 2
+
+    assert e.page_number == 1
+    assert ee.page_number == 2
+    assert eee.page_number == 3
+
+    assert f.page_number == 1
+    assert ff.page_number == 2
+    assert fff.page_number == 3
 
 
 def test_unlock_subpage():

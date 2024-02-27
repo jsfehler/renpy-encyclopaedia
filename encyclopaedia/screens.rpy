@@ -252,7 +252,7 @@ screen encyclopaedia_entry(enc):
 
                         # Flavour text to indicate which page out of the total is being viewed
                         $ total_pages = len(enc.active.pages)
-                        text _("Page [enc.active.current_page.number] / [total_pages]") style "encyclopaedia_entry_page_label"
+                        text _("Page [enc.active.current_page.page_number] / [total_pages]") style "encyclopaedia_entry_page_label"
 
                         textbutton _("Next Page") xalign .98 action enc.NextPage() style "encyclopaedia_entry_change_entry_button"
 

@@ -1,6 +1,6 @@
 """renpy
 init -85 python:
-"""
+"""  # NOQA D205
 from typing import Callable
 
 
@@ -8,6 +8,7 @@ CALLBACK_TYPE = Callable[['EventEmitter'], None]
 
 
 class EventEmitter:
+    """Register functions in a namespace and call them when the namespace is invoked."""
     def __init__(self) -> None:
         self.callbacks: dict[str, list[CALLBACK_TYPE]] = {}
 

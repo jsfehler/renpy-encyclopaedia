@@ -136,16 +136,17 @@ class EncEntry(EventEmitter, store.object):
         if self.viewed_persistent:
             self._viewed = getattr(persistent, self._name + "_viewed")
 
-    def __repr__(self) -> str:
+    def __repr__(self) -> str:  # NOQA D105
         return f"EncEntry(number={self.number}, name={self.name})"
 
-    def __str__(self) -> str:
+    def __str__(self) -> str:  # NOQA D105
         return self.label
 
     @property
     def locked(self) -> bool:
         """Determine if the entry's data can be viewed or not.
-            Changing this variable will modify the entry's locked status.
+
+        Changing this variable will modify the entry's locked status.
         """
         return self._locked
 
@@ -167,7 +168,8 @@ class EncEntry(EventEmitter, store.object):
     @property
     def viewed(self) -> bool:
         """Determines if the entry has been viewed or not.
-            Changing this variable will modify the entry's viewed status.
+
+        Changing this variable will modify the entry's viewed status.
         """
         return self._viewed
 
@@ -180,8 +182,7 @@ class EncEntry(EventEmitter, store.object):
 
     @property
     def label(self) -> str:
-        """The number and name of the entry, in the format of 'number: name'.
-        """
+        """The number and name of the entry, in the format of 'number: name'."""
         number = str(self.number).zfill(2)
 
         return f"{number}: {self.name}"
@@ -195,8 +196,7 @@ class EncEntry(EventEmitter, store.object):
         return self.unlocked_pages[self._unlocked_page_index]
 
     def __get_entry_data(self, data: Any, locked_data: Any) -> Any:
-        """Used by self.name, self.text, and self.image to control if
-        the locked placeholder or actual entry data should be returned.
+        """Used by (name, text, image) attributes to check if the placeholder should be returned.
 
         Return:
             If True or None, return the data requested,
@@ -294,7 +294,6 @@ class EncEntry(EventEmitter, store.object):
         Args:
             entry: The Entry to add to the unlocked entries list.
         """
-
         self.unlocked_pages.append(entry)
 
         # Remove duplicates
@@ -307,7 +306,6 @@ class EncEntry(EventEmitter, store.object):
 
     def _change_page(self, direction: Direction) -> bool:
         """Change the current sub-entry page."""
-
         new_page_number = self._unlocked_page_index + direction.value
 
         # Don't allow moving beyond bounds.

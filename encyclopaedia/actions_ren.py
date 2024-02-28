@@ -28,10 +28,9 @@ class EncyclopaediaAction(Action, DictEquality):
 
 
 class SetEntry(EncyclopaediaAction):
-    """Set an Encyclopaedia entry as the active entry,
-    then opens the Encyclopaedia's Entry Screen
+    """Set an Entry as active, then open the Encyclopaedia's Entry Screen.
 
-    Used for opening entries directly with a button.
+    Generally used with Ren'py Button displayable to display an Entry.
 
     Args:
         encyclopaedia: The Encyclopaedia instance to use.
@@ -52,6 +51,7 @@ class SetEntry(EncyclopaediaAction):
         return target_position
 
     def set_entry(self) -> None:
+        """Set the Entry as active and update the Encyclopaeda's internal state."""
         target_position = self._get_entry_index()
 
         # The active entry is set to whichever list position was found.
@@ -76,6 +76,7 @@ class SetEntry(EncyclopaediaAction):
         self.enc.current_position = target_position
 
     def __call__(self) -> None:
+        """Used by Ren'Py to invoke this Action."""
         self.set_entry()
 
         # Show the entry screen associated with the encyclopaedia.
@@ -95,6 +96,11 @@ class SetEntry(EncyclopaediaAction):
             return False
 
     def get_selected(self) -> bool:
+        """Used by Ren'Py to determine if the user of this Action should have a selected state.
+
+        Returns:
+            True if the Entry set by this Action is the active Entry, else False.
+        """
         return self.entry == self.enc.active
 
 
@@ -104,6 +110,7 @@ class CloseActiveEntry(EncyclopaediaAction):
     Normally used by the entry screen.
     """
     def __call__(self) -> None:
+        """Used by Ren'Py to invoke this Action."""
         self.enc.active = None
         self.enc.ResetSubPage()()
         renpy.hide_screen(self.enc.entry_screen)
@@ -118,6 +125,7 @@ class PreviousEntry(EncyclopaediaAction):
         encyclopaedia: The Encyclopaedia instance to use.
     """
     def __call__(self) -> None:
+        """Used by Ren'Py to invoke this Action."""
         result = self.enc.previous_entry()
 
         if result:
@@ -144,6 +152,7 @@ class NextEntry(EncyclopaediaAction):
         encyclopaedia: The Encyclopaedia instance to use.
     """
     def __call__(self) -> None:
+        """Used by Ren'Py to invoke this Action."""
         result = self.enc.next_entry()
 
         if result:
@@ -167,6 +176,7 @@ class PreviousPage(EncyclopaediaAction):
     Used to switch from one page to another.
     """
     def __call__(self) -> None:
+        """Used by Ren'Py to invoke this Action."""
         active = self.enc.active
 
         if not active:
@@ -197,6 +207,7 @@ class NextPage(EncyclopaediaAction):
     Used to switch from one page to another.
     """
     def __call__(self) -> None:
+        """Used by Ren'Py to invoke this Action."""
         active = self.enc.active
 
         if not active:
@@ -242,6 +253,7 @@ class SortEncyclopaedia(EncyclopaediaAction):
             self.reverse = True
 
     def __call__(self) -> None:
+        """Used by Ren'Py to invoke this Action."""
         self.enc.sort_entries(
             entries=self.enc.current_entries,
             sorting=int(self.sorting_mode.value),
@@ -252,6 +264,12 @@ class SortEncyclopaedia(EncyclopaediaAction):
         renpy.restart_interaction()
 
     def get_selected(self) -> bool:
+        """Used by Ren'Py to determine if the user of this Action should have a selected state.
+
+        Returns:
+            True if the Encyclopaedia's current sorting mode matches the one set
+            by this Action, else False.
+        """
         return self.enc.sorting_mode == self.sorting_mode
 
 
@@ -263,6 +281,7 @@ class FilterBySubject(EncyclopaediaAction):
         self.subject = subject
 
     def __call__(self):
+        """Used by Ren'Py to invoke this Action."""
         self.enc.filtering = self.subject
 
         self.enc._build_subject_filter(self.subject)
@@ -270,6 +289,12 @@ class FilterBySubject(EncyclopaediaAction):
         renpy.restart_interaction()
 
     def get_selected(self) -> bool:
+        """Used by Ren'Py to determine if the user of this Action should have a selected state.
+
+        Returns:
+            True if the Encyclopaedia is filtering and the filter matches the one set
+            by this Action, else False.
+        """
         self.selected = self.enc.filtering == self.subject
         return self.selected
 
@@ -277,6 +302,7 @@ class FilterBySubject(EncyclopaediaAction):
 class ClearFilter(EncyclopaediaAction):
     """Stop filtering an Encyclopaedia."""
     def __call__(self) -> None:
+        """Used by Ren'Py to invoke this Action."""
         self.enc.filtering = False
         renpy.restart_interaction()
 
@@ -284,6 +310,7 @@ class ClearFilter(EncyclopaediaAction):
 class ResetSubPage(EncyclopaediaAction):
     """Reset the sub-page count to 1. Used when closing the entry screen."""
     def __call__(self) -> None:
+        """Used by Ren'Py to invoke this Action."""
         if self.enc.active is not None:
             self.enc.active._unlocked_page_index = 0
         renpy.restart_interaction()
@@ -292,6 +319,7 @@ class ResetSubPage(EncyclopaediaAction):
 class ToggleShowLockedButtonsAction(EncyclopaediaAction):
     """Toggle if locked Entries will be visible in the list of Entries."""
     def __call__(self) -> None:
+        """Used by Ren'Py to invoke this Action."""
         self.enc.show_locked_buttons = not self.enc.show_locked_buttons
 
         # Ensure the filtering isn't broken by hiding buttons.
@@ -315,5 +343,6 @@ class ToggleShowLockedButtonsAction(EncyclopaediaAction):
 class ToggleShowLockedEntryAction(EncyclopaediaAction):
     """Toggle if locked Entries can be viewed."""
     def __call__(self) -> None:
+        """Used by Ren'Py to invoke this Action."""
         self.enc.show_locked_entry = not self.enc.show_locked_entry
         renpy.restart_interaction()

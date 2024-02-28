@@ -5,8 +5,11 @@ line-length = 99
 max-complexity = 8
 
 [lint.per-file-ignores]
-"**/tests/*" = ["S101","B018"]
+"**/tests/*" = ["D","S101","B018"]
 "**/encyclopaedia/encyclopaedia_ren.py" = ["N802"]
+
+[lint.pydocstyle]
+convention = "google"
 
 [lint]
 select = [
@@ -16,6 +19,7 @@ select = [
 "C4",
 "COM",
 "C90",
+"D",
 "E",
 "F",
 "N",
@@ -28,4 +32,15 @@ select = [
 "W",
 ]
 
-ignore = ["B026","F405","F821","RUF010","TRY003"]
+ignore = [
+"B026",
+"D100",
+"D107",
+"D204",
+"D413",
+"D415",
+"F405",
+"F821",
+"RUF010",
+"TRY003",
+]

@@ -1,6 +1,6 @@
 """renpy
 init -85 python:
-"""
+"""  # NOQA D205
 from enum import Enum
 
 

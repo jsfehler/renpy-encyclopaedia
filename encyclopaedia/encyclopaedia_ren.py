@@ -103,16 +103,14 @@ class Encyclopaedia(EventEmitter, store.object):
             "entry_unlocked": [],  # Run whenever a child entry is unlocked.
         }
 
-    def __repr__(self) -> str:
+    def __repr__(self) -> str:  # NOQA D105
         return f"Encyclopaedia(name={self.name}, length={len(self.all_entries)})"
 
-    def __str__(self) -> str:
+    def __str__(self) -> str:  # NOQA D105
         return f"Encyclopaedia: {self.name}"
 
     def __len__(self) -> int:
-        """Whatever the maximum size of the entry list should be,
-        based on if locked entries should be shown or not.
-        """
+        """The total number of entries, relative to if locked ones are shown or not."""
         rv = len(self.unlocked_entries)
         if self.show_locked_entry:
             rv = len(self.all_entries)
@@ -210,7 +208,6 @@ class Encyclopaedia(EventEmitter, store.object):
         Args:
             entry: The Entry to add to the unlocked entries list.
         """
-
         self.unlocked_entries.append(entry)
 
         # Remove duplicates

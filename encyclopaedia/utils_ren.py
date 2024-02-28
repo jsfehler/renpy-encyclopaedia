@@ -1,6 +1,6 @@
 """renpy
 init python:
-"""
+"""  # NOQA D205
 from typing import cast, Union
 
 from renpy.python import RevertableList
@@ -11,10 +11,10 @@ def string_to_list(given_text: Union[str, list[str]]) -> list[str]:
 
     Each list item represents a paragraph.
     If a string is given, convert it to a list,
-    assuming a string with no list = one paragraph.
+    assuming a string with no list == one paragraph.
 
     Args:
-        given_text
+        given_text: The string to transform.
 
     Return:
         list[str]

@@ -67,7 +67,7 @@ class SetEntry(EncyclopaediaAction):
         # When sorting by Unread, setting an entry marks is as read.
         # Thus we have to resort the entries to ensure they appear in the
         # correct order.
-        if self.enc.sorting_mode.value == 4:
+        if self.enc.sorting_mode.value == SortMode.UNREAD.value:
             self.enc.sort_entries(
                 entries=self.enc.current_entries,
                 sorting=self.enc.sorting_mode.value,

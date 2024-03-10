@@ -14,5 +14,5 @@ __all__ = [
     'Encyclopaedia',
     'EncEntry',
     'EncEntryTemplate',
-    'text_block'
+    'text_block',
 ]

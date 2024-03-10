@@ -91,10 +91,11 @@ class EncEntry(EventEmitter, store.object):
         self._locked = locked
         self._image = image
 
+        # When locked status is persistent, get the value from renpy.persistent.
         self.locked_persistent = locked_persistent
         if self.locked_persistent:
             self._locked = getattr(persistent, self._name + "_locked")
-            # The first time a persistent var is fetched it will be None.
+            # persistent variables default to None when not found.
             if self._locked is None:
                 self._locked = locked
                 setattr(persistent, self._name + "_locked", locked)
@@ -131,10 +132,13 @@ class EncEntry(EventEmitter, store.object):
             "entry_unlocked": [],  # Run whenever a child entry is unlocked.
         }
 
-        # When viewed is persistent, we get the viewed flag from persistent
+        # When viewed status is persistent, get the value from renpy.persistent.
         self.viewed_persistent = viewed_persistent
         if self.viewed_persistent:
             self._viewed = getattr(persistent, self._name + "_viewed")
+            # persistent variables default to None when not found.
+            if self._viewed is None:
+                self.viewed = False
 
     def __repr__(self) -> str:  # NOQA D105
         return f"EncEntry(number={self.number}, name={self.name})"
@@ -167,7 +171,7 @@ class EncEntry(EventEmitter, store.object):
 
     @property
     def viewed(self) -> bool:
-        """Determines if the entry has been viewed or not.
+        """Determine if the entry has been viewed or not.
 
         Changing this variable will modify the entry's viewed status.
         """

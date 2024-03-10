@@ -11,13 +11,28 @@ As of version `3.0` the renpy-encyclopaedia project can be installed using `pip 
   renpy-encyclopaedia is **not** a stand-alone python package and is not designed to work outside
   of a Ren'Py project.
 
-From the console, navigate into your project's directory and run the following command:
+From the console, navigate into your project's root directory.
+
+The target directory can be anywhere inside `game/`. Ren'Py is able to detect any valid code inside your project.
+
+From PyPi
+~~~~~~~~~
+
+To install the package from `PyPi <https://pypi.org/project/renpy-encyclopaedia/>`_, run the following command:
 
 .. code-block:: console
 
-    pip install --no-compile --target game git+https://github.com/jsfehler/renpy-encyclopaedia.git@3.0.2#egg=renpy-encyclopaedia
+    pip install --no-compile --target game renpy-encyclopaedia
 
-The target directory can be anywhere inside `game/`. Ren'Py is able to detect any valid code inside your project.
+From Github
+~~~~~~~~~~~
+
+To install the package from `Github <https://github.com/jsfehler/renpy-encyclopaedia>`_, run the following command:
+
+.. code-block:: console
+
+    pip install --no-compile --target game git+https://github.com/jsfehler/renpy-encyclopaedia.git@3.2.0
+
 
 Manual
 ------

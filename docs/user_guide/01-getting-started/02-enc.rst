@@ -38,9 +38,9 @@ The minimum arguments to create an EncEntry are:
         about_zeus = EncEntry(
             parent=your_new_encyclopaedia,
             name="Zeus",
-            text=[
-                "Zeus is the sky and thunder god in ancient Greek religion, who ruled as king of the gods of Mount Olympus."
-                " His name is cognate with the first element of his Roman equivalent Jupiter."
-                " His mythologies and powers are similar, though not identical, to those of Indo-European deities such as Indra, Jupiter, Perun, Thor, and Odin."
-            ]
+            text=enc_utils.text_block("""\
+                Zeus is the sky and thunder god in ancient Greek religion, who ruled as king of the gods of Mount Olympus.
+                His name is cognate with the first element of his Roman equivalent Jupiter.
+                His mythologies and powers are similar, though not identical, to those of Indo-European deities such as Indra, Jupiter, Perun, Thor, and Odin.
+            """)
         )

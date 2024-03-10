@@ -73,3 +73,4 @@
   api/encyclopaedia.rst
   api/encentry.rst
   api/encentrytemplate.rst
+  api/text_block.rst

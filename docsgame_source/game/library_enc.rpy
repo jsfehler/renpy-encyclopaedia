@@ -42,10 +42,25 @@ label setup_enc:
         about_library = LibraryEntry(
             name=_('Library'),
             subject=_('Locations'),
-            text="""You find yourself sitting on a blue leather armchair.
-You sink into the comfort of the seat and look around. Surrounding you are countless rows of books.
+            text=enc_utils.text_block("""\
+            You find yourself sitting on a blue leather armchair.
+            You sink into the comfort of the seat and look around.
+            In front of you, a small coffee table.
+            Around the coffee table there are more armchairs and a small sofa.
+            A single book sits atop the table. You pick it up and scan the cover:
+            "Names: Mythology & Narrative"
 
-You are, somehow, sitting in what appears to be a small section of a massive library.""",
+            You flip through the book. It seems to be a record of names and
+            people with those names. Each person's record includes a set of
+            detailed illustrations. You return the book to the table.
+
+            Surrounding you is a circlular shelf of books, at least a meter
+            in height. There are gaps at each cardinal direction.
+
+            You stand up and look around, then quickly sit down again.
+            All you can see are rows of bookshelves packed with books.
+            You are, somehow, sitting in what appears to be a small section of a massive library.
+            """),
             image=Transform('images/library.png', zoom=0.5),
         )
 

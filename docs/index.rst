@@ -58,14 +58,6 @@
     user_guide/06-actions/*
 
 .. toctree::
-    :caption: Development
-    :hidden:
-
-    development.rst
-    docsgame.rst
-    changelog.rst
-
-.. toctree::
   :maxdepth: 2
   :caption: API Documentation
   :hidden:
@@ -74,3 +66,11 @@
   api/encentry.rst
   api/encentrytemplate.rst
   api/text_block.rst
+
+.. toctree::
+  :caption: Framework Development
+  :hidden:
+
+  development/changelog.rst
+  development/tools.rst
+  development/docsgame.rst

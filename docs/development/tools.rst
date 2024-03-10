@@ -1,12 +1,12 @@
-Development
-===========
+Tools
+=====
 
-Although Ren'py Encyclopaedia is designed as a plugin for Ren'Py, it's
+Although the Encyclopaedia framework is designed as a plugin for Ren'Py, it's
 written almost entirely in Python. Consequently, it uses the Python
 ecosystem for development and testing.
 
-Python version `3.9` must be installed to build and test the plugin. The
-following python libraries must be installed as well:
+The framework's Python version matches Ren'Py's, thus `3.9` must be installed
+to build and test the plugin. The following Python libraries must be installed as well:
 
   - `Tox <https://tox.readthedocs.io/en/latest/>`_
 

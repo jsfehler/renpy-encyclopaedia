@@ -13,7 +13,6 @@ def test_text_block():
     Test 2
 
     Test 3
-    """
-    )
+    """)
 
     assert result == "Test 1 Test 2\n\nTest 3 "

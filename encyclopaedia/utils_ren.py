@@ -1,6 +1,6 @@
 """renpy
 init python:
-"""  # NOQA D205
+"""
 from typing import cast, Union
 
 from renpy.python import RevertableList

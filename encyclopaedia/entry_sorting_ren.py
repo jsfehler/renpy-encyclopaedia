@@ -1,6 +1,6 @@
 """renpy
 init python:
-"""  # NOQA D205
+"""
 from operator import attrgetter
 from typing import TYPE_CHECKING
 

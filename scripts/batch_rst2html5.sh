@@ -20,6 +20,6 @@ do
 done
 
 
-rst2html5.py --stylesheet='' --no-xml-declaration "docs/development.rst" ""$DOCSGAME_PATH"development.html"
+rst2html5.py --stylesheet='' --no-xml-declaration "docs/development/tools.rst" ""$DOCSGAME_PATH"tools.html"
 
 # rst2html5.py --stylesheet='' --no-xml-declaration "docs/encyclopaedia.rst" ""$DOCSGAME_PATH"encyclopaedia.html"

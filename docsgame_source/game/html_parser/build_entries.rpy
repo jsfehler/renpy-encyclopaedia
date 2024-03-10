@@ -38,7 +38,7 @@ init 1 python:
 
         entry.elements = elements
 
-    develop_path = 'docs/development.html'
+    develop_path = 'docs/tools.html'
     with renpy.open_file(develop_path) as f:
         soup = BeautifulSoup(f.read(), 'html.parser').html.body
 

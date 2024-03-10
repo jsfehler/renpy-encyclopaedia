@@ -3,8 +3,6 @@ import pytest
 from encyclopaedia import Encyclopaedia
 from encyclopaedia import EncEntry
 
-from renpy.game import persistent
-
 
 def test_image():
     enc = Encyclopaedia()

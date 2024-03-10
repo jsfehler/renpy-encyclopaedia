@@ -1,6 +1,19 @@
 Changelog
 =========
 
+[3.2.0] - 2024-03-10
+--------------------
+
+Added
+~~~~~
+
+- `enc_utils.text_block` function for handling large strings.
+
+Fixed
+~~~~~
+
+- Crash when `viewed_persistent` is true and the user sorts by unread entries.
+
 [3.1.0] - 2024-02-26
 --------------------
 

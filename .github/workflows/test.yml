@@ -35,15 +35,15 @@ jobs:
           python-version: ${{matrix.python-version}}
 
       - name: Install test dependencies
-        run: pip install tox coveralls
+        run: pip install tox
 
       - name: Run lint
         run: tox run -e lint;
 
       - name: Run unit tests
-        run: tox run -e tests;
+        run: tox run -e tests-lcov;
 
       - name: "Upload coverage"
-        uses: coverallsapp/github-action@v2
+        uses: coverallsapp/github-action@v2.2.3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

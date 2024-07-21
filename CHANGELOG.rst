@@ -1,6 +1,20 @@
 Changelog
 =========
 
+
+[3.3.0] - 2024-07-21
+--------------------
+
+Added
+~~~~~
+
+- AchievementEncEntry, an EncEntry which uses achievements to manage state.
+
+Changed
+~~~~~~~
+
+- Replaced EncEntry.label with str(EncEntry).
+
 [3.2.0] - 2024-03-10
 --------------------
 

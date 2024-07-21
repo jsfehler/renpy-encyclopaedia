@@ -1,2 +1,4 @@
-class Color:
-    pass
+from unittest.mock import MagicMock
+
+
+Color = MagicMock()

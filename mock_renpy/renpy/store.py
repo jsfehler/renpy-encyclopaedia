@@ -1,3 +1,6 @@
+from unittest.mock import MagicMock
+
+
 class object(object):
     pass
 
@@ -13,11 +16,7 @@ class ShowMenu(object):
     def __call__(self):
         pass
 
-class TintMatrix:
-    pass
 
+TintMatrix = MagicMock()
 
-class achievement:
-    """Mock the achievement module."""
-    def has(name):
-        pass
+achievement = MagicMock()

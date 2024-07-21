@@ -1,2 +1,3 @@
-class Transform:
-    pass
+from unittest.mock import MagicMock
+
+Transform = MagicMock()

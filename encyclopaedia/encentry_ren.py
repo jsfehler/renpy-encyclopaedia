@@ -126,7 +126,7 @@ class EncEntry(EventEmitter, store.object):
         # Relative to the unlocked pages, cache the position of the active page.
         self._unlocked_page_index = 0
 
-        self.callbacks: dict[str, list[Callable[['EncEntry'], None]]] = {
+        self.callbacks: dict[str, list[Callable[['EventEmitter'], None]]] = {
             "viewed": [],  # Run when this entry is viewed for the first time.
             "unlocked": [],  # Run when this entry is unlocked.
             "entry_unlocked": [],  # Run whenever a child entry is unlocked.

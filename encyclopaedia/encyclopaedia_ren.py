@@ -99,7 +99,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.locked_at_bottom: bool = True
 
-        self.callbacks: dict[str, list[Callable[['Encyclopaedia'], None]]] = {
+        self.callbacks: dict[str, list[Callable[['EventEmitter'], None]]] = {
             "entry_unlocked": [],  # Run whenever a child entry is unlocked.
         }
 

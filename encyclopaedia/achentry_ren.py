@@ -1,6 +1,11 @@
+from typing import TYPE_CHECKING
+
 from renpy import store
 
 from .encentry_ren import EncEntry
+
+if TYPE_CHECKING:  # pragma: no cover
+    from .encyclopaedia_ren import Encyclopaedia
 
 """renpy
 init -83 python:

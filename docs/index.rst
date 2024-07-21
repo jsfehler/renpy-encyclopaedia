@@ -64,6 +64,7 @@
 
   api/encyclopaedia.rst
   api/encentry.rst
+  api/achievementencentry.rst
   api/encentrytemplate.rst
   api/text_block.rst
 

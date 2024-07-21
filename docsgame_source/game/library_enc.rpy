@@ -5,12 +5,23 @@ screen enc_button():
         xfill True
         padding (8, 8, 8, 8)
 
-        imagebutton:
-            idle "images/enc_icon.png"
-            hover Transform("images/enc_icon.png", matrixcolor=InvertMatrix(1.0))
-            action ShowMenu(library_enc.list_screen, enc=library_enc)
-            xalign 0.05
-            yalign 0.05
+        hbox:
+            spacing 16
+
+            imagebutton:
+                idle "images/enc_icon.png"
+                hover Transform("images/enc_icon.png", matrixcolor=InvertMatrix(1.0))
+                action ShowMenu(library_enc.list_screen, enc=library_enc)
+                xalign 0.05
+                yalign 0.05
+
+
+            imagebutton:
+                idle "images/ach_icon.png"
+                hover Transform("images/ach_icon.png", matrixcolor=InvertMatrix(1.0))
+                action ShowMenu(library_enc.list_screen, enc=library_ach)
+                xalign 0.05
+                yalign 0.05
 
 
 # Shown as part of a callback when an entry is unlocked.
@@ -21,9 +32,15 @@ screen notify_entry_unlocked():
 
 
 init python:
+    achievement.register("ACH_01")
+
     def notify_entry_unlocked(source):
         """This function is called when an entry is unlocked."""
         renpy.show_screen('notify_entry_unlocked')
+
+
+    def unlock_ach(source):
+        achievement.grant("ACH_01")
 
 
 label setup_enc:
@@ -110,6 +127,9 @@ label setup_enc:
             image=Transform('images/garden.png', zoom=0.5),
         )
 
+        # Grant an achievement when the entry is viewed.
+        about_garden.on("viewed")(unlock_ach)
+
         about_garden_2 = EncEntry(
             parent=about_garden,
             name=_('Garden'),
@@ -131,6 +151,19 @@ label setup_enc:
                 "The person before you claims to be a librarian.",
                 ("Surrounded by so many books, it does not seem too unreasonable a claim.")
             ],
+        )
+
+        library_ach = Encyclopaedia(
+            name="Achievements",
+            show_locked_buttons=True,
+        )
+
+        AchievementEncEntry(
+            achievement="ACH_01",
+            parent=library_ach,
+            name="Garden Wanderer",
+            subject="Achievements",
+            text="You entered the Garden.",
         )
 
     return

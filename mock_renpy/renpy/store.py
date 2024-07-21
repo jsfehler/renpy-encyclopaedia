@@ -15,3 +15,9 @@ class ShowMenu(object):
 
 class TintMatrix:
     pass
+
+
+class achievement:
+    """Mock the achievement module."""
+    def has(name):
+        pass

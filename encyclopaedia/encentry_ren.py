@@ -15,7 +15,7 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 """renpy
-init python:
+init -84 python:
 """
 
 from operator import attrgetter  # NOQA E402

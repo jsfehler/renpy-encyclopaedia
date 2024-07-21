@@ -155,7 +155,7 @@ class Encyclopaedia(EventEmitter, store.object):
         """Get the percentage of the Encyclopaedia that's unlocked.
 
         Return:
-            float: Percentage of the Encyclopaedia that's unlocked
+            Number between 0.0 and 1.0
 
         Raises:
             ZeroDivisionError: If the Encyclopaedia is empty

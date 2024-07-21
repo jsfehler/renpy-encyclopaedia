@@ -189,7 +189,7 @@ screen encyclopaedia_entry(enc):
             frame:
                 style_suffix "label_frame"
 
-                text enc.active.label
+                text str(enc.active)
 
             # Buttons to swap between pages.
             frame:

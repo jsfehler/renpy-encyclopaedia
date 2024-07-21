@@ -143,8 +143,11 @@ class EncEntry(EventEmitter, store.object):
     def __repr__(self) -> str:  # NOQA D105
         return f"EncEntry(number={self.number}, name={self.name})"
 
-    def __str__(self) -> str:  # NOQA D105
-        return self.label
+    def __str__(self) -> str:
+        """The number and name of the entry, in the format of 'number: name'."""
+        number = str(self.number).zfill(2)
+
+        return f"{number}: {self.name}"
 
     @property
     def locked(self) -> bool:
@@ -183,13 +186,6 @@ class EncEntry(EventEmitter, store.object):
             setattr(persistent, self._name + "_viewed", new_value)
 
         self._viewed = new_value
-
-    @property
-    def label(self) -> str:
-        """The number and name of the entry, in the format of 'number: name'."""
-        number = str(self.number).zfill(2)
-
-        return f"{number}: {self.name}"
 
     @property
     def current_page(self) -> 'EncEntry':

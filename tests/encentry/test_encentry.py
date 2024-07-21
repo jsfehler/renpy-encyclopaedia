@@ -151,28 +151,6 @@ def test_unlock_subpage():
 
     assert ee in e.pages
 
-def test_label():
-    enc = Encyclopaedia()
-
-    e = EncEntry(
-        parent=enc,
-        name="Test Name",
-        text=["Test Text"],
-        locked=False,
-    )
-
-    assert "01: Test Name" == e.label
-
-
-def test_label_no_number():
-    e = EncEntry(
-        name="Test Name",
-        text=["Test Text"],
-        locked=False,
-    )
-
-    assert "None: Test Name" == e.label
-
 
 def test_name():
     enc = Encyclopaedia()

@@ -12,7 +12,7 @@ from .constants_ren import Direction
 
 if TYPE_CHECKING:  # pragma: no cover
     from .encyclopaedia_ren import Encyclopaedia
-
+    from .book import Book
 
 """renpy
 init -84 python:
@@ -54,7 +54,7 @@ class EncEntry(EventEmitter, store.object):
         has_pages: If an entry has any sub-entries.
     """
     def __init__(self,
-                 parent: Optional[Union['Encyclopaedia', 'EncEntry']] = None,
+                 parent: Optional[Union['Encyclopaedia', 'EncEntry', 'Book']] = None,
                  number: Optional[int] = None,
                  name: str = "",
                  text: Union[str, list[str]] = "",
@@ -74,7 +74,7 @@ class EncEntry(EventEmitter, store.object):
 
         # self.parent is set to None so that add_entry doesn't think
         # this EncEntry is already inside an Encyclopaedia.
-        self.parent: Optional[Union['Encyclopaedia', 'EncEntry']] = None
+        self.parent: Optional[Union['Encyclopaedia', 'EncEntry', 'Book']] = None
 
         # number is used by the Encyclopaedia, page_number by EncEntry.
         self.number = number

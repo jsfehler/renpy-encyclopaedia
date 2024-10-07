@@ -19,6 +19,9 @@ from .actions_ren import (
 from .entry_sorting_ren import push_locked_to_bottom
 from .eventemitter_ren import EventEmitter
 from .constants_ren import Direction, SortMode
+from .book import Book
+
+from .types_ren import ENTRY_TYPE
 
 if TYPE_CHECKING:  # pragma: no cover
     from .encentry_ren import EncEntry
@@ -78,9 +81,9 @@ class Encyclopaedia(EventEmitter, store.object):
         self.entry_screen = entry_screen
         self.name = name
 
-        self.all_entries: list['EncEntry'] = []
-        self.unlocked_entries: list['EncEntry'] = []
-        self.filtered_entries: list['EncEntry'] = []
+        self.all_entries: list[ENTRY_TYPE] = []
+        self.unlocked_entries: list[ENTRY_TYPE] = []
+        self.filtered_entries: list[ENTRY_TYPE] = []
 
         self.filtering: Union[bool, str] = False
 
@@ -94,7 +97,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.subjects: list[str] = []
 
-        self.active: Optional['EncEntry'] = None
+        self.active: Optional[ENTRY_TYPE] = None
         self._current_entries = self.all_entries
 
         self.locked_at_bottom: bool = True
@@ -118,7 +121,7 @@ class Encyclopaedia(EventEmitter, store.object):
         return rv
 
     @property
-    def current_entries(self) -> list['EncEntry']:
+    def current_entries(self) -> list[ENTRY_TYPE]:
         """Get all the entries which should be visible to the user.
 
         Return:
@@ -135,7 +138,7 @@ class Encyclopaedia(EventEmitter, store.object):
         return rv
 
     @property
-    def current_entry(self) -> 'EncEntry':
+    def current_entry(self) -> ENTRY_TYPE:
         """Get the entry at current_position.
 
         If show locked entries, pull from all_entries.
@@ -175,7 +178,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
     def sort_entries(
         self,
-        entries: list['EncEntry'],
+        entries: list[ENTRY_TYPE],
         sorting: int = 0,
         reverse: bool = False,
     ) -> None:
@@ -202,7 +205,7 @@ class Encyclopaedia(EventEmitter, store.object):
             if self.locked_at_bottom:
                 push_locked_to_bottom(entries)
 
-    def add_entry_to_unlocked_entries(self, entry: 'EncEntry') -> None:
+    def add_entry_to_unlocked_entries(self, entry: ENTRY_TYPE) -> None:
         """Add an entry to the list of unlocked entries.
 
         Args:
@@ -329,7 +332,8 @@ class Encyclopaedia(EventEmitter, store.object):
             self.active.emit("viewed")
 
             # Mark the entry as viewed.
-            self.active.viewed = True
+            if not isinstance(self.active, Book):
+                self.active.viewed = True
 
         # When changing an entry, the current entry page number is reset.
         self.active._unlocked_page_index = 0

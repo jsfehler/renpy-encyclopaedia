@@ -2,13 +2,11 @@
 init python:
 """
 from operator import attrgetter
-from typing import TYPE_CHECKING
 
-if TYPE_CHECKING:  # pragma: no cover
-    from .encentry_ren import EncEntry
+from .types_ren import ENTRY_TYPE
 
 
-def push_locked_to_bottom(seq: list['EncEntry']) -> list['EncEntry']:
+def push_locked_to_bottom(seq: list[ENTRY_TYPE]) -> list[ENTRY_TYPE]:
     """Move all the locked entries in a list of entries to the bottom of the list.
 
     Args:

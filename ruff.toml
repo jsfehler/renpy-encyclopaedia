@@ -7,6 +7,7 @@ max-complexity = 8
 [lint.per-file-ignores]
 "**/tests/*" = ["D","B018","PLR2004","PLW0603","S101"]
 "**/encyclopaedia/encyclopaedia_ren.py" = ["N802"]
+"**/encyclopaedia/book/book_ren.py" = ["N802"]
 
 [lint.pydocstyle]
 convention = "google"

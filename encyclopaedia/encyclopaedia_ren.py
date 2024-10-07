@@ -243,7 +243,7 @@ class Encyclopaedia(EventEmitter, store.object):
         else:
             return 1
 
-    def add_entry(self, entry: 'EncEntry') -> None:
+    def add_entry(self, entry: ENTRY_TYPE) -> None:
         """Add an entry to the Encyclopaedia's internal lists and sorts it.
 
         Attempts to create duplicates are softly ignored.

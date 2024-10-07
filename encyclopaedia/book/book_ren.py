@@ -45,7 +45,7 @@ class Book(EventEmitter, store.object):
         number: Optional[int] = None,
         parent: Optional['Encyclopaedia'] = None,
         title: str = "",
-        subject: Optional[str] = None,
+        subject: str = "",
         locked: bool = False,
         locked_persistent: Optional[bool] = False,
         locked_title: str = "???",

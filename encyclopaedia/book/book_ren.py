@@ -148,6 +148,11 @@ class Book(EventEmitter, store.object):
         return self.pages[self._unlocked_page_index]
 
     @property
+    def current_page(self) -> 'EncEntry':
+        """Alias for active. Used by screens."""
+        return self.active
+
+    @property
     def percentage_unlocked(self) -> float:
         """Get the percentage of the Book that's unlocked.
 

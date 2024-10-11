@@ -26,19 +26,8 @@ from typing import Any, Callable, Optional, Union  # NOQA E402
 class Book(EventEmitter, store.object):
     """Container for EncEntry which have a strong relationship with each other.
 
-    Unlike an Encyclopaedia, a Book:
-        - Does not have sorting and filtering options.
-        - Does not allow automatic numbering of it's pages.
-        - Forces the "subject" attribute of its pages to be the same as the Book.
-        - Its "viewed" attribute is set based on the "viewed" attribute of it's pages.
-        - When locked, will block access to its pages, even if those pages are unlocked.
-        - Always shows placeholders for locked pages.
-
-    Unlike adding sub-pages to an EncEntry, a Book:
-        - Does not expect its pages to be unlocked in order.
-
-    A Book can be placed inside an Encyclopaedia. When sorted and/or filtered,
-    the book's attributes will be used.
+    A Book should be placed inside an Encyclopaedia.
+    When sorted and/or filtered, the Book's attributes will be used.
     """
     def __init__(
         self,

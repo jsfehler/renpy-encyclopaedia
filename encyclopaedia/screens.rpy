@@ -244,7 +244,7 @@ screen encyclopaedia_entry(enc):
                 xfill True
 
                 # If the entry has pages, add Prev/Next Page buttons
-                if enc.active.has_pages:
+                if len(enc.active.pages):
                     hbox:
                         style "encyclopaedia_entry_change_entry_hbox"
 

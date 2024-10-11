@@ -51,7 +51,6 @@ class EncEntry(EventEmitter, store.object):
     Attributes:
         has_image: True if an image was provided, else False.
         pages: List of all the pages this entry contains.
-        has_pages: If an entry has any sub-entries.
     """
     def __init__(self,
                  parent: Optional[Union['Encyclopaedia', 'EncEntry', 'Book']] = None,
@@ -120,8 +119,6 @@ class EncEntry(EventEmitter, store.object):
 
         # Cache unlocked pages
         self.unlocked_pages: list['EncEntry'] = [self]
-
-        self.has_pages = False
 
         # Relative to the unlocked pages, cache the position of the active page.
         self._unlocked_page_index = 0
@@ -282,7 +279,6 @@ class EncEntry(EventEmitter, store.object):
                 self.pages,
                 key=attrgetter('page_number'),
             )
-            self.has_pages = True
 
             return True
 

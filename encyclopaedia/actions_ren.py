@@ -10,6 +10,8 @@ if TYPE_CHECKING:  # pragma: no cover
     from .encyclopaedia_ren import Encyclopaedia
     from .encentry_ren import EncEntry
 
+from .book import Book
+
 """renpy
 init python:
 """
@@ -57,7 +59,7 @@ class SetEntry(EncyclopaediaAction):
         # The active entry is set to whichever list position was found.
         self.enc.active = self.entry
 
-        if self.enc.active.locked is False:
+        if self.enc.active.locked is False and not isinstance(self.entry, Book):
             if self.entry.viewed is False:
                 # Run the callback, if provided.
                 self.entry.emit("viewed")

@@ -1,9 +1,9 @@
+from .types_ren import ENTRY_TYPE
+
 """renpy
 init python:
 """
-from operator import attrgetter
-
-from .types_ren import ENTRY_TYPE
+from operator import attrgetter  # NOQA E402
 
 
 def push_locked_to_bottom(seq: list[ENTRY_TYPE]) -> list[ENTRY_TYPE]:

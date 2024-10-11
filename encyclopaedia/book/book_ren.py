@@ -218,7 +218,15 @@ class Book(EventEmitter, store.object):
                 f"{entry.number} is already taken.",
             )
 
+        if entry.subject:
+            raise AddEntryError(
+                "Entries inside a Book cannot have their own subject.",
+            )
+
         entry.parent = self
+        entry.subject = self.subject
+        entry.page_number = entry.number + 1
+
         self.pages.append(entry)
         self.pages = sorted(
             self.pages,

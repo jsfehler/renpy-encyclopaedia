@@ -47,6 +47,17 @@ def test_book_add_entry_number_taken():
         book.add_entry(hades)
 
 
+def test_book_add_entry_subject_already_set():
+    enc = Encyclopaedia()
+
+    book = Book(parent=enc, title="Greek Gods", subject="Mythology")
+
+    zeus = EncEntry(number=0, name="Zeus", text="Dummy Text", subject="Mythology")
+
+    with pytest.raises(AddEntryError):
+        book.add_entry(zeus)
+
+
 def test_book_add_entry_recalculate_word_count():
     book = Book(title="Greek Gods", subject="Mythology")
 

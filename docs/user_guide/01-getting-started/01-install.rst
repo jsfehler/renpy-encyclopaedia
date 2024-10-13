@@ -1,10 +1,14 @@
 Installation
 ============
 
+The framework must be placed somewhere inside your project's `game/` directory.
+Ren'Py is able to detect any valid code inside that directory.
+
 Using Pip
 ---------
 
 As of version `3.0` the renpy-encyclopaedia project can be installed using `pip <https://pip.pypa.io/en/stable/>`_.
+pip is included with python. If your machine has python installed, pip is installed as well.
 
 .. warning::
   Although it uses many parts of the Python ecosystem,
@@ -13,12 +17,13 @@ As of version `3.0` the renpy-encyclopaedia project can be installed using `pip 
 
 From the console, navigate into your project's root directory.
 
-The target directory can be anywhere inside `game/`. Ren'Py is able to detect any valid code inside your project.
+.. note::
+    pip's `\--target` argument can be given any path inside your project's `game/` directory.
 
 From PyPi
 ~~~~~~~~~
 
-To install the package from `PyPi <https://pypi.org/project/renpy-encyclopaedia/>`_, run the following command:
+To install the latest version from `PyPi <https://pypi.org/project/renpy-encyclopaedia/>`_, run the following command:
 
 .. code-block:: console
 
@@ -27,17 +32,18 @@ To install the package from `PyPi <https://pypi.org/project/renpy-encyclopaedia/
 From Github
 ~~~~~~~~~~~
 
-To install the package from `Github <https://github.com/jsfehler/renpy-encyclopaedia>`_, run the following command:
+To install from `Github <https://github.com/jsfehler/renpy-encyclopaedia>`_ run the following command,
+replacing <VERSION_NUMBER> with the version of the framework you want to install:
 
 .. code-block:: console
 
-    pip install --no-compile --target game git+https://github.com/jsfehler/renpy-encyclopaedia.git@3.2.0
+    pip install --no-compile --target game git+https://github.com/jsfehler/renpy-encyclopaedia.git@<VERSION_NUMBER>
 
 
 Manual
 ------
 
-1. Download the latest release at: https://github.com/jsfehler/renpy-encyclopaedia/releases
+1. Download the version you want to install at: https://github.com/jsfehler/renpy-encyclopaedia/releases
 2. Place the `encyclopaedia` folder inside your project's `game` directory.
 
 Compatibility With Ren'Py

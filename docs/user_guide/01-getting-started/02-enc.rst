@@ -7,9 +7,6 @@ Fundamentally, an Encyclopaedia's data is built using the following python class
 - `Book()`: Container for multiple entries.
 - `EncEntry()`: Container for a single encyclopaedia entry.
 
-A default GUI to display and interact with an Encyclopaedia is included with the framework.
-This GUI can be skinned using Ren'Py's style system or completely replaced with your own.
-
 Encyclopaedia
 -------------
 

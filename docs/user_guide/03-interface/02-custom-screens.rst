@@ -31,6 +31,7 @@ In the following toy example, instead of textbuttons for each entry, we're going
 to use an imagebutton.
 
 .. code-block:: renpy
+
     screen custom_encyclopaedia_screen(enc):
         vbox:
             for entry in enc.current_entries:

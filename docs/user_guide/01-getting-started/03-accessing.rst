@@ -18,6 +18,7 @@ The screen is then shown to the player. This allows the player to open
 the encyclopaedia.
 
 .. code-block:: renpy
+
     init python:
         greek_mythology = Encyclopaedia(name="Greek Mythology")
 

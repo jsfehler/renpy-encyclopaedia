@@ -38,6 +38,7 @@ This screen should only be opened using the `SetEntry` Action.
 Example:
 
 .. code-block:: renpy
+
     init python:
         my_enc = Encyclopaedia(...)
         my_encentry = EncEntry(parent=my_enc, ...)

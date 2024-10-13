@@ -1,3 +1,5 @@
+.. _hyperlinks:
+
 Hyperlinks
 ==========
 

@@ -83,7 +83,7 @@ class Book(EventEmitter, store.object):
         return rv
 
     def __repr__(self) -> str:  # NOQA D105
-        return f"Book(number={self.number}, title={self.title})"
+        return f"Book(number={self.number}, title={self.title}, subject={self.subject})"
 
     def __str__(self) -> str:  # NOQA D105
         return f"{self.title}"

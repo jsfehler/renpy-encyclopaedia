@@ -10,4 +10,4 @@ def test_book_str():
 def test_book_repr():
     book = Book(number=100, title="Greek Gods", subject="Mythology")
 
-    assert repr(book) == "Book(number=100, title=Greek Gods)"
+    assert repr(book) == "Book(number=100, title=Greek Gods, subject=Mythology)"

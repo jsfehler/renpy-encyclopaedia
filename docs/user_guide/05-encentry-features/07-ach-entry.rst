@@ -9,19 +9,28 @@ This is **not** a replacement for Ren'Py's achievement system.
 It only allows you to manage the state of an EncEntry using an
 Achievement's status.
 
+.. note:: AchievementEncEntry does not emit the "unlocked" event.
+
+.. note:: AchievementEncEntry does not cause the parent Encyclopaedia to emit the "entry_unlocked" event.
+
+
 .. code-block:: python
 
-    achievement.register("read_all_the_books")
+    achievement_read_all_books = "read_all_books"
+
+    achievement.register(achievement_read_all_books)
+
+    reader_encyclopaedia = Encyclopaedia()
 
     read_all_the_books_entry = AchievementEncEntry(
-        achievement="read_all_the_books",
-        parent=your_new_encyclopaedia,
+        achievement=achievement_read_all_books,
+        parent=reader_encyclopaedia,
         name="Looks Like We Got Ourselves A Reader",
         text="Read all the books."
     )
 
     >>> read_all_the_books_entry.locked == True
 
-    achievement.grant("read_all_the_books")
+    achievement.grant(achievement_read_all_books)
 
     >>> read_all_the_books_entry.locked == False

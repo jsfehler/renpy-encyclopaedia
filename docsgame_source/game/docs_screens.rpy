@@ -99,14 +99,15 @@ screen docs_entry(enc):
                 xfill True
 
                 # If the entry has pages, add Prev/Next Page buttons
-                if enc.active.has_pages:
+                if len(enc.active.pages):
                     hbox:
                         style "encyclopaedia_entry_change_entry_hbox"
 
                         textbutton _("Previous Page") xalign .02 action enc.PreviousPage() style "encyclopaedia_entry_change_entry_button"
 
                         # Flavour text to indicate which page out of the total is being viewed
-                        text _("Page [enc.active.current_page.number] / [len(enc.active.pages)]") size 18 yalign 0.5
+                        $ total_pages = len(enc.active.pages)
+                        text _("Page [enc.active.current_page.page_number] / [total_pages]") size 18 yalign 0.5
 
                         textbutton _("Next Page") xalign .98 action enc.NextPage() style "encyclopaedia_entry_change_entry_button"
 

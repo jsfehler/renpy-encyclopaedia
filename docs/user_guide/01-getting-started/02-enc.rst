@@ -57,9 +57,12 @@ Book
 Like Encyclopaedia, `Book` is a container, except that it goes inside an Encyclopaedia.
 You can place entries inside a Book and place the Book inside your Encyclopaedia.
 
-Using a Book is optional.
-It's useful when multiple EncEntry have a close relationship and you want
-them to be grouped and paginated together.
+Using a Book is optional. They're useful when:
+    - Multiple EncEntry have a close relationship; it doesn't make sense for each Entry to be seen in the main list.
+    - Multiple EncEntry should be treated as a single item when sorting and/or filtering an Encyclopaedia.
+    - Multiple EncEntry should be read without changing the player's overall position in the Encyclopaedia.
+
+When using the framework's default screens, Books open to the first page when selected.
 
 For example, in an Encyclopaedia about Greek Mythology,
 instead of a separate item in your Encyclopaedia for each

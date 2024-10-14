@@ -51,6 +51,14 @@
 
 .. toctree::
     :maxdepth: 2
+    :caption: Book Features
+    :hidden:
+    :glob:
+
+    user_guide/06-book-features/*
+
+.. toctree::
+    :maxdepth: 2
     :caption: Actions
     :hidden:
     :glob:
@@ -63,6 +71,7 @@
   :hidden:
 
   api/encyclopaedia.rst
+  api/book.rst
   api/encentry.rst
   api/achievementencentry.rst
   api/encentrytemplate.rst

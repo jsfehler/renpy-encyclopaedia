@@ -63,7 +63,7 @@
     :hidden:
     :glob:
 
-    user_guide/06-actions/*
+    user_guide/07-actions/*
 
 .. toctree::
   :maxdepth: 2

@@ -132,7 +132,7 @@ class Book(EventEmitter, store.object):
         # Only run if the Book was locked.
         if (self._locked) and (new_value is False):
             if self.parent is not None:
-                self.parent.add_entry_to_unlocked_entries(self)
+                self.parent._add_entry_to_unlocked_entries(self)
                 self.parent.emit("entry_unlocked")
 
             self.emit("unlocked")
@@ -248,13 +248,13 @@ class Book(EventEmitter, store.object):
         )
 
         if entry.locked is False:
-            self.add_entry_to_unlocked_entries(entry)
+            self._add_entry_to_unlocked_entries(entry)
 
         self._recalculate_word_count()
 
         return True
 
-    def add_entry_to_unlocked_entries(self, entry: 'EncEntry') -> None:
+    def _add_entry_to_unlocked_entries(self, entry: 'EncEntry') -> None:
         """Add an entry to the list of unlocked entries.
 
         Args:

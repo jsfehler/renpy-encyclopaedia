@@ -205,7 +205,7 @@ class Encyclopaedia(EventEmitter, store.object):
             if self.locked_at_bottom:
                 push_locked_to_bottom(entries)
 
-    def add_entry_to_unlocked_entries(self, entry: ENTRY_TYPE) -> None:
+    def _add_entry_to_unlocked_entries(self, entry: ENTRY_TYPE) -> None:
         """Add an entry to the list of unlocked entries.
 
         Args:
@@ -279,7 +279,7 @@ class Encyclopaedia(EventEmitter, store.object):
         )
 
         if entry.locked is False:
-            self.add_entry_to_unlocked_entries(entry)
+            self._add_entry_to_unlocked_entries(entry)
 
         self.subjects.append(entry.subject)
         self.subjects = list(set(self.subjects))

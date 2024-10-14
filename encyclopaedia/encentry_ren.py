@@ -164,7 +164,7 @@ class EncEntry(EventEmitter, store.object):
             self._locked = new_value
 
             if self.parent is not None:
-                self.parent.add_entry_to_unlocked_entries(self)
+                self.parent._add_entry_to_unlocked_entries(self)
                 self.parent.emit("entry_unlocked")
 
             self.emit("unlocked")
@@ -271,7 +271,7 @@ class EncEntry(EventEmitter, store.object):
 
         if entry not in self.pages:
             if entry.locked is False:
-                self.add_entry_to_unlocked_entries(entry)
+                self._add_entry_to_unlocked_entries(entry)
 
             self.pages.append(entry)
             # Sort by number.
@@ -284,7 +284,7 @@ class EncEntry(EventEmitter, store.object):
 
         return False
 
-    def add_entry_to_unlocked_entries(self, entry: 'EncEntry') -> None:
+    def _add_entry_to_unlocked_entries(self, entry: 'EncEntry') -> None:
         """Add an entry to the list of unlocked entries.
 
         Args:

@@ -78,7 +78,7 @@ class AchievementEncEntry(EncEntry):
                 unlocked = self.parent.unlocked_pages
 
             if self not in unlocked:
-                self.parent.add_entry_to_unlocked_entries(self)
+                self.parent._add_entry_to_unlocked_entries(self)
 
         return not granted
 

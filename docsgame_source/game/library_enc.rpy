@@ -53,12 +53,15 @@ label setup_enc:
         # Register a callback function.
         library_enc.on('entry_unlocked')(notify_entry_unlocked)
 
+        library_book = Book(parent=library_enc, title=_('Library'), subject=_('Locations'), locked=True)
+
         # Use EncEntryTemplate to set reasonable defaults and reduce duplication
         LibraryEntry = EncEntryTemplate(parent=library_enc, locked=True)
 
-        about_library = LibraryEntry(
+        about_library = EncEntry(
+            parent=library_book,
+            number=0,
             name=_('Library'),
-            subject=_('Locations'),
             text=enc_utils.text_block("""\
             You find yourself sitting on a blue leather armchair.
             You sink into the comfort of the seat and look around.
@@ -78,13 +81,14 @@ label setup_enc:
             All you can see are rows of bookshelves packed with books.
             You are, somehow, sitting in what appears to be a small section of a massive library.
             """),
+            locked=True,
             image=Transform('images/library.png', zoom=0.5),
         )
 
         about_library_2 = EncEntry(
-            parent=about_library,
+            parent=library_book,
+            number=1,
             name=_("Library"),
-            subject=_('Locations'),
             text=(
                 "As far as you can see, long, elegant curved columns rise "
                 "several meters upwards. "
@@ -95,9 +99,9 @@ label setup_enc:
         )
 
         about_library_3 = EncEntry(
-            parent=about_library,
+            parent=library_book,
+            number=2,
             name=_("Library"),
-            subject=_('Locations'),
             text=(
                 "You attempt to look down a row of books, but become dizzy from the effort."
             ),
@@ -105,9 +109,12 @@ label setup_enc:
             image=Transform('images/library.png', zoom=0.5),
         )
 
-        about_garden = LibraryEntry(
+        garden_book = Book(parent=library_enc, title=_('Garden'), subject=_('Locations'), locked=True)
+
+        about_garden = EncEntry(
+            parent=garden_book,
+            number=0,
             name=_('Garden'),
-            subject=_('Locations'),
             text=[
                 "You focus on the concept of outside.",
                 (
@@ -131,9 +138,9 @@ label setup_enc:
         about_garden.on("viewed")(unlock_ach)
 
         about_garden_2 = EncEntry(
-            parent=about_garden,
+            parent=garden_book,
+            number=1,
             name=_('Garden'),
-            subject=_('Locations'),
             text=[
                 "There is a peculiar calm to this garden.",
                 (

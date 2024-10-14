@@ -33,6 +33,7 @@ label start:
 
     show screen enc_button
 
+    $ library_book.locked = False
     $ about_library.locked = False
 
     l "Welcome to my {a=set_entry:library_enc->about_library}Library{/a}."

@@ -75,6 +75,9 @@ screen docs_entry(enc):
                                     use inside_ol(element)
                                     $ current_parent = element
 
+                                elif element.name == 'aside':
+                                    $ current_parent = element
+
                                 elif current_parent:
                                     if element in current_parent.children:
                                         if current_parent.name == 'ul':
@@ -82,6 +85,14 @@ screen docs_entry(enc):
 
                                         elif current_parent.name == 'ol':
                                             use inside_ol(element)
+
+                                        elif current_parent.name == 'aside':
+                                            if element.text == "Warning":
+                                                use inside_aside_warning(element)
+                                            elif element.text == "Note":
+                                                use inside_aside_note(element)
+                                            else:
+                                                use inside_aside(element)
 
                                         else:
                                             text "[element.text]" style element.style
@@ -137,6 +148,21 @@ screen inside_ol(element):
         frame:
             style "html_ol"
             text "[element.text]" style element.style size 14
+
+screen inside_aside_warning(element):
+    frame:
+        style "html_aside_warning"
+        text "[element.text]" style "encyclopaedia_entry_text" size 14
+
+screen inside_aside_note(element):
+    frame:
+        style "html_aside_note"
+        text "[element.text]" style "encyclopaedia_entry_text" size 14
+
+screen inside_aside(element):
+    frame:
+        style "html_aside"
+        text "[element.text]" style "encyclopaedia_entry_text" size 14
 
 screen code_block(element):
     frame:

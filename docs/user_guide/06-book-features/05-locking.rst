@@ -6,6 +6,7 @@ This can result in unexpected side-effects with an Encyclopaedia's
 `show_locked_entry` parameter.
 
 In the following example:
+
 - The Book is locked but its page is not.
 - The Encyclopaedia has the `show_locked_buttons` parameter set to True.
 
@@ -24,10 +25,12 @@ In the following example:
     )
 
 Result:
+
 - The Book will be present in the list of entries.
 - The page will not be accessible, even though the page is not locked.
 
 In this next example:
+
 - The Book is locked but its page is not.
 - The Encyclopaedia has the `show_locked_buttons` and `show_locked_entry` parameters set to True.
 
@@ -46,6 +49,7 @@ In this next example:
     )
 
 Result:
+
 - The Book will be present in the list of entries.
 - The page will be accessible because it is not locked, even though the Book is locked.
 

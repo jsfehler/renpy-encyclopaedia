@@ -12,7 +12,7 @@ Skinning
 
 Inside encyclopaedia/screens.rpy, there is a section below the following text:
 
-.. code-block:: bash
+.. code-block:: python
 
     ######################
     # Encyclopaedia Styles

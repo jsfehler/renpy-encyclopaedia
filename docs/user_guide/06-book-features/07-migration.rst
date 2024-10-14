@@ -3,7 +3,7 @@
 Migrating Sub-Pages to Book
 ===========================
 
-Book and :ref:`Sub-Pages <sub_pages>` have similar functionality.
+Book and `Sub-Pages` have similar functionality.
 Both are grouping mechanisms.
 
 A Book is a flatter, more structured approach to grouping.

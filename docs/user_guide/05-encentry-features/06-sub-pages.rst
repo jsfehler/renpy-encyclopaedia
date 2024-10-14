@@ -4,7 +4,7 @@ Sub-Pages
 =========
 
 .. note::
-  As of version 3.4.0, the :ref:`Book <migration_to_book>`  object is available.
+  As of version 3.4.0, the `Book` object is available.
   A Book can do everything Sub-Pages can and more.
 
 Just like an Encyclopaedia holds EncEntry objects, each EncEntry can hold other EncEntry objects.

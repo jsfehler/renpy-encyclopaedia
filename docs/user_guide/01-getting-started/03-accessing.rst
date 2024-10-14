@@ -23,7 +23,8 @@ the encyclopaedia.
         greek_mythology = Encyclopaedia(name="Greek Mythology")
 
     screen open_encyclopaedia():
-        textbutton "Open Encyclopaedia" action ShowMenu(greek_mythology.list_screen, greek_mythology)
+        textbutton "Open Encyclopaedia":
+            action ShowMenu(greek_mythology.list_screen, greek_mythology)
 
     label start:
         show screen open_encyclopaedia
@@ -35,10 +36,10 @@ the encyclopaedia.
 Further Reading
 ---------------
 
-See the :ref:`Default Screens <default_screens>` section for more information
+See the `Default Screens` section for more information
 on how an Encyclopaedia displays its content.
 
-See the :ref:`Customizing Screens <custom_screens>` section for more information on creating custom screens.
+See the `Customizing Screens` section for more information on creating custom screens.
 
-See the :ref:`Hyperlinks <hyperlinks>` section for a way to open an
+See the `Hyperlinks` section for a way to open an
 Encyclopaedia directly from in-game dialogue.

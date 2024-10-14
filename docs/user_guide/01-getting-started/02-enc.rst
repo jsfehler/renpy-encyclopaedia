@@ -11,9 +11,10 @@ Encyclopaedia
 -------------
 
 `Encyclopaedia` is a container to manage your entries. It handles:
-    - The sorting and filtering of all your entries.
-    - Which screens are used to display your Encyclopaedia.
-    - Actions to interact with your Encyclopaedia from the GUI.
+
+- The sorting and filtering of all your entries.
+- Which screens are used to display your Encyclopaedia.
+- Actions to interact with your Encyclopaedia from the GUI.
 
 .. code-block:: renpy
 
@@ -58,9 +59,10 @@ Like Encyclopaedia, `Book` is a container, except that it goes inside an Encyclo
 You can place entries inside a Book and place the Book inside your Encyclopaedia.
 
 Using a Book is optional. They're useful when:
-    - Multiple EncEntry have a close relationship; it doesn't make sense for each Entry to be seen in the main list.
-    - Multiple EncEntry should be treated as a single item when sorting and/or filtering an Encyclopaedia.
-    - Multiple EncEntry should be read without changing the player's overall position in the Encyclopaedia.
+
+- Multiple EncEntry have a close relationship; it doesn't make sense for each Entry to be seen in the main list.
+- Multiple EncEntry should be treated as a single item when sorting and/or filtering an Encyclopaedia.
+- Multiple EncEntry should be read without changing the player's overall position in the Encyclopaedia.
 
 When using the framework's default screens, Books open to the first page when selected.
 

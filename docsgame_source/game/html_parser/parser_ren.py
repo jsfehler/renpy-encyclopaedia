@@ -1,6 +1,8 @@
 """renpy
 init -19 python:
 """
+from typing import Union
+
 from pygments import highlight
 from pygments.lexers import PythonLexer
 
@@ -24,6 +26,8 @@ def elem(name: str):
 
 
 class Element:
+    """Container for data extracted from an HTML Element.
+    """
     def __init__(self, name: str, style: str, text: str = '') -> None:
         self.name = name
         self.style = style
@@ -31,7 +35,7 @@ class Element:
 
         self.children = []
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if (self.name == other.name) and (self.text == other.text):
             return True
         return False
@@ -79,8 +83,11 @@ def check_cite(element):
 
 
 @elem('span')
-def check_span(element):
+def check_span(element) -> Union[Element, None]:
     text = str(element.string)
+    # An empty <span> has no data we care about preserving.
+    if element.string is None:
+        return
     return Element(element.name, 'html_span', f"{{i}}{text}{{/i}}")
 
 
@@ -132,7 +139,7 @@ def check_p(element):
             p_str += ''.join([e.text for e in found_elements])
 
     # Remove carriage return
-    clean_p_str = p_str.replace('\r\n', ' ').replace('\r', ' ')
+    clean_p_str = p_str.replace('\r\n', ' ').replace('\r', ' ').replace('\n', ' ')
 
     return Element(element.name, 'html_p', clean_p_str)
 
@@ -180,7 +187,8 @@ def iter_block(element):  # -> list[str]:
 
         element_str = ''
 
-        e_elements.append(Element(element.name, 'default', element_str))
+        # Ignore the pre tag, only add the code block
+        # e_elements.append(Element(element.name, 'default', element_str))
 
         inner_text = ''
         for sub_elem in element.contents:
@@ -204,16 +212,17 @@ def iter_block(element):  # -> list[str]:
     elif elem_funcs.get(element.name):
         element_class = elem_funcs[element.name](element)
 
-        found_elements = iter_blocks(element)
+        if element_class:
+            found_elements = iter_blocks(element)
 
-        # Record children
-        elements_x = []
-        for elem in element.children:
-            elements_x = [*elements_x, *iter_block(elem)]
+            # Record children
+            elements_x = []
+            for elem in element.children:
+                elements_x = [*elements_x, *iter_block(elem)]
 
-        element_class.children = elements_x
+            element_class.children = elements_x
 
-        e_elements = [*e_elements, element_class, *found_elements]
+            e_elements = [*e_elements, element_class, *found_elements]
 
     else:
         # Default for other blocks

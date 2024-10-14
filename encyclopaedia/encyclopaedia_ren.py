@@ -17,6 +17,7 @@ from .actions_ren import (
     ToggleShowLockedEntryAction,
 )
 from .entry_sorting_ren import push_locked_to_bottom
+from .exceptions_ren import AddEntryError
 from .eventemitter_ren import EventEmitter
 from .constants_ren import Direction, SortMode
 from .book import Book
@@ -253,14 +254,14 @@ class Encyclopaedia(EventEmitter, store.object):
             entry: The Entry to add to the Encyclopaedia
         """
         if entry.parent is not None and entry.parent != self:
-            raise ValueError(
-                f"{entry} is already inside another Encyclopaedia",
+            raise AddEntryError(
+                f"<{entry}> already has a parent: <{entry.parent}>",
             )
 
         # When a new entry has a number, ensure it's not already used.
         if entry.number is not None:
             if any(i for i in self.all_entries if i.number == entry.number):
-                raise ValueError(f"{entry.number} is already taken.")
+                raise AddEntryError(f"{entry.number} is already taken.")
 
         elif entry.number is None:
             entry.number = self._find_closest_free_number()

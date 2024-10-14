@@ -219,10 +219,15 @@ class Book(EventEmitter, store.object):
         Raises:
             AddEntryError
         """
-        if entry.parent is not None and entry.parent != self:
-            raise AddEntryError(
-                f"<{entry}> is already a page of {self.parent}",
-            )
+        if entry.parent is not None:
+            if entry.parent == self:
+                raise AddEntryError(
+                    f"<{entry}> is already a page of <{self}>",
+                )
+            else:
+                raise AddEntryError(
+                    f"<{entry}> already has a parent: <{entry.parent}>",
+                )
 
         if entry.number is None:
             raise AddEntryError(f"<{entry} does not have a number.")

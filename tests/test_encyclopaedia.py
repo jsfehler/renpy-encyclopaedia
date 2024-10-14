@@ -3,7 +3,7 @@ import pytest
 from encyclopaedia import Encyclopaedia
 from encyclopaedia import EncEntry
 from encyclopaedia import constants_ren
-
+from encyclopaedia import exceptions_ren
 
 def test_setting_entry_number(add_dummy_entries):
     """
@@ -248,7 +248,7 @@ def test_duplicate_entry_numbers():
         locked=False,
     )
 
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(exceptions_ren.AddEntryError) as e:
         EncEntry(
             parent=enc,
             number=1,
@@ -444,7 +444,7 @@ def test_add_entry_already_in_page():
         text=["Test Text"],
     )
 
-    with pytest.raises(ValueError):
+    with pytest.raises(exceptions_ren.AddEntryError):
         enc.add_entry(ee)
 
 

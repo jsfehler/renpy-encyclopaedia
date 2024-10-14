@@ -41,7 +41,8 @@ to use an imagebutton.
         greek_mythology = Encyclopaedia(name="Greek Mythology", list_screen="custom_encyclopaedia_screen")
 
     screen open_encyclopaedia():
-        textbutton "Open Encyclopaedia" action ShowMenu(greek_mythology.list_screen, greek_mythology)
+        textbutton "Open Encyclopaedia":
+            action ShowMenu(greek_mythology.list_screen, greek_mythology)
 
     label start:
         show screen open_encyclopaedia

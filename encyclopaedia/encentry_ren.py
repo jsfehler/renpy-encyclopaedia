@@ -38,7 +38,7 @@ class EncEntry(EventEmitter, store.object):
         viewed: Set the viewed status of the EncEntry. Default is False.
             Only use if the Encyclopaedia is save-game independent.
         viewed_persistent: Use persistent data for recording viewed status.
-        locked: Set the locked status of the EncEntry. Default is False.
+        locked: The initial locked status of the EncEntry. Default is False.
         locked_persistent: Use persistent data for recording locked status.
         image: The image displayed with the Entry text. Default is None.
         locked_name: Placeholder text for the name. Shown when the entry is locked.

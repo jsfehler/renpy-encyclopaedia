@@ -28,6 +28,15 @@ class Book(EventEmitter, store.object):
 
     A Book should be placed inside an Encyclopaedia.
     When sorted and/or filtered, the Book's attributes will be used.
+
+    Args:
+        number: The Book's number.
+        parent: The parent container for the Book.
+        title: A name for the Book.
+        subject: The subject to associate the Book with.
+        locked: The initial locked status of the Book.
+        locked_persistent: Use persistent data for recording locked status.
+        locked_title: Placeholder text for the title. Shown when the Book is locked.
     """
     def __init__(
         self,

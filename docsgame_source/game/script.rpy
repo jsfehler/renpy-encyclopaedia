@@ -70,7 +70,7 @@ label questions:
             l "You will find your way back."
             l "Likewise, focus on anything else to find your way there."
 
-            $ about_garden.locked = False
+            $ garden_book.locked = False
 
         "How do I get out?" if not about_library_3.locked:
             l "The way you came in, I would assume."

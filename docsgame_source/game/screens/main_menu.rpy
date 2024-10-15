@@ -10,7 +10,6 @@ screen main_menu():
     tag menu
 
     add gui.main_menu_background
-    add Tile("images/morphing-diamonds.svg")
 
     ## This empty frame darkens the main menu.
     frame:

@@ -85,7 +85,7 @@ define gui.title_text_size = 50
 ## Main and Game Menus #########################################################
 
 ## The images used for the main and game menus.
-define gui.main_menu_background = Solid(gui.idle_color)
+define gui.main_menu_background = Solid("#000")
 define gui.game_menu_background = "gui/game_menu.png"
 
 

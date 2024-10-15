@@ -1,6 +1,21 @@
 Changelog
 =========
 
+[3.4.0] - 2024-10-14
+--------------------
+
+Added
+~~~~~
+
+- Book object for grouping EncEntry.
+
+Changed
+~~~~~~~
+
+- `AddEntryError` is raised when adding an entry fails, instead of ValueError.
+- The attribute EncEntry.has_pages has been removed. Use `len(EncEntry().pages) > 1` instead.
+- The method `Encyclopaedia.add_entry_to_unlocked_entries()` is now private and renamed to `Encyclopaedia._add_entry_to_unlocked_entries()`
+- The method `EncEntry.add_entry_to_unlocked_entries()` is now private and renamed to `EncEntry._add_entry_to_unlocked_entries()`
 
 [3.3.0] - 2024-07-21
 --------------------

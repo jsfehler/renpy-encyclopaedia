@@ -9,7 +9,7 @@ from .actions_ren import (
 )
 from ..constants_ren import Direction
 from ..eventemitter_ren import EventEmitter
-from ..exceptions_ren import AddEntryError
+from ..exceptions_ren import AddEntryError, GetEntryError
 
 if TYPE_CHECKING:  # pragma: no cover
     from ..encyclopaedia_ren import Encyclopaedia
@@ -153,8 +153,26 @@ class Book(EventEmitter, store.object):
 
     @property
     def active(self) -> 'EncEntry':
-        """Get the page that's currently being viewed."""
-        return self.pages[self._unlocked_page_index]
+        """Get the object for the page that's currently active.
+
+        Raises:
+            GetEntryError: If no active page could be found.
+        """
+        try:
+            return self.pages[self._unlocked_page_index]
+        except IndexError:
+            page_num = len(self.pages)
+            if page_num == 0:
+                raise GetEntryError("Book has no pages.") from IndexError
+            else:
+                # This will only get triggered if the dev is messing with private variables.
+                raise GetEntryError(
+                    (
+                        "Tried to fetch page at index: "
+                        f"<{self._unlocked_page_index}>. "
+                        f"Maximum value is: <{page_num - 1}>"
+                    ),
+                ) from IndexError
 
     @property
     def current_page(self) -> 'EncEntry':

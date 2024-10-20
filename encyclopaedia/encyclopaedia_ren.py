@@ -328,7 +328,7 @@ class Encyclopaedia(EventEmitter, store.object):
         # Update the active entry.
         self.active = self.current_entry
 
-        if self.active.locked is False:
+        if self.active.locked is False and not isinstance(self.active, Book):
             # Run the callback, if provided.
             self.active.emit("viewed")
 

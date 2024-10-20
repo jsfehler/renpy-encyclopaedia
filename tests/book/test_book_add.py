@@ -15,6 +15,17 @@ def test_book_add_entry():
     assert result is True
 
 
+def test_book_add_entry_dupe():
+    book = Book(title="Greek Gods", subject="Mythology")
+
+    zeus = EncEntry(number=0, name="Zeus", text="Dummy Text")
+
+    book.add_entry(zeus)
+
+    with pytest.raises(AddEntryError):
+        book.add_entry(zeus)
+
+
 def test_book_add_entry_no_number():
     book = Book(title="Greek Gods", subject="Mythology")
 

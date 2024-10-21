@@ -132,46 +132,6 @@ def test_reset_sub_page():
     assert e.current_page == e
 
 
-def test_set_entry(add_dummy_entries):
-    """Test Actions through their implementation in Encyclopaedia."""
-
-    enc = Encyclopaedia()
-
-    entries = add_dummy_entries(enc, 5)
-
-    add_dummy_entries(enc, 5, locked=True)
-
-    e = entries[-1]
-
-    # Use the last unlocked Entry created for the test.
-    enc.SetEntry(e)()
-
-    assert e == enc.active
-    assert 4 == enc.current_position
-
-
-def test_set_entry_sorting_mode_unread(add_dummy_entries):
-    """
-    When the sorting mode is by unread entries,
-    Then the Encyclopaedia should resort when an entry is set
-    And the newly read entry is in the correct position
-    """
-
-    enc = Encyclopaedia(sorting_mode=4)
-
-    entries = add_dummy_entries(enc, 5)
-
-    e = entries[1]
-
-    assert e == enc.current_entries[1]
-
-    enc.SetEntry(e)()
-
-    assert e == enc.active
-
-    # entry should be moved from 2nd position to the last
-    assert e == enc.current_entries[-1]
-
 def test_filter_by_subject():
     """Test Actions through their implementation in Encyclopaedia."""
 

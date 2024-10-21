@@ -59,12 +59,18 @@ class SetEntry(EncyclopaediaAction):
         # The active entry is set to whichever list position was found.
         self.enc.active = self.entry
 
-        if self.enc.active.locked is False and not isinstance(self.entry, Book):
-            if self.entry.viewed is False:
-                # Run the callback, if provided.
-                self.entry.emit("viewed")
-            # Mark the entry as viewed.
-            self.enc.active.viewed = True
+        if self.enc.active.locked is False:
+            if not isinstance(self.entry, Book):
+                if self.entry.viewed is False:
+                    # Run the callback, if provided.
+                    self.entry.emit("viewed")
+                # Mark the entry as viewed.
+                self.enc.active.viewed = True
+
+            # When setting a Book, set the first page to viewed, not the Book.
+            elif isinstance(self.entry, Book):
+                self.entry.active.viewed = True
+                self.entry.active.emit("viewed")
 
         # When sorting by Unread, setting an entry marks is as read.
         # Thus we have to resort the entries to ensure they appear in the

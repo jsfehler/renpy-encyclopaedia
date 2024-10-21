@@ -13,6 +13,18 @@ more options for managing pages as a group.
 Key Differences
 ---------------
 
+Display Name
+~~~~~~~~~~~~
+
+A Book has a title attribute. It's what is displayed in the list of entries.
+Each page in a Book can have its own name and this can be displayed elsewhere.
+On the framework's default screens it's shown on the entry screen.
+
+Sub-Pages will display the name of the first entry in an Encyclopaedia's
+list of entries. That name will also be shown on the entry screen. There
+is no mechanism to have a name for the collection and a different name
+for the first page.
+
 Nesting
 ~~~~~~~
 

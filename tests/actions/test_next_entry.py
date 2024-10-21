@@ -64,12 +64,7 @@ def test_next_entry_get_sensitive_no_active():
         text=["Test Text"],
     )
 
-    EncEntry(
-        parent=enc,
-        name="Entry 2",
-        text=["Test Text"],
-    )
+    assert enc.active is None
 
-    enc.NextEntry()()
     result = enc.NextEntry().get_sensitive()
-    assert not result
+    assert result is False

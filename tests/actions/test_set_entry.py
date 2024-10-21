@@ -55,3 +55,54 @@ def test_set_entry_book_viewed():
 
     assert book.viewed is False
     assert book.active.viewed is True
+
+
+def test_set_entry_get_sensitive_entry_unlocked():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Entry 1",
+        text=["Test Text"],
+    )
+
+    action = enc.SetEntry(e)
+
+    result = action.get_sensitive()
+
+    assert result is True
+
+
+def test_set_entry_get_sensitive_entry_locked():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Entry 1",
+        text=["Test Text"],
+        locked=True,
+    )
+
+    action = enc.SetEntry(e)
+
+    result = action.get_sensitive()
+
+    assert result is False
+
+
+def test_set_entry_get_selected():
+    enc = Encyclopaedia()
+
+    e = EncEntry(
+        parent=enc,
+        name="Entry 1",
+        text=["Test Text"],
+    )
+
+    action = enc.SetEntry(e)
+
+    action()
+
+    result = action.get_selected()
+
+    assert result is True

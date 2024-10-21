@@ -328,13 +328,18 @@ class Encyclopaedia(EventEmitter, store.object):
         # Update the active entry.
         self.active = self.current_entry
 
-        if self.active.locked is False and not isinstance(self.active, Book):
-            # Run the callback, if provided.
-            self.active.emit("viewed")
-
-            # Mark the entry as viewed.
+        if self.active.locked is False:
             if not isinstance(self.active, Book):
+                # Run the callback, if provided.
+                self.active.emit("viewed")
+
+                # Mark the entry as viewed.
                 self.active.viewed = True
+
+            # When setting a Book, set the first page to viewed, not the Book.
+            elif isinstance(self.active, Book):
+                self.active.active.viewed = True
+                self.active.active.emit("viewed")
 
         # When changing an entry, the current entry page number is reset.
         self.active._unlocked_page_index = 0

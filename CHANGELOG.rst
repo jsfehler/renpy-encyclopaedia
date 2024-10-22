@@ -1,6 +1,21 @@
 Changelog
 =========
 
+[3.4.1] - 2024-10-21
+--------------------
+
+Changed
+~~~~~~~
+
+- When trying to get the active page on an empty Book, `GetEntryError` is raised instead of `IndexError`.
+
+Fixed
+~~~~~
+
+- Crash when using the `ChangeEntry` Action on a Book.
+- When using the `SetEntry` Action on a Book, the first page was not marked as viewed.
+- When using `Encyclopaedia.next_entry()` or `Encyclopaedia.previous_entry()` to reach a Book, the first page was not marked as viewed.
+
 [3.4.0] - 2024-10-14
 --------------------
 
@@ -28,7 +43,7 @@ Added
 Changed
 ~~~~~~~
 
-- Replaced EncEntry.label with str(EncEntry).
+- The attribute EncEntry.label has been removed. Use `str(EncEntry)` instead.
 
 [3.2.0] - 2024-03-10
 --------------------

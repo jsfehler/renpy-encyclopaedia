@@ -1,6 +1,22 @@
 Changelog
 =========
 
+[3.5.0] - 2024-11-10
+--------------------
+
+Added
+~~~~~
+
+- `Encyclopaedia.set_entry()` as the non-Action equivalent to `SetEntry()`.
+- Hyperlink now supports opening a Book
+
+Fixed
+~~~~~
+
+- Any time `EncEntry.viewed` is set to True, the "viewed" callback is triggered,
+  instead of only after the `SetEntry`, `NextEntry`, `PreviousEntry` Actions
+  are called.
+
 [3.4.1] - 2024-10-21
 --------------------
 

@@ -3,8 +3,11 @@
 Hyperlinks
 ==========
 
-During your game, you might want to have some in-game text link directly to an EncEntry.
-The `set_entry` hyperlink can be used to open the Encyclopaedia directly to a specific EncEntry.
+You can have in-game text open an entry using Ren'Py's
+`text anchors <https://www.renpy.org/doc/html/text.html#text-tag-a>`_.
+The `set_entry` function will open an Encyclopaedia directly to a specific entry.
+It takes 2 to 3 arguments, separated by `->`: The encyclopaedia variable name,
+the entry variable name, and optionally the page number, if the entry is a Book.
 
 Example:
 
@@ -18,4 +21,4 @@ Example:
 
     label start:
 
-        e "Want to learn how to build this {a=set_entry:enc_enc->dev_entry}documentation{/a} from source?"
+        "Want to learn how to build this {a=set_entry:enc_enc->dev_entry}documentation{/a} from source?"

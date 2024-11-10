@@ -1,0 +1,78 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pygments-plugin-renpy" # change this to a package name for your plugin
+version = "0.0.1"
+dependencies = ["docutils", "pygments"]
+#readme = "README.md"
+
+[tool.hatch.build]
+include = ["renpy_pygments/**"]
+
+# Declare plugin lexers in this table. The key (like `example_lexer` below) are
+# not significant. The value has the form `module_name:ClassName`. The lexer
+# class will be imported using `from module_name import ClassName`.
+
+# See the attributes declared in example_lexer.py for how to configure the
+# language names and file patterns.
+
+[project.entry-points."pygments.lexers"]
+example_lexer = "renpy_pygments.lexer:RenPyLexer"
+
+
+# Declare plugin formatters in this table. The key is not significant and the
+# value has the same format as for lexers. See example_formatter.py for
+# configuration options.
+
+#[project.entry-points."pygments.formatters"]
+#example_formatter = "example_formatter:ExampleFormatter"
+
+
+# Declare plugin styles in this table. The key *is* significant: it is the name
+# the style will be recognized as. In this example, we can use
+#
+#   pygmentize -Ostyle=example-style"
+#
+# on the command line. Also,
+#
+#   pygments.styles.get_style_by_name("example-style")
+#
+# will return the style class.
+
+#[project.entry-points."pygments.styles"]
+#example-style = "example_style:ExampleStyle"
+
+
+# Declare plugin filters in this table. The key *is* significant: it is the name
+# the filter will be recognized as. In this example, we can use
+#
+#  pygmentize -F example-filter
+#
+# on the command line. Also,
+#
+#   pygments.filters.find_filter_class("example-filter")
+#
+# will return the filter class.
+
+#[project.entry-points."pygments.filters"]
+#example-filter = "example_filter:ExampleFilter"
+
+
+# This is a test command. Running it should print:
+#
+# [ff0000]foo
+# [black]<tab><tab>bar # tabs here
+#
+# - Our custom lexer highlights "foo" as keyword,
+# - Our custom style uses red (ff0000) for keywords,
+# - Our custom formatter prints colors in brackets,
+# - Our custom filter replaces tabs with "<tab>".
+#
+# Run with
+#
+#   hatch run test
+
+#[tool.hatch.envs.default.scripts]
+#test = "pygmentize -l example-lang -f example-format -F example-filter -O style=example-style test.exmpl"

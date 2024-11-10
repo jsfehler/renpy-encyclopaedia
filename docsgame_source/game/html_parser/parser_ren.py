@@ -6,7 +6,7 @@ from typing import Union
 from pygments import highlight
 from pygments.lexers import PythonLexer
 
-from renpylexer.lexer import RenPyLexer
+from renpy_pygments.lexer import RenPyLexer
 
 
 elem_funcs = {}

@@ -36,7 +36,7 @@ label start:
     $ library_book.locked = False
     $ about_library.locked = False
 
-    l "Welcome to my {a=set_entry:library_enc->about_library}Library{/a}."
+    l "Welcome to my {a=set_entry:library_enc->library_book->0}Library{/a}."
 
     l "Is there any knowledge you seek?"
 

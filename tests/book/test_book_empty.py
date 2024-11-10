@@ -1,8 +1,8 @@
-from encyclopaedia.book import Book
-from encyclopaedia.encentry_ren import EncEntry
-from encyclopaedia.exceptions_ren import GetEntryError
-
 import pytest
+
+from encyclopaedia import EncEntry
+from encyclopaedia.book import Book
+from encyclopaedia.exceptions_ren import GetEntryError
 
 
 def test_book_empty_get_active():

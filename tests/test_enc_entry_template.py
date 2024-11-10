@@ -1,8 +1,6 @@
-from encyclopaedia import Encyclopaedia
-from encyclopaedia import EncEntry
-from encyclopaedia import EncEntryTemplate
-
 import pytest
+
+from encyclopaedia import EncEntry, EncEntryTemplate, Encyclopaedia
 
 
 def test_encentry_template():

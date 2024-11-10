@@ -1,5 +1,4 @@
-from encyclopaedia import Encyclopaedia
-from encyclopaedia import EncEntry
+from encyclopaedia import EncEntry, Encyclopaedia
 from encyclopaedia.book import Book
 
 

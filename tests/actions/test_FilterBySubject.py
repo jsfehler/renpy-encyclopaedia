@@ -1,7 +1,6 @@
-from encyclopaedia import Encyclopaedia
-from encyclopaedia import EncEntry
-
 import pytest
+
+from encyclopaedia import EncEntry, Encyclopaedia
 
 
 @pytest.fixture()

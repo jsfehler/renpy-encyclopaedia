@@ -1,5 +1,5 @@
-from encyclopaedia.book import Book
 from encyclopaedia import EncEntry
+from encyclopaedia.book import Book
 
 
 def test_book_viewed_none_viewed():

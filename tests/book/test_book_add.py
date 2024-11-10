@@ -1,9 +1,8 @@
-from encyclopaedia.book import Book
-from encyclopaedia import Encyclopaedia
-from encyclopaedia import EncEntry
-from encyclopaedia.exceptions_ren import AddEntryError
-
 import pytest
+
+from encyclopaedia import EncEntry, Encyclopaedia
+from encyclopaedia.book import Book
+from encyclopaedia.exceptions_ren import AddEntryError
 
 
 def test_book_add_entry():

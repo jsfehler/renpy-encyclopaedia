@@ -1,6 +1,4 @@
-from encyclopaedia import Encyclopaedia
-from encyclopaedia import EncEntry
-from encyclopaedia import constants_ren
+from encyclopaedia import EncEntry, Encyclopaedia, constants_ren
 
 
 def test_viewed_callback_set_entry():

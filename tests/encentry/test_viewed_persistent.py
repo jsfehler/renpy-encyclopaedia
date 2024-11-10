@@ -1,6 +1,6 @@
-from encyclopaedia import Encyclopaedia
-
 from renpy.game import persistent
+
+from encyclopaedia import Encyclopaedia
 
 
 def test_viewed_persistent_first_get(add_dummy_entries):

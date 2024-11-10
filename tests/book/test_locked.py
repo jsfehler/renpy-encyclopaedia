@@ -1,8 +1,7 @@
-from encyclopaedia.book import Book
-from encyclopaedia import Encyclopaedia
-from encyclopaedia import EncEntry
-
 from renpy.game import persistent
+
+from encyclopaedia import EncEntry, Encyclopaedia
+from encyclopaedia.book import Book
 
 
 def test_book_unlock():

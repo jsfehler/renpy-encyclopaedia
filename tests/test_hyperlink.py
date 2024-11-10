@@ -1,12 +1,11 @@
 from unittest.mock import patch
 
-from encyclopaedia import Encyclopaedia
-from encyclopaedia import EncEntry
-from encyclopaedia.book import Book
-from encyclopaedia.hyperlink_ren import set_encentry_from_text_anchor
-from encyclopaedia.exceptions_ren import InvalidEntryAnchorError
-
 import pytest
+
+from encyclopaedia import EncEntry, Encyclopaedia
+from encyclopaedia.book import Book
+from encyclopaedia.exceptions_ren import InvalidEntryAnchorError
+from encyclopaedia.hyperlink_ren import set_encentry_from_text_anchor
 
 
 @patch("encyclopaedia.hyperlink_ren.store")

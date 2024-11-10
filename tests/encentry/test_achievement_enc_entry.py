@@ -2,8 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from encyclopaedia import Encyclopaedia
-from encyclopaedia import AchievementEncEntry
+from encyclopaedia import AchievementEncEntry, Encyclopaedia
 
 
 def test_achievement_enc_entry_granted():

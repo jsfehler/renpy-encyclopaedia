@@ -1,8 +1,7 @@
-from encyclopaedia import Encyclopaedia
-from encyclopaedia import EncEntry
-from encyclopaedia.exceptions_ren import UnknownEntryError
-
 import pytest
+
+from encyclopaedia import EncEntry, Encyclopaedia
+from encyclopaedia.exceptions_ren import UnknownEntryError
 
 
 def test__change_active_entry_viewed_status_no_active():

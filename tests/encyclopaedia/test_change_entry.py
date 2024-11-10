@@ -1,8 +1,4 @@
-from encyclopaedia import (
-    EncEntry,
-    Encyclopaedia,
-    constants_ren,
-)
+from encyclopaedia import EncEntry, Encyclopaedia, constants_ren
 from encyclopaedia.book import Book
 
 

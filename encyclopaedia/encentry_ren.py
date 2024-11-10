@@ -6,13 +6,13 @@ from renpy.display.transform import Transform
 from renpy.game import persistent
 from renpy.store import TintMatrix
 
-from .utils_ren import string_to_list
-from .eventemitter_ren import EventEmitter
 from .constants_ren import Direction
+from .eventemitter_ren import EventEmitter
+from .utils_ren import string_to_list
 
 if TYPE_CHECKING:  # pragma: no cover
-    from .encyclopaedia_ren import Encyclopaedia
     from .book import Book
+    from .encyclopaedia_ren import Encyclopaedia
 
 """renpy
 init -84 python:

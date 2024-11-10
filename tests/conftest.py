@@ -7,9 +7,9 @@ from mock_renpy import renpy
 
 sys.modules['renpy'] = renpy
 
-from renpy.game import persistent, MockPersistent  # NOQA
+from renpy.game import MockPersistent, persistent  # NOQA
 
-from encyclopaedia import Encyclopaedia, EncEntry  # NOQA
+from encyclopaedia import EncEntry, Encyclopaedia  # NOQA
 
 
 @pytest.fixture

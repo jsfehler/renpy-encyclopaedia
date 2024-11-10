@@ -3,17 +3,14 @@ from typing import TYPE_CHECKING
 from renpy import store
 from renpy.game import persistent
 
-from .actions_ren import (
-    BookNextPage,
-    BookPreviousPage,
-)
 from ..constants_ren import Direction
 from ..eventemitter_ren import EventEmitter
 from ..exceptions_ren import AddEntryError, GetEntryError
+from .actions_ren import BookNextPage, BookPreviousPage
 
 if TYPE_CHECKING:  # pragma: no cover
-    from ..encyclopaedia_ren import Encyclopaedia
     from ..encentry_ren import EncEntry
+    from ..encyclopaedia_ren import Encyclopaedia
 
 """renpy
 init -84 python:

@@ -1,11 +1,11 @@
 from typing import TYPE_CHECKING
 
-from .constants_ren import SortMode
-from .types_ren import ENTRY_TYPE
-
 import renpy.exports as renpy
 from renpy.store import DictEquality
 from renpy.ui import Action
+
+from .constants_ren import SortMode
+from .types_ren import ENTRY_TYPE
 
 if TYPE_CHECKING:  # pragma: no cover
     from .encyclopaedia_ren import Encyclopaedia

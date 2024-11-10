@@ -1,7 +1,7 @@
 """renpy
 init python:
 """
-from typing import cast, Union
+from typing import Union, cast
 
 from renpy.python import RevertableList
 

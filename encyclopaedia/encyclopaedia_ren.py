@@ -7,20 +7,20 @@ from .actions_ren import (
     CloseActiveEntry,
     FilterBySubject,
     NextEntry,
-    PreviousEntry,
     NextPage,
+    PreviousEntry,
     PreviousPage,
-    SortEncyclopaedia,
-    SetEntry,
     ResetSubPage,
+    SetEntry,
+    SortEncyclopaedia,
     ToggleShowLockedButtonsAction,
     ToggleShowLockedEntryAction,
 )
-from .entry_sorting_ren import push_locked_to_bottom
-from .exceptions_ren import AddEntryError, UnknownEntryError
-from .eventemitter_ren import EventEmitter
-from .constants_ren import Direction, SortMode
 from .book import Book
+from .constants_ren import Direction, SortMode
+from .entry_sorting_ren import push_locked_to_bottom
+from .eventemitter_ren import EventEmitter
+from .exceptions_ren import AddEntryError, UnknownEntryError
 from .types_ren import ENTRY_TYPE
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -31,7 +31,7 @@ init python:
 """
 from math import floor  # NOQA E402
 from operator import attrgetter  # NOQA E402
-from typing import cast, Callable, Optional, Union  # NOQA E402
+from typing import Callable, Optional, Union, cast  # NOQA E402
 
 
 class Encyclopaedia(EventEmitter, store.object):

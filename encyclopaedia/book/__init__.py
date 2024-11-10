@@ -5,5 +5,4 @@ Ren'Py has no use for it.
 
 from encyclopaedia.book.book_ren import Book
 
-
 __all__ = ['Book']

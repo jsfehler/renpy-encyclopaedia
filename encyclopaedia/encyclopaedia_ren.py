@@ -46,6 +46,8 @@ class Encyclopaedia(EventEmitter, store.object):
             the data is hidden from view with a placeholder.
         list_screen: The Ren'Py screen to display the list of entries.
         entry_screen: The Ren'Py screen to display an open entry.
+        hyperlink_screen: The Ren'Py screen to display an entry opened from a
+            hyperlink.
         name: A optional name for the Encyclopaedia.
 
     Attributes:
@@ -71,6 +73,7 @@ class Encyclopaedia(EventEmitter, store.object):
                  show_locked_entry: bool = False,
                  list_screen: str = 'encyclopaedia_list',
                  entry_screen: str = 'encyclopaedia_entry',
+                 hyperlink_screen: str = 'encyclopaedia_list',
                  name: str = '',
                  ) -> None:
 
@@ -79,6 +82,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self.show_locked_entry = show_locked_entry
         self.list_screen = list_screen
         self.entry_screen = entry_screen
+        self.hyperlink_screen = hyperlink_screen
         self.name = name
 
         self.all_entries: list[ENTRY_TYPE] = []

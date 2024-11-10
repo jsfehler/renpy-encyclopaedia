@@ -15,3 +15,8 @@ class GetEntryError(Exception):
 class UnknownEntryError(Exception):
     """Raised when looking for an entry that is not in an Encyclopaedia."""
     pass
+
+
+class InvalidEntryAnchorError(Exception):
+    """Raised when an invalid text anchor is used."""
+    pass

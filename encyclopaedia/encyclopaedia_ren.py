@@ -122,7 +122,7 @@ class Encyclopaedia(EventEmitter, store.object):
         return rv
 
     @property
-    def viewable_entries(self):
+    def viewable_entries(self) -> list[ENTRY_TYPE]:
         """Get the list of entries which are currently viewable."""
         if self.show_locked_entry:
             return self.all_entries

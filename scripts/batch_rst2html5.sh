@@ -15,11 +15,11 @@ do
   html_name="$(basename "$filename" .rst).html"
   html_path="$docsgame_path/$html_name"
 
-  rst2html5.py --stylesheet='' --no-xml-declaration "$filename" > "$html_path"
+  rst2html5 --stylesheet='' --no-xml-declaration "$filename" > "$html_path"
 
 done
 
 
-rst2html5.py --stylesheet='' --no-xml-declaration "docs/development/tools.rst" ""$DOCSGAME_PATH"tools.html"
+rst2html5 --stylesheet='' --no-xml-declaration "docs/development/tools.rst" ""$DOCSGAME_PATH"tools.html"
 
 # rst2html5.py --stylesheet='' --no-xml-declaration "docs/encyclopaedia.rst" ""$DOCSGAME_PATH"encyclopaedia.html"

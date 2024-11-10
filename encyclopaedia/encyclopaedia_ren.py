@@ -17,11 +17,10 @@ from .actions_ren import (
     ToggleShowLockedEntryAction,
 )
 from .entry_sorting_ren import push_locked_to_bottom
-from .exceptions_ren import AddEntryError
+from .exceptions_ren import AddEntryError, UnknownEntryError
 from .eventemitter_ren import EventEmitter
 from .constants_ren import Direction, SortMode
 from .book import Book
-
 from .types_ren import ENTRY_TYPE
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -115,11 +114,16 @@ class Encyclopaedia(EventEmitter, store.object):
 
     def __len__(self) -> int:
         """The total number of entries, relative to if locked ones are shown or not."""
-        rv = len(self.unlocked_entries)
-        if self.show_locked_entry:
-            rv = len(self.all_entries)
-
+        rv = len(self.viewable_entries)
         return rv
+
+    @property
+    def viewable_entries(self):
+        """Get the list of entries which are currently viewable."""
+        if self.show_locked_entry:
+            return self.all_entries
+        else:
+            return self.unlocked_entries
 
     @property
     def current_entries(self) -> list[ENTRY_TYPE]:
@@ -148,10 +152,7 @@ class Encyclopaedia(EventEmitter, store.object):
         Return:
             EncEntry
         """
-        entry = self.unlocked_entries[self.current_position]
-        if self.show_locked_entry:
-            entry = self.all_entries[self.current_position]
-
+        entry = self.viewable_entries[self.current_position]
         return entry
 
     @property
@@ -311,8 +312,73 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.filtered_entries = [i for i in entries if i.subject == subject]
 
+    def _change_active_entry_viewed_status(self) -> bool:
+        """Change the viewed status of the active Entry.
+
+        Return:
+            True if status was changed, else False
+        """
+        if self.active is None:
+            raise ValueError(
+                'Tried to change active entry viewed status with no active entry.',
+            )
+        if self.active.locked is False:
+            entry = None
+
+            if isinstance(self.active, Book):
+                # When Book, set the first page to viewed, not the Book.
+                entry = self.active.active
+            else:
+                entry = self.active
+
+            # Mark the entry as viewed.
+            entry.viewed = True
+
+            return True
+
+        return False
+
+    def set_entry(self, entry: ENTRY_TYPE) -> None:
+        """Set an Entry as active.
+
+        Args:
+            entry: The Entry to set.
+
+        Raises:
+            ValueError: If the entry cannot be set.
+        """
+        try:
+            target_position = self.viewable_entries.index(entry)
+        except ValueError as e:
+            if entry not in self.all_entries:
+                raise UnknownEntryError(f"{entry} is not in this Encyclopaedia") from e
+            else:
+                raise ValueError(
+                    f"{entry} cannot be set because it is locked and 'show_locked_entry' is False",
+                ) from e
+
+        self.current_position = target_position
+
+        self.active = entry
+        self._change_active_entry_viewed_status()
+
+        # When sorting by Unread, setting an entry marks is as read.
+        # Thus we have to resort the entries to ensure they appear in the
+        # correct order.
+        if self.sorting_mode.value == SortMode.UNREAD.value:
+            self.sort_entries(
+                entries=self.current_entries,
+                sorting=self.sorting_mode.value,
+            )
+
     def _change_entry(self, direction: Direction) -> bool:
-        """Change the current active EncEntry."""
+        """Change the active entry by changing the index.
+
+        This is relative to the current sorting.
+
+        Args:
+            direction: The direction to move.
+        """
         test_position = self.current_position + direction.value
 
         # Boundary check
@@ -328,18 +394,7 @@ class Encyclopaedia(EventEmitter, store.object):
         # Update the active entry.
         self.active = self.current_entry
 
-        if self.active.locked is False:
-            if not isinstance(self.active, Book):
-                # Run the callback, if provided.
-                self.active.emit("viewed")
-
-                # Mark the entry as viewed.
-                self.active.viewed = True
-
-            # When setting a Book, set the first page to viewed, not the Book.
-            elif isinstance(self.active, Book):
-                self.active.active.viewed = True
-                self.active.active.emit("viewed")
+        self._change_active_entry_viewed_status()
 
         # When changing an entry, the current entry page number is reset.
         self.active._unlocked_page_index = 0

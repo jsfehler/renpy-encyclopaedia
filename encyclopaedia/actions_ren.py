@@ -1,16 +1,14 @@
+from typing import TYPE_CHECKING
+
 from .constants_ren import SortMode
+from .types_ren import ENTRY_TYPE
 
 import renpy.exports as renpy
 from renpy.store import DictEquality
 from renpy.ui import Action
 
-from typing import TYPE_CHECKING
-
 if TYPE_CHECKING:  # pragma: no cover
     from .encyclopaedia_ren import Encyclopaedia
-    from .encentry_ren import EncEntry
-
-from .book import Book
 
 """renpy
 init python:
@@ -38,54 +36,14 @@ class SetEntry(EncyclopaediaAction):
         encyclopaedia: The Encyclopaedia instance to use.
         entry: The entry to be made active.
     """
-    def __init__(self, encyclopaedia: 'Encyclopaedia', entry: 'EncEntry') -> None:
+    def __init__(self, encyclopaedia: 'Encyclopaedia', entry: ENTRY_TYPE) -> None:
         super().__init__(encyclopaedia)
 
         self.entry = entry
 
-    def _get_entry_index(self) -> int:
-        # Find the position of the entry
-        if self.enc.show_locked_entry:
-            target_position = self.enc.all_entries.index(self.entry)
-        else:
-            target_position = self.enc.unlocked_entries.index(self.entry)
-
-        return target_position
-
-    def set_entry(self) -> None:
-        """Set the Entry as active and update the Encyclopaeda's internal state."""
-        target_position = self._get_entry_index()
-
-        # The active entry is set to whichever list position was found.
-        self.enc.active = self.entry
-
-        if self.enc.active.locked is False:
-            if not isinstance(self.entry, Book):
-                if self.entry.viewed is False:
-                    # Run the callback, if provided.
-                    self.entry.emit("viewed")
-                # Mark the entry as viewed.
-                self.enc.active.viewed = True
-
-            # When setting a Book, set the first page to viewed, not the Book.
-            elif isinstance(self.entry, Book):
-                self.entry.active.viewed = True
-                self.entry.active.emit("viewed")
-
-        # When sorting by Unread, setting an entry marks is as read.
-        # Thus we have to resort the entries to ensure they appear in the
-        # correct order.
-        if self.enc.sorting_mode.value == SortMode.UNREAD.value:
-            self.enc.sort_entries(
-                entries=self.enc.current_entries,
-                sorting=self.enc.sorting_mode.value,
-            )
-
-        self.enc.current_position = target_position
-
     def __call__(self) -> None:
         """Used by Ren'Py to invoke this Action."""
-        self.set_entry()
+        self.enc.set_entry(self.entry)
 
         # Show the entry screen associated with the encyclopaedia.
         renpy.show_screen(self.enc.entry_screen, enc=self.enc)

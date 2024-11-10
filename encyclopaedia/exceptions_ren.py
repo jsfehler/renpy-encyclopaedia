@@ -9,3 +9,9 @@ class AddEntryError(Exception):
 
 class GetEntryError(Exception):
     """Raised when getting an entry fails."""
+    pass
+
+
+class UnknownEntryError(Exception):
+    """Raised when looking for an entry that is not in an Encyclopaedia."""
+    pass

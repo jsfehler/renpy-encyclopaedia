@@ -182,7 +182,11 @@ class EncEntry(EventEmitter, store.object):
         if self.viewed_persistent:
             setattr(persistent, self._name + "_viewed", new_value)
 
+        if self._viewed is False and new_value is True:
+            self.emit("viewed")
+
         self._viewed = new_value
+
 
     @property
     def current_page(self) -> 'EncEntry':

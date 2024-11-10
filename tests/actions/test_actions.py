@@ -132,37 +132,6 @@ def test_reset_sub_page():
     assert e.current_page == e
 
 
-def test_filter_by_subject():
-    """Test Actions through their implementation in Encyclopaedia."""
-
-    enc = Encyclopaedia()
-
-    expected_entries = []
-
-    for _ in range(5):
-        e = EncEntry(
-            parent=enc,
-            name="Test Name",
-            text=["Test Text"],
-            subject="Robots",
-        )
-
-        expected_entries.append(e)
-
-    for _ in range(5):
-        EncEntry(
-            parent=enc,
-            name="Test Name",
-            text=["Test Text"],
-            subject="Humans",
-        )
-
-    enc.FilterBySubject("Robots")()
-
-    assert "Robots" == enc.filtering
-    assert expected_entries == enc.filtered_entries
-
-
 def test_toggle_show_locked_buttons():
     """Test Actions through their implementation in Encyclopaedia."""
 

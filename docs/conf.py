@@ -27,6 +27,8 @@ import renpy
 
 sys.path.insert(0, os.path.abspath('../'))
 
+sys.path.append(os.path.abspath('.'))
+
 import encyclopaedia
 
 # -- General configuration ------------------------------------------------
@@ -47,7 +49,7 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.napoleon',
     'sphinx_immaterial',
-    'renpy_pygments',
+    'renpy_doc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

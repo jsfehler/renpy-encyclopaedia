@@ -1,0 +1,45 @@
+line-length = 99
+
+[lint.mccabe]
+max-complexity = 8
+
+[lint.pydocstyle]
+convention = "google"
+
+[lint]
+select = [
+"A",
+"B",
+"BLE",
+"C4",
+"COM",
+"C90",
+"D",
+"E",
+"F",
+"N",
+"PL",
+"PTH",
+"RUF",
+"S",
+"SLOT",
+"T20",
+"TRY",
+"W",
+]
+
+ignore = [
+"B026",
+"D100",
+"D104",
+"D107",
+"D204",
+"D205",
+"D413",
+"D415",
+"F405",
+"F821",
+"PLR0913",
+"RUF010",
+"TRY003",
+]

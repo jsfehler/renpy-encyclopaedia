@@ -1,0 +1,6 @@
+isort==5.13.2
+pyright
+ruff
+
+# Required imports for type check
+pygments

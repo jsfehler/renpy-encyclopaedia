@@ -12,8 +12,8 @@ from encyclopaedia.version import __version__  # noqa: F401
 
 __all__ = [
     'AchievementEncEntry',
-    'Encyclopaedia',
     'EncEntry',
     'EncEntryTemplate',
+    'Encyclopaedia',
     'text_block',
 ]

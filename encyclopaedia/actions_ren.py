@@ -46,6 +46,7 @@ class SetEntry(EncyclopaediaAction):
         self.enc.set_entry(self.entry)
 
         # Show the entry screen associated with the encyclopaedia.
+        renpy.hide_screen(self.enc.entry_screen)
         renpy.show_screen(self.enc.entry_screen, enc=self.enc)
         renpy.restart_interaction()
 

@@ -38,8 +38,7 @@ class Encyclopaedia(EventEmitter, store.object):
     """Container that manages the behaviour of a collection of EncEntry objects.
 
     Args:
-        sorting_mode: The default for how entries are sorted.
-            Default sorting is by Number.
+        sorting_mode: How entries are sorted. Default is SortMode.NUMBER.
         show_locked_buttons: If True, locked entries show a
             placeholder label on the listing screen.
         show_locked_entry: If True, locked entries can be viewed, but
@@ -68,7 +67,7 @@ class Encyclopaedia(EventEmitter, store.object):
     """
 
     def __init__(self,
-                 sorting_mode: int = 0,
+                 sorting_mode: SortMode = SortMode.NUMBER,
                  show_locked_buttons: bool = False,
                  show_locked_entry: bool = False,
                  list_screen: str = 'encyclopaedia_list',
@@ -76,8 +75,8 @@ class Encyclopaedia(EventEmitter, store.object):
                  hyperlink_screen: str = 'encyclopaedia_list',
                  name: str = '',
                  ) -> None:
+        self._sorting_mode = sorting_mode
 
-        self.sorting_mode = SortMode(sorting_mode)
         self.show_locked_buttons = show_locked_buttons
         self.show_locked_entry = show_locked_entry
         self.list_screen = list_screen
@@ -92,8 +91,6 @@ class Encyclopaedia(EventEmitter, store.object):
         self.filtering: Union[bool, str] = False
 
         self.reverse_sorting: bool = False
-        if self.sorting_mode == SortMode.REVERSE_ALPHABETICAL:
-            self.reverse_sorting = True
 
         self.nest_alphabetical_sort: bool = True
 
@@ -182,6 +179,28 @@ class Encyclopaedia(EventEmitter, store.object):
         percentage = floor(amount_unlocked * 100)
         return percentage
 
+    @property
+    def sorting_mode(self) -> SortMode:
+        """Get the current sorting mode of the Encyclopaedia."""
+        return self._sorting_mode
+
+    @sorting_mode.setter
+    def sorting_mode(self, new_mode: SortMode) -> None:
+        """Set the current sorting mode of the Encyclopaedia.
+
+        This will resort the current entry list.
+
+        Args:
+            new_mode: The sorting mode to change to.
+        """
+        self._sorting_mode = new_mode
+
+        self.sort_entries(
+            entries=self.current_entries,
+            sorting_mode=self._sorting_mode,
+            reverse=self.reverse_sorting,
+        )
+
     def sort_entries(
         self,
         entries: list[ENTRY_TYPE],
@@ -195,20 +214,26 @@ class Encyclopaedia(EventEmitter, store.object):
             sorting_mode: The sorting mode to use.
             reverse: If the sorting should be done in reverse or not.
         """
-        # Force reverse.
-        if sorting_mode == SortMode.REVERSE_ALPHABETICAL:
-            reverse = True
+        # The reverse of SortMode.ALPHABETICAL is the equivalent of
+        # SortMode.REVERSE_ALPHABETICAL and vice versa.
+        reverse_alphabetical = False
+        if (sorting_mode == SortMode.REVERSE_ALPHABETICAL) and not reverse:
+            reverse_alphabetical = True
+
+        elif (sorting_mode == SortMode.ALPHABETICAL) and reverse:
+            reverse_alphabetical = True
 
         if sorting_mode == SortMode.NUMBER:
             entries.sort(key=attrgetter('number'))
         else:
-            entries.sort(reverse=reverse, key=attrgetter('name'))
+            # If not number, always sort by name first.
+            entries.sort(reverse=reverse_alphabetical, key=attrgetter('name'))
 
             if sorting_mode == SortMode.UNREAD:
-                entries.sort(key=attrgetter('viewed'))
+                entries.sort(reverse=reverse, key=attrgetter('viewed'))
 
             elif sorting_mode == SortMode.SUBJECT:
-                entries.sort(key=attrgetter('subject'))
+                entries.sort(reverse=reverse, key=attrgetter('subject'))
 
             if self.locked_at_bottom:
                 push_locked_to_bottom(entries)
@@ -455,7 +480,7 @@ class Encyclopaedia(EventEmitter, store.object):
         """
         return NextPage(encyclopaedia=self)
 
-    def Sort(self, sorting_mode: SortMode) -> SortEncyclopaedia:
+    def Sort(self, sorting_mode: SortMode, reverse: bool = False) -> SortEncyclopaedia:
         """Wrapper around the Action of the same name.
 
         Use with a renpy button.
@@ -463,11 +488,12 @@ class Encyclopaedia(EventEmitter, store.object):
         Args:
             sorting_mode: The type of sorting to use.
                 If None specified, use the current sorting.
+            reverse: Sort in reverse.
 
         Return:
             Screen Action
         """
-        return SortEncyclopaedia(self, sorting_mode)
+        return SortEncyclopaedia(self, sorting_mode, reverse)
 
     def SetEntry(self, given_entry: 'EncEntry') -> SetEntry:
         """Wrapper around the Action of the same name.

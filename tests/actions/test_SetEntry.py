@@ -1,4 +1,4 @@
-from encyclopaedia import EncEntry, Encyclopaedia
+from encyclopaedia import EncEntry, Encyclopaedia, constants_ren
 from encyclopaedia.book import Book
 
 
@@ -27,7 +27,7 @@ def test_set_entry_sorting_mode_unread(add_dummy_entries):
     And the newly read entry is in the correct position
     """
 
-    enc = Encyclopaedia(sorting_mode=4)
+    enc = Encyclopaedia(sorting_mode=constants_ren.SortMode.UNREAD)
 
     entries = add_dummy_entries(enc, 5)
 

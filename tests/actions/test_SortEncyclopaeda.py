@@ -60,3 +60,17 @@ def test_sort_encyclopaedia_get_selected_no_filter(sortable_enc):
     result = action.get_selected()
 
     assert result is False
+
+
+def test_sort_encyclopaedia_reverse_alphabetical_reverse(sortable_enc):
+    """Test Actions through their implementation in Encyclopaedia."""
+    action = sortable_enc.Sort(
+        constants_ren.SortMode.REVERSE_ALPHABETICAL,
+        reverse=True,
+    )
+
+    assert sortable_enc.current_entries[0].name == "Apple"
+
+    action()
+
+    assert sortable_enc.current_entries[0].name == "Apple"

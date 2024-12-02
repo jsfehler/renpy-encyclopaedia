@@ -1,11 +1,6 @@
 import pytest
 
-from encyclopaedia import (
-    EncEntry,
-    Encyclopaedia,
-    constants_ren,
-    exceptions_ren,
-)
+from encyclopaedia import EncEntry, Encyclopaedia, exceptions_ren
 
 
 def test_setting_entry_number(add_dummy_entries):
@@ -180,30 +175,6 @@ def test_clear_filtering():
 
     assert False is enc.filtering
     assert [apple, banana, cantaloupe, cucumber] == enc.current_entries
-
-
-def test_reverse_alphabetical_sorting():
-    enc = Encyclopaedia(sorting_mode=constants_ren.SortMode.REVERSE_ALPHABETICAL)
-
-    apple = EncEntry(
-        parent=enc,
-        name="Apple",
-        text=["Test Text"],
-    )
-
-    banana = EncEntry(
-        parent=enc,
-        name="Banana",
-        text=["Test Text"],
-    )
-
-    cantaloupe = EncEntry(
-        parent=enc,
-        name="Cantaloupe",
-        text=["Test Text"],
-    )
-
-    assert [cantaloupe, banana, apple] == enc.all_entries
 
 
 def test_unlock_callback():

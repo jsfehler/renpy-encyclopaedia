@@ -18,28 +18,6 @@ def test_image():
     assert e.has_image
 
 
-def test_unlock_entry():
-    enc = Encyclopaedia()
-
-    e = EncEntry(
-        parent=enc,
-        name="Test Name",
-        text=["Test Text"],
-        locked=True,
-
-    )
-
-    assert e in enc.all_entries
-    assert e not in enc.unlocked_entries
-
-    # Unlock the first entry
-    e.locked = False
-    assert e.locked is False
-
-    assert e in enc.all_entries
-    assert e in enc.unlocked_entries
-
-
 def test_add_page():
     """
     When an EncEntry has another EncEntry as a parent

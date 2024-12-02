@@ -185,17 +185,19 @@ class Encyclopaedia(EventEmitter, store.object):
     def sort_entries(
         self,
         entries: list[ENTRY_TYPE],
-        sorting: int = 0,
+        sorting_mode: SortMode = SortMode.NUMBER,
         reverse: bool = False,
     ) -> None:
-        """Sort entry lists by whatever the current sorting mode is.
+        """Sort entry lists.
 
         Args:
-            entries: The EncEntry list to sort
-            sorting: The sorting mode to use
-            reverse: If the sorting should be done in reverse or not
+            entries: The EncEntry list to sort.
+            sorting_mode: The sorting mode to use.
+            reverse: If the sorting should be done in reverse or not.
         """
-        sorting_mode = SortMode(sorting)
+        # Force reverse.
+        if sorting_mode == SortMode.REVERSE_ALPHABETICAL:
+            reverse = True
 
         if sorting_mode == SortMode.NUMBER:
             entries.sort(key=attrgetter('number'))
@@ -224,7 +226,7 @@ class Encyclopaedia(EventEmitter, store.object):
 
         self.sort_entries(
             entries=self.unlocked_entries,
-            sorting=int(self.sorting_mode.value),
+            sorting_mode=self.sorting_mode,
             reverse=self.reverse_sorting,
         )
 
@@ -280,7 +282,7 @@ class Encyclopaedia(EventEmitter, store.object):
         # Ensure correct sorting of entry lists.
         self.sort_entries(
             entries=self.all_entries,
-            sorting=int(self.sorting_mode.value),
+            sorting_mode=self.sorting_mode,
             reverse=self.reverse_sorting,
         )
 
@@ -369,10 +371,10 @@ class Encyclopaedia(EventEmitter, store.object):
         # When sorting by Unread, setting an entry marks is as read.
         # Thus we have to resort the entries to ensure they appear in the
         # correct order.
-        if self.sorting_mode.value == SortMode.UNREAD.value:
+        if self.sorting_mode == SortMode.UNREAD:
             self.sort_entries(
                 entries=self.current_entries,
-                sorting=self.sorting_mode.value,
+                sorting_mode=self.sorting_mode,
             )
 
     def _change_entry(self, direction: Direction) -> bool:

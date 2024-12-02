@@ -205,11 +205,13 @@ class SortEncyclopaedia(EncyclopaediaAction):
     Args:
         encyclopaedia: The Encyclopaedia instance to use.
         sorting_mode: The sorting mode to sort by.
+        reverse: If the sorting should be done in reverse or not.
     """
     def __init__(
         self,
         encyclopaedia: 'Encyclopaedia',
         sorting_mode: SortMode,
+        reverse: bool = False,
     ) -> None:
         super().__init__(encyclopaedia)
 
@@ -223,11 +225,12 @@ class SortEncyclopaedia(EncyclopaediaAction):
         """Used by Ren'Py to invoke this Action."""
         self.enc.sort_entries(
             entries=self.enc.current_entries,
-            sorting=int(self.sorting_mode.value),
+            sorting_mode=self.sorting_mode,
             reverse=self.reverse,
         )
 
         self.enc.sorting_mode = self.sorting_mode
+
         renpy.restart_interaction()
 
     def get_selected(self) -> bool:
@@ -300,7 +303,7 @@ class ToggleShowLockedButtonsAction(EncyclopaediaAction):
 
         self.enc.sort_entries(
             entries=self.enc.current_entries,
-            sorting=int(self.enc.sorting_mode.value),
+            sorting_mode=self.enc.sorting_mode,
             reverse=reverse,
         )
 

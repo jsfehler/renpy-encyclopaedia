@@ -220,8 +220,7 @@ class SortEncyclopaedia(EncyclopaediaAction):
 
     def __call__(self) -> None:
         """Used by Ren'Py to invoke this Action."""
-        self.enc.reverse_sorting = self.reverse
-        self.enc.sorting_mode = self.sorting_mode
+        self.enc.sort(mode=self.sorting_mode, reverse=self.reverse)
 
         renpy.restart_interaction()
 
@@ -289,11 +288,7 @@ class ToggleShowLockedButtonsAction(EncyclopaediaAction):
             self.enc._build_subject_filter(self.enc.filtering)
 
         # Ensure the sorting isn't broken by hiding buttons.
-        self.enc.sort_entries(
-            entries=self.enc.current_entries,
-            sorting_mode=self.enc.sorting_mode,
-            reverse=self.enc.reverse_sorting,
-        )
+        self.enc.sort()
 
         renpy.restart_interaction()
 

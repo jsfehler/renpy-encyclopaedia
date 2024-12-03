@@ -195,19 +195,21 @@ class Encyclopaedia(EventEmitter, store.object):
         """
         self._sorting_mode = new_mode
 
-        self.sort_entries(
+        self._sort_entries(
             entries=self.current_entries,
             sorting_mode=self._sorting_mode,
             reverse=self.reverse_sorting,
         )
 
-    def sort_entries(
+    def _sort_entries(
         self,
         entries: list[ENTRY_TYPE],
         sorting_mode: SortMode = SortMode.NUMBER,
         reverse: bool = False,
     ) -> None:
         """Sort entry lists.
+
+        This method does not change the sorting mode or reverse_sorting attribute.
 
         Args:
             entries: The EncEntry list to sort.
@@ -249,7 +251,7 @@ class Encyclopaedia(EventEmitter, store.object):
         # Remove duplicates
         self.unlocked_entries = list(set(self.unlocked_entries))
 
-        self.sort_entries(
+        self._sort_entries(
             entries=self.unlocked_entries,
             sorting_mode=self.sorting_mode,
             reverse=self.reverse_sorting,
@@ -305,7 +307,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self.all_entries = list(set(self.all_entries))
 
         # Ensure correct sorting of entry lists.
-        self.sort_entries(
+        self._sort_entries(
             entries=self.all_entries,
             sorting_mode=self.sorting_mode,
             reverse=self.reverse_sorting,
@@ -317,6 +319,31 @@ class Encyclopaedia(EventEmitter, store.object):
         self.subjects.append(entry.subject)
         self.subjects = list(set(self.subjects))
         self.subjects.sort()
+
+    def sort(self, mode: Union[SortMode, None] = None, reverse: bool = False) -> None:
+        """Sort the entries in the Encyclopaedia.
+
+        Args:
+            mode: The sorting mode to use. If None, the current sorting mode will be used.
+            reverse: If the sorting should be done in reverse or not.
+        """
+        if mode:
+            self._sorting_mode = mode
+
+        elif not mode:
+            mode = self.sorting_mode
+
+        if reverse:
+            self.reverse_sorting = reverse
+
+        elif not reverse:
+            reverse = self.reverse_sorting
+
+        self._sort_entries(
+            self.current_entries,
+            sorting_mode=mode,
+            reverse=reverse,
+        )
 
     @property
     def word_count(self) -> int:
@@ -397,9 +424,10 @@ class Encyclopaedia(EventEmitter, store.object):
         # Thus we have to resort the entries to ensure they appear in the
         # correct order.
         if self.sorting_mode == SortMode.UNREAD:
-            self.sort_entries(
+            self._sort_entries(
                 entries=self.current_entries,
                 sorting_mode=self.sorting_mode,
+                reverse=self.reverse_sorting,
             )
 
     def _change_entry(self, direction: Direction) -> bool:

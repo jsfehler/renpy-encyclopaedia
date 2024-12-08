@@ -1,6 +1,33 @@
 Changelog
 =========
 
+[3.6.0] - 2024-12-08
+--------------------
+
+Added
+~~~~~
+
+- `Encyclopaedia.sort()` as a non-Action equivalent to `Encyclopaedia.Sort()`
+
+Changed
+~~~~~~~
+
+- The `sorting_mode` argument for an Encyclopaedia now takes a SortMode Enum
+  instead of an integer.
+
+- `Encyclopaedia.sort_entries()` is private and renamed to `Encyclopaedia._sort_entries()`
+
+- `SetEntry()` hides entry screen before showing it. This resets the state of the entry screen.
+
+Fixed
+~~~~~
+
+- Locking an unlocked EncEntry did not update the `locked` attribute.
+
+- `Encyclopaedia.sorting_mode` can no longer be set.
+
+- `Encyclopaedia.reverse_sorting` can no longer be set.
+
 [3.5.0] - 2024-11-10
 --------------------
 

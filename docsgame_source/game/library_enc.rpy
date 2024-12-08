@@ -74,7 +74,7 @@ label setup_enc:
             people with those names. Each person's record includes a set of
             detailed illustrations. You return the book to the table.
 
-            Surrounding you is a circlular shelf of books, at least a meter
+            Surrounding you is a circular shelf of books, at least a meter
             in height. There are gaps at each cardinal direction.
 
             You stand up and look around, then quickly sit down again.

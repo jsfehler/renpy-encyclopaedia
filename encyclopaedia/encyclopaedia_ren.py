@@ -76,6 +76,7 @@ class Encyclopaedia(EventEmitter, store.object):
                  name: str = '',
                  ) -> None:
         self._sorting_mode = sorting_mode
+        self._reverse_sorting: bool = False
 
         self.show_locked_buttons = show_locked_buttons
         self.show_locked_entry = show_locked_entry
@@ -89,8 +90,6 @@ class Encyclopaedia(EventEmitter, store.object):
         self.filtered_entries: list[ENTRY_TYPE] = []
 
         self.filtering: Union[bool, str] = False
-
-        self.reverse_sorting: bool = False
 
         self.nest_alphabetical_sort: bool = True
 
@@ -184,6 +183,15 @@ class Encyclopaedia(EventEmitter, store.object):
         """Get the current sorting mode of the Encyclopaedia."""
         return self._sorting_mode
 
+    @property
+    def reverse_sorting(self) -> bool:
+        """Get the direction of the current sorting.
+
+        Returns:
+            True if sorting is reversed, else False.
+        """
+        return self._reverse_sorting
+
     def _sort_entries(
         self,
         entries: list[ENTRY_TYPE],
@@ -191,8 +199,6 @@ class Encyclopaedia(EventEmitter, store.object):
         reverse: bool = False,
     ) -> None:
         """Sort entry lists.
-
-        This method does not change the sorting mode or reverse_sorting attribute.
 
         Args:
             entries: The EncEntry list to sort.
@@ -303,7 +309,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self.subjects = list(set(self.subjects))
         self.subjects.sort()
 
-    def sort(self, mode: Union[SortMode, None] = None, reverse: bool = False) -> None:
+    def sort(self, mode: Union[SortMode, None] = None, reverse: Union[bool, None] = None) -> None:
         """Sort the entries in the Encyclopaedia.
 
         The attribute `sorting_mode` will be set to the value of `mode`.
@@ -319,10 +325,10 @@ class Encyclopaedia(EventEmitter, store.object):
         elif not mode:
             mode = self.sorting_mode
 
-        if reverse:
-            self.reverse_sorting = reverse
+        if reverse is not None:
+            self._reverse_sorting = reverse
 
-        elif not reverse:
+        else:
             reverse = self.reverse_sorting
 
         self._sort_entries(

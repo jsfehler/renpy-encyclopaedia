@@ -192,14 +192,11 @@ class Encyclopaedia(EventEmitter, store.object):
         """
         return self._reverse_sorting
 
-    def _sort_entries(
-        self,
-        entries: list[ENTRY_TYPE],
-    ) -> None:
+    def _sort_entries(self, entries: list[ENTRY_TYPE]) -> None:
         """Sort an entry list.
 
         The Encyclopaedia's `sorting_mode` and `reverse_sorting` attributes
-        will be used.
+        are used for sorting.
 
         Args:
             entries: The EncEntry list to sort.

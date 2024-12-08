@@ -32,6 +32,7 @@ Change Sorting Mode
 An Encyclopaedia has the `sort()` method and `Sort()` Action available.
 
 .. code-block:: python
+
     about_gods = Encyclopaedia()
 
     about_gods.sort(SortMode.SUBJECT)

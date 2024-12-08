@@ -58,14 +58,6 @@
     user_guide/06-book-features/*
 
 .. toctree::
-    :maxdepth: 2
-    :caption: Actions
-    :hidden:
-    :glob:
-
-    user_guide/07-actions/*
-
-.. toctree::
   :maxdepth: 2
   :caption: API Documentation
   :hidden:

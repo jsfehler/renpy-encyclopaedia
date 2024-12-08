@@ -30,18 +30,17 @@ Change Sorting Mode
 -------------------
 
 An Encyclopaedia has the `sort()` method and `Sort()` Action available.
-Changing the value of the `sorting_mode` attribute also changes the sorting mode.
 
 .. code-block:: python
+    about_gods = Encyclopaedia()
 
-    my_encyclopaedia.sorting_mode = SortMode.SUBJECT
-    my_encyclopaedia.sort(SortMode.SUBJECT)
+    about_gods.sort(SortMode.SUBJECT)
 
 
-.. code-block:: python
+.. code-block:: renpy
 
     screen foo():
-        textbutton "Sort by Subject" my_encyclopaedia.Sort(SortMode.SUBJECT)
+        textbutton "Sort by Subject" about_gods.Sort(SortMode.SUBJECT)
 
 Changing the default sorting mode
 ---------------------------------

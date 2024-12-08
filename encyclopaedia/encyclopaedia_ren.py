@@ -184,23 +184,6 @@ class Encyclopaedia(EventEmitter, store.object):
         """Get the current sorting mode of the Encyclopaedia."""
         return self._sorting_mode
 
-    @sorting_mode.setter
-    def sorting_mode(self, new_mode: SortMode) -> None:
-        """Set the current sorting mode of the Encyclopaedia.
-
-        This will resort the current entry list.
-
-        Args:
-            new_mode: The sorting mode to change to.
-        """
-        self._sorting_mode = new_mode
-
-        self._sort_entries(
-            entries=self.current_entries,
-            sorting_mode=self._sorting_mode,
-            reverse=self.reverse_sorting,
-        )
-
     def _sort_entries(
         self,
         entries: list[ENTRY_TYPE],
@@ -323,8 +306,11 @@ class Encyclopaedia(EventEmitter, store.object):
     def sort(self, mode: Union[SortMode, None] = None, reverse: bool = False) -> None:
         """Sort the entries in the Encyclopaedia.
 
+        The attribute `sorting_mode` will be set to the value of `mode`.
+
         Args:
-            mode: The sorting mode to use. If None, the current sorting mode will be used.
+            mode: The sorting mode to use.
+                  If None, the attribute `sorting_mode` will be used.
             reverse: If the sorting should be done in reverse or not.
         """
         if mode:

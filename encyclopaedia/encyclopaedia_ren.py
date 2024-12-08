@@ -195,16 +195,18 @@ class Encyclopaedia(EventEmitter, store.object):
     def _sort_entries(
         self,
         entries: list[ENTRY_TYPE],
-        sorting_mode: SortMode = SortMode.NUMBER,
-        reverse: bool = False,
     ) -> None:
-        """Sort entry lists.
+        """Sort an entry list.
+
+        The Encyclopaedia's `sorting_mode` and `reverse_sorting` attributes
+        will be used.
 
         Args:
             entries: The EncEntry list to sort.
-            sorting_mode: The sorting mode to use.
-            reverse: If the sorting should be done in reverse or not.
         """
+        sorting_mode = self.sorting_mode
+        reverse = self.reverse_sorting
+
         # The reverse of SortMode.ALPHABETICAL is the equivalent of
         # SortMode.REVERSE_ALPHABETICAL and vice versa.
         reverse_alphabetical = False
@@ -240,11 +242,7 @@ class Encyclopaedia(EventEmitter, store.object):
         # Remove duplicates
         self.unlocked_entries = list(set(self.unlocked_entries))
 
-        self._sort_entries(
-            entries=self.unlocked_entries,
-            sorting_mode=self.sorting_mode,
-            reverse=self.reverse_sorting,
-        )
+        self._sort_entries(entries=self.unlocked_entries)
 
     def _find_closest_free_number(self) -> int:
         """Find the closest unused EncEntry number."""
@@ -296,11 +294,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self.all_entries = list(set(self.all_entries))
 
         # Ensure correct sorting of entry lists.
-        self._sort_entries(
-            entries=self.all_entries,
-            sorting_mode=self.sorting_mode,
-            reverse=self.reverse_sorting,
-        )
+        self._sort_entries(entries=self.all_entries)
 
         if entry.locked is False:
             self._add_entry_to_unlocked_entries(entry)
@@ -309,7 +303,7 @@ class Encyclopaedia(EventEmitter, store.object):
         self.subjects = list(set(self.subjects))
         self.subjects.sort()
 
-    def sort(self, mode: Union[SortMode, None] = None, reverse: Union[bool, None] = None) -> None:
+    def sort(self, mode: Union[SortMode, None] = None, reverse: bool = False) -> None:
         """Sort the entries in the Encyclopaedia.
 
         The attribute `sorting_mode` will be set to the value of `mode`.
@@ -322,20 +316,9 @@ class Encyclopaedia(EventEmitter, store.object):
         if mode:
             self._sorting_mode = mode
 
-        elif not mode:
-            mode = self.sorting_mode
+        self._reverse_sorting = reverse
 
-        if reverse is not None:
-            self._reverse_sorting = reverse
-
-        else:
-            reverse = self.reverse_sorting
-
-        self._sort_entries(
-            self.current_entries,
-            sorting_mode=mode,
-            reverse=reverse,
-        )
+        self._sort_entries(entries=self.current_entries)
 
     @property
     def word_count(self) -> int:
@@ -416,11 +399,7 @@ class Encyclopaedia(EventEmitter, store.object):
         # Thus we have to resort the entries to ensure they appear in the
         # correct order.
         if self.sorting_mode == SortMode.UNREAD:
-            self._sort_entries(
-                entries=self.current_entries,
-                sorting_mode=self.sorting_mode,
-                reverse=self.reverse_sorting,
-            )
+            self._sort_entries(entries=self.current_entries)
 
     def _change_entry(self, direction: Direction) -> bool:
         """Change the active entry by changing the index.

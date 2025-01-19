@@ -6,10 +6,10 @@ def test_next_entry():
 
     enc = Encyclopaedia()
 
-    for x in range(0, 5):
+    for x in range(5):
         EncEntry(
             parent=enc,
-            name="Test Name {}".format(x + 1),
+            name=f"Test Name {x + 1}",
             text=["Test Text"],
             locked=False,
         )

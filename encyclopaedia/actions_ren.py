@@ -59,8 +59,8 @@ class SetEntry(EncyclopaediaAction):
         """
         if self.enc.show_locked_entry or (not self.entry.locked):
             return True
-        else:
-            return False
+
+        return False
 
     def get_selected(self) -> bool:
         """Used by Ren'Py to determine if the user of this Action should have a selected state.
@@ -241,7 +241,7 @@ class FilterBySubject(EncyclopaediaAction):
 
         self.subject = subject
 
-    def __call__(self):
+    def __call__(self) -> None:
         """Used by Ren'Py to invoke this Action."""
         self.enc.filtering = self.subject
 

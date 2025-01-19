@@ -3,7 +3,7 @@ import pytest
 from encyclopaedia import EncEntry, Encyclopaedia, constants_ren
 
 
-@pytest.fixture()
+@pytest.fixture
 def sortable_enc():
     """Create an encyclopaedia for filtering tests."""
     enc = Encyclopaedia()

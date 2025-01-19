@@ -19,7 +19,7 @@ class BookAction(Action, DictEquality):
     Args:
         book: The Book instance to use.
     """
-    def __init__(self, book: 'Book'):
+    def __init__(self, book: 'Book') -> None:
         self.book = book
 
 

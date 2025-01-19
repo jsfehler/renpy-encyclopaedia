@@ -122,8 +122,8 @@ class Encyclopaedia(EventEmitter, store.object):
         """Get the list of entries which are currently viewable."""
         if self.show_locked_entry:
             return self.all_entries
-        else:
-            return self.unlocked_entries
+
+        return self.unlocked_entries
 
     @property
     def current_entries(self) -> list[ENTRY_TYPE]:
@@ -254,9 +254,9 @@ class Encyclopaedia(EventEmitter, store.object):
             # If there are unused numbers.
             if len(free_numbers) > 0:
                 return min(free_numbers)
+
             # Else add a new number.
-            else:
-                return len(self.all_entries) + 1
+            return len(self.all_entries) + 1
 
         # Catch the first EncEntry to be entered.
         else:

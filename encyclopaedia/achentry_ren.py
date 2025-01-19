@@ -19,7 +19,7 @@ class AchievementEncEntry(EncEntry):
         number: The entry's number.
             If this is not set then it will be given a number automatically.
         name: Title, normally used for buttons and headings.
-        text: The text that will be displayed when the entry is viewed.
+        text: The text to be displayed when the entry is viewed.
         subject: The subject to associate the entry with.
             Used for sorting and filtering.
         viewed: Set the viewed status of the EncEntry. Default is False.

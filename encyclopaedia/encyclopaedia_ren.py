@@ -35,7 +35,7 @@ from typing import Callable, Optional, Union, cast  # NOQA E402
 
 
 class Encyclopaedia(EventEmitter, store.object):
-    """Container that manages the behaviour of a collection of EncEntry objects.
+    """Container to manage the behaviour of a collection of EncEntry objects.
 
     Args:
         sorting_mode: How entries are sorted. Default is SortMode.NUMBER.
@@ -53,7 +53,7 @@ class Encyclopaedia(EventEmitter, store.object):
         all_entries: All entries, regardless of status.
         unlocked_entries: Only unlocked entries.
         filtered_entries: Entries that match a subject filter.
-        filtering: The subject that's being used as a filter.
+        filtering: The subject name being used as a filter.
         size_all: Length of self.all_entries.
         size_unlocked: Length of self.unlocked_entries.
         reverse_sorting: Should sorting occur in reverse or not.

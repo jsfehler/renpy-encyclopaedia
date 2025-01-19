@@ -150,7 +150,7 @@ class Book(EventEmitter, store.object):
 
     @property
     def active(self) -> 'EncEntry':
-        """Get the object for the page that's currently active.
+        """Get the object for the currently active page.
 
         Raises:
             GetEntryError: If no active page could be found.
@@ -178,7 +178,7 @@ class Book(EventEmitter, store.object):
 
     @property
     def percentage_unlocked(self) -> float:
-        """Get the percentage of the Book that's unlocked.
+        """Get the percentage of the Book's pages which are unlocked.
 
         Return:
             Number between 0.0 and 1.0

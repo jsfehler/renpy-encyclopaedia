@@ -71,7 +71,7 @@ screen vertical_list(enc):
 
 ################################################################################
 #    Encyclopaedia List:
-#    Screen that's used to display the list of entries, the filter buttons, and the sorting buttons
+#    Screen used to display the list of entries, the filter buttons, and the sorting buttons
 #
 #    Args:
 #        enc (Encyclopaedia): The encyclopaedia to use on this screen.
@@ -173,7 +173,7 @@ screen encyclopaedia_list(enc):
 
 ################################################################################
 #    Encyclopaedia Entry:
-#    Screen that's used to display an individual EncEntry.
+#    Screen used to display an individual EncEntry.
 #
 #    Args:
 #        enc (Encyclopaedia): The encyclopaedia to use on this screen.
